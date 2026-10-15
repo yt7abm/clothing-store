@@ -1,20 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const path = require('path');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const db = require('../database');
 
-// إعداد رفع الصور
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '..', 'uploads')),
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname);
-    cb(null, uniqueName);
+// ========================================
+// إعداد Cloudinary
+// ========================================
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// إعداد التخزين على Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'clothing-store/products', // اسم المجلد في Cloudinary
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+    transformation: [{ width: 800, height: 800, crop: 'limit' }]
   }
 });
+
 const upload = multer({ storage });
 
+// ========================================
 // جلب كل المنتجات
+// ========================================
 router.get('/', (req, res) => {
   try {
     const products = db.prepare(`
@@ -30,7 +44,9 @@ router.get('/', (req, res) => {
   }
 });
 
+// ========================================
 // جلب منتج واحد
+// ========================================
 router.get('/:id', (req, res) => {
   try {
     const product = db.prepare('SELECT * FROM products WHERE id = ?').get(req.params.id);
@@ -43,11 +59,15 @@ router.get('/:id', (req, res) => {
   }
 });
 
+// ========================================
 // إضافة منتج جديد
+// ========================================
 router.post('/', upload.single('image'), (req, res) => {
   try {
     const { name, description, price, cost, category_id, stock, min_stock } = req.body;
-    const image = req.file ? req.file.filename : null;
+    
+    // Cloudinary يرجع الرابط الكامل في req.file.path
+    const image = req.file ? req.file.path : null;
 
     if (!name || !price) {
       return res.status(400).json({ success: false, message: 'الاسم والسعر مطلوبان' });
@@ -64,7 +84,9 @@ router.post('/', upload.single('image'), (req, res) => {
   }
 });
 
+// ========================================
 // تعديل منتج
+// ========================================
 router.put('/:id', upload.single('image'), (req, res) => {
   try {
     const { name, description, price, cost, category_id, stock, min_stock } = req.body;
@@ -74,7 +96,8 @@ router.put('/:id', upload.single('image'), (req, res) => {
       return res.status(404).json({ success: false, message: 'المنتج غير موجود' });
     }
 
-    const image = req.file ? req.file.filename : product.image;
+    // إذا تم رفع صورة جديدة، استخدم رابط Cloudinary، وإلا احتفظ بالصورة القديمة
+    const image = req.file ? req.file.path : product.image;
 
     db.prepare(`
       UPDATE products 
@@ -88,7 +111,9 @@ router.put('/:id', upload.single('image'), (req, res) => {
   }
 });
 
+// ========================================
 // حذف منتج
+// ========================================
 router.delete('/:id', (req, res) => {
   try {
     db.prepare('UPDATE products SET active = 0 WHERE id = ?').run(req.params.id);
