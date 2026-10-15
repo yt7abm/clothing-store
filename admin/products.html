@@ -1068,7 +1068,7 @@ function renderTable() {
           <tr>
             <td>
               <div class="product-thumb">
-                ${p.image ? `<img src="const API_URL = '/api';clothing-store-m94s.onrender.com/uploads/${p.image}">` : '👕'}
+               ${p.image ? `<img src="${p.image}">` : '👕'}
               </div>
             </td>
             <td>
@@ -1125,7 +1125,7 @@ function renderCards() {
     return `
       <div class="product-card">
         <div class="product-card-image">
-          ${p.image ? `<img src="const API_URL = '/api';clothing-store-m94s.onrender.com/uploads/${p.image}">` : '👕'}
+          ${p.image ? `<img src="${p.image}">` : '👕'}
         </div>
         <div class="product-card-content">
           <div class="product-card-name">${p.name}</div>
@@ -1203,7 +1203,7 @@ function editProduct(p) {
   
   if (p.image) {
     document.getElementById('fileLabel').innerHTML = '🖼️ تغيير الصورة';
-    document.getElementById('previewImg').src = `const API_URL = '/api';clothing-store-m94s.onrender.com/uploads/${p.image}`;
+document.getElementById('previewImg').src = p.image;
     document.getElementById('filePreview').classList.add('show');
   } else {
     document.getElementById('fileLabel').innerHTML = '📷 اضغط لاختيار صورة';
