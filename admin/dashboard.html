@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>لوحة التحكم - متجر راقي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root { 
+  --primary: #8b5cf6; 
+  --primary-light: #a78bfa; 
+  --primary-dark: #6d28d9; 
+  --accent: #fbbf24;
+  --accent-2: #f472b6;
+  --black: #0f0b1e; 
+  --dark: #1e1b3a; 
+  --dark-2: #252047; 
+  --white: #f5f3ff; 
+  --gray: #a5a1b8; 
+  --border: rgba(139,92,246,0.2); 
+  --success: #10b981; 
+  --danger: #ef4444; 
+  --warning: #fbbf24; 
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+html, body { 
+  background: var(--black); 
+  color: var(--white); 
+  min-height: 100vh; 
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 0; height: 0; display: none; }
+html { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* ========== Layout ========== */
+.layout { 
+  display: grid; 
+  grid-template-columns: 250px 1fr; 
+  min-height: 100vh;
+}
+
+/* ========== Overlay ========== */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 998;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.overlay.active { display: block; }
+
+/* ========== Sidebar ========== */
+.sidebar { 
+  background: var(--dark); 
+  border-left: 1px solid var(--border); 
+  height: 100vh; 
+  position: sticky; 
+  top: 0; 
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.sidebar-header {
+  padding: 25px 20px 18px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.sidebar-logo { 
+  font-size: 1.4rem; 
+  font-weight: 900; 
+  background: linear-gradient(135deg, var(--primary), var(--accent-2)); 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  background-clip: text; 
+  margin-bottom: 4px; 
+}
+
+.sidebar-sub { 
+  color: var(--gray); 
+  font-size: 0.75rem; 
+}
+
+.close-sidebar {
+  display: none;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-menu {
+  flex: 1;
+  padding: 18px 15px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sidebar-menu::-webkit-scrollbar { display: none; }
+
+.menu { list-style: none; }
+.menu li { margin-bottom: 6px; }
+
+.menu a { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  padding: 13px 16px; 
+  color: var(--gray); 
+  text-decoration: none; 
+  border-radius: 10px; 
+  transition: all 0.3s; 
+  font-weight: 600; 
+  font-size: 0.9rem;
+}
+
+.menu a:hover { background: rgba(139,92,246,0.1); color: var(--primary-light); }
+.menu a.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+.menu-icon { font-size: 1.1rem; }
+
+.sidebar-footer {
+  padding: 15px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.logout-btn { 
+  width: 100%;
+  background: rgba(239,68,68,0.15); 
+  color: var(--danger); 
+  border: 1px solid var(--danger); 
+  padding: 12px; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  font-weight: 700; 
+  font-family: 'Cairo', sans-serif; 
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.logout-btn:hover { background: var(--danger); color: white; }
+
+/* ========== Main ========== */
+.main { 
+  padding: 25px 35px; 
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ========== Mobile Header ========== */
+.mobile-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, var(--dark), var(--dark-2));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  gap: 12px;
+}
+
+.hamburger {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid var(--border);
+  color: var(--primary-light);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.hamburger span {
+  width: 20px;
+  height: 2.5px;
+  background: var(--primary-light);
+  border-radius: 3px;
+}
+
+.mobile-title {
+  flex: 1;
+  text-align: center;
+}
+
+.mobile-title h1 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary-light), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mobile-title p {
+  color: var(--gray);
+  font-size: 0.72rem;
+}
+
+.user-avatar-small { 
+  width: 40px; 
+  height: 40px; 
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+  color: white; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-weight: 900; 
+  font-size: 1rem; 
+  flex-shrink: 0;
+  border: 2px solid var(--primary-light);
+}
+
+/* ========== Desktop Topbar ========== */
+.topbar { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 25px; 
+  padding-bottom: 18px; 
+  border-bottom: 1px solid var(--border); 
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.page-title { font-size: 1.6rem; font-weight: 800; }
+.page-title span { color: var(--primary-light); }
+
+.user-info { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  background: var(--dark); 
+  padding: 8px 16px; 
+  border-radius: 30px; 
+  border: 1px solid var(--border); 
+}
+
+.user-avatar { 
+  width: 38px; 
+  height: 38px; 
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+  color: white; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-weight: 900; 
+  font-size: 1rem; 
+  flex-shrink: 0;
+}
+
+.user-name { font-weight: 600; font-size: 0.9rem; }
+.user-role { color: var(--gray); font-size: 0.75rem; }
+
+/* ========== Section Title Mobile ========== */
+.section-mobile-title {
+  display: none;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 14px;
+  padding-right: 12px;
+  border-right: 4px solid var(--primary);
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.section-mobile-title span { color: var(--primary-light); }
+
+/* ========== Stats Cards ========== */
+.stats-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+  gap: 16px; 
+  margin-bottom: 25px; 
+}
+
+.stat-card { 
+  background: linear-gradient(135deg, var(--dark), var(--dark-2)); 
+  border: 1px solid var(--border); 
+  border-radius: 15px; 
+  padding: 20px; 
+  transition: all 0.3s; 
+  position: relative; 
+  overflow: hidden; 
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stat-icon-box {
+  width: 55px;
+  height: 55px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-icon-box.primary {
+  background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.1));
+  border: 1px solid var(--primary);
+}
+
+.stat-icon-box.warning {
+  background: linear-gradient(135deg, rgba(251,191,36,0.25), rgba(251,191,36,0.1));
+  border: 1px solid var(--warning);
+}
+
+.stat-icon-box.danger {
+  background: linear-gradient(135deg, rgba(239,68,68,0.25), rgba(239,68,68,0.1));
+  border: 1px solid var(--danger);
+}
+
+.stat-icon-box.success {
+  background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(16,185,129,0.1));
+  border: 1px solid var(--success);
+}
+
+.stat-content {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-label { 
+  color: var(--gray); 
+  font-size: 0.78rem; 
+  font-weight: 600; 
+  margin-bottom: 4px;
+}
+
+.stat-value { 
+  font-size: 1.6rem; 
+  font-weight: 900; 
+  color: var(--primary-light);
+  line-height: 1.1;
+}
+
+.stat-value small { font-size: 0.75rem; color: var(--gray); font-weight: 500; }
+
+.stat-footer { 
+  color: var(--gray); 
+  font-size: 0.72rem; 
+  margin-top: 3px;
+}
+
+.stat-value.warning-color { color: var(--warning); }
+.stat-value.danger-color { color: var(--danger); }
+
+/* ========== Sections ========== */
+.section { 
+  background: linear-gradient(135deg, var(--dark), var(--dark-2)); 
+  border: 1px solid var(--border); 
+  border-radius: 15px; 
+  padding: 20px; 
+  margin-bottom: 20px; 
+}
+
+.section-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 18px; 
+  padding-bottom: 12px; 
+  border-bottom: 1px solid var(--border); 
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.section-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-light); }
+.section-link { color: var(--primary-light); text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: color 0.3s; }
+.section-link:hover { color: var(--accent-2); }
+
+/* ========== List Items (بديل الجدول على الجوال) ========== */
+.list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.list-item {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+.list-item:hover { border-color: var(--primary); }
+
+.list-rank {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+}
+
+.list-rank.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+.list-rank.silver { background: linear-gradient(135deg, #cbd5e1, #94a3b8); color: #1a1432; }
+.list-rank.bronze { background: linear-gradient(135deg, #f59e0b, #b45309); }
+
+.list-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--gray);
+}
+
+.list-meta strong { color: var(--primary-light); }
+
+/* ========== Table ========== */
+.table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-wrapper::-webkit-scrollbar { height: 6px; }
+.table-wrapper::-webkit-scrollbar-track { background: var(--black); border-radius: 3px; }
+.table-wrapper::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+table { width: 100%; border-collapse: collapse; min-width: 550px; }
+th, td { padding: 12px 10px; text-align: right; border-bottom: 1px solid rgba(139,92,246,0.1); }
+th { color: var(--gray); font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+td { font-size: 0.9rem; }
+tr:hover { background: rgba(139,92,246,0.05); }
+
+.badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
+.badge-success { background: rgba(16,185,129,0.2); color: var(--success); }
+.badge-warning { background: rgba(251,191,36,0.2); color: var(--warning); }
+.badge-danger { background: rgba(239,68,68,0.2); color: var(--danger); }
+.badge-primary { background: rgba(139,92,246,0.2); color: var(--primary-light); }
+
+.empty-state { text-align: center; padding: 35px 20px; color: var(--gray); }
+.empty-state-icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+
+.loading { text-align: center; padding: 25px; color: var(--primary-light); }
+
+/* ========== Mobile ========== */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  
+  .sidebar { 
+    position: fixed; 
+    top: 0;
+    right: -280px; 
+    width: 280px; 
+    height: 100vh;
+    z-index: 999; 
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1); 
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+  }
+  
+  .sidebar.open { right: 0; }
+  .close-sidebar { display: flex; }
+  .mobile-header { display: flex; }
+  .main { padding: 15px 12px; }
+  .topbar { display: none; }
+  .section-mobile-title { display: block; }
+}
+
+@media (max-width: 600px) {
+  .main { padding: 12px; }
+  
+  .mobile-header {
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+  
+  .mobile-title h1 { font-size: 0.95rem; }
+  .mobile-title p { font-size: 0.68rem; }
+  
+  .hamburger { width: 40px; height: 40px; }
+  .hamburger span { width: 18px; height: 2px; }
+  .user-avatar-small { width: 38px; height: 38px; font-size: 0.95rem; }
+  
+  /* Stats - عمودين مريحين */
+  .stats-grid { 
+    grid-template-columns: 1fr 1fr; 
+    gap: 10px; 
+    margin-bottom: 18px;
+  }
+  
+  .stat-card { 
+    padding: 14px 12px; 
+    border-radius: 12px;
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  .stat-icon-box {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+    border-radius: 12px;
+  }
+  
+  .stat-label { 
+    font-size: 0.72rem; 
+    margin-bottom: 3px;
+  }
+  
+  .stat-value { 
+    font-size: 1.3rem; 
+  }
+  
+  .stat-value small { font-size: 0.68rem; }
+  .stat-footer { font-size: 0.68rem; margin-top: 2px; }
+  
+  .section { 
+    padding: 15px; 
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+  
+  .section-title { font-size: 1rem; }
+  .section-header { margin-bottom: 12px; padding-bottom: 10px; }
+  .section-link { font-size: 0.78rem; }
+  
+  .list-item { padding: 12px; gap: 10px; }
+  .list-rank { width: 34px; height: 34px; font-size: 0.85rem; }
+  .list-title { font-size: 0.85rem; }
+  .list-meta { font-size: 0.72rem; }
+  
+  .section-mobile-title { font-size: 1rem; margin-bottom: 12px; }
+}
+
+@media (max-width: 400px) {
+  .stat-card { padding: 12px 10px; }
+  .stat-value { font-size: 1.15rem; }
+  .stat-icon-box { width: 40px; height: 40px; font-size: 1.15rem; }
+  .stat-label { font-size: 0.68rem; }
+  .list-title { font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  
+  <!-- ========== Sidebar ========== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <button class="close-sidebar" onclick="closeSidebar()">✕</button>
+      <div class="sidebar-logo">✨ متجر راقي</div>
+      <div class="sidebar-sub">لوحة التحكم</div>
+    </div>
+    
+    <div class="sidebar-menu">
+      <ul class="menu">
+        <li><a href="dashboard.html" class="active"><span class="menu-icon">📊</span> الرئيسية</a></li>
+        <li><a href="products.html"><span class="menu-icon">🛍️</span> المنتجات</a></li>
+        <li><a href="inventory.html"><span class="menu-icon">📦</span> المخزون</a></li>
+        <li><a href="cashier.html"><span class="menu-icon">💰</span> الكاشير</a></li>
+        <li><a href="orders.html"><span class="menu-icon">🌐</span> الطلبات الأونلاين</a></li>
+        <li><a href="coupons.html"><span class="menu-icon">🎟️</span> الكوبونات</a></li>
+        <li><a href="reports.html"><span class="menu-icon">📈</span> التقارير</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</button>
+    </div>
+  </aside>
+  
+  <!-- ========== Main ========== -->
+  <main class="main">
+    
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+      <button class="hamburger" onclick="openSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="mobile-title">
+        <h1>✨ متجر راقي</h1>
+        <p>لوحة التحكم</p>
+      </div>
+      <div class="user-avatar-small" id="mobileAvatar">ر</div>
+    </div>
+    
+    <!-- Desktop Topbar -->
+    <div class="topbar">
+      <h1 class="page-title">لوحة <span>التحكم</span></h1>
+      <div class="user-info">
+        <div>
+          <div class="user-name" id="userName">الرئيس</div>
+          <div class="user-role" id="userRole">الرئيس</div>
+        </div>
+        <div class="user-avatar" id="userAvatar">ر</div>
+      </div>
+    </div>
+    
+    <!-- Mobile: إحصائيات العنوان -->
+    <div class="section-mobile-title">📊 <span>الإحصائيات</span></div>
+    
+    <!-- إحصائيات -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon-box primary">💰</div>
+        <div class="stat-content">
+          <div class="stat-label">مبيعات اليوم</div>
+          <div class="stat-value" id="todaySales">0.000 <small>ر.ع</small></div>
+          <div class="stat-footer" id="todayCount">0 فاتورة</div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon-box success">📅</div>
+        <div class="stat-content">
+          <div class="stat-label">مبيعات الشهر</div>
+          <div class="stat-value" id="monthSales">0.000 <small>ر.ع</small></div>
+          <div class="stat-footer" id="monthCount">0 فاتورة</div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon-box warning">🌐</div>
+        <div class="stat-content">
+          <div class="stat-label">طلبات أونلاين</div>
+          <div class="stat-value warning-color" id="pendingOrders">0</div>
+          <div class="stat-footer">تحتاج مراجعة</div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon-box danger">⚠️</div>
+        <div class="stat-content">
+          <div class="stat-label">منتجات ناقصة</div>
+          <div class="stat-value danger-color" id="lowStock">0</div>
+          <div class="stat-footer">تحتاج تخزين</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- أفضل المنتجات -->
+    <div class="section-mobile-title">🏆 <span>الأفضل مبيعاً</span></div>
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">🏆 أفضل المنتجات مبيعاً</h2>
+        <a href="reports.html" class="section-link">عرض الكل ←</a>
+      </div>
+      <div id="topProducts">
+        <div class="loading">⏳ جاري التحميل...</div>
+      </div>
+    </div>
+    
+    <!-- آخر الفواتير -->
+    <div class="section-mobile-title">🧾 <span>آخر الفواتير</span></div>
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">🧾 آخر الفواتير</h2>
+        <a href="cashier.html" class="section-link">فتح الكاشير ←</a>
+      </div>
+      <div id="recentSales">
+        <div class="loading">⏳ جاري التحميل...</div>
+      </div>
+    </div>
+    
+  </main>
+  
+</div>
+
+<script>
+const API_URL = 'http://localhost:3000/api';
+const token = localStorage.getItem('raki_token');
+const user = JSON.parse(localStorage.getItem('raki_user') || '{}');
+
+if (!token) {
+  window.location.href = 'login.html';
+}
+
+// عرض بيانات المستخدم - "الرئيس"
+const displayName = (!user.full_name || user.full_name === 'المدير العام') ? 'الرئيس' : user.full_name;
+document.getElementById('userName').textContent = displayName;
+document.getElementById('userAvatar').textContent = displayName.charAt(0);
+document.getElementById('mobileAvatar').textContent = displayName.charAt(0);
+document.getElementById('userRole').textContent = 'الرئيس';
+
+// ========================================
+// Sidebar على الجوال
+// ========================================
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) closeSidebar();
+});
+
+function logout() {
+  if (confirm('هل تريد تسجيل الخروج؟')) {
+    localStorage.removeItem('raki_token');
+    localStorage.removeItem('raki_user');
+    window.location.href = 'login.html';
+  }
+}
+
+// ========================================
+// تحميل الإحصائيات
+// ========================================
+async function loadStats() {
+  try {
+    const salesRes = await fetch(`${API_URL}/reports/sales`);
+    const salesData = await salesRes.json();
+    
+    if (salesData.success) {
+      document.getElementById('todaySales').innerHTML = 
+        `${salesData.today.total.toFixed(2)} <small>ر.ع</small>`;
+      document.getElementById('todayCount').textContent = 
+        `${salesData.today.count} فاتورة`;
+      document.getElementById('monthSales').innerHTML = 
+        `${salesData.thisMonth.total.toFixed(2)} <small>ر.ع</small>`;
+      document.getElementById('monthCount').textContent = 
+        `${salesData.thisMonth.count} فاتورة`;
+    }
+    
+    try {
+      const ordersRes = await fetch(`${API_URL}/sales/online`);
+      const ordersData = await ordersRes.json();
+      
+      if (ordersData.success) {
+        const pending = ordersData.orders.filter(o => o.status === 'pending').length;
+        document.getElementById('pendingOrders').textContent = pending;
+      }
+    } catch (e) {
+      document.getElementById('pendingOrders').textContent = '0';
+    }
+    
+    const invRes = await fetch(`${API_URL}/inventory`);
+    const invData = await invRes.json();
+    
+    if (invData.success) {
+      document.getElementById('lowStock').textContent = invData.lowStock.length;
+    }
+  } catch (error) {
+    console.error('خطأ في تحميل الإحصائيات:', error);
+  }
+}
+
+// ========================================
+// أفضل المنتجات - يستخدم list-items للجوال
+// ========================================
+async function loadTopProducts() {
+  try {
+    const res = await fetch(`${API_URL}/reports/top-products`);
+    const data = await res.json();
+    
+    const container = document.getElementById('topProducts');
+    
+    if (!data.success || data.products.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">📊</div>
+          <p>لا توجد مبيعات بعد</p>
+        </div>
+      `;
+      return;
+    }
+    
+    // عرض قائمة على الجوال و جدول على الكمبيوتر
+    const isMobile = window.innerWidth <= 600;
+    
+    if (isMobile) {
+      container.innerHTML = `
+        <div class="list-items">
+          ${data.products.slice(0, 5).map((p, i) => {
+            const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+            return `
+              <div class="list-item">
+                <div class="list-rank ${rankClass}">${i + 1}</div>
+                <div class="list-content">
+                  <div class="list-title">${p.product_name}</div>
+                  <div class="list-meta">
+                    <span>الكمية: <strong>${p.total_sold}</strong></span>
+                    <span><strong>${p.revenue.toFixed(2)}</strong> ر.ع</span>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>المنتج</th>
+                <th>الكمية المباعة</th>
+                <th>الإيرادات</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.products.map((p, i) => `
+                <tr>
+                  <td><span class="badge badge-primary">${i + 1}</span></td>
+                  <td>${p.product_name}</td>
+                  <td>${p.total_sold}</td>
+                  <td style="color:var(--primary-light);font-weight:700;white-space:nowrap;">${p.revenue.toFixed(2)} ر.ع</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+  } catch (error) {
+    document.getElementById('topProducts').innerHTML = 
+      '<div class="empty-state">❌ خطأ في التحميل</div>';
+  }
+}
+
+// ========================================
+// آخر الفواتير - يستخدم list-items للجوال
+// ========================================
+async function loadRecentSales() {
+  try {
+    const res = await fetch(`${API_URL}/sales`);
+    const data = await res.json();
+    
+    const container = document.getElementById('recentSales');
+    
+    if (!data.success || data.sales.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">🧾</div>
+          <p>لا توجد فواتير بعد</p>
+        </div>
+      `;
+      return;
+    }
+    
+    const recent = data.sales.slice(0, 5);
+    const isMobile = window.innerWidth <= 600;
+    
+    if (isMobile) {
+      container.innerHTML = `
+        <div class="list-items">
+          ${recent.map(s => `
+            <div class="list-item">
+              <div class="list-rank ${s.sale_type === 'online' ? '' : 'gold'}" style="font-size:1.1rem;">
+                ${s.sale_type === 'online' ? '🌐' : '💰'}
+              </div>
+              <div class="list-content">
+                <div class="list-title">${s.customer_name || 'زائر'}</div>
+                <div class="list-meta">
+                  <span style="font-size:0.7rem;font-family:monospace;color:var(--gray);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px;">${s.invoice_number}</span>
+                  <span><strong>${s.final_total.toFixed(2)}</strong> ر.ع</span>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>رقم الفاتورة</th>
+                <th>العميل</th>
+                <th>النوع</th>
+                <th>الإجمالي</th>
+                <th>التاريخ</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${recent.map(s => `
+                <tr>
+                  <td style="font-family:monospace;font-size:0.8rem;white-space:nowrap;">${s.invoice_number}</td>
+                  <td>${s.customer_name || 'زائر'}</td>
+                  <td>
+                    ${s.sale_type === 'online' 
+                      ? '<span class="badge badge-warning">🌐 أونلاين</span>' 
+                      : '<span class="badge badge-success">💰 كاشير</span>'}
+                  </td>
+                  <td style="color:var(--primary-light);font-weight:700;white-space:nowrap;">${s.final_total.toFixed(2)} ر.ع</td>
+                  <td style="font-size:0.8rem;color:var(--gray);white-space:nowrap;">${formatDate(s.created_at)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+  } catch (error) {
+    document.getElementById('recentSales').innerHTML = 
+      '<div class="empty-state">❌ خطأ في التحميل</div>';
+  }
+}
+
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return date.toLocaleString('ar-OM', { 
+    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
+  });
+}
+
+// ========================================
+// التشغيل
+// ========================================
+loadStats();
+loadTopProducts();
+loadRecentSales();
+
+// إعادة التحميل عند تغيير حجم الشاشة
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    loadTopProducts();
+    loadRecentSales();
+  }, 300);
+});
+
+setInterval(loadStats, 30000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>إتمام الطلب - متجر راقي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #8b5cf6;
+  --primary-light: #a78bfa;
+  --primary-dark: #6d28d9;
+  --accent: #fbbf24;
+  --accent-2: #f472b6;
+  --bg: #0f0b1e;
+  --card: #1e1b3a;
+  --card-2: #252047;
+  --text: #f5f3ff;
+  --text-muted: #a5a1b8;
+  --border: rgba(139, 92, 246, 0.2);
+  --success: #10b981;
+  --danger: #ef4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; overflow-x: hidden; }
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at 20% 10%, rgba(139, 92, 246, 0.15), transparent 40%),
+              radial-gradient(circle at 80% 80%, rgba(244, 114, 182, 0.1), transparent 40%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+
+.header {
+  position: sticky;
+  top: 0;
+  background: rgba(15, 11, 30, 0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 12px 0;
+}
+
+.nav {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 900;
+  font-family: 'Playfair Display', 'Cairo', sans-serif;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.back-btn {
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--primary-light);
+  border: 1px solid var(--primary);
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 700;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.back-btn:hover { background: var(--primary); color: white; }
+
+.container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 25px;
+  align-items: start;
+}
+
+.card {
+  background: linear-gradient(135deg, var(--card), var(--card-2));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  color: var(--text);
+  font-size: 1.3rem;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h2 .icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.form-group { margin-bottom: 20px; }
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.form-group label .required { color: var(--danger); }
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 1rem;
+  font-family: 'Cairo', sans-serif;
+  transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+}
+
+.form-group input.error,
+.form-group textarea.error {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+.form-group .error-msg {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  display: none;
+}
+
+.form-group .error-msg.show { display: block; }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.payment-methods {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.payment-option {
+  padding: 22px 15px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.payment-option:hover { border-color: var(--primary); }
+
+.payment-option.selected {
+  border-color: var(--primary);
+  background: rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+}
+
+.payment-option .check {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 24px;
+  height: 24px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.payment-option.selected .check { display: flex; }
+
+.payment-option .icon { font-size: 2.5rem; margin-bottom: 10px; }
+.payment-option .name { font-weight: 700; font-size: 1rem; }
+.payment-option .desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; }
+
+.coupon-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.coupon-section input { flex: 1; }
+
+.coupon-btn {
+  background: linear-gradient(135deg, var(--accent), #f59e0b);
+  color: var(--bg);
+  padding: 14px 25px;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.coupon-btn:hover { transform: translateY(-2px); }
+
+.coupon-message {
+  font-size: 0.9rem;
+  padding: 12px;
+  border-radius: 10px;
+  display: none;
+  margin-top: 10px;
+}
+
+.coupon-message.success {
+  display: block;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.coupon-message.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.summary-card { position: sticky; top: 90px; }
+
+.order-items {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.order-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+}
+
+.order-item-img {
+  width: 55px;
+  height: 55px;
+  background: var(--card-2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.order-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.order-item-info { flex: 1; min-width: 0; }
+
+.order-item-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+.order-item-qty {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.order-item-price {
+  color: var(--primary-light);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.summary-item.discount { color: var(--success); }
+
+.summary-item.total {
+  border-top: 2px solid var(--border);
+  margin-top: 12px;
+  padding-top: 20px;
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.summary-item.total span:last-child {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.6rem;
+  font-weight: 900;
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 18px;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  transition: all 0.3s;
+  margin-top: 20px;
+  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 50px rgba(139, 92, 246, 0.5);
+}
+
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.empty-cart {
+  text-align: center;
+  padding: 80px 20px;
+  grid-column: 1 / -1;
+}
+
+.empty-cart-icon { font-size: 5rem; margin-bottom: 20px; opacity: 0.5; }
+.empty-cart h2 { color: var(--text); margin-bottom: 15px; font-size: 1.5rem; }
+.empty-cart p { color: var(--text-muted); margin-bottom: 25px; }
+
+.empty-cart a {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 14px 35px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .container { grid-template-columns: 1fr; margin: 20px auto; }
+  .summary-card { position: static; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 12px; margin: 15px auto; }
+  .card { padding: 20px 18px; border-radius: 16px; }
+  .card h2 { font-size: 1.1rem; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .logo { font-size: 1.15rem; }
+  .back-btn { padding: 8px 14px; font-size: 0.8rem; }
+  .payment-option { padding: 18px 10px; }
+  .payment-option .icon { font-size: 2rem; }
+  .coupon-section { flex-direction: column; }
+  .coupon-btn { width: 100%; }
+}
+
+@media (max-width: 380px) {
+  .payment-methods { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <nav class="nav">
+    <div class="logo">✨ متجر راقي</div>
+    <a href="../index.html" class="back-btn">← رجوع للمتجر</a>
+  </nav>
+</header>
+
+<div id="content"></div>
+
+<script>
+// ========================================
+// المتغيرات
+// ========================================
+const API_URL = 'http://localhost:3000/api';
+let cart = JSON.parse(localStorage.getItem('raki_cart') || '[]');
+let appliedDiscount = 0;
+let appliedCoupon = null;
+let selectedPayment = 'cash';
+
+// ========================================
+// حفظ / استرجاع بيانات النموذج
+// ========================================
+function saveFormData() {
+  const nameEl = document.getElementById('customerName');
+  if (!nameEl) return;
+  
+  const data = {
+    customerName: document.getElementById('customerName')?.value || '',
+    customerPhone: document.getElementById('customerPhone')?.value || '',
+    customerAddress: document.getElementById('customerAddress')?.value || '',
+    customerNotes: document.getElementById('customerNotes')?.value || '',
+    couponCode: document.getElementById('couponCode')?.value || ''
+  };
+  sessionStorage.setItem('checkoutFormData', JSON.stringify(data));
+}
+
+function restoreFormData() {
+  const saved = sessionStorage.getItem('checkoutFormData');
+  if (!saved) return;
+  
+  try {
+    const data = JSON.parse(saved);
+    ['customerName', 'customerPhone', 'customerAddress', 'customerNotes', 'couponCode'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && data[id]) el.value = data[id];
+    });
+  } catch (e) {}
+}
+
+// ========================================
+// عرض الصفحة
+// ========================================
+function renderPage() {
+  const content = document.getElementById('content');
+  
+  if (cart.length === 0) {
+    content.innerHTML = `
+      <div class="container">
+        <div class="empty-cart">
+          <div class="empty-cart-icon">🛒</div>
+          <h2>السلة فاضية</h2>
+          <p>أضف بعض المنتجات أولاً لإتمام الطلب</p>
+          <a href="../index.html">🛍️ تسوق الآن</a>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const total = subtotal - appliedDiscount;
+  
+  content.innerHTML = `
+    <div class="container">
+      <div>
+        <div class="card">
+          <h2><span class="icon">👤</span> معلومات العميل</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>الاسم الكامل <span class="required">*</span></label>
+              <input type="text" id="customerName" placeholder="مثال: أحمد محمد" autocomplete="name">
+              <div class="error-msg" id="nameError">⚠️ الرجاء إدخال الاسم الكامل</div>
+            </div>
+            <div class="form-group">
+              <label>رقم الهاتف <span class="required">*</span></label>
+              <input type="tel" id="customerPhone" placeholder="مثال: 9XXXXXXX" autocomplete="tel">
+              <div class="error-msg" id="phoneError">⚠️ الرجاء إدخال رقم هاتف صحيح</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>العنوان (اختياري)</label>
+            <input type="text" id="customerAddress" placeholder="مثال: مسقط - الخوير - شارع 18">
+          </div>
+          
+          <div class="form-group">
+            <label>ملاحظات (اختياري)</label>
+            <textarea id="customerNotes" rows="2" placeholder="أي ملاحظات إضافية..."></textarea>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h2><span class="icon">💳</span> طريقة الدفع</h2>
+          
+          <div class="payment-methods">
+            <div class="payment-option selected" data-method="cash" onclick="selectPayment('cash', this)">
+              <span class="check">✓</span>
+              <div class="icon">💵</div>
+              <div class="name">نقداً</div>
+              <div class="desc">الدفع عند الاستلام</div>
+            </div>
+            <div class="payment-option" data-method="transfer" onclick="selectPayment('transfer', this)">
+              <span class="check">✓</span>
+              <div class="icon">🏦</div>
+              <div class="name">تحويل بنكي</div>
+              <div class="desc">تحويل إلى حساب المتجر</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h2><span class="icon">🎟️</span> كوبون الخصم</h2>
+          
+          <div class="coupon-section">
+            <input type="text" id="couponCode" placeholder="أدخل كود الكوبون" style="text-transform:uppercase;">
+            <button class="coupon-btn" onclick="applyCoupon()">تطبيق</button>
+          </div>
+          
+          <div class="coupon-message" id="couponMessage"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="card summary-card">
+          <h2><span class="icon">📦</span> ملخص الطلب</h2>
+          
+          <div class="order-items">
+            ${cart.map(item => `
+              <div class="order-item">
+                <div class="order-item-img">
+                  ${item.image 
+                    ? `<img src="http://localhost:3000/uploads/${item.image}" alt="${item.name}">` 
+                    : '👕'
+                  }
+                </div>
+                <div class="order-item-info">
+                  <div class="order-item-name">${item.name}</div>
+                  <div class="order-item-qty">${item.quantity} × ${item.price.toFixed(3)} ر.ع</div>
+                </div>
+                <div class="order-item-price">${(item.price * item.quantity).toFixed(3)} ر.ع</div>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="summary-item">
+            <span>المجموع الفرعي</span>
+            <span>${subtotal.toFixed(3)} ر.ع</span>
+          </div>
+          
+          ${appliedDiscount > 0 ? `
+            <div class="summary-item discount">
+              <span>🎟️ خصم (${appliedCoupon})</span>
+              <span>-${appliedDiscount.toFixed(3)} ر.ع</span>
+            </div>
+          ` : ''}
+          
+          <div class="summary-item total">
+            <span>الإجمالي</span>
+            <span>${total.toFixed(3)} ر.ع</span>
+          </div>
+          
+          <button class="submit-btn" onclick="submitOrder()" id="submitBtn">
+            ✅ تأكيد الطلب
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  restoreFormData();
+  
+  ['customerName', 'customerPhone', 'customerAddress', 'customerNotes', 'couponCode'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', () => {
+        el.classList.remove('error');
+        saveFormData();
+      });
+    }
+  });
+  
+  document.querySelectorAll('.payment-option').forEach(el => {
+    if (el.dataset.method === selectedPayment) {
+      el.classList.add('selected');
+    } else {
+      el.classList.remove('selected');
+    }
+  });
+  
+  if (appliedDiscount > 0) {
+    showCouponMessage(`✅ تم تطبيق الكوبون! خصم ${appliedDiscount.toFixed(3)} ر.ع`, 'success');
+  }
+}
+
+// ========================================
+// اختيار طريقة الدفع
+// ========================================
+function selectPayment(method, el) {
+  selectedPayment = method;
+  document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ========================================
+// تطبيق الكوبون
+// ========================================
+async function applyCoupon() {
+  const code = document.getElementById('couponCode').value.trim().toUpperCase();
+  
+  if (!code) {
+    showCouponMessage('⚠️ الرجاء إدخال كود الكوبون', 'error');
+    return;
+  }
+  
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  
+  try {
+    const res = await fetch(`${API_URL}/coupons/validate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code, total: subtotal })
+    });
+    
+    const data = await res.json();
+    
+    if (data.success) {
+      appliedDiscount = data.discount;
+      appliedCoupon = code;
+      saveFormData();
+      renderPage();
+      setTimeout(() => showCouponMessage(`✅ تم تطبيق الكوبون! خصم ${data.discount.toFixed(3)} ر.ع`, 'success'), 50);
+    } else {
+      showCouponMessage(`❌ ${data.message}`, 'error');
+    }
+  } catch (error) {
+    showCouponMessage('❌ تعذّر الاتصال بالسيرفر', 'error');
+  }
+}
+
+function showCouponMessage(msg, type) {
+  const el = document.getElementById('couponMessage');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = `coupon-message ${type}`;
+}
+
+// ========================================
+// التحقق من النموذج
+// ========================================
+function validateForm() {
+  let valid = true;
+  
+  const name = document.getElementById('customerName');
+  const phone = document.getElementById('customerPhone');
+  
+  if (!name.value.trim() || name.value.trim().length < 3) {
+    name.classList.add('error');
+    document.getElementById('nameError').classList.add('show');
+    valid = false;
+  } else {
+    name.classList.remove('error');
+    document.getElementById('nameError').classList.remove('show');
+  }
+  
+  const phoneValue = phone.value.trim();
+  const phoneRegex = /^[0-9+\-\s]{8,}$/;
+  if (!phoneValue || !phoneRegex.test(phoneValue)) {
+    phone.classList.add('error');
+    document.getElementById('phoneError').classList.add('show');
+    valid = false;
+  } else {
+    phone.classList.remove('error');
+    document.getElementById('phoneError').classList.remove('show');
+  }
+  
+  if (!valid) {
+    const firstError = document.querySelector('.form-group input.error');
+    if (firstError) {
+      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstError.focus();
+    }
+  }
+  
+  return valid;
+}
+
+// ========================================
+// إرسال الطلب
+// ========================================
+async function submitOrder() {
+  if (!validateForm()) return;
+  
+  const name = document.getElementById('customerName').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+  const address = document.getElementById('customerAddress')?.value.trim() || '';
+  const notes = document.getElementById('customerNotes')?.value.trim() || '';
+  
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ جاري إرسال الطلب...';
+  
+  const items = cart.map(item => ({
+    product_id: item.id,
+    product_name: item.name,
+    price: item.price,
+    quantity: item.quantity
+  }));
+  
+  const orderData = {
+    items,
+    discount: appliedDiscount,
+    coupon_code: appliedCoupon,
+    payment_method: selectedPayment,
+    customer_name: name,
+    customer_phone: phone,
+    customer_address: address,
+    customer_notes: notes,
+    sale_type: 'online'
+  };
+  
+  console.log('📦 إرسال الطلب:', orderData);
+  
+  try {
+    const res = await fetch(`${API_URL}/sales`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData)
+    });
+    
+    const data = await res.json();
+    console.log('📥 استجابة السيرفر:', data);
+    
+    if (data.success) {
+      localStorage.setItem('lastOrder', JSON.stringify({
+        invoice_number: data.invoice_number,
+        final_total: data.final_total,
+        payment_method: selectedPayment,
+        customer_name: name,
+        customer_phone: phone
+      }));
+      
+      localStorage.removeItem('raki_cart');
+      sessionStorage.removeItem('checkoutFormData');
+      
+      window.location.href = 'order-success.html';
+    } else {
+      btn.disabled = false;
+      btn.innerHTML = '✅ تأكيد الطلب';
+      showCouponMessage('❌ ' + data.message, 'error');
+    }
+  } catch (error) {
+    console.error('❌ خطأ:', error);
+    btn.disabled = false;
+    btn.innerHTML = '✅ تأكيد الطلب';
+    alert('❌ تعذّر الاتصال بالسيرفر');
+  }
+}
+
+// ========================================
+// التشغيل
+// ========================================
+renderPage();
+</script>
+
+</body>
+</html>
