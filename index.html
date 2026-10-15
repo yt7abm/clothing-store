@@ -1273,7 +1273,7 @@ img { max-width: 100%; display: block; }
 <div class="notification" id="notification"></div>
 
 <script>
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'http://https://clothing-store-m94s.onrender.com/api';
 let cart = JSON.parse(localStorage.getItem('raki_cart') || '[]');
 let allProducts = [];
 
@@ -1339,7 +1339,7 @@ function renderProducts(products) {
     <div class="product-card" onclick="openProductModal(${p.id})">
       <div class="product-image">
         ${p.image 
-          ? `<img src="http://localhost:3000/uploads/${p.image}" alt="${p.name}" loading="lazy">` 
+          ? `<img src="http://https://clothing-store-m94s.onrender.com/uploads/${p.image}" alt="${p.name}" loading="lazy">` 
           : '👕'
         }
         ${p.stock <= p.min_stock && p.stock > 0 
@@ -1381,7 +1381,7 @@ function openProductModal(id) {
     <button class="product-modal-close" onclick="closeProductModal()">✕</button>
     <div class="product-modal-image">
       ${product.image 
-        ? `<img src="http://localhost:3000/uploads/${product.image}" alt="${product.name}">` 
+        ? `<img src="http://https://clothing-store-m94s.onrender.com/uploads/${product.image}" alt="${product.name}">` 
         : '👕'
       }
     </div>
@@ -1495,7 +1495,7 @@ function renderCart() {
     <div class="cart-item">
       <div class="cart-item-image">
         ${item.image 
-          ? `<img src="http://localhost:3000/uploads/${item.image}" alt="${item.name}">` 
+          ? `<img src="http://https://clothing-store-m94s.onrender.com/uploads/${item.image}" alt="${item.name}">` 
           : '👕'
         }
       </div>
