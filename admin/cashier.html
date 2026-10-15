@@ -1316,7 +1316,7 @@ html, body { background: var(--black); color: var(--white); min-height: 100vh; }
 <div class="notification" id="notification"></div>
 
 <script>
-const API_URL = 'http://https://clothing-store-m94s.onrender.com/api';
+const API_URL = 'const API_URL = '/api';://clothing-store-m94s.onrender.com/api';
 const token = localStorage.getItem('raki_token');
 if (!token) window.location.href = 'login.html';
 
@@ -1399,7 +1399,7 @@ function renderProducts() {
       <div class="pos-item ${outClass}" onclick="${p.stock > 0 ? `addToCart(${p.id})` : ''}">
         <div class="pos-item-icon">
           ${p.image 
-            ? `<img src="http://https://clothing-store-m94s.onrender.com/uploads/${p.image}" alt="${p.name}">` 
+            ? `<img src="const API_URL = '/api';://clothing-store-m94s.onrender.com/uploads/${p.image}" alt="${p.name}">` 
             : '👕'
           }
         </div>
@@ -1528,7 +1528,7 @@ function renderCart() {
       <div class="cart-item">
         <div class="cart-item-image">
           ${item.image 
-            ? `<img src="http://https://clothing-store-m94s.onrender.com/uploads/${item.image}" alt="${item.name}">` 
+            ? `<img src="const API_URL = '/api';://clothing-store-m94s.onrender.com/uploads/${item.image}" alt="${item.name}">` 
             : '👕'
           }
         </div>
