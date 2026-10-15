@@ -74,7 +74,7 @@ db.exec(`
   )
 `);
 
-// 5. جدول المبيعات
+// 5. جدول المبيعات (مع الأعمدة الجديدة)
 db.exec(`
   CREATE TABLE IF NOT EXISTS sales (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -85,8 +85,12 @@ db.exec(`
     payment_method TEXT DEFAULT 'cash',
     coupon_code TEXT,
     customer_name TEXT,
+    customer_phone TEXT,
+    customer_address TEXT,
+    customer_notes TEXT,
     user_id INTEGER,
     sale_type TEXT DEFAULT 'online',
+    status TEXT DEFAULT 'pending',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
   )
