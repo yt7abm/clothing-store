@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>إدارة المخزون - متجر راقي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root { 
+  --primary: #8b5cf6; 
+  --primary-light: #a78bfa; 
+  --primary-dark: #6d28d9; 
+  --accent: #fbbf24;
+  --accent-2: #f472b6;
+  --black: #0f0b1e; 
+  --dark: #1e1b3a; 
+  --dark-2: #252047; 
+  --white: #f5f3ff; 
+  --gray: #a5a1b8; 
+  --border: rgba(139,92,246,0.2); 
+  --success: #10b981; 
+  --danger: #ef4444; 
+  --warning: #fbbf24; 
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+html, body { background: var(--black); color: var(--white); min-height: 100vh; overflow-x: hidden; }
+
+::-webkit-scrollbar { width: 0; height: 0; display: none; }
+html { scrollbar-width: none; -ms-overflow-style: none; }
+
+.layout { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 998;
+  backdrop-filter: blur(4px);
+}
+.overlay.active { display: block; }
+
+/* ========== Sidebar ========== */
+.sidebar { 
+  background: var(--dark); 
+  border-left: 1px solid var(--border); 
+  height: 100vh; 
+  position: sticky; 
+  top: 0; 
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.sidebar-header {
+  padding: 25px 20px 18px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.sidebar-logo { 
+  font-size: 1.4rem; 
+  font-weight: 900; 
+  background: linear-gradient(135deg, var(--primary), var(--accent-2)); 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  background-clip: text; 
+  margin-bottom: 4px; 
+}
+
+.sidebar-sub { color: var(--gray); font-size: 0.75rem; }
+
+.close-sidebar {
+  display: none;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-menu {
+  flex: 1;
+  padding: 18px 15px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.sidebar-menu::-webkit-scrollbar { display: none; }
+
+.menu { list-style: none; }
+.menu li { margin-bottom: 6px; }
+
+.menu a { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  padding: 13px 16px; 
+  color: var(--gray); 
+  text-decoration: none; 
+  border-radius: 10px; 
+  transition: all 0.3s; 
+  font-weight: 600; 
+  font-size: 0.9rem;
+}
+
+.menu a:hover { background: rgba(139,92,246,0.1); color: var(--primary-light); }
+.menu a.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+.menu-icon { font-size: 1.1rem; }
+
+.sidebar-footer { padding: 15px; border-top: 1px solid var(--border); flex-shrink: 0; }
+
+.logout-btn { 
+  width: 100%;
+  background: rgba(239,68,68,0.15); 
+  color: var(--danger); 
+  border: 1px solid var(--danger); 
+  padding: 12px; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  font-weight: 700; 
+  font-family: 'Cairo', sans-serif; 
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+.logout-btn:hover { background: var(--danger); color: white; }
+
+/* ========== Main ========== */
+.main { padding: 25px 35px; overflow-x: hidden; min-height: 100vh; }
+
+/* ========== Mobile Header ========== */
+.mobile-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, var(--dark), var(--dark-2));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  gap: 12px;
+}
+
+.hamburger {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid var(--border);
+  color: var(--primary-light);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.hamburger span { width: 20px; height: 2.5px; background: var(--primary-light); border-radius: 3px; }
+
+.mobile-title { flex: 1; text-align: center; }
+.mobile-title h1 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary-light), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.mobile-title p { color: var(--gray); font-size: 0.72rem; }
+
+.user-avatar-small { 
+  width: 40px; 
+  height: 40px; 
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+  color: white; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-weight: 900; 
+  font-size: 1rem; 
+  flex-shrink: 0;
+  border: 2px solid var(--primary-light);
+}
+
+/* ========== Topbar ========== */
+.topbar { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 25px; 
+  padding-bottom: 18px; 
+  border-bottom: 1px solid var(--border); 
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.page-title { font-size: 1.6rem; font-weight: 800; }
+.page-title span { color: var(--primary-light); }
+
+/* ========== Stats ========== */
+.stats-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+  gap: 15px; 
+  margin-bottom: 25px; 
+}
+
+.stat-card { 
+  background: linear-gradient(135deg, var(--dark), var(--dark-2)); 
+  border: 1px solid var(--border); 
+  border-radius: 15px; 
+  padding: 18px; 
+  display: flex; 
+  align-items: center; 
+  gap: 12px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before { 
+  content: ''; 
+  position: absolute; 
+  top: 0; 
+  right: 0; 
+  width: 100px; 
+  height: 100px; 
+  background: radial-gradient(circle, rgba(139,92,246,0.15), transparent 70%); 
+  border-radius: 50%; 
+}
+
+.stat-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+
+.stat-icon-box {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-icon-box.primary {
+  background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.1));
+  border: 1px solid var(--primary);
+}
+
+.stat-icon-box.success {
+  background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(16,185,129,0.1));
+  border: 1px solid var(--success);
+}
+
+.stat-icon-box.warning {
+  background: linear-gradient(135deg, rgba(251,191,36,0.25), rgba(251,191,36,0.1));
+  border: 1px solid var(--warning);
+}
+
+.stat-icon-box.danger {
+  background: linear-gradient(135deg, rgba(239,68,68,0.25), rgba(239,68,68,0.1));
+  border: 1px solid var(--danger);
+}
+
+.stat-content { flex: 1; min-width: 0; position: relative; z-index: 1; }
+.stat-label { color: var(--gray); font-size: 0.78rem; font-weight: 600; margin-bottom: 3px; }
+.stat-value { font-size: 1.5rem; font-weight: 900; color: var(--primary-light); line-height: 1.1; }
+.stat-value small { font-size: 0.7rem; color: var(--gray); font-weight: 500; }
+
+/* ========== Section ========== */
+.section { 
+  background: linear-gradient(135deg, var(--dark), var(--dark-2)); 
+  border: 1px solid var(--border); 
+  border-radius: 15px; 
+  padding: 20px; 
+  margin-bottom: 20px;
+}
+
+.section-title { 
+  font-size: 1.15rem; 
+  font-weight: 700; 
+  color: var(--primary-light); 
+  margin-bottom: 18px; 
+  padding-bottom: 12px; 
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ========== Search ========== */
+.search-wrapper {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: var(--gray);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 50px 14px 16px;
+  background: var(--black);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  color: var(--white);
+  font-size: 0.95rem;
+  font-family: 'Cairo', sans-serif;
+  transition: all 0.3s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(139,92,246,0.15);
+}
+
+/* ========== Desktop Table ========== */
+.table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 14px 12px; text-align: right; border-bottom: 1px solid rgba(139,92,246,0.1); }
+th { color: var(--gray); font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
+td { font-size: 0.9rem; }
+tr:hover { background: rgba(139,92,246,0.05); }
+
+.badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+.badge-success { background: rgba(16,185,129,0.2); color: var(--success); }
+.badge-warning { background: rgba(251,191,36,0.2); color: var(--warning); }
+.badge-danger { background: rgba(239,68,68,0.2); color: var(--danger); }
+.badge-primary { background: rgba(139,92,246,0.2); color: var(--primary-light); }
+
+.btn-icon { 
+  background: var(--black); 
+  color: var(--primary-light); 
+  width: 36px; 
+  height: 36px; 
+  border-radius: 10px; 
+  border: 1px solid var(--border); 
+  cursor: pointer; 
+  font-size: 1rem; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  transition: all 0.3s; 
+}
+
+.btn-icon:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* ========== Mobile Cards ========== */
+.inventory-cards { display: none; flex-direction: column; gap: 12px; }
+
+.inv-card {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 14px;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.inv-card.low-stock { border-right: 4px solid var(--warning); }
+.inv-card.out-stock { border-right: 4px solid var(--danger); }
+
+.inv-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.inv-card-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inv-card-category {
+  color: var(--gray);
+  font-size: 0.75rem;
+  margin-top: 3px;
+}
+
+.inv-card-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: var(--dark);
+  border-radius: 10px;
+}
+
+.inv-stat {
+  text-align: center;
+}
+
+.inv-stat-label {
+  color: var(--gray);
+  font-size: 0.7rem;
+  margin-bottom: 3px;
+}
+
+.inv-stat-value {
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: var(--primary-light);
+}
+
+.inv-stat-value.stock {
+  color: var(--white);
+  font-size: 1.3rem;
+}
+
+.inv-stat-value.low {
+  color: var(--warning);
+}
+
+.inv-stat-value.danger {
+  color: var(--danger);
+}
+
+.inv-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.inv-total {
+  color: var(--gray);
+  font-size: 0.8rem;
+}
+
+.inv-total strong {
+  color: var(--success);
+  font-size: 0.95rem;
+}
+
+/* ========== Movements ========== */
+.movement-item {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.movement-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.movement-icon.add {
+  background: rgba(16,185,129,0.15);
+  border: 1px solid var(--success);
+}
+
+.movement-icon.remove {
+  background: rgba(239,68,68,0.15);
+  border: 1px solid var(--danger);
+}
+
+.movement-content { flex: 1; min-width: 0; }
+
+.movement-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.movement-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--gray);
+}
+
+.movement-qty {
+  font-weight: 900;
+  font-size: 1rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.movement-qty.add {
+  color: var(--success);
+  background: rgba(16,185,129,0.1);
+}
+
+.movement-qty.remove {
+  color: var(--danger);
+  background: rgba(239,68,68,0.1);
+}
+
+/* ========== Empty ========== */
+.empty-state { text-align: center; padding: 50px 20px; color: var(--gray); }
+.empty-state-icon { font-size: 4rem; margin-bottom: 15px; opacity: 0.5; }
+.empty-state h3 { color: var(--white); margin-bottom: 8px; font-size: 1.1rem; }
+.empty-state p { font-size: 0.9rem; }
+
+.loading { text-align: center; padding: 30px; color: var(--primary-light); }
+
+/* ========== Modal ========== */
+.modal-overlay { 
+  position: fixed; 
+  top: 0; left: 0; 
+  width: 100%; height: 100%; 
+  background: rgba(0,0,0,0.85); 
+  backdrop-filter: blur(8px);
+  z-index: 2000; 
+  display: none; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 20px; 
+  overflow-y: auto;
+}
+.modal-overlay.show { display: flex; }
+
+.modal { 
+  background: linear-gradient(135deg, var(--dark), var(--dark-2)); 
+  border: 2px solid var(--primary); 
+  border-radius: 20px; 
+  padding: 30px; 
+  width: 100%; 
+  max-width: 500px; 
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal h2 { color: var(--primary-light); margin-bottom: 22px; font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+
+.form-group input { 
+  width: 100%; 
+  padding: 13px 15px; 
+  background: var(--black); 
+  border: 2px solid var(--border); 
+  border-radius: 12px; 
+  color: var(--white); 
+  font-size: 0.95rem; 
+  font-family: 'Cairo', sans-serif;
+  transition: all 0.3s;
+}
+
+.form-group input:focus { 
+  outline: none; 
+  border-color: var(--primary); 
+  box-shadow: 0 0 0 4px rgba(139,92,246,0.15);
+}
+
+.form-group input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.type-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+
+.type-btn { 
+  padding: 15px; 
+  background: var(--black); 
+  border: 2px solid var(--border); 
+  border-radius: 12px; 
+  color: var(--white); 
+  cursor: pointer; 
+  font-family: 'Cairo', sans-serif; 
+  font-weight: 700; 
+  font-size: 0.95rem; 
+  transition: all 0.3s; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.type-btn.add-btn.selected { 
+  border-color: var(--success); 
+  background: rgba(16,185,129,0.15); 
+  color: var(--success); 
+}
+
+.type-btn.remove-btn.selected { 
+  border-color: var(--danger); 
+  background: rgba(239,68,68,0.15); 
+  color: var(--danger); 
+}
+
+.modal-actions { display: flex; gap: 12px; margin-top: 22px; }
+
+.modal-actions button { 
+  flex: 1; 
+  padding: 14px; 
+  border-radius: 12px; 
+  font-weight: 700; 
+  font-family: 'Cairo', sans-serif; 
+  cursor: pointer; 
+  font-size: 0.95rem; 
+  border: none;
+  transition: all 0.3s;
+}
+
+.btn-save { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+.btn-save:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(139,92,246,0.4); }
+.btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-cancel { 
+  background: transparent; 
+  color: var(--white); 
+  border: 2px solid var(--border) !important; 
+}
+.btn-cancel:hover { border-color: var(--gray) !important; }
+
+/* ========== Notification ========== */
+.notification { 
+  position: fixed; 
+  bottom: 30px; 
+  right: 30px; 
+  background: linear-gradient(135deg, var(--success), #059669); 
+  color: white; 
+  padding: 15px 25px; 
+  border-radius: 12px; 
+  font-weight: 700; 
+  z-index: 3000; 
+  transform: translateX(500px); 
+  transition: transform 0.4s; 
+  box-shadow: 0 15px 40px rgba(16,185,129,0.4);
+  font-size: 0.95rem;
+}
+
+.notification.show { transform: translateX(0); }
+.notification.error { background: linear-gradient(135deg, var(--danger), #b91c1c); box-shadow: 0 15px 40px rgba(239,68,68,0.4); }
+
+/* ========== Mobile ========== */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  
+  .sidebar { 
+    position: fixed; 
+    top: 0;
+    right: -280px; 
+    width: 280px; 
+    height: 100vh;
+    z-index: 999; 
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1); 
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+  }
+  
+  .sidebar.open { right: 0; }
+  .close-sidebar { display: flex; }
+  .mobile-header { display: flex; }
+  .main { padding: 15px 12px; }
+  .topbar { display: none; }
+}
+
+@media (max-width: 700px) {
+  .table-wrapper { display: none; }
+  .inventory-cards { display: flex; }
+}
+
+@media (max-width: 600px) {
+  .main { padding: 12px; }
+  
+  .mobile-header {
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+  
+  .mobile-title h1 { font-size: 0.95rem; }
+  .mobile-title p { font-size: 0.68rem; }
+  .hamburger { width: 40px; height: 40px; }
+  .hamburger span { width: 18px; height: 2px; }
+  .user-avatar-small { width: 38px; height: 38px; font-size: 0.95rem; }
+  
+  /* Stats 2 columns */
+  .stats-grid { 
+    grid-template-columns: 1fr 1fr; 
+    gap: 10px; 
+    margin-bottom: 18px;
+  }
+  
+  .stat-card { 
+    padding: 14px 12px; 
+    border-radius: 12px;
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+  }
+  
+  .stat-icon-box {
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+    border-radius: 11px;
+  }
+  
+  .stat-label { font-size: 0.7rem; margin-bottom: 2px; }
+  .stat-value { font-size: 1.2rem; }
+  .stat-value small { font-size: 0.65rem; }
+  
+  .section { padding: 14px; border-radius: 12px; margin-bottom: 14px; }
+  .section-title { font-size: 1rem; padding-bottom: 10px; margin-bottom: 14px; }
+  
+  .search-input { padding: 12px 45px 12px 14px; font-size: 0.9rem; }
+  .search-icon { right: 14px; font-size: 1rem; }
+  
+  .inv-card { padding: 12px; }
+  .inv-card-title { font-size: 0.88rem; }
+  .inv-card-category { font-size: 0.7rem; }
+  .inv-card-stats { padding: 10px; gap: 6px; }
+  .inv-stat-label { font-size: 0.65rem; }
+  .inv-stat-value { font-size: 0.95rem; }
+  .inv-stat-value.stock { font-size: 1.15rem; }
+  .inv-total { font-size: 0.75rem; }
+  .inv-total strong { font-size: 0.85rem; }
+  
+  .movement-item { padding: 10px; gap: 10px; }
+  .movement-icon { width: 38px; height: 38px; font-size: 1.15rem; }
+  .movement-title { font-size: 0.85rem; }
+  .movement-meta { font-size: 0.7rem; }
+  .movement-qty { font-size: 0.9rem; padding: 3px 8px; }
+  
+  .modal { padding: 22px 18px; border-radius: 18px; }
+  .modal h2 { font-size: 1.1rem; margin-bottom: 18px; }
+  .form-group input { padding: 12px 14px; font-size: 0.9rem; }
+  .modal-actions { flex-direction: column-reverse; }
+  
+  .notification {
+    bottom: 15px;
+    right: 15px;
+    left: 15px;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 14px 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .inv-card-stats { grid-template-columns: 1fr 1fr; }
+  .inv-card-stats .inv-stat:last-child { grid-column: 1 / -1; }
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <button class="close-sidebar" onclick="closeSidebar()">✕</button>
+      <div class="sidebar-logo">✨ متجر راقي</div>
+      <div class="sidebar-sub">لوحة التحكم</div>
+    </div>
+    
+    <div class="sidebar-menu">
+      <ul class="menu">
+        <li><a href="dashboard.html"><span class="menu-icon">📊</span> الرئيسية</a></li>
+        <li><a href="products.html"><span class="menu-icon">🛍️</span> المنتجات</a></li>
+        <li><a href="inventory.html" class="active"><span class="menu-icon">📦</span> المخزون</a></li>
+        <li><a href="cashier.html"><span class="menu-icon">💰</span> الكاشير</a></li>
+        <li><a href="orders.html"><span class="menu-icon">🌐</span> الطلبات الأونلاين</a></li>
+        <li><a href="coupons.html"><span class="menu-icon">🎟️</span> الكوبونات</a></li>
+        <li><a href="reports.html"><span class="menu-icon">📈</span> التقارير</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</button>
+    </div>
+  </aside>
+  
+  <!-- Main -->
+  <main class="main">
+    
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+      <button class="hamburger" onclick="openSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="mobile-title">
+        <h1>✨ متجر راقي</h1>
+        <p>المخزون</p>
+      </div>
+      <div class="user-avatar-small">ر</div>
+    </div>
+    
+    <!-- Desktop Topbar -->
+    <div class="topbar">
+      <h1 class="page-title">📦 إدارة <span>المخزون</span></h1>
+    </div>
+    
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon-box success">💰</div>
+        <div class="stat-content">
+          <div class="stat-label">إجمالي قيمة المخزون</div>
+          <div class="stat-value" id="totalValue">0.00 <small>ر.ع</small></div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon-box primary">🛍️</div>
+        <div class="stat-content">
+          <div class="stat-label">عدد المنتجات</div>
+          <div class="stat-value" id="totalItems">0</div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon-box warning">⚠️</div>
+        <div class="stat-content">
+          <div class="stat-label">منتجات منخفضة</div>
+          <div class="stat-value" id="lowCount" style="color:var(--warning);">0</div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon-box danger">❌</div>
+        <div class="stat-content">
+          <div class="stat-label">منتجات نافذة</div>
+          <div class="stat-value" id="outCount" style="color:var(--danger);">0</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Search + Inventory -->
+    <div class="section">
+      <h2 class="section-title">📋 تفاصيل المخزون</h2>
+      
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن منتج..." oninput="filterInventory()">
+      </div>
+      
+      <!-- Desktop Table -->
+      <div class="table-wrapper" id="inventoryTable">
+        <div class="loading">⏳ جاري التحميل...</div>
+      </div>
+      
+      <!-- Mobile Cards -->
+      <div class="inventory-cards" id="inventoryCards"></div>
+    </div>
+    
+    <!-- Movements -->
+    <div class="section">
+      <h2 class="section-title">📜 سجل حركات المخزون</h2>
+      <div id="movementsList">
+        <div class="loading">⏳ جاري التحميل...</div>
+      </div>
+    </div>
+    
+  </main>
+  
+</div>
+
+<!-- Modal تعديل المخزون -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2 id="modalTitle">📦 تعديل المخزون</h2>
+    <input type="hidden" id="productId">
+    
+    <div class="form-group">
+      <label>المنتج</label>
+      <input type="text" id="productName" disabled>
+    </div>
+    
+    <div class="type-btns">
+      <button class="type-btn add-btn selected" onclick="selectType('add', this)">➕ إضافة</button>
+      <button class="type-btn remove-btn" onclick="selectType('remove', this)">➖ سحب</button>
+    </div>
+    
+    <div class="form-group">
+      <label>الكمية</label>
+      <input type="number" id="quantity" min="1" value="1">
+    </div>
+    
+    <div class="form-group">
+      <label>السبب (اختياري)</label>
+      <input type="text" id="reason" placeholder="مثال: إعادة تخزين، تالف، جرد...">
+    </div>
+    
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
+      <button class="btn-save" onclick="saveAdjust()" id="saveBtn">💾 حفظ</button>
+    </div>
+  </div>
+</div>
+
+<div class="notification" id="notification"></div>
+
+<script>
+const API_URL = 'http://localhost:3000/api';
+const token = localStorage.getItem('raki_token');
+if (!token) window.location.href = 'login.html';
+
+let allInventory = [];
+let filteredInventory = [];
+let adjustType = 'add';
+
+// ========================================
+// Sidebar
+// ========================================
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) closeSidebar();
+});
+
+function logout() {
+  if (confirm('هل تريد تسجيل الخروج؟')) {
+    localStorage.removeItem('raki_token');
+    localStorage.removeItem('raki_user');
+    window.location.href = 'login.html';
+  }
+}
+
+// ========================================
+// تحميل المخزون
+// ========================================
+async function loadInventory() {
+  try {
+    const res = await fetch(`${API_URL}/inventory`);
+    const data = await res.json();
+    
+    if (!data.success) throw new Error();
+    
+    allInventory = data.inventory;
+    filteredInventory = allInventory;
+    
+    document.getElementById('totalValue').innerHTML = `${data.totalValue.toFixed(2)} <small>ر.ع</small>`;
+    document.getElementById('totalItems').textContent = data.inventory.length;
+    document.getElementById('lowCount').textContent = data.lowStock.length;
+    document.getElementById('outCount').textContent = data.inventory.filter(p => p.stock === 0).length;
+    
+    renderInventory();
+  } catch (e) {
+    document.getElementById('inventoryTable').innerHTML = '<div class="empty-state">❌ خطأ في التحميل</div>';
+    document.getElementById('inventoryCards').innerHTML = '<div class="empty-state">❌ خطأ في التحميل</div>';
+  }
+}
+
+function renderInventory() {
+  renderTable();
+  renderCards();
+}
+
+// ========================================
+// Desktop Table
+// ========================================
+function renderTable() {
+  const container = document.getElementById('inventoryTable');
+  
+  if (filteredInventory.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📦</div>
+        <h3>لا توجد منتجات</h3>
+        <p>أضف منتجات أولاً من صفحة المنتجات</p>
+      </div>
+    `;
+    return;
+  }
+  
+  container.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>المنتج</th>
+          <th>الفئة</th>
+          <th>السعر</th>
+          <th>المخزون</th>
+          <th>الحد الأدنى</th>
+          <th>القيمة</th>
+          <th>الحالة</th>
+          <th>إجراء</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${filteredInventory.map(p => `
+          <tr>
+            <td><strong>${p.name}</strong></td>
+            <td>${p.category || '-'}</td>
+            <td style="color:var(--primary-light);white-space:nowrap;">${p.price.toFixed(3)} ر.ع</td>
+            <td style="font-weight:700;font-size:1rem;">${p.stock}</td>
+            <td>${p.min_stock}</td>
+            <td style="color:var(--success);font-weight:700;white-space:nowrap;">${(p.stock * p.price).toFixed(2)} ر.ع</td>
+            <td>
+              ${p.stock === 0 
+                ? '<span class="badge badge-danger">نفذ</span>' 
+                : p.stock <= p.min_stock 
+                  ? '<span class="badge badge-warning">منخفض</span>' 
+                  : '<span class="badge badge-success">متوفر</span>'}
+            </td>
+            <td>
+              <button class="btn-icon" onclick="openAdjust(${p.id}, '${p.name.replace(/'/g, "\\'")}')" title="تعديل">✏️</button>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+// ========================================
+// Mobile Cards
+// ========================================
+function renderCards() {
+  const container = document.getElementById('inventoryCards');
+  
+  if (filteredInventory.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📦</div>
+        <h3>لا توجد منتجات</h3>
+        <p>أضف منتجات أولاً من صفحة المنتجات</p>
+      </div>
+    `;
+    return;
+  }
+  
+  container.innerHTML = filteredInventory.map(p => {
+    const cardClass = p.stock === 0 ? 'out-stock' : (p.stock <= p.min_stock ? 'low-stock' : '');
+    const stockClass = p.stock === 0 ? 'danger' : (p.stock <= p.min_stock ? 'low' : '');
+    
+    return `
+      <div class="inv-card ${cardClass}">
+        <div class="inv-card-header">
+          <div style="flex:1;min-width:0;">
+            <div class="inv-card-title">${p.name}</div>
+            <div class="inv-card-category">🏷️ ${p.category || 'عام'}</div>
+          </div>
+        </div>
+        
+        <div class="inv-card-stats">
+          <div class="inv-stat">
+            <div class="inv-stat-label">المخزون</div>
+            <div class="inv-stat-value stock ${stockClass}">${p.stock}</div>
+          </div>
+          <div class="inv-stat">
+            <div class="inv-stat-label">السعر</div>
+            <div class="inv-stat-value">${p.price.toFixed(2)}</div>
+          </div>
+          <div class="inv-stat">
+            <div class="inv-stat-label">الحد الأدنى</div>
+            <div class="inv-stat-value">${p.min_stock}</div>
+          </div>
+        </div>
+        
+        <div class="inv-card-footer">
+          <div class="inv-total">
+            القيمة: <strong>${(p.stock * p.price).toFixed(2)} ر.ع</strong>
+          </div>
+          <button class="btn-icon" onclick="openAdjust(${p.id}, '${p.name.replace(/'/g, "\\'")}')">✏️</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ========================================
+// البحث
+// ========================================
+function filterInventory() {
+  const query = document.getElementById('searchInput').value.toLowerCase().trim();
+  
+  if (!query) {
+    filteredInventory = allInventory;
+  } else {
+    filteredInventory = allInventory.filter(p => 
+      p.name.toLowerCase().includes(query) || 
+      (p.category && p.category.toLowerCase().includes(query))
+    );
+  }
+  
+  renderInventory();
+}
+
+// ========================================
+// Modal تعديل المخزون
+// ========================================
+function openAdjust(id, name) {
+  document.getElementById('productId').value = id;
+  document.getElementById('productName').value = name;
+  document.getElementById('quantity').value = 1;
+  document.getElementById('reason').value = '';
+  
+  adjustType = 'add';
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelector('.add-btn').classList.add('selected');
+  
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function selectType(type, btn) {
+  adjustType = type;
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+async function saveAdjust() {
+  const product_id = document.getElementById('productId').value;
+  const quantity = parseInt(document.getElementById('quantity').value);
+  const reason = document.getElementById('reason').value.trim();
+  
+  if (!quantity || quantity < 1) {
+    showNotification('⚠️ أدخل كمية صحيحة', true);
+    return;
+  }
+  
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ جاري الحفظ...';
+  
+  try {
+    const res = await fetch(`${API_URL}/inventory/adjust`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ product_id, quantity, type: adjustType, reason })
+    });
+    const data = await res.json();
+    
+    if (data.success) {
+      showNotification('✅ تم تعديل المخزون');
+      closeModal();
+      loadInventory();
+      loadMovements();
+    } else {
+      showNotification('❌ ' + data.message, true);
+    }
+  } catch (e) {
+    showNotification('❌ خطأ في الحفظ', true);
+  }
+  
+  btn.disabled = false;
+  btn.innerHTML = '💾 حفظ';
+}
+
+// ========================================
+// سجل الحركات
+// ========================================
+async function loadMovements() {
+  try {
+    const res = await fetch(`${API_URL}/inventory/movements`);
+    const data = await res.json();
+    
+    const container = document.getElementById('movementsList');
+    
+    if (!data.success || data.movements.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">📜</div>
+          <h3>لا توجد حركات بعد</h3>
+          <p>ستظهر الحركات عند تعديل المخزون</p>
+        </div>
+      `;
+      return;
+    }
+    
+    container.innerHTML = data.movements.slice(0, 20).map(m => `
+      <div class="movement-item">
+        <div class="movement-icon ${m.type === 'add' ? 'add' : 'remove'}">
+          ${m.type === 'add' ? '➕' : '➖'}
+        </div>
+        <div class="movement-content">
+          <div class="movement-title">${m.product_name || 'منتج محذوف'}</div>
+          <div class="movement-meta">
+            <span>📅 ${formatDate(m.created_at)}</span>
+            <span>${m.reason || 'بدون سبب'}</span>
+          </div>
+        </div>
+        <div class="movement-qty ${m.type === 'add' ? 'add' : 'remove'}">
+          ${m.type === 'add' ? '+' : '-'}${m.quantity}
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {
+    document.getElementById('movementsList').innerHTML = '<div class="empty-state">❌ خطأ في التحميل</div>';
+  }
+}
+
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return date.toLocaleString('ar-OM', { 
+    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
+  });
+}
+
+// ========================================
+// Notification
+// ========================================
+function showNotification(msg, isError = false) {
+  const n = document.getElementById('notification');
+  n.textContent = msg;
+  n.className = 'notification show' + (isError ? ' error' : '');
+  setTimeout(() => n.classList.remove('show'), 2500);
+}
+
+// ========================================
+// إغلاق Modal
+// ========================================
+document.getElementById('modal')?.addEventListener('click', (e) => {
+  if (e.target.id === 'modal') closeModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeModal();
+    closeSidebar();
+  }
+});
+
+// ========================================
+// التشغيل
+// ========================================
+loadInventory();
+loadMovements();
+</script>
+
+</body>
+</html>

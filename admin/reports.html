@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>التقارير والإحصائيات - لوحة التحكم</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Cairo', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --primary: #8b5cf6;
+  --primary-light: #a78bfa;
+  --primary-dark: #6d28d9;
+  --accent: #fbbf24;
+  --accent-2: #f472b6;
+  --black: #0f0b1e;
+  --dark: #1e1b3a;
+  --dark-2: #252047;
+  --white: #f5f3ff;
+  --gray: #a5a1b8;
+  --border: rgba(139,92,246,0.2);
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #fbbf24;
+  --info: #3b82f6;
+}
+
+html, body {
+  background: var(--black);
+  color: var(--white);
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+.layout { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 998;
+  backdrop-filter: blur(4px);
+}
+.overlay.active { display: block; }
+
+/* ========== Sidebar ========== */
+.sidebar {
+  background: var(--dark);
+  border-left: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.sidebar-header {
+  padding: 25px 20px 18px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.sidebar-logo {
+  font-size: 1.4rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
+}
+
+.sidebar-sub { color: var(--gray); font-size: 0.75rem; }
+
+.close-sidebar {
+  display: none;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-menu { flex: 1; padding: 18px 15px; overflow-y: auto; scrollbar-width: none; }
+.sidebar-menu::-webkit-scrollbar { display: none; }
+
+.menu { list-style: none; }
+.menu li { margin-bottom: 6px; }
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  color: var(--gray);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.3s;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.menu a:hover { background: rgba(139,92,246,0.1); color: var(--primary-light); }
+.menu a.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+.menu-icon { font-size: 1.1rem; }
+
+.sidebar-footer { padding: 15px; border-top: 1px solid var(--border); flex-shrink: 0; }
+
+.logout-btn {
+  width: 100%;
+  background: rgba(239,68,68,0.15);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Cairo', sans-serif;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+.logout-btn:hover { background: var(--danger); color: white; }
+
+/* ========== Main ========== */
+.main { padding: 25px 30px; min-height: 100vh; max-width: 100%; overflow-x: hidden; }
+
+/* ========== Mobile Header ========== */
+.mobile-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, var(--dark), var(--dark-2));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  gap: 12px;
+}
+
+.hamburger {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid var(--border);
+  color: var(--primary-light);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.hamburger span { width: 20px; height: 2.5px; background: var(--primary-light); border-radius: 3px; }
+
+.mobile-title { flex: 1; text-align: center; }
+.mobile-title h1 {
+  font-size: 1rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary-light), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.mobile-title p { color: var(--gray); font-size: 0.7rem; }
+
+.user-avatar-small {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  border: 2px solid var(--primary-light);
+}
+
+/* ========== Topbar ========== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.page-title { font-size: 1.6rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.page-title span { color: var(--primary-light); }
+
+.topbar-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.print-btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-family: 'Cairo', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.print-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(139,92,246,0.4); }
+
+.refresh-btn {
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--primary-light);
+  border: 1px solid var(--primary);
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-family: 'Cairo', sans-serif;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s;
+}
+
+.refresh-btn:hover { background: var(--primary); color: white; }
+
+/* ========== Stats Grid ========== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, var(--dark), var(--dark-2));
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 20px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 100px; height: 100px;
+  background: radial-gradient(circle, rgba(139,92,246,0.15), transparent 70%);
+  border-radius: 50%;
+}
+
+.stat-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+
+.stat-icon-box {
+  width: 55px;
+  height: 55px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-icon-box.primary {
+  background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.1));
+  border: 1px solid var(--primary);
+}
+
+.stat-icon-box.success {
+  background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(16,185,129,0.1));
+  border: 1px solid var(--success);
+}
+
+.stat-icon-box.danger {
+  background: linear-gradient(135deg, rgba(239,68,68,0.25), rgba(239,68,68,0.1));
+  border: 1px solid var(--danger);
+}
+
+.stat-icon-box.info {
+  background: linear-gradient(135deg, rgba(59,130,246,0.25), rgba(59,130,246,0.1));
+  border: 1px solid var(--info);
+}
+
+.stat-content {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-label {
+  color: var(--gray);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--primary-light);
+  line-height: 1.1;
+}
+
+.stat-value small {
+  font-size: 0.75rem;
+  color: var(--gray);
+  font-weight: 500;
+}
+
+.stat-value.success-color { color: var(--success); }
+.stat-value.danger-color { color: var(--danger); }
+
+/* ========== Section ========== */
+.section {
+  background: linear-gradient(135deg, var(--dark), var(--dark-2));
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary-light);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ========== Bar Chart ========== */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 220px;
+  padding: 15px 5px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.bar-chart::-webkit-scrollbar { display: none; }
+
+.bar-item {
+  flex: 1;
+  min-width: 55px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.bar-value {
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+  border-radius: 8px 8px 0 0;
+  min-height: 5px;
+  transition: all 0.5s;
+  position: relative;
+  box-shadow: 0 0 20px rgba(139,92,246,0.3);
+}
+
+.bar:hover {
+  filter: brightness(1.3);
+  box-shadow: 0 0 30px rgba(139,92,246,0.6);
+}
+
+.bar-label {
+  font-size: 0.7rem;
+  color: var(--gray);
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* ========== Top Products List ========== */
+.top-products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.top-product-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.top-product-item:hover { border-color: var(--primary); }
+
+.rank-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1rem;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+}
+
+.rank-badge.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #0f0b1e; }
+.rank-badge.silver { background: linear-gradient(135deg, #cbd5e1, #94a3b8); color: #0f0b1e; }
+.rank-badge.bronze { background: linear-gradient(135deg, #f59e0b, #b45309); color: white; }
+
+.top-product-info { flex: 1; min-width: 0; }
+
+.top-product-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.top-product-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 0.78rem;
+  color: var(--gray);
+}
+
+.top-product-meta strong { color: var(--primary-light); }
+
+/* ========== Table ========== */
+.table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px;
+}
+
+th, td {
+  padding: 12px 10px;
+  text-align: right;
+  border-bottom: 1px solid rgba(139,92,246,0.1);
+}
+
+th {
+  color: var(--gray);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+td { font-size: 0.88rem; }
+tr:hover { background: rgba(139,92,246,0.05); }
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-gold { background: rgba(251,191,36,0.2); color: var(--accent); }
+.badge-success { background: rgba(16,185,129,0.2); color: var(--success); }
+.badge-info { background: rgba(59,130,246,0.2); color: var(--info); }
+
+/* ========== Empty/Loading ========== */
+.empty-state { text-align: center; padding: 50px 20px; color: var(--gray); }
+.empty-state-icon { font-size: 3.5rem; margin-bottom: 15px; opacity: 0.5; }
+.empty-state h3 { color: var(--white); margin-bottom: 8px; font-size: 1.05rem; }
+.empty-state p { font-size: 0.85rem; }
+
+.loading { text-align: center; padding: 40px; color: var(--primary-light); }
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ========== Notification ========== */
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-150px);
+  background: linear-gradient(135deg, var(--success), #059669);
+  color: white;
+  padding: 14px 25px;
+  border-radius: 15px;
+  font-weight: 800;
+  z-index: 4000;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 15px 45px rgba(16,185,129,0.5);
+  font-size: 0.9rem;
+  max-width: 90%;
+}
+
+.notification.show { transform: translateX(-50%) translateY(0); }
+.notification.error { background: linear-gradient(135deg, var(--danger), #b91c1c); }
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 280px;
+    height: 100vh;
+    z-index: 999;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .sidebar.open { right: 0; }
+  .close-sidebar { display: flex; }
+  .mobile-header { display: flex; }
+  .main { padding: 15px; }
+  .topbar { display: none; }
+
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .main { padding: 12px; }
+
+  .mobile-header { margin-bottom: 12px; padding: 10px 12px; border-radius: 14px; }
+  .mobile-title h1 { font-size: 0.95rem; }
+  .mobile-title p { font-size: 0.68rem; }
+  .hamburger { width: 40px; height: 40px; }
+  .hamburger span { width: 18px; height: 2px; }
+  .user-avatar-small { width: 36px; height: 36px; font-size: 0.9rem; }
+
+  /* Mobile Actions */
+  .mobile-actions {
+    display: flex !important;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+
+  .mobile-actions button {
+    flex: 1;
+    justify-content: center;
+    padding: 12px;
+    font-size: 0.82rem;
+  }
+
+  /* Stats */
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+
+  .stat-card {
+    padding: 14px 12px;
+    border-radius: 12px;
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .stat-icon-box { width: 45px; height: 45px; font-size: 1.3rem; border-radius: 12px; }
+  .stat-label { font-size: 0.72rem; margin-bottom: 3px; }
+  .stat-value { font-size: 1.2rem; }
+  .stat-value small { font-size: 0.65rem; }
+
+  /* Section */
+  .section { padding: 15px; border-radius: 12px; margin-bottom: 14px; }
+  .section-title { font-size: 1rem; }
+  .section-header { margin-bottom: 12px; padding-bottom: 10px; }
+
+  /* Bar Chart Mobile */
+  .bar-chart { height: 170px; gap: 6px; padding: 10px 2px; }
+  .bar-item { min-width: 45px; }
+  .bar-value { font-size: 0.68rem; }
+  .bar-label { font-size: 0.62rem; }
+
+  /* Top Products Mobile */
+  .top-product-item { padding: 10px; gap: 10px; }
+  .rank-badge { width: 36px; height: 36px; font-size: 0.9rem; border-radius: 10px; }
+  .top-product-name { font-size: 0.82rem; }
+  .top-product-meta { font-size: 0.7rem; gap: 10px; }
+
+  /* Table Mobile */
+  th, td { padding: 10px 8px; font-size: 0.8rem; }
+  th { font-size: 0.7rem; }
+
+  .notification {
+    top: 15px;
+    padding: 12px 20px;
+    font-size: 0.85rem;
+    max-width: calc(100% - 24px);
+  }
+}
+
+@media (max-width: 400px) {
+  .stats-grid { gap: 8px; }
+  .stat-card { padding: 12px 8px; }
+  .stat-value { font-size: 1.05rem; }
+  .bar-item { min-width: 40px; }
+}
+
+/* Desktop */
+@media (min-width: 601px) {
+  .mobile-actions { display: none; }
+}
+
+/* ==========================================================
+   PRINT STYLES - الفاتورة تطبع بشكل نظيف
+   ========================================================== */
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html, body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+
+  .sidebar,
+  .mobile-header,
+  .topbar,
+  .topbar-actions,
+  .mobile-actions,
+  .print-btn,
+  .refresh-btn,
+  .overlay,
+  .notification,
+  .logout-btn,
+  .hamburger {
+    display: none !important;
+  }
+
+  .layout {
+    display: block !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .main {
+    padding: 0 !important;
+    min-height: auto !important;
+    background: white !important;
+  }
+
+  /* Print Header */
+  .print-header {
+    display: block !important;
+    text-align: center;
+    padding: 15px 0 20px;
+    border-bottom: 3px solid #000;
+    margin-bottom: 25px;
+  }
+
+  .print-header h1 {
+    font-size: 24pt !important;
+    font-weight: 900 !important;
+    color: black !important;
+    margin-bottom: 8px;
+  }
+
+  .print-header p {
+    font-size: 11pt !important;
+    color: #333 !important;
+  }
+
+  .print-header .date {
+    font-size: 10pt !important;
+    color: #666 !important;
+    margin-top: 5px;
+  }
+
+  /* Print Sections */
+  .section {
+    background: white !important;
+    border: 1.5px solid #000 !important;
+    border-radius: 8px !important;
+    padding: 15px !important;
+    margin-bottom: 20px !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .section-title {
+    color: black !important;
+    font-size: 14pt !important;
+    font-weight: 900 !important;
+    border-bottom: 2px solid #000 !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 15px !important;
+  }
+
+  /* Print Stats */
+  .stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .stat-card {
+    background: white !important;
+    border: 1.5px solid #000 !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    page-break-inside: avoid;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+
+  .stat-card::before { display: none !important; }
+
+  .stat-icon-box {
+    width: 45px !important;
+    height: 45px !important;
+    background: white !important;
+    border: 1.5px solid #000 !important;
+    font-size: 20pt !important;
+    border-radius: 8px !important;
+  }
+
+  .stat-label {
+    color: #333 !important;
+    font-size: 10pt !important;
+    font-weight: 600 !important;
+  }
+
+  .stat-value {
+    color: black !important;
+    font-size: 16pt !important;
+    font-weight: 900 !important;
+  }
+
+  .stat-value small {
+    color: #333 !important;
+    font-size: 10pt !important;
+  }
+
+  /* Print Bar Chart */
+  .bar-chart {
+    display: flex !important;
+    height: 180px !important;
+    gap: 10px !important;
+    padding: 10px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 8px !important;
+  }
+
+  .bar-item {
+    flex: 1 !important;
+    min-width: 50px !important;
+  }
+
+  .bar-value {
+    color: black !important;
+    font-size: 9pt !important;
+    font-weight: 700 !important;
+  }
+
+  .bar {
+    background: #333 !important;
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+  }
+
+  .bar-label {
+    color: black !important;
+    font-size: 8pt !important;
+    font-weight: 600 !important;
+  }
+
+  /* Print Top Products */
+  .top-product-item {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    padding: 10px !important;
+    page-break-inside: avoid;
+  }
+
+  .rank-badge {
+    background: white !important;
+    color: black !important;
+    border: 2px solid #000 !important;
+    font-size: 12pt !important;
+  }
+
+  .top-product-name {
+    color: black !important;
+    font-size: 11pt !important;
+    font-weight: 700 !important;
+  }
+
+  .top-product-meta {
+    color: #333 !important;
+    font-size: 10pt !important;
+  }
+
+  .top-product-meta strong {
+    color: black !important;
+    font-weight: 900 !important;
+  }
+
+  /* Print Table */
+  table {
+    border: 1.5px solid #000 !important;
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+
+  th {
+    background: #f0f0f0 !important;
+    color: black !important;
+    border: 1px solid #000 !important;
+    font-weight: 900 !important;
+    font-size: 11pt !important;
+    padding: 10px !important;
+  }
+
+  td {
+    color: black !important;
+    border: 1px solid #ccc !important;
+    font-size: 10pt !important;
+    padding: 8px !important;
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Print Badge */
+  .badge {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #000 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Hide browser elements */
+  a[href]:after { content: none !important; }
+
+  /* Print footer */
+  .print-footer {
+    display: block !important;
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 2px solid #000;
+    font-size: 10pt;
+    color: #333;
+  }
+}
+
+/* Print header/footer - مخفي في الوضع العادي */
+.print-header, .print-footer {
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <button class="close-sidebar" onclick="closeSidebar()">✕</button>
+      <div class="sidebar-logo">✨ متجر راقي</div>
+      <div class="sidebar-sub">لوحة التحكم</div>
+    </div>
+    
+    <div class="sidebar-menu">
+      <ul class="menu">
+        <li><a href="dashboard.html"><span class="menu-icon">📊</span> الرئيسية</a></li>
+        <li><a href="products.html"><span class="menu-icon">🛍️</span> المنتجات</a></li>
+        <li><a href="inventory.html"><span class="menu-icon">📦</span> المخزون</a></li>
+        <li><a href="cashier.html"><span class="menu-icon">💰</span> الكاشير</a></li>
+        <li><a href="orders.html"><span class="menu-icon">🌐</span> الطلبات الأونلاين</a></li>
+        <li><a href="coupons.html"><span class="menu-icon">🎟️</span> الكوبونات</a></li>
+        <li><a href="reports.html" class="active"><span class="menu-icon">📈</span> التقارير</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</button>
+    </div>
+  </aside>
+  
+  <main class="main">
+    
+    <!-- Print Header (يظهر فقط عند الطباعة) -->
+    <div class="print-header">
+      <h1>✨ متجر راقي</h1>
+      <p>تقرير المبيعات والأرباح</p>
+      <p class="date" id="printDate">-</p>
+    </div>
+    
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+      <button class="hamburger" onclick="openSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="mobile-title">
+        <h1>📈 التقارير</h1>
+        <p>لوحة التحكم</p>
+      </div>
+      <div class="user-avatar-small">ر</div>
+    </div>
+    
+    <!-- Desktop Topbar -->
+    <div class="topbar">
+      <h1 class="page-title">📈 <span>التقارير والإحصائيات</span></h1>
+      <div class="topbar-actions">
+        <button class="refresh-btn" onclick="loadAll()">🔄 تحديث</button>
+        <button class="print-btn" onclick="window.print()">🖨️ طباعة</button>
+      </div>
+    </div>
+    
+    <!-- Mobile Actions -->
+    <div class="mobile-actions">
+      <button class="refresh-btn" onclick="loadAll()">🔄 تحديث</button>
+      <button class="print-btn" onclick="window.print()">🖨️ طباعة</button>
+    </div>
+    
+    <!-- Stats: الأرباح -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon-box primary">💰</div>
+        <div class="stat-content">
+          <div class="stat-label">إجمالي الإيرادات</div>
+          <div class="stat-value" id="revenue">0.000 <small>ر.ع</small></div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon-box danger">💸</div>
+        <div class="stat-content">
+          <div class="stat-label">إجمالي التكاليف</div>
+          <div class="stat-value danger-color" id="cost">0.000 <small>ر.ع</small></div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon-box success">📈</div>
+        <div class="stat-content">
+          <div class="stat-label">صافي الأرباح</div>
+          <div class="stat-value success-color" id="profit">0.000 <small>ر.ع</small></div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon-box info">🧾</div>
+        <div class="stat-content">
+          <div class="stat-label">عدد الفواتير</div>
+          <div class="stat-value" id="invoices">0</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Stats: المبيعات -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon-box primary">📅</div>
+        <div class="stat-content">
+          <div class="stat-label">مبيعات اليوم</div>
+          <div class="stat-value" id="todaySales">0.000 <small>ر.ع</small></div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon-box success">📆</div>
+        <div class="stat-content">
+          <div class="stat-label">مبيعات الشهر</div>
+          <div class="stat-value" id="monthSales">0.000 <small>ر.ع</small></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bar Chart: آخر 7 أيام -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">📊 مبيعات آخر 7 أيام</h2>
+      </div>
+      <div id="dailyChart">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>جاري التحميل...</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Top Products -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">🏆 أفضل 10 منتجات مبيعاً</h2>
+      </div>
+      <div id="topProducts">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>جاري التحميل...</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Print Footer -->
+    <div class="print-footer">
+      <p>© 2026 متجر راقي - جميع الحقوق محفوظة</p>
+      <p style="margin-top: 5px;">تم التصميم من قبل <strong>Webora</strong></p>
+    </div>
+    
+  </main>
+  
+</div>
+
+<div class="notification" id="notification"></div>
+
+<script>
+const API_URL = 'http://localhost:3000/api';
+const token = localStorage.getItem('raki_token');
+if (!token) window.location.href = 'login.html';
+
+// ========================================
+// Sidebar
+// ========================================
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('overlay').classList.add('active');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('active');
+}
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) closeSidebar();
+});
+
+function logout() {
+  if (confirm('هل تريد تسجيل الخروج؟')) {
+    localStorage.removeItem('raki_token');
+    localStorage.removeItem('raki_user');
+    window.location.href = 'login.html';
+  }
+}
+
+// ========================================
+// تحميل الأرباح
+// ========================================
+async function loadProfit() {
+  try {
+    const res = await fetch(`${API_URL}/reports/profit`);
+    const data = await res.json();
+    
+    if (data.success) {
+      document.getElementById('revenue').innerHTML = `${data.profit.revenue.toFixed(3)} <small>ر.ع</small>`;
+      document.getElementById('cost').innerHTML = `${data.profit.cost.toFixed(3)} <small>ر.ع</small>`;
+      document.getElementById('profit').innerHTML = `${data.profit.profit.toFixed(3)} <small>ر.ع</small>`;
+    }
+  } catch (e) {
+    console.error('خطأ في الأرباح:', e);
+  }
+}
+
+// ========================================
+// تحميل المبيعات
+// ========================================
+async function loadSales() {
+  try {
+    const res = await fetch(`${API_URL}/reports/sales`);
+    const data = await res.json();
+    
+    if (data.success) {
+      document.getElementById('todaySales').innerHTML = `${data.today.total.toFixed(3)} <small>ر.ع</small>`;
+      document.getElementById('monthSales').innerHTML = `${data.thisMonth.total.toFixed(3)} <small>ر.ع</small>`;
+      document.getElementById('invoices').textContent = data.total.count;
+    }
+  } catch (e) {
+    console.error('خطأ في المبيعات:', e);
+  }
+}
+
+// ========================================
+// المخطط اليومي - آخر 7 أيام
+// ========================================
+async function loadDaily() {
+  const container = document.getElementById('dailyChart');
+  
+  try {
+    const res = await fetch(`${API_URL}/reports/daily`);
+    const data = await res.json();
+    
+    if (!data.success || data.daily.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">📊</div>
+          <h3>لا توجد بيانات</h3>
+          <p>لم يتم تسجيل أي مبيعات في آخر 7 أيام</p>
+        </div>
+      `;
+      return;
+    }
+    
+    const max = Math.max(...data.daily.map(d => d.total), 1);
+    
+    container.innerHTML = `
+      <div class="bar-chart">
+        ${data.daily.map(d => {
+          const height = (d.total / max) * 100;
+          const date = new Date(d.date);
+          const label = date.toLocaleDateString('ar-OM', { month: 'short', day: 'numeric' });
+          return `
+            <div class="bar-item">
+              <div class="bar-value">${d.total.toFixed(1)}</div>
+              <div class="bar" style="height: ${Math.max(height, 3)}%;"></div>
+              <div class="bar-label">${label}</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  } catch (e) {
+    console.error('خطأ في المخطط:', e);
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">❌</div>
+        <h3>خطأ في التحميل</h3>
+      </div>
+    `;
+  }
+}
+
+// ========================================
+// أفضل المنتجات
+// ========================================
+async function loadTopProducts() {
+  const container = document.getElementById('topProducts');
+  
+  try {
+    const res = await fetch(`${API_URL}/reports/top-products`);
+    const data = await res.json();
+    
+    if (!data.success || data.products.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">🏆</div>
+          <h3>لا توجد مبيعات بعد</h3>
+          <p>لم يتم بيع أي منتجات حتى الآن</p>
+        </div>
+      `;
+      return;
+    }
+    
+    container.innerHTML = `
+      <div class="top-products-list">
+        ${data.products.map((p, i) => {
+          const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+          return `
+            <div class="top-product-item">
+              <div class="rank-badge ${rankClass}">${i + 1}</div>
+              <div class="top-product-info">
+                <div class="top-product-name">${p.product_name}</div>
+                <div class="top-product-meta">
+                  <span>الكمية: <strong>${p.total_sold}</strong></span>
+                  <span>الإيرادات: <strong>${p.revenue.toFixed(2)} ر.ع</strong></span>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  } catch (e) {
+    console.error('خطأ في أفضل المنتجات:', e);
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">❌</div>
+        <h3>خطأ في التحميل</h3>
+      </div>
+    `;
+  }
+}
+
+// ========================================
+// تعيين تاريخ الطباعة
+// ========================================
+function setPrintDate() {
+  const now = new Date();
+  const formatted = now.toLocaleString('ar-OM', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  document.getElementById('printDate').textContent = `تاريخ التقرير: ${formatted}`;
+}
+
+// ========================================
+// تحميل الكل
+// ========================================
+async function loadAll() {
+  showNotification('🔄 جاري التحديث...');
+  await Promise.all([
+    loadProfit(),
+    loadSales(),
+    loadDaily(),
+    loadTopProducts()
+  ]);
+  showNotification('✅ تم التحديث');
+}
+
+// ========================================
+// Notification
+// ========================================
+let notificationTimer = null;
+
+function showNotification(msg, isError = false) {
+  const n = document.getElementById('notification');
+  if (notificationTimer) clearTimeout(notificationTimer);
+  
+  n.textContent = msg;
+  n.className = 'notification show' + (isError ? ' error' : '');
+  
+  notificationTimer = setTimeout(() => {
+    n.classList.remove('show');
+  }, 2500);
+}
+
+// ========================================
+// ESC
+// ========================================
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeSidebar();
+});
+
+// ========================================
+// اختصار Ctrl + P للطباعة
+// ========================================
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+    // اتركه يعمل طبيعي
+    setPrintDate();
+  }
+});
+
+window.addEventListener('beforeprint', setPrintDate);
+
+// ========================================
+// التشغيل
+// ========================================
+setPrintDate();
+loadAll();
+</script>
+
+</body>
+</html>
