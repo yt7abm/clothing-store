@@ -251,18 +251,18 @@ img { max-width: 100%; display: block; }
   text-align: right;
 }
 
-.categories-chips {
-  display: flex;
-  flex-wrap: wrap;
+.categories-grid-chips {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   gap: 8px;
-  justify-content: center;
 }
 
 .category-chip {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 8px 16px;
+  padding: 10px 14px;
   background: var(--bg-2);
   border: 1.5px solid var(--border);
   border-radius: 25px;
@@ -272,6 +272,7 @@ img { max-width: 100%; display: block; }
   transition: all 0.3s;
   cursor: pointer;
   white-space: nowrap;
+  text-align: center;
 }
 
 .category-chip:hover {
@@ -1080,9 +1081,20 @@ img { max-width: 100%; display: block; }
 .notification.error { background: var(--danger); box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3); }
 
 /* ========== Responsive ========== */
+@media (max-width: 1100px) {
+  .categories-grid-chips {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 @media (max-width: 900px) {
   .modal-content { grid-template-columns: 1fr; max-height: 95vh; }
   .modal-image { min-height: 240px; font-size: 5rem; }
+  
+  .categories-grid-chips {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1106,9 +1118,20 @@ img { max-width: 100%; display: block; }
   .search-icon svg { width: 20px; height: 20px; }
   
   .categories-section { padding: 0 12px; margin-top: 20px; }
-  .categories-chips { gap: 6px; }
-  .category-chip { padding: 6px 12px; font-size: 0.75rem; }
-  .category-chip .emoji { font-size: 0.9rem; }
+  
+  /* على الجوال: 2 في الصف (شبكة مرتبة) */
+  .categories-grid-chips {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  
+  .category-chip { 
+    padding: 10px 12px; 
+    font-size: 0.8rem; 
+    border-radius: 20px;
+  }
+  
+  .category-chip .emoji { font-size: 0.95rem; }
   
   .results-info { padding: 0 12px; margin-top: 20px; flex-direction: column; align-items: flex-start; gap: 5px; }
   .results-title { font-size: 1rem; }
@@ -1116,7 +1139,6 @@ img { max-width: 100%; display: block; }
   
   .products-section { padding: 15px 12px 40px; }
   
-  /* على الجوال: منتجين فقط في سطر واحد */
   .products-grid { 
     grid-template-columns: repeat(2, 1fr); 
     gap: 10px; 
@@ -1179,7 +1201,7 @@ img { max-width: 100%; display: block; }
         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </a>
     </div>
-    <a href="index.html" class="logo">
+    <a href="../index.html" class="logo">
       <div class="logo-icon">✨</div>
       متجر راقي
     </a>
@@ -1216,7 +1238,7 @@ img { max-width: 100%; display: block; }
   <!-- الفئات -->
   <div class="categories-section">
     <div class="categories-title">الفئات:</div>
-    <div class="categories-chips" id="categoriesChips">
+    <div class="categories-grid-chips" id="categoriesChips">
       <!-- يتم إضافتها من JavaScript -->
     </div>
   </div>
@@ -1384,21 +1406,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadAllProducts();
   renderCart();
   
-  // قراءة الفئة من URL
   const urlParams = new URLSearchParams(window.location.search);
   const categoryParam = urlParams.get('category');
   if (categoryParam) {
     selectCategory(parseInt(categoryParam));
   }
   
-  // إعداد البحث
   document.getElementById('searchInput').addEventListener('input', (e) => {
     currentSearchQuery = e.target.value.trim().toLowerCase();
     applyFilters();
   });
 });
 
-// ========== الفئات ==========
 async function loadCategories() {
   try {
     const res = await fetch(`${API_URL}/categories`);
@@ -1416,10 +1435,8 @@ async function loadCategories() {
 function renderCategoriesChips() {
   const container = document.getElementById('categoriesChips');
   
-  // زر "الكل"
   let html = `<button class="category-chip active" data-category="all" onclick="selectCategory(null)">✨ الكل</button>`;
   
-  // الفئات
   html += allCategories.map(cat => `
     <button class="category-chip" data-category="${cat.id}" onclick="selectCategory(${cat.id})">
       <span class="emoji">${CATEGORY_ICONS[cat.name] || '🏷️'}</span>
@@ -1433,7 +1450,6 @@ function renderCategoriesChips() {
 function selectCategory(categoryId) {
   currentCategoryId = categoryId;
   
-  // تحديث حالة الأزرار
   document.querySelectorAll('.category-chip').forEach(chip => {
     const chipCat = chip.getAttribute('data-category');
     if (categoryId === null && chipCat === 'all') {
@@ -1448,7 +1464,6 @@ function selectCategory(categoryId) {
   applyFilters();
 }
 
-// ========== المنتجات ==========
 async function loadAllProducts() {
   try {
     const res = await fetch(`${API_URL}/products`);
@@ -1466,12 +1481,10 @@ async function loadAllProducts() {
 
 function applyFilters() {
   filteredProducts = allProducts.filter(p => {
-    // فلترة الفئة
     if (currentCategoryId !== null && p.category_id !== currentCategoryId) {
       return false;
     }
     
-    // فلترة البحث (اسم + فئة فقط)
     if (currentSearchQuery) {
       const nameMatch = p.name.toLowerCase().includes(currentSearchQuery);
       const categoryMatch = (p.category_name || '').toLowerCase().includes(currentSearchQuery);
@@ -1520,7 +1533,6 @@ function renderProducts() {
   grid.innerHTML = filteredProducts.map(p => renderProductCard(p)).join('');
 }
 
-// ========== بطاقة المنتج ==========
 function renderProductCard(p) {
   const inCart = cart.find(item => item.id === p.id);
   const hasDiscount = p.discount_type && p.discount_value > 0;
@@ -1587,7 +1599,6 @@ function renderProductCard(p) {
   `;
 }
 
-// ========== Modal ==========
 function openProductModal(id) {
   const product = allProducts.find(p => p.id === id);
   if (!product) return;
@@ -1680,7 +1691,6 @@ document.getElementById('productModal')?.addEventListener('click', (e) => {
   if (e.target.id === 'productModal') closeProductModal();
 });
 
-// ========== السلة ==========
 function toggleCart() {
   document.getElementById('cartSidebar').classList.toggle('open');
   document.getElementById('cartOverlay').classList.toggle('active');
