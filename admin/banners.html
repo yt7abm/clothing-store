@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>إدارة البانرات - متجر راقي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #3b82f6;
+  --primary-dark: #1e40af;
+  --accent: #f59e0b;
+  --accent-2: #ec4899;
+  --gold: #d4af37;
+  --bg: #ffffff;
+  --bg-2: #f9fafb;
+  --bg-3: #f3f4f6;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; height: 100%; }
+
+body {
+  background: var(--bg-2);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ========== Top Bar ========== */
+.top-bar {
+  position: fixed;
+  top: 0; right: 0; left: 0;
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  box-shadow: var(--shadow-sm);
+}
+
+.top-bar-right { display: flex; align-items: center; gap: 15px; }
+
+.menu-toggle {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--bg-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+  border: 1px solid var(--border);
+}
+
+.menu-toggle:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+.top-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 1.1rem; font-weight: 900; color: var(--primary);
+}
+
+.top-logo-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+}
+
+.top-bar-left { display: flex; align-items: center; gap: 12px; }
+
+.user-badge {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 14px 6px 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 25px;
+}
+
+.user-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 900; font-size: 0.9rem;
+}
+
+.user-info { display: flex; flex-direction: column; align-items: flex-start; }
+.user-name { font-size: 0.85rem; font-weight: 900; line-height: 1.2; }
+.user-role { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; }
+
+.logout-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+}
+
+.logout-btn:hover { background: var(--danger); color: white; transform: translateY(-2px); }
+
+/* ========== Sidebar ========== */
+.sidebar {
+  position: fixed;
+  top: 70px; right: 0;
+  width: 270px;
+  height: calc(100vh - 70px);
+  background: white;
+  border-left: 1px solid var(--border);
+  padding: 20px 15px;
+  overflow-y: auto;
+  z-index: 900;
+  transition: transform 0.3s;
+}
+
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.sidebar-section { margin-bottom: 25px; }
+
+.sidebar-section-title {
+  font-size: 0.7rem; font-weight: 900;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 15px;
+  margin-bottom: 10px;
+}
+
+.sidebar-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 0.9rem; font-weight: 600;
+  transition: all 0.3s;
+  margin-bottom: 3px;
+}
+
+.sidebar-link:hover { background: var(--bg-3); color: var(--primary); padding-right: 20px; }
+.sidebar-link.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+}
+
+.sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
+
+/* ========== Main ========== */
+.main-content {
+  margin-right: 270px;
+  padding: 90px 25px 30px;
+  min-height: 100vh;
+}
+
+/* ========== Page Header ========== */
+.page-header {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 25px 30px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.page-header-info h1 {
+  font-size: 1.5rem; font-weight: 900;
+  margin-bottom: 5px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.page-header-info p { color: var(--text-muted); font-size: 0.85rem; }
+
+.add-btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+}
+
+.add-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35); }
+
+/* ========== Stats ========== */
+.stats-mini {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.stat-mini {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-mini.blue { color: var(--primary); background: rgba(30, 58, 138, 0.05); border-color: rgba(30, 58, 138, 0.15); }
+.stat-mini.green { color: var(--success); background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.15); }
+.stat-mini.gray { color: var(--text-muted); background: rgba(107, 114, 128, 0.05); border-color: rgba(107, 114, 128, 0.15); }
+
+/* ========== Banners Grid ========== */
+.banners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.banner-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+
+.banner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.banner-card.inactive { opacity: 0.6; }
+
+.banner-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 6;
+  background: var(--bg-3);
+  overflow: hidden;
+}
+
+.banner-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.banner-card:hover .banner-image-wrap img { transform: scale(1.05); }
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  color: white;
+}
+
+.banner-overlay h3 {
+  font-size: 1.1rem;
+  font-weight: 900;
+  margin-bottom: 5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.banner-overlay .banner-link {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  direction: ltr;
+  text-align: right;
+  word-break: break-all;
+}
+
+.banner-order-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(30, 58, 138, 0.95);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 900;
+  backdrop-filter: blur(5px);
+}
+
+.banner-status-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 900;
+  backdrop-filter: blur(5px);
+}
+
+.banner-status-badge.active { background: rgba(16, 185, 129, 0.95); color: white; }
+.banner-status-badge.inactive { background: rgba(107, 114, 128, 0.95); color: white; }
+
+.banner-actions {
+  display: flex;
+  gap: 6px;
+  padding: 12px 20px;
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+}
+
+.banner-btn {
+  flex: 1;
+  padding: 9px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.banner-btn.edit { background: rgba(30, 58, 138, 0.1); color: var(--primary); }
+.banner-btn.edit:hover { background: var(--primary); color: white; }
+
+.banner-btn.toggle { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.banner-btn.toggle:hover { background: var(--warning); color: white; }
+
+.banner-btn.delete { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+.banner-btn.delete:hover { background: var(--danger); color: white; }
+
+/* ========== Empty State ========== */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 20px;
+  border: 2px dashed var(--border);
+  grid-column: 1 / -1;
+}
+
+.empty-state .icon { font-size: 4rem; margin-bottom: 15px; opacity: 0.5; }
+.empty-state h3 { font-size: 1.2rem; font-weight: 900; margin-bottom: 8px; }
+.empty-state p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* ========== Loading ========== */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--primary);
+  grid-column: 1 / -1;
+}
+
+.loading::after {
+  content: '';
+  display: block;
+  width: 35px; height: 35px;
+  margin: 15px auto 0;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ========== Modal ========== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+  overflow-y: auto;
+}
+
+.modal.show { display: flex; }
+
+.modal-content {
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
+  animation: modalIn 0.3s ease;
+}
+
+.modal-content.small { max-width: 450px; }
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  padding: 22px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 24px 24px 0 0;
+}
+
+.modal-header.danger { background: linear-gradient(135deg, var(--danger), #b91c1c); }
+
+.modal-header h2 {
+  font-size: 1.1rem;
+  font-weight: 900;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.modal-close {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.modal-close:hover { background: rgba(255, 255, 255, 0.3); transform: rotate(90deg); }
+
+.modal-body { padding: 25px; }
+
+.modal-footer {
+  padding: 18px 25px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
+  border-radius: 0 0 24px 24px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* ========== Form ========== */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 5px;
+}
+
+.form-group label .required { color: var(--danger); }
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg-2);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
+}
+
+.form-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; }
+
+/* Image Upload */
+.image-upload {
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: var(--bg-2);
+  position: relative;
+  overflow: hidden;
+}
+
+.image-upload:hover { border-color: var(--primary); background: white; }
+
+.image-upload input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: none;
+  margin-bottom: 10px;
+}
+
+.image-upload .upload-icon { font-size: 2.5rem; margin-bottom: 8px; }
+.image-upload p { font-size: 0.85rem; color: var(--text-muted); }
+
+/* ========== Button ========== */
+.btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+}
+
+.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35); }
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--danger), #b91c1c);
+  color: white;
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.25);
+}
+
+.btn-danger:hover:not(:disabled) { transform: translateY(-3px); }
+
+.btn-secondary {
+  background: white;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+}
+
+.btn-secondary:hover { background: var(--bg-3); }
+
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ========== Notification ========== */
+.notification {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--primary);
+  color: white;
+  padding: 14px 25px;
+  border-radius: 14px;
+  font-weight: 700;
+  z-index: 3000;
+  transform: translateX(500px);
+  transition: transform 0.4s;
+  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.3);
+  max-width: calc(100% - 60px);
+  font-size: 0.9rem;
+}
+
+.notification.show { transform: translateX(0); }
+.notification.error { background: var(--danger); }
+.notification.success { background: var(--success); }
+
+/* ========== Responsive ========== */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(100%); box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1); }
+  .sidebar.open { transform: translateX(0); }
+  .main-content { margin-right: 0; padding: 90px 18px 30px; }
+
+  .banners-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .top-bar { height: 65px; padding: 0 15px; }
+  .top-logo { font-size: 0.95rem; }
+  .top-logo-icon { width: 36px; height: 36px; font-size: 1rem; }
+  .user-info { display: none; }
+  .user-badge { padding: 6px; }
+
+  .main-content { padding: 85px 12px 25px; }
+
+  .page-header { padding: 18px; border-radius: 16px; }
+  .page-header-info h1 { font-size: 1.2rem; }
+  .page-header-info p { font-size: 0.75rem; }
+  .add-btn { padding: 10px 18px; font-size: 0.85rem; width: 100%; justify-content: center; }
+
+  .stats-mini { gap: 8px; }
+  .stat-mini { padding: 8px 12px; font-size: 0.7rem; }
+
+  .banners-grid { grid-template-columns: 1fr; gap: 14px; }
+
+  .banner-image-wrap { aspect-ratio: 16 / 8; }
+  .banner-overlay { padding: 15px; }
+  .banner-overlay h3 { font-size: 0.95rem; }
+  .banner-overlay .banner-link { font-size: 0.7rem; }
+  .banner-actions { padding: 10px 15px; }
+  .banner-btn { padding: 8px; font-size: 0.7rem; }
+
+  .modal { padding: 10px; }
+  .modal-content { border-radius: 20px; }
+  .modal-header { padding: 18px 20px; border-radius: 20px 20px 0 0; }
+  .modal-header h2 { font-size: 1rem; }
+  .modal-body { padding: 20px; }
+  .modal-footer { padding: 15px 20px; border-radius: 0 0 20px 20px; flex-direction: column; }
+  .btn { width: 100%; }
+
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+
+  .notification { bottom: 15px; right: 15px; left: 15px; max-width: calc(100% - 30px); text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<header class="top-bar">
+  <div class="top-bar-right">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="top-logo">
+      <div class="top-logo-icon">🖼️</div>
+      البانرات
+    </div>
+  </div>
+  <div class="top-bar-left">
+    <div class="user-badge">
+      <div class="user-avatar" id="userAvatar">A</div>
+      <div class="user-info">
+        <span class="user-name" id="userName">المدير</span>
+        <span class="user-role" id="userRole">admin</span>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="openLogoutModal()">🚪</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">الرئيسية</div>
+    <a href="dashboard.html" class="sidebar-link">
+      <span class="icon">📊</span>
+      <span>لوحة التحكم</span>
+    </a>
+  </div>
+
+  <div class="sidebar-section" id="operationsSection" style="display:none;">
+    <div class="sidebar-section-title">العمليات</div>
+    <a href="products.html" class="sidebar-link" data-permission="products.view">
+      <span class="icon">👕</span>
+      <span>المنتجات</span>
+    </a>
+    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
+      <span class="icon">🏷️</span>
+      <span>الفئات</span>
+    </a>
+    <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
+      <span class="icon">📦</span>
+      <span>المخزون</span>
+    </a>
+    <a href="orders.html" class="sidebar-link" data-permission="orders.view">
+      <span class="icon">🛍️</span>
+      <span>الطلبات</span>
+    </a>
+    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
+      <span class="icon">💰</span>
+      <span>الكاشير</span>
+    </a>
+    <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
+      <span class="icon">🎟️</span>
+      <span>الكوبونات</span>
+    </a>
+  </div>
+
+  <div class="sidebar-section" id="managementSection" style="display:none;">
+    <div class="sidebar-section-title">الإدارة</div>
+    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
+      <span class="icon">🎁</span>
+      <span>العروضات</span>
+    </a>
+    <a href="reports.html" class="sidebar-link" data-permission="reports.view">
+      <span class="icon">📈</span>
+      <span>التقارير</span>
+    </a>
+    <a href="banners.html" class="sidebar-link active" data-permission="banners.view">
+      <span class="icon">🖼️</span>
+      <span>البانرات</span>
+    </a>
+    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
+      <span class="icon">👥</span>
+      <span>الموظفين</span>
+    </a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">المتجر</div>
+    <a href="../index.html" class="sidebar-link">
+      <span class="icon">🏠</span>
+      <span>الصفحة الرئيسية</span>
+    </a>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main-content">
+
+  <div class="page-header">
+    <div class="page-header-info">
+      <h1>🖼️ إدارة البانرات</h1>
+      <p>أضف وعدل البانرات اللي تظهر في الصفحة الرئيسية</p>
+    </div>
+    <button class="add-btn" onclick="openAddModal()">
+      <span>➕</span>
+      <span>إضافة بانر جديد</span>
+    </button>
+  </div>
+
+  <div class="stats-mini">
+    <div class="stat-mini blue">🖼️ <span id="countAll">0</span> بانر</div>
+    <div class="stat-mini green">✅ <span id="countActive">0</span> نشط</div>
+    <div class="stat-mini gray">🚫 <span id="countInactive">0</span> معطل</div>
+  </div>
+
+  <div class="banners-grid" id="bannersGrid">
+    <div class="loading">⏳ جاري تحميل البانرات...</div>
+  </div>
+
+</main>
+
+<!-- ========== Modal إضافة/تعديل بانر ========== -->
+<div class="modal" id="bannerModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">➕ إضافة بانر جديد</h2>
+      <button class="modal-close" onclick="closeBannerModal()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <form id="bannerForm" onsubmit="saveBanner(event)">
+        <input type="hidden" id="bannerId">
+
+        <div class="form-group">
+          <label>🖼️ صورة البانر <span class="required">*</span></label>
+          <div class="image-upload">
+            <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
+            <img id="imagePreview" class="image-preview" alt="معاينة">
+            <div class="upload-icon" id="uploadIcon">📷</div>
+            <p id="uploadText">اضغط لاختيار صورة</p>
+          </div>
+          <div class="form-hint">يفضل صورة بعرض 1600px وارتفاع 600px</div>
+        </div>
+
+        <div class="form-group">
+          <label>📝 العنوان (اختياري)</label>
+          <input type="text" id="title" placeholder="مثال: تخفيضات صيف 2026">
+          <div class="form-hint">يظهر فوق الصورة</div>
+        </div>
+
+        <div class="form-group">
+          <label>🔗 الرابط (اختياري)</label>
+          <input type="text" id="link" placeholder="مثال: frontend/search.html" dir="ltr">
+          <div class="form-hint">عند الضغط على البانر، يفتح هذا الرابط</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>🔢 ترتيب العرض</label>
+            <input type="number" id="displayOrder" min="0" value="0" placeholder="0">
+            <div class="form-hint">الأقل يظهر أولاً</div>
+          </div>
+          <div class="form-group">
+            <label>✅ الحالة</label>
+            <select id="active">
+              <option value="1">نشط</option>
+              <option value="0">معطل</option>
+            </select>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeBannerModal()">إلغاء</button>
+      <button class="btn btn-primary" onclick="document.getElementById('bannerForm').requestSubmit()" id="saveBtn">
+        <span>💾</span>
+        <span>حفظ</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Modal حذف ========== -->
+<div class="modal" id="deleteModal">
+  <div class="modal-content small">
+    <div class="modal-header danger">
+      <h2>🗑️ حذف البانر</h2>
+      <button class="modal-close" onclick="closeDeleteModal()">✕</button>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <div style="font-size: 4rem; margin-bottom: 15px;">⚠️</div>
+      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">تأكيد الحذف</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">هل أنت متأكد من حذف هذا البانر؟</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeDeleteModal()">إلغاء</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">🗑️ حذف</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Modal تسجيل الخروج ========== -->
+<div class="modal" id="logoutModal">
+  <div class="modal-content small">
+    <div class="modal-header danger">
+      <h2>🚪 تسجيل الخروج</h2>
+      <button class="modal-close" onclick="closeLogoutModal()">✕</button>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <div style="font-size: 4rem; margin-bottom: 15px;">👋</div>
+      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">هل أنت متأكد؟</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">سيتم تسجيل خروجك من لوحة التحكم</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeLogoutModal()">إلغاء</button>
+      <button class="btn btn-danger" onclick="confirmLogout()">🚪 تسجيل الخروج</button>
+    </div>
+  </div>
+</div>
+
+<!-- Notification -->
+<div class="notification" id="notification"></div>
+
+<script>
+const API_URL = '/api';
+let user = null;
+let permissions = [];
+let allBanners = [];
+let deletingId = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const userStr = localStorage.getItem('raki_user');
+  const permStr = localStorage.getItem('raki_permissions');
+  const token = localStorage.getItem('raki_token');
+
+  if (!userStr || !token) { window.location.href = 'login.html'; return; }
+
+  try {
+    user = JSON.parse(userStr);
+    permissions = JSON.parse(permStr || '[]');
+  } catch (e) { window.location.href = 'login.html'; return; }
+
+  if (!user.is_admin && !permissions.includes('banners.view')) {
+    alert('ليس لديك صلاحية الوصول');
+    window.location.href = 'dashboard.html';
+    return;
+  }
+
+  applyUserData();
+  applyPermissions();
+  await loadBanners();
+});
+
+function applyUserData() {
+  const fullName = user.full_name || user.username;
+  document.getElementById('userAvatar').textContent = fullName.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent = fullName;
+  document.getElementById('userRole').textContent = user.is_admin ? 'المدير العام' : 'موظف';
+}
+
+function applyPermissions() {
+  const isAdmin = user.is_admin;
+  let hasOperations = false;
+  let hasManagement = false;
+
+  document.querySelectorAll('.sidebar-link[data-permission]').forEach(link => {
+    const perm = link.getAttribute('data-permission');
+    const has = isAdmin || permissions.includes(perm);
+    if (!has) {
+      link.style.display = 'none';
+    } else {
+      const section = link.closest('.sidebar-section');
+      if (section) {
+        section.style.display = 'block';
+        if (section.id === 'operationsSection') hasOperations = true;
+        if (section.id === 'managementSection') hasManagement = true;
+      }
+    }
+  });
+
+  if (!hasOperations) document.getElementById('operationsSection').style.display = 'none';
+  if (!hasManagement) document.getElementById('managementSection').style.display = 'none';
+}
+
+async function loadBanners() {
+  try {
+    const res = await fetch(`${API_URL}/banners`);
+    const data = await res.json();
+
+    if (data.success) {
+      allBanners = data.banners || [];
+      updateStats();
+      renderBanners();
+    }
+  } catch (error) {
+    document.getElementById('bannersGrid').innerHTML = `
+      <div class="empty-state">
+        <div class="icon">❌</div>
+        <h3>تعذّر تحميل البانرات</h3>
+      </div>
+    `;
+  }
+}
+
+function updateStats() {
+  document.getElementById('countAll').textContent = allBanners.length;
+  document.getElementById('countActive').textContent = allBanners.filter(b => b.active === 1).length;
+  document.getElementById('countInactive').textContent = allBanners.filter(b => b.active === 0).length;
+}
+
+function renderBanners() {
+  const grid = document.getElementById('bannersGrid');
+
+  if (allBanners.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">🖼️</div>
+        <h3>لا توجد بانرات</h3>
+        <p>ابدأ بإضافة أول بانر للصفحة الرئيسية</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = allBanners.map(b => `
+    <div class="banner-card ${b.active === 0 ? 'inactive' : ''}">
+      <div class="banner-image-wrap">
+        ${b.image ? `<img src="${b.image}" alt="${b.title || 'بانر'}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;">🖼️</div>'}
+        <div class="banner-order-badge">#${b.display_order || 0}</div>
+        <div class="banner-status-badge ${b.active === 1 ? 'active' : 'inactive'}">
+          ${b.active === 1 ? '✅ نشط' : '🚫 معطل'}
+        </div>
+        ${b.title || b.link ? `
+          <div class="banner-overlay">
+            ${b.title ? `<h3>${b.title}</h3>` : ''}
+            ${b.link ? `<div class="banner-link">🔗 ${b.link}</div>` : ''}
+          </div>
+        ` : ''}
+      </div>
+
+      <div class="banner-actions">
+        <button class="banner-btn edit" onclick="openEditModal(${b.id})">✏️ تعديل</button>
+        <button class="banner-btn toggle" onclick="toggleBanner(${b.id})">
+          ${b.active === 1 ? '🚫 تعطيل' : '✅ تفعيل'}
+        </button>
+        <button class="banner-btn delete" onclick="openDeleteModal(${b.id})">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ========== إضافة ==========
+function openAddModal() {
+  document.getElementById('modalTitle').innerHTML = '➕ إضافة بانر جديد';
+  document.getElementById('bannerId').value = '';
+  document.getElementById('title').value = '';
+  document.getElementById('link').value = '';
+  document.getElementById('displayOrder').value = '0';
+  document.getElementById('active').value = '1';
+  document.getElementById('imagePreview').style.display = 'none';
+  document.getElementById('uploadIcon').style.display = 'block';
+  document.getElementById('uploadText').textContent = 'اضغط لاختيار صورة';
+  document.getElementById('imageInput').value = '';
+
+  document.getElementById('bannerModal').classList.add('show');
+}
+
+function openEditModal(id) {
+  const b = allBanners.find(x => x.id === id);
+  if (!b) return;
+
+  document.getElementById('modalTitle').innerHTML = '✏️ تعديل البانر';
+  document.getElementById('bannerId').value = b.id;
+  document.getElementById('title').value = b.title || '';
+  document.getElementById('link').value = b.link || '';
+  document.getElementById('displayOrder').value = b.display_order || 0;
+  document.getElementById('active').value = b.active;
+
+  if (b.image) {
+    document.getElementById('imagePreview').src = b.image;
+    document.getElementById('imagePreview').style.display = 'block';
+    document.getElementById('uploadIcon').style.display = 'none';
+    document.getElementById('uploadText').textContent = 'اضغط لتغيير الصورة';
+  } else {
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('uploadIcon').style.display = 'block';
+    document.getElementById('uploadText').textContent = 'اضغط لاختيار صورة';
+  }
+
+  document.getElementById('imageInput').value = '';
+  document.getElementById('bannerModal').classList.add('show');
+}
+
+function closeBannerModal() {
+  document.getElementById('bannerModal').classList.remove('show');
+}
+
+function previewImage(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.getElementById('imagePreview').src = e.target.result;
+    document.getElementById('imagePreview').style.display = 'block';
+    document.getElementById('uploadIcon').style.display = 'none';
+    document.getElementById('uploadText').textContent = file.name;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ========== حفظ ==========
+async function saveBanner(e) {
+  e.preventDefault();
+
+  const id = document.getElementById('bannerId').value;
+  const imageFile = document.getElementById('imageInput').files[0];
+
+  // إذا كان إضافة جديدة، الصورة مطلوبة
+  if (!id && !imageFile) {
+    showNotification('⚠️ الصورة مطلوبة', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span><span>جاري الحفظ...</span>';
+
+  const formData = new FormData();
+  formData.append('title', document.getElementById('title').value);
+  formData.append('link', document.getElementById('link').value);
+  formData.append('display_order', document.getElementById('displayOrder').value || 0);
+  formData.append('active', document.getElementById('active').value);
+
+  if (imageFile) formData.append('image', imageFile);
+
+  try {
+    const url = id ? `${API_URL}/banners/${id}` : `${API_URL}/banners`;
+    const method = id ? 'PUT' : 'POST';
+
+    const res = await fetch(url, { method, body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+      showNotification(id ? '✅ تم تعديل البانر' : '✅ تم إضافة البانر', 'success');
+      closeBannerModal();
+      await loadBanners();
+    } else {
+      showNotification('❌ ' + data.message, 'error');
+    }
+  } catch (error) {
+    showNotification('❌ حدث خطأ', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>💾</span><span>حفظ</span>';
+  }
+}
+
+// ========== تفعيل/تعطيل ==========
+async function toggleBanner(id) {
+  try {
+    const res = await fetch(`${API_URL}/banners/${id}/toggle`, { method: 'PUT' });
+    const data = await res.json();
+
+    if (data.success) {
+      showNotification('✅ ' + data.message, 'success');
+      await loadBanners();
+    } else {
+      showNotification('❌ ' + data.message, 'error');
+    }
+  } catch (error) {
+    showNotification('❌ حدث خطأ', 'error');
+  }
+}
+
+// ========== حذف ==========
+function openDeleteModal(id) {
+  deletingId = id;
+  document.getElementById('deleteModal').classList.add('show');
+}
+
+function closeDeleteModal() {
+  document.getElementById('deleteModal').classList.remove('show');
+  deletingId = null;
+}
+
+async function confirmDelete() {
+  if (!deletingId) return;
+
+  try {
+    const res = await fetch(`${API_URL}/banners/${deletingId}`, { method: 'DELETE' });
+    const data = await res.json();
+
+    if (data.success) {
+      showNotification('✅ تم حذف البانر', 'success');
+      closeDeleteModal();
+      await loadBanners();
+    } else {
+      showNotification('❌ ' + data.message, 'error');
+    }
+  } catch (error) {
+    showNotification('❌ حدث خطأ', 'error');
+  }
+}
+
+// ========== Sidebar ==========
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('active');
+}
+
+// ========== Logout ==========
+function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
+function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
+function confirmLogout() {
+  localStorage.removeItem('raki_token');
+  localStorage.removeItem('raki_user');
+  localStorage.removeItem('raki_permissions');
+  window.location.href = 'login.html';
+}
+
+// ========== Notification ==========
+function showNotification(message, type = '') {
+  const notif = document.getElementById('notification');
+  notif.textContent = message;
+  notif.className = 'notification show ' + type;
+  setTimeout(() => notif.classList.remove('show'), 3000);
+}
+
+// ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeBannerModal();
+    closeDeleteModal();
+    closeLogoutModal();
+  }
+});
+
+document.querySelectorAll('.modal').forEach(modal => {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('show');
+  });
+});
+</script>
+
+</body>
+</html>
