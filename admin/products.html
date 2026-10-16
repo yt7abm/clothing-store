@@ -167,6 +167,16 @@ img { max-width: 100%; display: block; }
 
 .sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
 
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 850;
+}
+
+.sidebar-overlay.active { display: block; }
+
 /* ========== Main ========== */
 .main-content {
   margin-right: 270px;
@@ -209,6 +219,31 @@ img { max-width: 100%; display: block; }
 }
 
 .add-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35); }
+
+/* ========== Stats Mini ========== */
+.stats-mini {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.stat-mini {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-mini.blue { color: var(--primary); background: rgba(30, 58, 138, 0.05); border-color: rgba(30, 58, 138, 0.15); }
+.stat-mini.green { color: var(--success); background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.15); }
+.stat-mini.red { color: var(--danger); background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.15); }
+.stat-mini.gold { color: var(--gold); background: rgba(212, 175, 55, 0.08); border-color: rgba(212, 175, 55, 0.2); }
 
 /* ========== Filters ========== */
 .filters-bar {
@@ -276,32 +311,7 @@ img { max-width: 100%; display: block; }
   background: white;
 }
 
-/* ========== Stats Mini ========== */
-.stats-mini {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.stat-mini {
-  background: white;
-  border: 1px solid var(--border);
-  padding: 10px 16px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.stat-mini.blue { color: var(--primary); background: rgba(30, 58, 138, 0.05); border-color: rgba(30, 58, 138, 0.15); }
-.stat-mini.green { color: var(--success); background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.15); }
-.stat-mini.red { color: var(--danger); background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.15); }
-.stat-mini.gold { color: var(--gold); background: rgba(212, 175, 55, 0.08); border-color: rgba(212, 175, 55, 0.2); }
-
-/* ========== Products Table (مع تمرير أفقي) ========== */
+/* ========== Products Table ========== */
 .products-table-wrap {
   background: white;
   border: 1px solid var(--border);
@@ -309,7 +319,6 @@ img { max-width: 100%; display: block; }
   overflow-x: auto;
   overflow-y: visible;
   -webkit-overflow-scrolling: touch;
-  position: relative;
 }
 
 .products-table-wrap::-webkit-scrollbar {
@@ -717,7 +726,7 @@ img { max-width: 100%; display: block; }
   display: flex; align-items: center; gap: 6px;
 }
 
-/* ========== Discount Type Options ========== */
+/* Discount Type Options */
 .discount-type-option {
   transition: all 0.3s;
 }
@@ -816,7 +825,6 @@ img { max-width: 100%; display: block; }
   .stats-mini { gap: 8px; }
   .stat-mini { padding: 8px 12px; font-size: 0.7rem; }
 
-  /* الجدول: تمرير أفقي واضح */
   .products-table {
     min-width: 800px;
   }
@@ -858,7 +866,6 @@ img { max-width: 100%; display: block; }
     padding: 2px 6px;
   }
 
-  /* مؤشر تمرير أفقي */
   .products-table-wrap::after {
     content: '← اسحب للجانب لرؤية المزيد →';
     display: block;
@@ -979,7 +986,6 @@ img { max-width: 100%; display: block; }
 <!-- Main -->
 <main class="main-content">
 
-  <!-- Page Header -->
   <div class="page-header">
     <div class="page-header-info">
       <h1>👕 إدارة المنتجات</h1>
@@ -991,15 +997,13 @@ img { max-width: 100%; display: block; }
     </button>
   </div>
 
-  <!-- Stats Mini -->
-  <div class="stats-mini" id="statsMini">
+  <div class="stats-mini">
     <div class="stat-mini blue">📦 <span id="countAll">0</span> منتج</div>
     <div class="stat-mini green">✅ <span id="countActive">0</span> نشط</div>
     <div class="stat-mini red">🏷️ <span id="countDiscounted">0</span> مخصوم</div>
     <div class="stat-mini gold">⭐ <span id="countFeatured">0</span> مميز</div>
   </div>
 
-  <!-- Filters -->
   <div class="filters-bar">
     <div class="filter-search">
       <input type="text" id="searchInput" placeholder="ابحث عن منتج..." oninput="applyFilters()">
@@ -1018,14 +1022,13 @@ img { max-width: 100%; display: block; }
     </select>
   </div>
 
-  <!-- Products Table -->
   <div class="products-table-wrap" id="tableWrap">
     <div class="loading">⏳ جاري تحميل المنتجات...</div>
   </div>
 
 </main>
 
-<!-- ========== Modal إضافة/تعديل منتج ========== -->
+<!-- Modal إضافة/تعديل منتج -->
 <div class="modal" id="productModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -1129,7 +1132,7 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- ========== Modal تسجيل الخروج ========== -->
+<!-- Modal تسجيل الخروج -->
 <div class="modal" id="logoutModal">
   <div class="modal-content small">
     <div class="modal-header danger">
@@ -1148,7 +1151,7 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- ========== Modal الحذف ========== -->
+<!-- Modal الحذف -->
 <div class="modal" id="deleteModal">
   <div class="modal-content small">
     <div class="modal-header danger">
@@ -1178,7 +1181,6 @@ let allProducts = [];
 let allCategories = [];
 let filteredProducts = [];
 let deletingId = null;
-let currentImage = null;
 let currentDiscountProductId = null;
 
 // ========== التحقق من الدخول ==========
@@ -1205,6 +1207,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await loadCategories();
   await loadProducts();
+
+  // ربط الأحداث لدiscountPreview2 (في نموذج التعديل)
+  document.getElementById('discountType').addEventListener('change', updateDiscountPreview2);
+  document.getElementById('discountValue').addEventListener('input', updateDiscountPreview2);
+  document.getElementById('price').addEventListener('input', updateDiscountPreview2);
 });
 
 function applyUserData() {
@@ -1402,7 +1409,7 @@ function renderRow(p) {
   `;
 }
 
-// ========== إضافة/تعديل ==========
+// ========== إضافة منتج ==========
 function openAddModal() {
   document.getElementById('modalTitle').innerHTML = '➕ إضافة منتج جديد';
   document.getElementById('productId').value = '';
@@ -1420,11 +1427,11 @@ function openAddModal() {
   document.getElementById('uploadIcon').style.display = 'block';
   document.getElementById('uploadText').textContent = 'اضغط لاختيار صورة';
   document.getElementById('discountPreview2').style.display = 'none';
-  currentImage = null;
 
   document.getElementById('productModal').classList.add('show');
 }
 
+// ========== تعديل منتج (مُصلح) ==========
 function openEditModal(id) {
   const p = allProducts.find(x => x.id === id);
   if (!p) return;
@@ -1453,8 +1460,11 @@ function openEditModal(id) {
     document.getElementById('uploadText').textContent = 'اضغط لاختيار صورة';
   }
 
-  updateDiscountPreview();
+  // افتح النافذة أولاً
   document.getElementById('productModal').classList.add('show');
+
+  // ثم حدّث معاينة الخصم
+  updateDiscountPreview2();
 }
 
 function closeProductModal() {
@@ -1521,6 +1531,44 @@ async function saveProduct(e) {
     btn.disabled = false;
     btn.innerHTML = '<span>💾</span><span>حفظ</span>';
     document.getElementById('imageInput').value = '';
+  }
+}
+
+// ========== معاينة الخصم في نموذج التعديل ==========
+function updateDiscountPreview2() {
+  const typeEl = document.getElementById('discountType');
+  const valueEl = document.getElementById('discountValue');
+  const priceEl = document.getElementById('price');
+  const hintEl = document.getElementById('discountHint');
+  const previewEl = document.getElementById('discountPreview2');
+  const previewPriceEl = document.getElementById('discountPreviewPrice');
+
+  // تحقق من وجود العناصر
+  if (!typeEl || !valueEl || !priceEl || !hintEl || !previewEl || !previewPriceEl) return;
+
+  const type = typeEl.value;
+  const value = parseFloat(valueEl.value) || 0;
+  const price = parseFloat(priceEl.value) || 0;
+
+  if (type === 'percent') {
+    hintEl.textContent = 'مثال: 20 (يعني 20%)';
+  } else if (type === 'fixed') {
+    hintEl.textContent = 'مثال: 5 (يعني 5 ر.ع)';
+  } else {
+    hintEl.textContent = 'اختر نوع الخصم أولاً';
+  }
+
+  if (type && value > 0 && price > 0) {
+    let finalPrice = price;
+    if (type === 'percent') {
+      finalPrice = price - (price * value / 100);
+    } else {
+      finalPrice = Math.max(0, price - value);
+    }
+    previewEl.style.display = 'block';
+    previewPriceEl.textContent = finalPrice.toFixed(3);
+  } else {
+    previewEl.style.display = 'none';
   }
 }
 
@@ -1611,7 +1659,6 @@ function openDiscountModal(id) {
   if (p.discount_type) {
     setTimeout(() => {
       selectDiscountType(p.discount_type);
-      updateDiscountPreview();
     }, 50);
   }
 
@@ -1669,12 +1716,18 @@ function selectDiscountType(type) {
 }
 
 function updateDiscountPreview() {
-  const type = document.getElementById('discountTypeInput').value;
-  const value = parseFloat(document.getElementById('discountValueInput').value) || 0;
+  const typeEl = document.getElementById('discountTypeInput');
+  const valueEl = document.getElementById('discountValueInput');
+  const previewBox = document.getElementById('discountPreviewBox');
+
+  if (!typeEl || !valueEl || !previewBox) return;
+
+  const type = typeEl.value;
+  const value = parseFloat(valueEl.value) || 0;
   const product = allProducts.find(p => p.id === currentDiscountProductId);
 
   if (!product || !type || value <= 0) {
-    document.getElementById('discountPreviewBox').style.display = 'none';
+    previewBox.style.display = 'none';
     return;
   }
 
@@ -1685,7 +1738,7 @@ function updateDiscountPreview() {
     newPrice = Math.max(0, product.price - value);
   }
 
-  document.getElementById('discountPreviewBox').style.display = 'block';
+  previewBox.style.display = 'block';
   document.getElementById('previewNewPrice').textContent = newPrice.toFixed(3);
   document.getElementById('previewOldPrice').textContent = product.price.toFixed(3);
 }
@@ -1796,42 +1849,6 @@ async function confirmDelete() {
     showNotification('❌ حدث خطأ', 'error');
   }
 }
-
-// ========== معاينة الخصم في النموذج ==========
-function updateDiscountPreview2() {
-  const type = document.getElementById('discountType').value;
-  const value = parseFloat(document.getElementById('discountValue').value) || 0;
-  const price = parseFloat(document.getElementById('price').value) || 0;
-
-  const hint = document.getElementById('discountHint');
-  const preview = document.getElementById('discountPreview2');
-  const previewPrice = document.getElementById('discountPreviewPrice');
-
-  if (type === 'percent') {
-    hint.textContent = 'مثال: 20 (يعني 20%)';
-  } else if (type === 'fixed') {
-    hint.textContent = 'مثال: 5 (يعني 5 ر.ع)';
-  } else {
-    hint.textContent = 'اختر نوع الخصم أولاً';
-  }
-
-  if (type && value > 0 && price > 0) {
-    let finalPrice = price;
-    if (type === 'percent') {
-      finalPrice = price - (price * value / 100);
-    } else {
-      finalPrice = Math.max(0, price - value);
-    }
-    preview.style.display = 'block';
-    previewPrice.textContent = finalPrice.toFixed(3);
-  } else {
-    preview.style.display = 'none';
-  }
-}
-
-document.getElementById('discountType').addEventListener('change', updateDiscountPreview2);
-document.getElementById('discountValue').addEventListener('input', updateDiscountPreview2);
-document.getElementById('price').addEventListener('input', updateDiscountPreview2);
 
 // ========== Sidebar ==========
 function toggleSidebar() {
