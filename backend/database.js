@@ -19,14 +19,17 @@ db.pragma('foreign_keys = ON');
 // ========================================
 console.log('📦 جاري تجهيز قاعدة البيانات...');
 
-// 1. جدول المستخدمين
+// 1. جدول المستخدمين (مع الصلاحيات)
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     full_name TEXT,
+    phone TEXT,
     role TEXT DEFAULT 'employee',
+    permissions TEXT DEFAULT '[]',
+    active INTEGER DEFAULT 1,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )
 `);
@@ -74,7 +77,7 @@ db.exec(`
   )
 `);
 
-// 5. جدول المبيعات (مع الأعمدة الجديدة)
+// 5. جدول المبيعات
 db.exec(`
   CREATE TABLE IF NOT EXISTS sales (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -126,6 +129,32 @@ db.exec(`
   )
 `);
 
+// 8. جدول البانرات (الإعلانات) - جديد ✨
+db.exec(`
+  CREATE TABLE IF NOT EXISTS banners (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    image TEXT NOT NULL,
+    link TEXT,
+    display_order INTEGER DEFAULT 0,
+    active INTEGER DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
+// 9. جدول سجل النشاطات (اختياري - للمدير) - جديد ✨
+db.exec(`
+  CREATE TABLE IF NOT EXISTS activity_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    action TEXT NOT NULL,
+    details TEXT,
+    ip_address TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  )
+`);
+
 console.log('✅ تم إنشاء جميع الجداول بنجاح');
 
 // ========================================
@@ -138,9 +167,9 @@ const adminExists = db.prepare('SELECT * FROM users WHERE username = ?').get('ad
 if (!adminExists) {
   const hashedPassword = bcrypt.hashSync('admin123', 10);
   db.prepare(`
-    INSERT INTO users (username, password, full_name, role)
-    VALUES (?, ?, ?, ?)
-  `).run('admin', hashedPassword, 'المدير العام', 'admin');
+    INSERT INTO users (username, password, full_name, role, permissions, active)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `).run('admin', hashedPassword, 'المدير العام', 'admin', '["all"]', 1);
   console.log('👤 تم إنشاء حساب المدير: admin / admin123');
 }
 

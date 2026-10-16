@@ -33,6 +33,7 @@ console.log('4️⃣ تم تفعيل الجلسات');
 
 // الملفات الثابتة (Static Files)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/images', express.static(path.join(__dirname, '..', 'images')));
 app.use('/admin', express.static(path.join(__dirname, '..', 'admin')));
 app.use('/frontend', express.static(path.join(__dirname, '..', 'frontend')));
 app.use('/', express.static(path.join(__dirname, '..')));
@@ -63,6 +64,12 @@ console.log('   ✅ coupons');
 app.use('/api/reports', require('./routes/reports'));
 console.log('   ✅ reports');
 
+app.use('/api/banners', require('./routes/banners'));
+console.log('   ✅ banners');
+
+app.use('/api/staff', require('./routes/staff'));
+console.log('   ✅ staff');
+
 // ========================================
 // صفحة اختبار
 // ========================================
@@ -72,6 +79,27 @@ app.get('/api/test', (req, res) => {
     message: '✅ السيرفر شغّال تمام!',
     store: process.env.STORE_NAME || 'متجر الملابس',
     time: new Date().toLocaleString('ar-OM')
+  });
+});
+
+// ========================================
+// معالجة الأخطاء (Error Handler)
+// ========================================
+app.use((err, req, res, next) => {
+  console.error('❌ خطأ في السيرفر:', err.message);
+  res.status(500).json({ 
+    success: false, 
+    message: err.message || 'حدث خطأ في السيرفر' 
+  });
+});
+
+// ========================================
+// 404 Handler
+// ========================================
+app.use((req, res) => {
+  res.status(404).json({ 
+    success: false, 
+    message: 'المسار غير موجود' 
   });
 });
 
