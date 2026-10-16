@@ -180,32 +180,33 @@ img { max-width: 100%; display: block; }
   font-size: 0.9rem;
 }
 
-/* ========== تبويبات الحالة ========== */
+/* ========== تبويبات الحالة (شبكة) ========== */
 .status-tabs {
   max-width: 1000px;
   margin: 25px auto 0;
   padding: 0 20px;
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .status-tab {
-  padding: 10px 20px;
+  padding: 10px 14px;
   background: var(--bg-2);
   border: 1.5px solid var(--border);
-  border-radius: 25px;
-  font-size: 0.85rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--text);
   transition: all 0.3s;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   white-space: nowrap;
+  text-align: center;
 }
 
 .status-tab:hover {
@@ -224,15 +225,14 @@ img { max-width: 100%; display: block; }
   background: rgba(255, 255, 255, 0.3);
   padding: 2px 8px;
   border-radius: 10px;
-  font-size: 0.75rem;
-}
-
-.status-tab.active .count {
-  background: rgba(255, 255, 255, 0.3);
+  font-size: 0.7rem;
+  font-weight: 900;
+  min-width: 24px;
 }
 
 .status-tab:not(.active) .count {
   background: var(--bg-3);
+  color: var(--primary);
 }
 
 /* ========== عدد النتائج ========== */
@@ -364,7 +364,6 @@ img { max-width: 100%; display: block; }
   color: var(--danger);
 }
 
-/* ========== تفاصيل الطلب ========== */
 .order-details {
   display: flex;
   flex-direction: column;
@@ -439,7 +438,6 @@ img { max-width: 100%; display: block; }
   height: 12px;
 }
 
-/* ========== إجمالي الطلب ========== */
 .order-footer {
   display: flex;
   justify-content: space-between;
@@ -497,16 +495,6 @@ img { max-width: 100%; display: block; }
 .order-btn.primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(30, 58, 138, 0.35);
-}
-
-.order-btn.secondary {
-  background: var(--bg-2);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-.order-btn.secondary:hover {
-  background: var(--bg-3);
 }
 
 .order-btn.danger {
@@ -588,7 +576,7 @@ img { max-width: 100%; display: block; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ========== Modal تفاصيل الطلب ========== */
+/* ========== Modal ========== */
 .modal {
   position: fixed;
   inset: 0;
@@ -1090,6 +1078,12 @@ img { max-width: 100%; display: block; }
 .notification.error { background: var(--danger); box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3); }
 
 /* ========== Responsive ========== */
+@media (max-width: 900px) {
+  .status-tabs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 600px) {
   body { padding-bottom: 75px; }
   .bottom-nav { display: block; }
@@ -1104,11 +1098,29 @@ img { max-width: 100%; display: block; }
   
   .page-header { padding: 20px 12px 15px; }
   .page-header h1 { font-size: 1.3rem; }
+  .page-header p { font-size: 0.8rem; }
   
-  .status-tabs { padding: 0 12px; gap: 6px; margin-top: 20px; overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; padding-bottom: 8px; }
-  .status-tabs::-webkit-scrollbar { height: 3px; }
-  .status-tabs::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-  .status-tab { padding: 8px 14px; font-size: 0.75rem; flex-shrink: 0; }
+  /* التبويبات: شبكة 2 في الصف */
+  .status-tabs {
+    padding: 0 12px;
+    gap: 8px;
+    margin-top: 20px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .status-tab {
+    padding: 10px 8px;
+    font-size: 0.75rem;
+    flex-direction: row;
+    gap: 5px;
+    border-radius: 15px;
+  }
+  
+  .status-tab .count {
+    padding: 2px 6px;
+    font-size: 0.65rem;
+    min-width: 20px;
+  }
   
   .results-info { padding: 0 12px; flex-direction: column; align-items: flex-start; gap: 5px; }
   .results-title { font-size: 1rem; }
@@ -1196,13 +1208,12 @@ img { max-width: 100%; display: block; }
 
 <div class="main-content">
 
-  <!-- رأس الصفحة -->
   <div class="page-header">
     <h1>طلباتي <span>📦</span></h1>
     <p>تابع حالة طلباتك واستعرض تفاصيلها</p>
   </div>
 
-  <!-- تبويبات الحالة -->
+  <!-- تبويبات الحالة (شبكة) -->
   <div class="status-tabs" id="statusTabs">
     <button class="status-tab active" data-status="all" onclick="selectStatus('all')">
       ✨ الكل
@@ -1226,13 +1237,11 @@ img { max-width: 100%; display: block; }
     </button>
   </div>
 
-  <!-- عدد النتائج -->
   <div class="results-info">
     <div class="results-title" id="resultsTitle">جميع الطلبات</div>
     <div class="results-count"><strong id="resultsCount">0</strong> طلب</div>
   </div>
 
-  <!-- قائمة الطلبات -->
   <section class="orders-section" id="ordersSection">
     <div class="loading">⏳ جاري تحميل الطلبات...</div>
   </section>
@@ -1360,7 +1369,7 @@ img { max-width: 100%; display: block; }
   </div>
 </aside>
 
-<!-- Modal تفاصيل الطلب -->
+<!-- Modal -->
 <div class="modal" id="orderModal">
   <div class="modal-content" id="orderModalContent"></div>
 </div>
@@ -1539,7 +1548,6 @@ async function openOrderDetails(orderId) {
       
       <div class="modal-body">
         
-        <!-- معلومات الطلب -->
         <div class="modal-section">
           <div class="modal-section-title">📋 معلومات الطلب</div>
           <div class="modal-row">
@@ -1578,7 +1586,6 @@ async function openOrderDetails(orderId) {
           ` : ''}
         </div>
         
-        <!-- المنتجات -->
         <div class="modal-section">
           <div class="modal-section-title">🛍️ المنتجات (${items.length})</div>
           <div class="modal-items">
@@ -1600,7 +1607,6 @@ async function openOrderDetails(orderId) {
           </div>
         </div>
         
-        <!-- الفاتورة -->
         <div class="modal-section">
           <div class="modal-section-title">💰 الفاتورة</div>
           <div class="modal-row">
