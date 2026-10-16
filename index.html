@@ -442,8 +442,9 @@ img { max-width: 100%; display: block; }
 /* ========== العروضات ========== */
 .offers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
+  justify-content: center;
 }
 
 .offer-card {
@@ -554,11 +555,11 @@ img { max-width: 100%; display: block; }
 .offer-new-price img { width: 18px; height: 18px; }
 
 /* ========== شبكة المنتجات ========== */
+/* 4 منتجات في الصف على اللابتوب */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  justify-content: center;
 }
 
 .product-card {
@@ -1328,7 +1329,7 @@ img { max-width: 100%; display: block; }
   .offer-title { font-size: 1rem; }
   .offer-new-price { font-size: 1.1rem; }
   
-  /* ✅ على الجوال: منتجين في الصف */
+  /* ✅ على الجوال: منتجين في الصف فقط */
   .products-grid { 
     grid-template-columns: repeat(2, 1fr); 
     gap: 10px; 
@@ -1721,6 +1722,7 @@ async function loadBestSellers() {
     
     if (data.success && data.products.length > 0) {
       document.getElementById('bestSellersSection').style.display = 'block';
+      // ✅ 4 منتجات كحد أقصى
       const products = data.products.slice(0, 4);
       products.forEach(p => allProducts[p.id] = p);
       document.getElementById('bestSellersGrid').innerHTML = products.map(p => renderProductCard(p)).join('');
@@ -1738,7 +1740,8 @@ async function loadOffers() {
     
     if (data.success && data.offers.length > 0) {
       document.getElementById('offersSection').style.display = 'block';
-      document.getElementById('offersGrid').innerHTML = data.offers.map(o => {
+      // ✅ 4 عروض كحد أقصى
+      document.getElementById('offersGrid').innerHTML = data.offers.slice(0, 4).map(o => {
         const discountPercent = o.original_price > 0 
           ? Math.round(((o.original_price - o.offer_price) / o.original_price) * 100)
           : 0;
@@ -1782,6 +1785,7 @@ async function loadCategoriesWithProducts() {
     container.innerHTML = '';
 
     for (const cat of data.categories) {
+      // ✅ 4 منتجات كحد أقصى لكل فئة
       const prodRes = await fetch(`${API_URL}/products/category/${cat.id}?limit=4`);
       const prodData = await prodRes.json();
       
@@ -1902,7 +1906,6 @@ function openProductModal(id) {
   const stockClass = product.stock === 0 ? 'stock-out' : product.stock <= product.min_stock ? 'stock-low' : 'stock-ok';
   const stockText = product.stock === 0 ? '❌ نفذ' : product.stock <= product.min_stock ? `⚠️ آخر ${product.stock} قطع` : `✅ متوفر (${product.stock})`;
   
-  // زر السلة الذكي في Modal
   let cartButtonHTML = '';
   const inCart = cart.find(item => item.id === product.id);
   
@@ -1964,8 +1967,6 @@ function modalUpdateQuantity(productId, change) {
   renderCart();
   refreshAllProductCards();
   updateBadge();
-  
-  // إعادة رندر الـ Modal
   openProductModal(productId);
 }
 
