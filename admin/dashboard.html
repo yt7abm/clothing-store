@@ -61,11 +61,7 @@ img { max-width: 100%; display: block; }
   box-shadow: var(--shadow-sm);
 }
 
-.top-bar-right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
+.top-bar-right { display: flex; align-items: center; gap: 15px; }
 
 .menu-toggle {
   width: 40px;
@@ -108,11 +104,7 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
 }
 
-.top-bar-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.top-bar-left { display: flex; align-items: center; gap: 12px; }
 
 .user-badge {
   display: flex;
@@ -145,11 +137,7 @@ img { max-width: 100%; display: block; }
   font-size: 0.9rem;
 }
 
-.user-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
+.user-info { display: flex; flex-direction: column; align-items: flex-start; }
 
 .user-name {
   font-size: 0.85rem;
@@ -202,9 +190,7 @@ img { max-width: 100%; display: block; }
 .sidebar::-webkit-scrollbar { width: 4px; }
 .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-.sidebar-section {
-  margin-bottom: 25px;
-}
+.sidebar-section { margin-bottom: 25px; }
 
 .sidebar-section-title {
   font-size: 0.7rem;
@@ -242,15 +228,8 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
 }
 
-.sidebar-link .icon {
-  font-size: 1.2rem;
-  width: 24px;
-  text-align: center;
-}
-
-.sidebar-link .label {
-  flex: 1;
-}
+.sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
+.sidebar-link .label { flex: 1; }
 
 .sidebar-link .badge-count {
   background: var(--danger);
@@ -291,10 +270,7 @@ img { max-width: 100%; display: block; }
   border-radius: 50%;
 }
 
-.welcome-content {
-  position: relative;
-  z-index: 1;
-}
+.welcome-content { position: relative; z-index: 1; }
 
 .welcome-section h1 {
   font-size: 1.7rem;
@@ -302,9 +278,7 @@ img { max-width: 100%; display: block; }
   margin-bottom: 8px;
 }
 
-.welcome-section h1 span {
-  color: var(--gold);
-}
+.welcome-section h1 span { color: var(--gold); }
 
 .welcome-section p {
   font-size: 0.95rem;
@@ -383,39 +357,10 @@ img { max-width: 100%; display: block; }
   font-size: 1.5rem;
 }
 
-.stat-card.blue .stat-icon {
-  background: rgba(30, 58, 138, 0.1);
-  color: var(--primary);
-}
-.stat-card.green .stat-icon {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--success);
-}
-.stat-card.gold .stat-icon {
-  background: rgba(212, 175, 55, 0.15);
-  color: var(--gold);
-}
-.stat-card.pink .stat-icon {
-  background: rgba(236, 72, 153, 0.1);
-  color: var(--accent-2);
-}
-
-.stat-trend {
-  font-size: 0.75rem;
-  font-weight: 900;
-  padding: 4px 10px;
-  border-radius: 12px;
-}
-
-.stat-trend.up {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--success);
-}
-
-.stat-trend.down {
-  background: rgba(239, 68, 68, 0.1);
-  color: var(--danger);
-}
+.stat-card.blue .stat-icon { background: rgba(30, 58, 138, 0.1); color: var(--primary); }
+.stat-card.green .stat-icon { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+.stat-card.gold .stat-icon { background: rgba(212, 175, 55, 0.15); color: var(--gold); }
+.stat-card.pink .stat-icon { background: rgba(236, 72, 153, 0.1); color: var(--accent-2); }
 
 .stat-value {
   font-size: 1.8rem;
@@ -427,10 +372,7 @@ img { max-width: 100%; display: block; }
   gap: 5px;
 }
 
-.stat-value img {
-  width: 22px;
-  height: 22px;
-}
+.stat-value img { width: 22px; height: 22px; }
 
 .stat-label {
   color: var(--text-muted);
@@ -559,7 +501,7 @@ img { max-width: 100%; display: block; }
 
 .order-price img { width: 14px; height: 14px; }
 
-/* ========== حالة فارغة ========== */
+/* ========== Empty Message ========== */
 .empty-message {
   text-align: center;
   padding: 40px 20px;
@@ -572,11 +514,9 @@ img { max-width: 100%; display: block; }
   opacity: 0.5;
 }
 
-.empty-message p {
-  font-size: 0.9rem;
-}
+.empty-message p { font-size: 0.9rem; }
 
-/* ========== Overlay (للجوال) ========== */
+/* ========== Sidebar Overlay ========== */
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -588,6 +528,157 @@ img { max-width: 100%; display: block; }
 
 .sidebar-overlay.active { display: block; }
 
+/* ========== Modal (لتسجيل الخروج) ========== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.modal.show { display: flex; }
+
+.modal-content {
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
+  animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  padding: 22px 25px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header.danger {
+  background: linear-gradient(135deg, var(--danger), #b91c1c);
+}
+
+.modal-header h2 {
+  font-size: 1.1rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 35px 30px;
+  text-align: center;
+}
+
+.modal-body .modal-icon {
+  font-size: 4rem;
+  margin-bottom: 15px;
+  animation: wave 1.5s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  75% { transform: rotate(-15deg); }
+}
+
+.modal-body h3 {
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.modal-body p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.modal-footer {
+  padding: 18px 25px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--danger), #b91c1c);
+  color: white;
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.25);
+}
+
+.btn-danger:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(239, 68, 68, 0.35);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+}
+
+.btn-secondary:hover { background: var(--bg-3); }
+
 /* ========== Responsive ========== */
 @media (max-width: 900px) {
   .sidebar {
@@ -595,9 +686,7 @@ img { max-width: 100%; display: block; }
     box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
   }
   
-  .sidebar.open {
-    transform: translateX(0);
-  }
+  .sidebar.open { transform: translateX(0); }
   
   .main-content {
     margin-right: 0;
@@ -640,7 +729,6 @@ img { max-width: 100%; display: block; }
   .stat-value { font-size: 1.3rem; }
   .stat-value img { width: 18px; height: 18px; }
   .stat-label { font-size: 0.75rem; }
-  .stat-trend { font-size: 0.65rem; padding: 3px 8px; }
   
   .section-card { padding: 18px; border-radius: 16px; }
   .section-card-title { font-size: 0.95rem; }
@@ -651,6 +739,15 @@ img { max-width: 100%; display: block; }
   .order-details h4 { font-size: 0.85rem; }
   .order-details p { font-size: 0.7rem; }
   .order-price { font-size: 0.9rem; }
+  
+  .modal { padding: 15px; }
+  .modal-content { border-radius: 20px; }
+  .modal-header { padding: 18px 20px; }
+  .modal-body { padding: 25px 20px; }
+  .modal-body .modal-icon { font-size: 3rem; }
+  .modal-body h3 { font-size: 1.1rem; }
+  .modal-footer { flex-direction: column; padding: 15px 20px; }
+  .btn { width: 100%; }
 }
 </style>
 </head>
@@ -674,7 +771,7 @@ img { max-width: 100%; display: block; }
         <span class="user-role" id="userRole">admin</span>
       </div>
     </div>
-    <button class="logout-btn" onclick="logout()" title="تسجيل الخروج">🚪</button>
+    <button class="logout-btn" onclick="openLogoutModal()" title="تسجيل الخروج">🚪</button>
   </div>
 </header>
 
@@ -684,7 +781,6 @@ img { max-width: 100%; display: block; }
 <!-- ========== Sidebar ========== -->
 <aside class="sidebar" id="sidebar">
   
-  <!-- الأقسام الرئيسية -->
   <div class="sidebar-section">
     <div class="sidebar-section-title">الرئيسية</div>
     <a href="dashboard.html" class="sidebar-link active">
@@ -693,7 +789,6 @@ img { max-width: 100%; display: block; }
     </a>
   </div>
 
-  <!-- الأقسام (حسب الصلاحيات) -->
   <div class="sidebar-section" id="operationsSection" style="display:none;">
     <div class="sidebar-section-title">العمليات</div>
     
@@ -728,7 +823,6 @@ img { max-width: 100%; display: block; }
     </a>
   </div>
 
-  <!-- الإدارة -->
   <div class="sidebar-section" id="managementSection" style="display:none;">
     <div class="sidebar-section-title">الإدارة</div>
     
@@ -748,7 +842,6 @@ img { max-width: 100%; display: block; }
     </a>
   </div>
 
-  <!-- المتجر -->
   <div class="sidebar-section">
     <div class="sidebar-section-title">المتجر</div>
     
@@ -768,7 +861,6 @@ img { max-width: 100%; display: block; }
 <!-- ========== Main Content ========== -->
 <main class="main-content">
   
-  <!-- Welcome Section -->
   <div class="welcome-section">
     <div class="welcome-content">
       <h1>مرحباً، <span id="welcomeName">المدير</span> 👋</h1>
@@ -779,7 +871,6 @@ img { max-width: 100%; display: block; }
     </div>
   </div>
 
-  <!-- Stats Grid -->
   <div class="stats-grid" id="statsGrid">
     <div class="stat-card blue">
       <div class="stat-card-header">
@@ -807,7 +898,7 @@ img { max-width: 100%; display: block; }
       <div class="stat-label">المنتجات</div>
     </div>
     
-    <div class="stat-card pink">
+    <div class="stat-card pink" id="staffCard">
       <div class="stat-card-header">
         <div class="stat-icon">👥</div>
       </div>
@@ -816,7 +907,6 @@ img { max-width: 100%; display: block; }
     </div>
   </div>
 
-  <!-- Recent Orders -->
   <div class="section-card">
     <div class="section-card-header">
       <div class="section-card-title">
@@ -835,16 +925,37 @@ img { max-width: 100%; display: block; }
 
 </main>
 
+<!-- ========== Modal تسجيل الخروج ========== -->
+<div class="modal" id="logoutModal">
+  <div class="modal-content">
+    <div class="modal-header danger">
+      <h2>🚪 تسجيل الخروج</h2>
+      <button class="modal-close" onclick="closeLogoutModal()">✕</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="modal-icon">👋</div>
+      <h3>هل أنت متأكد؟</h3>
+      <p>سيتم تسجيل خروجك من لوحة التحكم. يمكنك الدخول مرة أخرى في أي وقت.</p>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeLogoutModal()">إلغاء</button>
+      <button class="btn btn-danger" onclick="confirmLogout()">
+        🚪 تسجيل الخروج
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
 const API_URL = '/api';
 
-// ========== متغيرات ==========
 let user = null;
 let permissions = [];
 
 // ========== التحقق من تسجيل الدخول ==========
 document.addEventListener('DOMContentLoaded', async () => {
-  // جلب بيانات المستخدم
   const userStr = localStorage.getItem('raki_user');
   const permStr = localStorage.getItem('raki_permissions');
   const token = localStorage.getItem('raki_token');
@@ -862,7 +973,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
   
-  // تطبيق البيانات
   applyUserData();
   applyPermissions();
   updateCurrentDate();
@@ -871,18 +981,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // ========== تطبيق بيانات المستخدم ==========
 function applyUserData() {
-  const avatar = document.getElementById('userAvatar');
-  const name = document.getElementById('userName');
-  const role = document.getElementById('userRole');
-  const welcomeName = document.getElementById('welcomeName');
-  
   const fullName = user.full_name || user.username;
   const initial = fullName.charAt(0).toUpperCase();
   
-  avatar.textContent = initial;
-  name.textContent = fullName;
-  role.textContent = user.is_admin ? 'المدير العام' : 'موظف';
-  welcomeName.textContent = fullName;
+  document.getElementById('userAvatar').textContent = initial;
+  document.getElementById('userName').textContent = fullName;
+  document.getElementById('userRole').textContent = user.is_admin ? 'المدير العام' : 'موظف';
+  document.getElementById('welcomeName').textContent = fullName;
 }
 
 // ========== تطبيق الصلاحيات ==========
@@ -894,44 +999,35 @@ function applyPermissions() {
   let hasOperations = false;
   let hasManagement = false;
   
-  // لكل رابط في الـ sidebar
   document.querySelectorAll('.sidebar-link[data-permission]').forEach(link => {
     const requiredPerm = link.getAttribute('data-permission');
-    
-    // التحقق من الصلاحية
     const hasPerm = isAdmin || permissions.includes(requiredPerm);
     
     if (!hasPerm) {
       link.style.display = 'none';
     } else {
-      // إظهار القسم
       const parentSection = link.closest('.sidebar-section');
       if (parentSection) {
         parentSection.style.display = 'block';
-        
         if (parentSection.id === 'operationsSection') hasOperations = true;
         if (parentSection.id === 'managementSection') hasManagement = true;
       }
     }
   });
   
-  // إخفاء الأقسام الفارغة
   if (!hasOperations) operationsSection.style.display = 'none';
   if (!hasManagement) managementSection.style.display = 'none';
   
-  // إخفاء رابط "عرض الكل" للطلبات إذا ما عنده صلاحية
   if (!isAdmin && !permissions.includes('orders.view')) {
     document.getElementById('viewAllOrders').style.display = 'none';
   }
   
-  // إخفاء بطاقة الموظفين إذا ما عنده صلاحية
   if (!isAdmin && !permissions.includes('staff.view')) {
-    const staffCard = document.querySelector('.stat-card.pink');
-    if (staffCard) staffCard.style.display = 'none';
+    document.getElementById('staffCard').style.display = 'none';
   }
 }
 
-// ========== التاريخ الحالي ==========
+// ========== التاريخ ==========
 function updateCurrentDate() {
   const date = new Date().toLocaleDateString('ar-OM', {
     weekday: 'long',
@@ -942,7 +1038,7 @@ function updateCurrentDate() {
   document.getElementById('currentDate').textContent = date;
 }
 
-// ========== جلب بيانات لوحة التحكم ==========
+// ========== جلب البيانات ==========
 async function loadDashboardData() {
   await Promise.all([
     loadStats(),
@@ -950,10 +1046,8 @@ async function loadDashboardData() {
   ]);
 }
 
-// ========== الإحصائيات ==========
 async function loadStats() {
   try {
-    // مبيعات اليوم
     const salesRes = await fetch(`${API_URL}/reports/sales`);
     const salesData = await salesRes.json();
     
@@ -968,7 +1062,6 @@ async function loadStats() {
   }
   
   try {
-    // الطلبات قيد الانتظار
     const ordersRes = await fetch(`${API_URL}/sales/online`);
     const ordersData = await ordersRes.json();
     
@@ -981,7 +1074,6 @@ async function loadStats() {
   }
   
   try {
-    // عدد المنتجات
     const productsRes = await fetch(`${API_URL}/products`);
     const productsData = await productsRes.json();
     
@@ -993,7 +1085,6 @@ async function loadStats() {
   }
   
   try {
-    // عدد الموظفين
     if (user.is_admin || permissions.includes('staff.view')) {
       const staffRes = await fetch(`${API_URL}/staff`);
       const staffData = await staffRes.json();
@@ -1007,7 +1098,6 @@ async function loadStats() {
   }
 }
 
-// ========== آخر الطلبات ==========
 async function loadRecentOrders() {
   try {
     const res = await fetch(`${API_URL}/sales/online`);
@@ -1067,13 +1157,10 @@ async function loadRecentOrders() {
   }
 }
 
-// ========== Sidebar للجوال ==========
+// ========== Sidebar ==========
 function toggleSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('sidebarOverlay');
-  
-  sidebar.classList.toggle('open');
-  overlay.classList.toggle('active');
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('active');
 }
 
 // ========== قائمة المستخدم ==========
@@ -1106,14 +1193,13 @@ function showUserMenu() {
       🏠 الصفحة الرئيسية
     </a>
     
-    <button onclick="logout()" style="width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: var(--danger); font-size: 0.85rem; font-weight: 600; transition: all 0.3s; text-align: right;" onmouseover="this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.background='transparent'">
+    <button onclick="closeUserMenu(); openLogoutModal();" style="width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: var(--danger); font-size: 0.85rem; font-weight: 600; transition: all 0.3s; text-align: right;" onmouseover="this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.background='transparent'">
       🚪 تسجيل الخروج
     </button>
   `;
   
   document.body.appendChild(menu);
   
-  // إغلاق عند الضغط خارج القائمة
   const closeMenu = (e) => {
     if (!menu.contains(e.target)) {
       menu.remove();
@@ -1123,16 +1209,44 @@ function showUserMenu() {
   setTimeout(() => document.addEventListener('click', closeMenu), 100);
 }
 
-// ========== تسجيل الخروج ==========
-function logout() {
-  if (!confirm('هل أنت متأكد من تسجيل الخروج؟')) return;
-  
+function closeUserMenu() {
+  const menus = document.querySelectorAll('body > div');
+  menus.forEach(menu => {
+    if (menu.style.position === 'fixed' && menu.style.top === '75px') {
+      menu.remove();
+    }
+  });
+}
+
+// ========== Modal تسجيل الخروج ==========
+function openLogoutModal() {
+  document.getElementById('logoutModal').classList.add('show');
+}
+
+function closeLogoutModal() {
+  document.getElementById('logoutModal').classList.remove('show');
+}
+
+function confirmLogout() {
   localStorage.removeItem('raki_token');
   localStorage.removeItem('raki_user');
   localStorage.removeItem('raki_permissions');
-  
   window.location.href = 'login.html';
 }
+
+// إغلاق Modal عند الضغط على ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeLogoutModal();
+  }
+});
+
+// إغلاق عند الضغط على خارج النافذة
+document.getElementById('logoutModal')?.addEventListener('click', (e) => {
+  if (e.target.id === 'logoutModal') {
+    closeLogoutModal();
+  }
+});
 
 // ========== Animation ==========
 const style = document.createElement('style');
