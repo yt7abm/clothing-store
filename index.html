@@ -55,7 +55,6 @@ img { max-width: 100%; display: block; }
   border-bottom: 1px solid var(--border);
   z-index: 1000;
   padding: 12px 0;
-  transition: all 0.3s;
 }
 
 .nav {
@@ -262,6 +261,108 @@ img { max-width: 100%; display: block; }
 .slider-arrow.prev { right: 15px; }
 .slider-arrow.next { left: 15px; }
 
+/* ========== المميزات ========== */
+.features-section {
+  max-width: 1200px;
+  margin: 50px auto 0;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.features-header h2 {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.features-header h2 span { color: var(--primary); }
+
+.features-header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.feature-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 25px 20px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  transform: scaleX(0);
+  transition: transform 0.4s;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+  border-color: transparent;
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
+}
+
+.feature-icon {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 15px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  transition: transform 0.4s;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+.feature-icon.blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+.feature-icon.green { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+.feature-icon.purple { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+.feature-icon.orange { background: linear-gradient(135deg, #fed7aa, #fdba74); }
+.feature-icon.pink { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+.feature-icon.gold { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+
+.feature-card h3 {
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.feature-card p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
 /* ========== الأقسام ========== */
 .section {
   max-width: 1200px;
@@ -338,7 +439,7 @@ img { max-width: 100%; display: block; }
   gap: 10px;
 }
 
-/* ========== Offres (الباقات) ========== */
+/* ========== العروضات ========== */
 .offers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -455,7 +556,7 @@ img { max-width: 100%; display: block; }
 /* ========== شبكة المنتجات ========== */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
 }
 
@@ -1122,16 +1223,6 @@ img { max-width: 100%; display: block; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ========== Animations ========== */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in-up {
-  animation: fadeInUp 0.6s ease forwards;
-}
-
 /* ========== Responsive ========== */
 @media (max-width: 900px) {
   .modal-content { grid-template-columns: 1fr; max-height: 95vh; }
@@ -1139,6 +1230,7 @@ img { max-width: 100%; display: block; }
   .slider-wrapper { aspect-ratio: 16 / 9; }
   .slide-overlay { padding: 25px 30px; }
   .offers-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
 }
 
 @media (max-width: 600px) {
@@ -1157,6 +1249,14 @@ img { max-width: 100%; display: block; }
   .slide-overlay h2 { font-size: 1.1rem; }
   .slide-overlay .btn-shop { padding: 8px 16px; font-size: 0.75rem; }
   .slider-arrow { display: none; }
+  
+  .features-section { padding: 0 12px; margin-top: 35px; }
+  .features-header h2 { font-size: 1.2rem; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .feature-card { padding: 18px 12px; border-radius: 16px; }
+  .feature-icon { width: 50px; height: 50px; font-size: 1.4rem; margin-bottom: 10px; border-radius: 15px; }
+  .feature-card h3 { font-size: 0.85rem; }
+  .feature-card p { font-size: 0.7rem; }
   
   .section { padding: 35px 12px; }
   .section-header { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
@@ -1252,6 +1352,46 @@ img { max-width: 100%; display: block; }
       <div class="slider-dots" id="sliderDots"></div>
     </div>
   </div>
+
+  <!-- مميزات المتجر -->
+  <section class="features-section">
+    <div class="features-header">
+      <h2>لماذا <span>تختارنا؟</span></h2>
+      <p>نقدم لك تجربة تسوق فريدة ومميزة</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon blue">🚚</div>
+        <h3>توصيل سريع</h3>
+        <p>خلال 24-48 ساعة لجميع مناطق السلطنة</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon green">🛡️</div>
+        <h3>ضمان الاستبدال</h3>
+        <p>خلال 7 أيام من تاريخ الاستلام</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon purple">💳</div>
+        <h3>دفع آمن</h3>
+        <p>طرق دفع متعددة وآمنة 100%</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon orange">📞</div>
+        <h3>دعم 24/7</h3>
+        <p>خدمة عملاء ممتازة في أي وقت</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon pink">✨</div>
+        <h3>منتجات أصلية</h3>
+        <p>ماركات أصلية 100% مضمونة</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon gold">🎁</div>
+        <h3>تغليف فاخر</h3>
+        <p>تغليف هدايا مجاني مع كل طلب</p>
+      </div>
+    </div>
+  </section>
 
   <!-- الأكثر مبيعاً -->
   <section class="section" id="bestSellersSection" style="display:none;">
@@ -1424,7 +1564,7 @@ img { max-width: 100%; display: block; }
 <script>
 const API_URL = '/api';
 let cart = JSON.parse(localStorage.getItem('raki_cart') || '[]');
-let allProducts = [];
+let allProducts = {};
 let currentSlide = 0;
 let slides = [];
 let slideInterval;
@@ -1517,8 +1657,9 @@ async function loadBestSellers() {
     
     if (data.success && data.products.length > 0) {
       document.getElementById('bestSellersSection').style.display = 'block';
-      document.getElementById('bestSellersGrid').innerHTML = data.products.map(p => renderProductCard(p)).join('');
-      data.products.forEach(p => allProducts[p.id] = p);
+      const products = data.products.slice(0, 2);
+      products.forEach(p => allProducts[p.id] = p);
+      document.getElementById('bestSellersGrid').innerHTML = products.map(p => renderProductCard(p)).join('');
     }
   } catch (error) {
     console.error('خطأ في تحميل الأكثر مبيعاً:', error);
@@ -1576,14 +1717,12 @@ async function loadCategoriesWithProducts() {
     const container = document.getElementById('categoriesContainer');
     container.innerHTML = '';
 
-    // لكل فئة، جلب 3 منتجات
     for (const cat of data.categories) {
-      const prodRes = await fetch(`${API_URL}/products/category/${cat.id}?limit=3`);
+      const prodRes = await fetch(`${API_URL}/products/category/${cat.id}?limit=2`);
       const prodData = await prodRes.json();
       
       if (!prodData.success || prodData.products.length === 0) continue;
 
-      // حفظ المنتجات في allProducts
       prodData.products.forEach(p => allProducts[p.id] = p);
 
       const icon = CATEGORY_ICONS[cat.name] || '🏷️';
@@ -1627,7 +1766,6 @@ function renderProductCard(p) {
     }
   }
 
-  // حالة المخزون
   let stockBadge = '';
   if (p.stock === 0) {
     stockBadge = '<span class="product-badge badge-out">نفذ</span>';
@@ -1635,18 +1773,15 @@ function renderProductCard(p) {
     stockBadge = '<span class="product-badge badge-last">آخر القطع</span>';
   }
 
-  // شارة الخصم
   let discountBadge = '';
   if (hasDiscount && discountPercent > 0) {
     discountBadge = `<span class="product-badge badge-discount">-${discountPercent}%</span>`;
   }
 
-  // زر السلة (ذكي)
   let cartButton = '';
   if (p.stock === 0) {
     cartButton = `<button class="cart-control simple" disabled style="opacity:0.5;background:#6b7280;">✕</button>`;
   } else if (inCart && inCart.quantity > 0) {
-    // بعد الإضافة: − [رقم] +
     cartButton = `
       <div class="cart-control full" onclick="event.stopPropagation()">
         <button onclick="updateQuantity(${p.id}, -1)">−</button>
@@ -1655,12 +1790,11 @@ function renderProductCard(p) {
       </div>
     `;
   } else {
-    // قبل الإضافة: +
-    cartButton = `<button class="cart-control simple" onclick="event.stopPropagation(); quickAdd(${p.id}, this)">+</button>`;
+    cartButton = `<button class="cart-control simple" onclick="event.stopPropagation(); quickAdd(${p.id})">+</button>`;
   }
 
   return `
-    <div class="product-card" onclick="openProductModal(${p.id})">
+    <div class="product-card" data-product-id="${p.id}" onclick="openProductModal(${p.id})">
       <div class="product-image">
         ${p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy">` : '👕'}
         ${stockBadge}
@@ -1764,7 +1898,7 @@ function toggleMenu() {
   setTimeout(() => document.addEventListener('click', closeMenu), 100);
 }
 
-function quickAdd(id, btn) {
+function quickAdd(id) {
   addToCart(id);
 }
 
@@ -1830,38 +1964,14 @@ function updateQuantity(id, change) {
 }
 
 function refreshAllProductCards() {
-  // تحديث بطاقات الأكثر مبيعاً
-  const bestSellersGrid = document.getElementById('bestSellersGrid');
-  if (bestSellersGrid && bestSellersGrid.children.length > 0) {
-    bestSellersGrid.querySelectorAll('.product-card').forEach(card => {
-      const productId = parseInt(card.getAttribute('data-product-id'));
-      if (productId) {
-        // إعادة رندر البطاقة
-        const product = allProducts[productId];
-        if (product) {
-          const newCard = document.createElement('div');
-          newCard.innerHTML = renderProductCard(product);
-          card.replaceWith(newCard.firstElementChild);
-        }
-      }
-    });
-  }
-  
-  // تحديث كل البطاقات في categoriesContainer
-  const container = document.getElementById('categoriesContainer');
-  if (container) {
-    container.querySelectorAll('.product-card').forEach(card => {
-      const productId = parseInt(card.getAttribute('data-product-id'));
-      if (productId) {
-        const product = allProducts[productId];
-        if (product) {
-          const newCard = document.createElement('div');
-          newCard.innerHTML = renderProductCard(product);
-          card.replaceWith(newCard.firstElementChild);
-        }
-      }
-    });
-  }
+  document.querySelectorAll('.product-card').forEach(card => {
+    const productId = parseInt(card.getAttribute('data-product-id'));
+    if (productId && allProducts[productId]) {
+      const newCard = document.createElement('div');
+      newCard.innerHTML = renderProductCard(allProducts[productId]);
+      card.replaceWith(newCard.firstElementChild);
+    }
+  });
 }
 
 function updateBadge(animate = false) {
