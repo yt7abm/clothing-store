@@ -4,992 +4,1145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>لوحة التحكم - متجر راقي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-:root { 
-  --primary: #8b5cf6; 
-  --primary-light: #a78bfa; 
-  --primary-dark: #6d28d9; 
-  --accent: #fbbf24;
-  --accent-2: #f472b6;
-  --black: #0f0b1e; 
-  --dark: #1e1b3a; 
-  --dark-2: #252047; 
-  --white: #f5f3ff; 
-  --gray: #a5a1b8; 
-  --border: rgba(139,92,246,0.2); 
-  --success: #10b981; 
-  --danger: #ef4444; 
-  --warning: #fbbf24; 
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #3b82f6;
+  --primary-dark: #1e40af;
+  --accent: #f59e0b;
+  --accent-2: #ec4899;
+  --gold: #d4af37;
+  --bg: #ffffff;
+  --bg-2: #f9fafb;
+  --bg-3: #f3f4f6;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
+  --shadow-xl: 0 20px 60px rgba(30, 58, 138, 0.15);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
 
-html, body { 
-  background: var(--black); 
-  color: var(--white); 
-  min-height: 100vh; 
+html { scroll-behavior: smooth; height: 100%; }
+
+body {
+  background: var(--bg-2);
+  color: var(--text);
+  line-height: 1.6;
   overflow-x: hidden;
-}
-
-::-webkit-scrollbar { width: 0; height: 0; display: none; }
-html { scrollbar-width: none; -ms-overflow-style: none; }
-
-/* ========== Layout ========== */
-.layout { 
-  display: grid; 
-  grid-template-columns: 250px 1fr; 
   min-height: 100vh;
 }
 
-/* ========== Overlay ========== */
-.overlay {
-  display: none;
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ========== Top Bar ========== */
+.top-bar {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 998;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  box-shadow: var(--shadow-sm);
 }
 
-.overlay.active { display: block; }
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
-/* ========== Sidebar ========== */
-.sidebar { 
-  background: var(--dark); 
-  border-left: 1px solid var(--border); 
-  height: 100vh; 
-  position: sticky; 
-  top: 0; 
+.menu-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--bg-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+  border: 1px solid var(--border);
+}
+
+.menu-toggle:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.top-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.top-logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px 6px 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.user-badge:hover {
+  background: white;
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 900;
+  font-size: 0.9rem;
+}
+
+.user-info {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  z-index: 999;
+  align-items: flex-start;
 }
 
-.sidebar-header {
-  padding: 25px 20px 18px;
-  text-align: center;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-  position: relative;
+.user-name {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.2;
 }
 
-.sidebar-logo { 
-  font-size: 1.4rem; 
-  font-weight: 900; 
-  background: linear-gradient(135deg, var(--primary), var(--accent-2)); 
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
-  background-clip: text; 
-  margin-bottom: 4px; 
+.user-role {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-weight: 600;
 }
 
-.sidebar-sub { 
-  color: var(--gray); 
-  font-size: 0.75rem; 
-}
-
-.close-sidebar {
-  display: none;
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background: rgba(239, 68, 68, 0.15);
+.logout-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
   color: var(--danger);
-  border: none;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.1rem;
-  align-items: center;
-  justify-content: center;
-}
-
-.sidebar-menu {
-  flex: 1;
-  padding: 18px 15px;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.sidebar-menu::-webkit-scrollbar { display: none; }
-
-.menu { list-style: none; }
-.menu li { margin-bottom: 6px; }
-
-.menu a { 
-  display: flex; 
-  align-items: center; 
-  gap: 12px; 
-  padding: 13px 16px; 
-  color: var(--gray); 
-  text-decoration: none; 
-  border-radius: 10px; 
-  transition: all 0.3s; 
-  font-weight: 600; 
-  font-size: 0.9rem;
-}
-
-.menu a:hover { background: rgba(139,92,246,0.1); color: var(--primary-light); }
-.menu a.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
-.menu-icon { font-size: 1.1rem; }
-
-.sidebar-footer {
-  padding: 15px;
-  border-top: 1px solid var(--border);
-  flex-shrink: 0;
-}
-
-.logout-btn { 
-  width: 100%;
-  background: rgba(239,68,68,0.15); 
-  color: var(--danger); 
-  border: 1px solid var(--danger); 
-  padding: 12px; 
-  border-radius: 10px; 
-  cursor: pointer; 
-  font-weight: 700; 
-  font-family: 'Cairo', sans-serif; 
-  transition: all 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  transition: all 0.3s;
 }
 
-.logout-btn:hover { background: var(--danger); color: white; }
+.logout-btn:hover {
+  background: var(--danger);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+}
 
-/* ========== Main ========== */
-.main { 
-  padding: 25px 35px; 
-  overflow-x: hidden;
+/* ========== Sidebar ========== */
+.sidebar {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  width: 270px;
+  height: calc(100vh - 70px);
+  background: white;
+  border-left: 1px solid var(--border);
+  padding: 20px 15px;
+  overflow-y: auto;
+  z-index: 900;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.sidebar-section {
+  margin-bottom: 25px;
+}
+
+.sidebar-section-title {
+  font-size: 0.7rem;
+  font-weight: 900;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 15px;
+  margin-bottom: 10px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+
+.sidebar-link:hover {
+  background: var(--bg-3);
+  color: var(--primary);
+  padding-right: 20px;
+}
+
+.sidebar-link.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+}
+
+.sidebar-link .icon {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+}
+
+.sidebar-link .label {
+  flex: 1;
+}
+
+.sidebar-link .badge-count {
+  background: var(--danger);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+/* ========== Main Content ========== */
+.main-content {
+  margin-right: 270px;
+  padding: 90px 25px 30px;
   min-height: 100vh;
 }
 
-/* ========== Mobile Header ========== */
-.mobile-header {
-  display: none;
+/* ========== Welcome Section ========== */
+.welcome-section {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 24px;
+  padding: 35px 30px;
+  color: white;
+  margin-bottom: 25px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.25);
+}
+
+.welcome-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+  border-radius: 50%;
+}
+
+.welcome-content {
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-section h1 {
+  font-size: 1.7rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.welcome-section h1 span {
+  color: var(--gold);
+}
+
+.welcome-section p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+.welcome-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+/* ========== Stats Grid ========== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 22px;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  opacity: 0.08;
+  transition: all 0.4s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.1);
+  border-color: transparent;
+}
+
+.stat-card.blue::before { background: var(--primary); }
+.stat-card.green::before { background: var(--success); }
+.stat-card.gold::before { background: var(--gold); }
+.stat-card.pink::before { background: var(--accent-2); }
+
+.stat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.stat-card.blue .stat-icon {
+  background: rgba(30, 58, 138, 0.1);
+  color: var(--primary);
+}
+.stat-card.green .stat-icon {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+}
+.stat-card.gold .stat-icon {
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--gold);
+}
+.stat-card.pink .stat-icon {
+  background: rgba(236, 72, 153, 0.1);
+  color: var(--accent-2);
+}
+
+.stat-trend {
+  font-size: 0.75rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.stat-trend.up {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+}
+
+.stat-trend.down {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-value img {
+  width: 22px;
+  height: 22px;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+/* ========== Section Card ========== */
+.section-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 25px;
+}
+
+.section-card-header {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  padding: 14px 16px;
-  background: linear-gradient(135deg, var(--dark), var(--dark-2));
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
-.hamburger {
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid var(--border);
-  color: var(--primary-light);
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  cursor: pointer;
-  flex-shrink: 0;
-  padding: 0;
-}
-
-.hamburger span {
-  width: 20px;
-  height: 2.5px;
-  background: var(--primary-light);
-  border-radius: 3px;
-}
-
-.mobile-title {
-  flex: 1;
-  text-align: center;
-}
-
-.mobile-title h1 {
-  font-size: 1.05rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--primary-light), var(--accent-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.mobile-title p {
-  color: var(--gray);
-  font-size: 0.72rem;
-}
-
-.user-avatar-small { 
-  width: 40px; 
-  height: 40px; 
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
-  color: white; 
-  border-radius: 50%; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  font-weight: 900; 
-  font-size: 1rem; 
-  flex-shrink: 0;
-  border: 2px solid var(--primary-light);
-}
-
-/* ========== Desktop Topbar ========== */
-.topbar { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  margin-bottom: 25px; 
-  padding-bottom: 18px; 
-  border-bottom: 1px solid var(--border); 
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.page-title { font-size: 1.6rem; font-weight: 800; }
-.page-title span { color: var(--primary-light); }
-
-.user-info { 
-  display: flex; 
-  align-items: center; 
-  gap: 12px; 
-  background: var(--dark); 
-  padding: 8px 16px; 
-  border-radius: 30px; 
-  border: 1px solid var(--border); 
-}
-
-.user-avatar { 
-  width: 38px; 
-  height: 38px; 
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
-  color: white; 
-  border-radius: 50%; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  font-weight: 900; 
-  font-size: 1rem; 
-  flex-shrink: 0;
-}
-
-.user-name { font-weight: 600; font-size: 0.9rem; }
-.user-role { color: var(--gray); font-size: 0.75rem; }
-
-/* ========== Section Title Mobile ========== */
-.section-mobile-title {
-  display: none;
+.section-card-title {
   font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--white);
-  margin-bottom: 14px;
-  padding-right: 12px;
-  border-right: 4px solid var(--primary);
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.section-mobile-title span { color: var(--primary-light); }
-
-/* ========== Stats Cards ========== */
-.stats-grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-  gap: 16px; 
-  margin-bottom: 25px; 
-}
-
-.stat-card { 
-  background: linear-gradient(135deg, var(--dark), var(--dark-2)); 
-  border: 1px solid var(--border); 
-  border-radius: 15px; 
-  padding: 20px; 
-  transition: all 0.3s; 
-  position: relative; 
-  overflow: hidden; 
+  font-weight: 900;
+  color: var(--text);
   display: flex;
   align-items: center;
-  gap: 14px;
-}
-
-.stat-icon-box {
-  width: 55px;
-  height: 55px;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
-}
-
-.stat-icon-box.primary {
-  background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.1));
-  border: 1px solid var(--primary);
-}
-
-.stat-icon-box.warning {
-  background: linear-gradient(135deg, rgba(251,191,36,0.25), rgba(251,191,36,0.1));
-  border: 1px solid var(--warning);
-}
-
-.stat-icon-box.danger {
-  background: linear-gradient(135deg, rgba(239,68,68,0.25), rgba(239,68,68,0.1));
-  border: 1px solid var(--danger);
-}
-
-.stat-icon-box.success {
-  background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(16,185,129,0.1));
-  border: 1px solid var(--success);
-}
-
-.stat-content {
-  flex: 1;
-  min-width: 0;
-  position: relative;
-  z-index: 1;
-}
-
-.stat-label { 
-  color: var(--gray); 
-  font-size: 0.78rem; 
-  font-weight: 600; 
-  margin-bottom: 4px;
-}
-
-.stat-value { 
-  font-size: 1.6rem; 
-  font-weight: 900; 
-  color: var(--primary-light);
-  line-height: 1.1;
-}
-
-.stat-value small { font-size: 0.75rem; color: var(--gray); font-weight: 500; }
-
-.stat-footer { 
-  color: var(--gray); 
-  font-size: 0.72rem; 
-  margin-top: 3px;
-}
-
-.stat-value.warning-color { color: var(--warning); }
-.stat-value.danger-color { color: var(--danger); }
-
-/* ========== Sections ========== */
-.section { 
-  background: linear-gradient(135deg, var(--dark), var(--dark-2)); 
-  border: 1px solid var(--border); 
-  border-radius: 15px; 
-  padding: 20px; 
-  margin-bottom: 20px; 
-}
-
-.section-header { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  margin-bottom: 18px; 
-  padding-bottom: 12px; 
-  border-bottom: 1px solid var(--border); 
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.section-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-light); }
-.section-link { color: var(--primary-light); text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: color 0.3s; }
-.section-link:hover { color: var(--accent-2); }
-
-/* ========== List Items (بديل الجدول على الجوال) ========== */
-.list-items {
-  display: flex;
-  flex-direction: column;
   gap: 10px;
 }
 
-.list-item {
-  background: var(--black);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  transition: all 0.3s;
-}
-
-.list-item:hover { border-color: var(--primary); }
-
-.list-rank {
+.section-card-title .icon {
   width: 38px;
   height: 38px;
-  border-radius: 10px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 900;
-  font-size: 0.95rem;
-  flex-shrink: 0;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
+  font-size: 1.1rem;
 }
 
-.list-rank.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
-.list-rank.silver { background: linear-gradient(135deg, #cbd5e1, #94a3b8); color: #1a1432; }
-.list-rank.bronze { background: linear-gradient(135deg, #f59e0b, #b45309); }
-
-.list-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.list-title {
+.section-card-link {
+  color: var(--primary);
   font-weight: 700;
-  font-size: 0.9rem;
-  margin-bottom: 4px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s;
 }
 
-.list-meta {
+.section-card-link:hover { gap: 10px; }
+
+/* ========== Recent Orders ========== */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-item {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
-  font-size: 0.78rem;
-  color: var(--gray);
+  align-items: center;
+  padding: 15px;
+  background: var(--bg-2);
+  border-radius: 14px;
+  transition: all 0.3s;
+  border: 1px solid transparent;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.list-meta strong { color: var(--primary-light); }
+.order-item:hover {
+  background: white;
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
 
-/* ========== Table ========== */
-.table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.table-wrapper::-webkit-scrollbar { height: 6px; }
-.table-wrapper::-webkit-scrollbar-track { background: var(--black); border-radius: 3px; }
-.table-wrapper::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+.order-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 200px;
+}
 
-table { width: 100%; border-collapse: collapse; min-width: 550px; }
-th, td { padding: 12px 10px; text-align: right; border-bottom: 1px solid rgba(139,92,246,0.1); }
-th { color: var(--gray); font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
-td { font-size: 0.9rem; }
-tr:hover { background: rgba(139,92,246,0.05); }
+.order-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
 
-.badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
-.badge-success { background: rgba(16,185,129,0.2); color: var(--success); }
-.badge-warning { background: rgba(251,191,36,0.2); color: var(--warning); }
-.badge-danger { background: rgba(239,68,68,0.2); color: var(--danger); }
-.badge-primary { background: rgba(139,92,246,0.2); color: var(--primary-light); }
+.order-details h4 {
+  font-size: 0.9rem;
+  font-weight: 900;
+  margin-bottom: 3px;
+}
 
-.empty-state { text-align: center; padding: 35px 20px; color: var(--gray); }
-.empty-state-icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+.order-details p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
 
-.loading { text-align: center; padding: 25px; color: var(--primary-light); }
+.order-price {
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
 
-/* ========== Mobile ========== */
+.order-price img { width: 14px; height: 14px; }
+
+/* ========== حالة فارغة ========== */
+.empty-message {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+}
+
+.empty-message .icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.empty-message p {
+  font-size: 0.9rem;
+}
+
+/* ========== Overlay (للجوال) ========== */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 850;
+  backdrop-filter: blur(3px);
+}
+
+.sidebar-overlay.active { display: block; }
+
+/* ========== Responsive ========== */
 @media (max-width: 900px) {
-  .layout { grid-template-columns: 1fr; }
-  
-  .sidebar { 
-    position: fixed; 
-    top: 0;
-    right: -280px; 
-    width: 280px; 
-    height: 100vh;
-    z-index: 999; 
-    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1); 
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+  .sidebar {
+    transform: translateX(100%);
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
   }
   
-  .sidebar.open { right: 0; }
-  .close-sidebar { display: flex; }
-  .mobile-header { display: flex; }
-  .main { padding: 15px 12px; }
-  .topbar { display: none; }
-  .section-mobile-title { display: block; }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-right: 0;
+    padding: 90px 18px 30px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  .stat-card { padding: 18px; }
+  .stat-value { font-size: 1.5rem; }
+  .stat-icon { width: 45px; height: 45px; font-size: 1.3rem; }
 }
 
 @media (max-width: 600px) {
-  .main { padding: 12px; }
+  .top-bar { height: 65px; padding: 0 15px; }
+  .top-logo { font-size: 0.95rem; }
+  .top-logo-icon { width: 36px; height: 36px; font-size: 1rem; }
   
-  .mobile-header {
-    margin-bottom: 16px;
-    padding: 12px 14px;
-    border-radius: 14px;
-  }
+  .user-info { display: none; }
+  .user-badge { padding: 6px; }
   
-  .mobile-title h1 { font-size: 0.95rem; }
-  .mobile-title p { font-size: 0.68rem; }
+  .main-content { padding: 85px 12px 25px; }
   
-  .hamburger { width: 40px; height: 40px; }
-  .hamburger span { width: 18px; height: 2px; }
-  .user-avatar-small { width: 38px; height: 38px; font-size: 0.95rem; }
+  .welcome-section { padding: 25px 20px; border-radius: 18px; }
+  .welcome-section h1 { font-size: 1.3rem; }
+  .welcome-section p { font-size: 0.85rem; }
+  .welcome-date { font-size: 0.75rem; padding: 6px 12px; }
   
-  /* Stats - عمودين مريحين */
-  .stats-grid { 
-    grid-template-columns: 1fr 1fr; 
-    gap: 10px; 
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
     margin-bottom: 18px;
   }
   
-  .stat-card { 
-    padding: 14px 12px; 
-    border-radius: 12px;
-    flex-direction: column;
-    text-align: center;
-    gap: 8px;
-  }
+  .stat-card { padding: 15px; border-radius: 16px; }
+  .stat-icon { width: 40px; height: 40px; font-size: 1.2rem; border-radius: 11px; }
+  .stat-value { font-size: 1.3rem; }
+  .stat-value img { width: 18px; height: 18px; }
+  .stat-label { font-size: 0.75rem; }
+  .stat-trend { font-size: 0.65rem; padding: 3px 8px; }
   
-  .stat-icon-box {
-    width: 45px;
-    height: 45px;
-    font-size: 1.3rem;
-    border-radius: 12px;
-  }
+  .section-card { padding: 18px; border-radius: 16px; }
+  .section-card-title { font-size: 0.95rem; }
+  .section-card-title .icon { width: 34px; height: 34px; font-size: 1rem; }
   
-  .stat-label { 
-    font-size: 0.72rem; 
-    margin-bottom: 3px;
-  }
-  
-  .stat-value { 
-    font-size: 1.3rem; 
-  }
-  
-  .stat-value small { font-size: 0.68rem; }
-  .stat-footer { font-size: 0.68rem; margin-top: 2px; }
-  
-  .section { 
-    padding: 15px; 
-    border-radius: 12px;
-    margin-bottom: 14px;
-  }
-  
-  .section-title { font-size: 1rem; }
-  .section-header { margin-bottom: 12px; padding-bottom: 10px; }
-  .section-link { font-size: 0.78rem; }
-  
-  .list-item { padding: 12px; gap: 10px; }
-  .list-rank { width: 34px; height: 34px; font-size: 0.85rem; }
-  .list-title { font-size: 0.85rem; }
-  .list-meta { font-size: 0.72rem; }
-  
-  .section-mobile-title { font-size: 1rem; margin-bottom: 12px; }
-}
-
-@media (max-width: 400px) {
-  .stat-card { padding: 12px 10px; }
-  .stat-value { font-size: 1.15rem; }
-  .stat-icon-box { width: 40px; height: 40px; font-size: 1.15rem; }
-  .stat-label { font-size: 0.68rem; }
-  .list-title { font-size: 0.8rem; }
+  .order-item { padding: 12px; }
+  .order-icon { width: 40px; height: 40px; font-size: 1.1rem; }
+  .order-details h4 { font-size: 0.85rem; }
+  .order-details p { font-size: 0.7rem; }
+  .order-price { font-size: 0.9rem; }
 }
 </style>
 </head>
 <body>
 
-<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-<div class="layout">
+<!-- ========== Top Bar ========== -->
+<header class="top-bar">
+  <div class="top-bar-right">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="top-logo">
+      <div class="top-logo-icon">✨</div>
+      لوحة التحكم
+    </div>
+  </div>
   
-  <!-- ========== Sidebar ========== -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <button class="close-sidebar" onclick="closeSidebar()">✕</button>
-      <div class="sidebar-logo">✨ متجر راقي</div>
-      <div class="sidebar-sub">لوحة التحكم</div>
-    </div>
-    
-    <div class="sidebar-menu">
-      <ul class="menu">
-        <li><a href="dashboard.html" class="active"><span class="menu-icon">📊</span> الرئيسية</a></li>
-        <li><a href="products.html"><span class="menu-icon">🛍️</span> المنتجات</a></li>
-        <li><a href="inventory.html"><span class="menu-icon">📦</span> المخزون</a></li>
-        <li><a href="cashier.html"><span class="menu-icon">💰</span> الكاشير</a></li>
-        <li><a href="orders.html"><span class="menu-icon">🌐</span> الطلبات الأونلاين</a></li>
-        <li><a href="coupons.html"><span class="menu-icon">🎟️</span> الكوبونات</a></li>
-        <li><a href="reports.html"><span class="menu-icon">📈</span> التقارير</a></li>
-      </ul>
-    </div>
-    
-    <div class="sidebar-footer">
-      <button class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</button>
-    </div>
-  </aside>
-  
-  <!-- ========== Main ========== -->
-  <main class="main">
-    
-    <!-- Mobile Header -->
-    <div class="mobile-header">
-      <button class="hamburger" onclick="openSidebar()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <div class="mobile-title">
-        <h1>✨ متجر راقي</h1>
-        <p>لوحة التحكم</p>
-      </div>
-      <div class="user-avatar-small" id="mobileAvatar">ر</div>
-    </div>
-    
-    <!-- Desktop Topbar -->
-    <div class="topbar">
-      <h1 class="page-title">لوحة <span>التحكم</span></h1>
+  <div class="top-bar-left">
+    <div class="user-badge" onclick="showUserMenu()">
+      <div class="user-avatar" id="userAvatar">A</div>
       <div class="user-info">
-        <div>
-          <div class="user-name" id="userName">الرئيس</div>
-          <div class="user-role" id="userRole">الرئيس</div>
-        </div>
-        <div class="user-avatar" id="userAvatar">ر</div>
+        <span class="user-name" id="userName">المدير</span>
+        <span class="user-role" id="userRole">admin</span>
       </div>
     </div>
-    
-    <!-- Mobile: إحصائيات العنوان -->
-    <div class="section-mobile-title">📊 <span>الإحصائيات</span></div>
-    
-    <!-- إحصائيات -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon-box primary">💰</div>
-        <div class="stat-content">
-          <div class="stat-label">مبيعات اليوم</div>
-          <div class="stat-value" id="todaySales">0.000 <small>ر.ع</small></div>
-          <div class="stat-footer" id="todayCount">0 فاتورة</div>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon-box success">📅</div>
-        <div class="stat-content">
-          <div class="stat-label">مبيعات الشهر</div>
-          <div class="stat-value" id="monthSales">0.000 <small>ر.ع</small></div>
-          <div class="stat-footer" id="monthCount">0 فاتورة</div>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon-box warning">🌐</div>
-        <div class="stat-content">
-          <div class="stat-label">طلبات أونلاين</div>
-          <div class="stat-value warning-color" id="pendingOrders">0</div>
-          <div class="stat-footer">تحتاج مراجعة</div>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon-box danger">⚠️</div>
-        <div class="stat-content">
-          <div class="stat-label">منتجات ناقصة</div>
-          <div class="stat-value danger-color" id="lowStock">0</div>
-          <div class="stat-footer">تحتاج تخزين</div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- أفضل المنتجات -->
-    <div class="section-mobile-title">🏆 <span>الأفضل مبيعاً</span></div>
-    <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">🏆 أفضل المنتجات مبيعاً</h2>
-        <a href="reports.html" class="section-link">عرض الكل ←</a>
-      </div>
-      <div id="topProducts">
-        <div class="loading">⏳ جاري التحميل...</div>
-      </div>
-    </div>
-    
-    <!-- آخر الفواتير -->
-    <div class="section-mobile-title">🧾 <span>آخر الفواتير</span></div>
-    <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">🧾 آخر الفواتير</h2>
-        <a href="cashier.html" class="section-link">فتح الكاشير ←</a>
-      </div>
-      <div id="recentSales">
-        <div class="loading">⏳ جاري التحميل...</div>
-      </div>
-    </div>
-    
-  </main>
+    <button class="logout-btn" onclick="logout()" title="تسجيل الخروج">🚪</button>
+  </div>
+</header>
+
+<!-- Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- ========== Sidebar ========== -->
+<aside class="sidebar" id="sidebar">
   
-</div>
+  <!-- الأقسام الرئيسية -->
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">الرئيسية</div>
+    <a href="dashboard.html" class="sidebar-link active">
+      <span class="icon">📊</span>
+      <span class="label">لوحة التحكم</span>
+    </a>
+  </div>
+
+  <!-- الأقسام (حسب الصلاحيات) -->
+  <div class="sidebar-section" id="operationsSection" style="display:none;">
+    <div class="sidebar-section-title">العمليات</div>
+    
+    <a href="products.html" class="sidebar-link" data-permission="products.view">
+      <span class="icon">👕</span>
+      <span class="label">المنتجات</span>
+    </a>
+    
+    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
+      <span class="icon">🏷️</span>
+      <span class="label">الفئات</span>
+    </a>
+    
+    <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
+      <span class="icon">📦</span>
+      <span class="label">المخزون</span>
+    </a>
+    
+    <a href="orders.html" class="sidebar-link" data-permission="orders.view">
+      <span class="icon">🛍️</span>
+      <span class="label">الطلبات</span>
+    </a>
+    
+    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
+      <span class="icon">💰</span>
+      <span class="label">الكاشير</span>
+    </a>
+    
+    <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
+      <span class="icon">🎟️</span>
+      <span class="label">الكوبونات</span>
+    </a>
+  </div>
+
+  <!-- الإدارة -->
+  <div class="sidebar-section" id="managementSection" style="display:none;">
+    <div class="sidebar-section-title">الإدارة</div>
+    
+    <a href="reports.html" class="sidebar-link" data-permission="reports.view">
+      <span class="icon">📈</span>
+      <span class="label">التقارير</span>
+    </a>
+    
+    <a href="banners.html" class="sidebar-link" data-permission="banners.view">
+      <span class="icon">🖼️</span>
+      <span class="label">البانرات</span>
+    </a>
+    
+    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
+      <span class="icon">👥</span>
+      <span class="label">الموظفين</span>
+    </a>
+  </div>
+
+  <!-- المتجر -->
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">المتجر</div>
+    
+    <a href="../index.html" class="sidebar-link">
+      <span class="icon">🏠</span>
+      <span class="label">الصفحة الرئيسية</span>
+    </a>
+    
+    <a href="../frontend/search.html" class="sidebar-link">
+      <span class="icon">🔍</span>
+      <span class="label">البحث والفئات</span>
+    </a>
+  </div>
+
+</aside>
+
+<!-- ========== Main Content ========== -->
+<main class="main-content">
+  
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <div class="welcome-content">
+      <h1>مرحباً، <span id="welcomeName">المدير</span> 👋</h1>
+      <p>أهلاً بك في لوحة التحكم. تابع أداء متجرك وإدارة العمليات من هنا.</p>
+      <div class="welcome-date">
+        📅 <span id="currentDate">جاري التحميل...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-card blue">
+      <div class="stat-card-header">
+        <div class="stat-icon">💰</div>
+      </div>
+      <div class="stat-value" id="todaySales">
+        0.000 <img src="/images/omr-dark.png" alt="ر.ع">
+      </div>
+      <div class="stat-label">مبيعات اليوم</div>
+    </div>
+    
+    <div class="stat-card green">
+      <div class="stat-card-header">
+        <div class="stat-icon">📦</div>
+      </div>
+      <div class="stat-value" id="pendingOrders">0</div>
+      <div class="stat-label">طلبات قيد الانتظار</div>
+    </div>
+    
+    <div class="stat-card gold">
+      <div class="stat-card-header">
+        <div class="stat-icon">👕</div>
+      </div>
+      <div class="stat-value" id="totalProducts">0</div>
+      <div class="stat-label">المنتجات</div>
+    </div>
+    
+    <div class="stat-card pink">
+      <div class="stat-card-header">
+        <div class="stat-icon">👥</div>
+      </div>
+      <div class="stat-value" id="totalStaff">0</div>
+      <div class="stat-label">الموظفين</div>
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="section-card">
+    <div class="section-card-header">
+      <div class="section-card-title">
+        <span class="icon">🛍️</span>
+        آخر الطلبات
+      </div>
+      <a href="orders.html" class="section-card-link" id="viewAllOrders">عرض الكل ←</a>
+    </div>
+    <div class="orders-list" id="recentOrders">
+      <div class="empty-message">
+        <div class="icon">⏳</div>
+        <p>جاري تحميل الطلبات...</p>
+      </div>
+    </div>
+  </div>
+
+</main>
 
 <script>
 const API_URL = '/api';
-const token = localStorage.getItem('raki_token');
-const user = JSON.parse(localStorage.getItem('raki_user') || '{}');
 
-if (!token) {
-  window.location.href = 'login.html';
-}
+// ========== متغيرات ==========
+let user = null;
+let permissions = [];
 
-// عرض بيانات المستخدم - "الرئيس"
-const displayName = (!user.full_name || user.full_name === 'المدير العام') ? 'الرئيس' : user.full_name;
-document.getElementById('userName').textContent = displayName;
-document.getElementById('userAvatar').textContent = displayName.charAt(0);
-document.getElementById('mobileAvatar').textContent = displayName.charAt(0);
-document.getElementById('userRole').textContent = 'الرئيس';
-
-// ========================================
-// Sidebar على الجوال
-// ========================================
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('open');
-  document.getElementById('overlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
-
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 900) closeSidebar();
+// ========== التحقق من تسجيل الدخول ==========
+document.addEventListener('DOMContentLoaded', async () => {
+  // جلب بيانات المستخدم
+  const userStr = localStorage.getItem('raki_user');
+  const permStr = localStorage.getItem('raki_permissions');
+  const token = localStorage.getItem('raki_token');
+  
+  if (!userStr || !token) {
+    window.location.href = 'login.html';
+    return;
+  }
+  
+  try {
+    user = JSON.parse(userStr);
+    permissions = JSON.parse(permStr || '[]');
+  } catch (e) {
+    window.location.href = 'login.html';
+    return;
+  }
+  
+  // تطبيق البيانات
+  applyUserData();
+  applyPermissions();
+  updateCurrentDate();
+  loadDashboardData();
 });
 
-function logout() {
-  if (confirm('هل تريد تسجيل الخروج؟')) {
-    localStorage.removeItem('raki_token');
-    localStorage.removeItem('raki_user');
-    window.location.href = 'login.html';
+// ========== تطبيق بيانات المستخدم ==========
+function applyUserData() {
+  const avatar = document.getElementById('userAvatar');
+  const name = document.getElementById('userName');
+  const role = document.getElementById('userRole');
+  const welcomeName = document.getElementById('welcomeName');
+  
+  const fullName = user.full_name || user.username;
+  const initial = fullName.charAt(0).toUpperCase();
+  
+  avatar.textContent = initial;
+  name.textContent = fullName;
+  role.textContent = user.is_admin ? 'المدير العام' : 'موظف';
+  welcomeName.textContent = fullName;
+}
+
+// ========== تطبيق الصلاحيات ==========
+function applyPermissions() {
+  const isAdmin = user.is_admin;
+  const operationsSection = document.getElementById('operationsSection');
+  const managementSection = document.getElementById('managementSection');
+  
+  let hasOperations = false;
+  let hasManagement = false;
+  
+  // لكل رابط في الـ sidebar
+  document.querySelectorAll('.sidebar-link[data-permission]').forEach(link => {
+    const requiredPerm = link.getAttribute('data-permission');
+    
+    // التحقق من الصلاحية
+    const hasPerm = isAdmin || permissions.includes(requiredPerm);
+    
+    if (!hasPerm) {
+      link.style.display = 'none';
+    } else {
+      // إظهار القسم
+      const parentSection = link.closest('.sidebar-section');
+      if (parentSection) {
+        parentSection.style.display = 'block';
+        
+        if (parentSection.id === 'operationsSection') hasOperations = true;
+        if (parentSection.id === 'managementSection') hasManagement = true;
+      }
+    }
+  });
+  
+  // إخفاء الأقسام الفارغة
+  if (!hasOperations) operationsSection.style.display = 'none';
+  if (!hasManagement) managementSection.style.display = 'none';
+  
+  // إخفاء رابط "عرض الكل" للطلبات إذا ما عنده صلاحية
+  if (!isAdmin && !permissions.includes('orders.view')) {
+    document.getElementById('viewAllOrders').style.display = 'none';
+  }
+  
+  // إخفاء بطاقة الموظفين إذا ما عنده صلاحية
+  if (!isAdmin && !permissions.includes('staff.view')) {
+    const staffCard = document.querySelector('.stat-card.pink');
+    if (staffCard) staffCard.style.display = 'none';
   }
 }
 
-// ========================================
-// تحميل الإحصائيات
-// ========================================
+// ========== التاريخ الحالي ==========
+function updateCurrentDate() {
+  const date = new Date().toLocaleDateString('ar-OM', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  document.getElementById('currentDate').textContent = date;
+}
+
+// ========== جلب بيانات لوحة التحكم ==========
+async function loadDashboardData() {
+  await Promise.all([
+    loadStats(),
+    loadRecentOrders()
+  ]);
+}
+
+// ========== الإحصائيات ==========
 async function loadStats() {
   try {
+    // مبيعات اليوم
     const salesRes = await fetch(`${API_URL}/reports/sales`);
     const salesData = await salesRes.json();
     
     if (salesData.success) {
-      document.getElementById('todaySales').innerHTML = 
-        `${salesData.today.total.toFixed(2)} <small>ر.ع</small>`;
-      document.getElementById('todayCount').textContent = 
-        `${salesData.today.count} فاتورة`;
-      document.getElementById('monthSales').innerHTML = 
-        `${salesData.thisMonth.total.toFixed(2)} <small>ر.ع</small>`;
-      document.getElementById('monthCount').textContent = 
-        `${salesData.thisMonth.count} فاتورة`;
+      const today = salesData.today || { total: 0 };
+      document.getElementById('todaySales').innerHTML = `
+        ${(today.total || 0).toFixed(3)} <img src="/images/omr-dark.png" alt="ر.ع">
+      `;
     }
+  } catch (error) {
+    console.error('خطأ في جلب المبيعات:', error);
+  }
+  
+  try {
+    // الطلبات قيد الانتظار
+    const ordersRes = await fetch(`${API_URL}/sales/online`);
+    const ordersData = await ordersRes.json();
     
-    try {
-      const ordersRes = await fetch(`${API_URL}/sales/online`);
-      const ordersData = await ordersRes.json();
+    if (ordersData.success) {
+      const pending = ordersData.orders.filter(o => o.status === 'pending').length;
+      document.getElementById('pendingOrders').textContent = pending;
+    }
+  } catch (error) {
+    console.error('خطأ في جلب الطلبات:', error);
+  }
+  
+  try {
+    // عدد المنتجات
+    const productsRes = await fetch(`${API_URL}/products`);
+    const productsData = await productsRes.json();
+    
+    if (productsData.success) {
+      document.getElementById('totalProducts').textContent = productsData.products.length;
+    }
+  } catch (error) {
+    console.error('خطأ في جلب المنتجات:', error);
+  }
+  
+  try {
+    // عدد الموظفين
+    if (user.is_admin || permissions.includes('staff.view')) {
+      const staffRes = await fetch(`${API_URL}/staff`);
+      const staffData = await staffRes.json();
       
-      if (ordersData.success) {
-        const pending = ordersData.orders.filter(o => o.status === 'pending').length;
-        document.getElementById('pendingOrders').textContent = pending;
+      if (staffData.success) {
+        document.getElementById('totalStaff').textContent = staffData.staff.length;
       }
-    } catch (e) {
-      document.getElementById('pendingOrders').textContent = '0';
-    }
-    
-    const invRes = await fetch(`${API_URL}/inventory`);
-    const invData = await invRes.json();
-    
-    if (invData.success) {
-      document.getElementById('lowStock').textContent = invData.lowStock.length;
     }
   } catch (error) {
-    console.error('خطأ في تحميل الإحصائيات:', error);
+    console.error('خطأ في جلب الموظفين:', error);
   }
 }
 
-// ========================================
-// أفضل المنتجات - يستخدم list-items للجوال
-// ========================================
-async function loadTopProducts() {
+// ========== آخر الطلبات ==========
+async function loadRecentOrders() {
   try {
-    const res = await fetch(`${API_URL}/reports/top-products`);
+    const res = await fetch(`${API_URL}/sales/online`);
     const data = await res.json();
     
-    const container = document.getElementById('topProducts');
-    
-    if (!data.success || data.products.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state-icon">📊</div>
-          <p>لا توجد مبيعات بعد</p>
+    if (!data.success || !data.orders || data.orders.length === 0) {
+      document.getElementById('recentOrders').innerHTML = `
+        <div class="empty-message">
+          <div class="icon">📭</div>
+          <p>لا توجد طلبات حالياً</p>
         </div>
       `;
       return;
     }
     
-    // عرض قائمة على الجوال و جدول على الكمبيوتر
-    const isMobile = window.innerWidth <= 600;
+    const recent = data.orders.slice(0, 5);
     
-    if (isMobile) {
-      container.innerHTML = `
-        <div class="list-items">
-          ${data.products.slice(0, 5).map((p, i) => {
-            const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
-            return `
-              <div class="list-item">
-                <div class="list-rank ${rankClass}">${i + 1}</div>
-                <div class="list-content">
-                  <div class="list-title">${p.product_name}</div>
-                  <div class="list-meta">
-                    <span>الكمية: <strong>${p.total_sold}</strong></span>
-                    <span><strong>${p.revenue.toFixed(2)}</strong> ر.ع</span>
-                  </div>
-                </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-      `;
-    } else {
-      container.innerHTML = `
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>المنتج</th>
-                <th>الكمية المباعة</th>
-                <th>الإيرادات</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${data.products.map((p, i) => `
-                <tr>
-                  <td><span class="badge badge-primary">${i + 1}</span></td>
-                  <td>${p.product_name}</td>
-                  <td>${p.total_sold}</td>
-                  <td style="color:var(--primary-light);font-weight:700;white-space:nowrap;">${p.revenue.toFixed(2)} ر.ع</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
-    }
-  } catch (error) {
-    document.getElementById('topProducts').innerHTML = 
-      '<div class="empty-state">❌ خطأ في التحميل</div>';
-  }
-}
-
-// ========================================
-// آخر الفواتير - يستخدم list-items للجوال
-// ========================================
-async function loadRecentSales() {
-  try {
-    const res = await fetch(`${API_URL}/sales`);
-    const data = await res.json();
-    
-    const container = document.getElementById('recentSales');
-    
-    if (!data.success || data.sales.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state-icon">🧾</div>
-          <p>لا توجد فواتير بعد</p>
-        </div>
-      `;
-      return;
-    }
-    
-    const recent = data.sales.slice(0, 5);
-    const isMobile = window.innerWidth <= 600;
-    
-    if (isMobile) {
-      container.innerHTML = `
-        <div class="list-items">
-          ${recent.map(s => `
-            <div class="list-item">
-              <div class="list-rank ${s.sale_type === 'online' ? '' : 'gold'}" style="font-size:1.1rem;">
-                ${s.sale_type === 'online' ? '🌐' : '💰'}
-              </div>
-              <div class="list-content">
-                <div class="list-title">${s.customer_name || 'زائر'}</div>
-                <div class="list-meta">
-                  <span style="font-size:0.7rem;font-family:monospace;color:var(--gray);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px;">${s.invoice_number}</span>
-                  <span><strong>${s.final_total.toFixed(2)}</strong> ر.ع</span>
-                </div>
-              </div>
+    document.getElementById('recentOrders').innerHTML = recent.map(order => {
+      const date = new Date(order.created_at).toLocaleDateString('ar-OM', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      const statusIcon = {
+        pending: '⏳',
+        confirmed: '✅',
+        completed: '🎉',
+        cancelled: '❌'
+      }[order.status] || '⏳';
+      
+      return `
+        <div class="order-item">
+          <div class="order-info">
+            <div class="order-icon">${statusIcon}</div>
+            <div class="order-details">
+              <h4>${order.invoice_number}</h4>
+              <p>${order.customer_name || 'عميل'} • ${date}</p>
             </div>
-          `).join('')}
+          </div>
+          <div class="order-price">
+            ${order.final_total.toFixed(3)}
+            <img src="/images/omr-dark.png" alt="ر.ع">
+          </div>
         </div>
       `;
-    } else {
-      container.innerHTML = `
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>رقم الفاتورة</th>
-                <th>العميل</th>
-                <th>النوع</th>
-                <th>الإجمالي</th>
-                <th>التاريخ</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${recent.map(s => `
-                <tr>
-                  <td style="font-family:monospace;font-size:0.8rem;white-space:nowrap;">${s.invoice_number}</td>
-                  <td>${s.customer_name || 'زائر'}</td>
-                  <td>
-                    ${s.sale_type === 'online' 
-                      ? '<span class="badge badge-warning">🌐 أونلاين</span>' 
-                      : '<span class="badge badge-success">💰 كاشير</span>'}
-                  </td>
-                  <td style="color:var(--primary-light);font-weight:700;white-space:nowrap;">${s.final_total.toFixed(2)} ر.ع</td>
-                  <td style="font-size:0.8rem;color:var(--gray);white-space:nowrap;">${formatDate(s.created_at)}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
-    }
+    }).join('');
+    
   } catch (error) {
-    document.getElementById('recentSales').innerHTML = 
-      '<div class="empty-state">❌ خطأ في التحميل</div>';
+    document.getElementById('recentOrders').innerHTML = `
+      <div class="empty-message">
+        <div class="icon">❌</div>
+        <p>تعذّر تحميل الطلبات</p>
+      </div>
+    `;
   }
 }
 
-function formatDate(dateStr) {
-  const date = new Date(dateStr);
-  return date.toLocaleString('ar-OM', { 
-    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
-  });
+// ========== Sidebar للجوال ==========
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('active');
 }
 
-// ========================================
-// التشغيل
-// ========================================
-loadStats();
-loadTopProducts();
-loadRecentSales();
+// ========== قائمة المستخدم ==========
+function showUserMenu() {
+  const menu = document.createElement('div');
+  menu.style.cssText = `
+    position: fixed;
+    top: 75px;
+    left: 20px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 15px;
+    min-width: 220px;
+    z-index: 3000;
+    border: 1px solid var(--border);
+    animation: slideDown 0.3s ease;
+  `;
+  
+  menu.innerHTML = `
+    <div style="text-align: center; padding-bottom: 15px; border-bottom: 1px solid var(--border); margin-bottom: 12px;">
+      <div style="width: 60px; height: 60px; margin: 0 auto 10px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-light)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 900;">
+        ${(user.full_name || user.username).charAt(0).toUpperCase()}
+      </div>
+      <div style="font-weight: 900; font-size: 0.95rem;">${user.full_name || user.username}</div>
+      <div style="font-size: 0.75rem; color: var(--text-muted);">${user.is_admin ? 'المدير العام' : 'موظف'}</div>
+    </div>
+    
+    <a href="../index.html" style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: var(--text); font-size: 0.85rem; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.background='var(--bg-2)'" onmouseout="this.style.background='transparent'">
+      🏠 الصفحة الرئيسية
+    </a>
+    
+    <button onclick="logout()" style="width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: var(--danger); font-size: 0.85rem; font-weight: 600; transition: all 0.3s; text-align: right;" onmouseover="this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.background='transparent'">
+      🚪 تسجيل الخروج
+    </button>
+  `;
+  
+  document.body.appendChild(menu);
+  
+  // إغلاق عند الضغط خارج القائمة
+  const closeMenu = (e) => {
+    if (!menu.contains(e.target)) {
+      menu.remove();
+      document.removeEventListener('click', closeMenu);
+    }
+  };
+  setTimeout(() => document.addEventListener('click', closeMenu), 100);
+}
 
-// إعادة التحميل عند تغيير حجم الشاشة
-let resizeTimer;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    loadTopProducts();
-    loadRecentSales();
-  }, 300);
-});
+// ========== تسجيل الخروج ==========
+function logout() {
+  if (!confirm('هل أنت متأكد من تسجيل الخروج؟')) return;
+  
+  localStorage.removeItem('raki_token');
+  localStorage.removeItem('raki_user');
+  localStorage.removeItem('raki_permissions');
+  
+  window.location.href = 'login.html';
+}
 
-setInterval(loadStats, 30000);
+// ========== Animation ==========
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+`;
+document.head.appendChild(style);
 </script>
 
 </body>
