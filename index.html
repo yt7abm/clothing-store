@@ -1326,7 +1326,6 @@ img { max-width: 100%; display: block; }
     gap: 10px; 
   }
   
-  /* إخفاء المنتج الثالث والرابع على الجوال */
   .products-grid .product-card:nth-child(n+3) {
     display: none;
   }
@@ -1403,7 +1402,7 @@ img { max-width: 100%; display: block; }
       <button class="icon-btn" onclick="toggleMenu()" title="القائمة">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
-      <a href="account.html" class="icon-btn" title="حسابي">
+      <a href="frontend/account.html" class="icon-btn" title="حسابي">
         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </a>
     </div>
@@ -1412,7 +1411,7 @@ img { max-width: 100%; display: block; }
       متجر راقي
     </a>
     <div class="nav-left">
-      <a href="search.html" class="icon-btn" title="البحث">
+      <a href="frontend/search.html" class="icon-btn" title="البحث">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </a>
       <button class="icon-btn" onclick="toggleCart()" title="السلة">
@@ -1484,7 +1483,7 @@ img { max-width: 100%; display: block; }
           <p>المنتجات الأكثر طلباً من عملائنا</p>
         </div>
       </div>
-      <a href="search.html" class="view-all">عرض الكل ←</a>
+      <a href="frontend/search.html" class="view-all">عرض الكل ←</a>
     </div>
     <div class="products-grid" id="bestSellersGrid">
       <div class="loading">⏳ جاري التحميل...</div>
@@ -1501,7 +1500,7 @@ img { max-width: 100%; display: block; }
           <p>باقات حصرية بأسعار مميزة</p>
         </div>
       </div>
-      <a href="search.html" class="view-all">عرض الكل ←</a>
+      <a href="frontend/search.html" class="view-all">عرض الكل ←</a>
     </div>
     <div class="offers-grid" id="offersGrid">
       <div class="loading">⏳ جاري التحميل...</div>
@@ -1532,14 +1531,14 @@ img { max-width: 100%; display: block; }
       <div class="footer-col">
         <h4>روابط سريعة</h4>
         <a href="index.html">الرئيسية</a>
-        <a href="search.html">البحث والفئات</a>
-        <a href="orders.html">طلباتي</a>
+        <a href="frontend/search.html">البحث والفئات</a>
+        <a href="frontend/orders.html">طلباتي</a>
       </div>
       <div class="footer-col">
         <h4>حسابي</h4>
-        <a href="account.html">حسابي</a>
+        <a href="frontend/account.html">حسابي</a>
         <a href="admin/login.html">الموظفين</a>
-        <a href="orders.html">الطلبات</a>
+        <a href="frontend/orders.html">الطلبات</a>
       </div>
       <div class="footer-col">
         <h4>تواصل معنا</h4>
@@ -1592,7 +1591,7 @@ img { max-width: 100%; display: block; }
       <span class="icon">🏠</span>
       <span>الرئيسية</span>
     </a>
-    <a href="search.html" class="bottom-nav-item">
+    <a href="frontend/search.html" class="bottom-nav-item">
       <span class="icon">🔍</span>
       <span>البحث</span>
     </a>
@@ -1601,11 +1600,11 @@ img { max-width: 100%; display: block; }
       <span>السلة</span>
       <span class="badge" id="bottomCartBadge"></span>
     </button>
-    <a href="orders.html" class="bottom-nav-item">
+    <a href="frontend/orders.html" class="bottom-nav-item">
       <span class="icon">📦</span>
       <span>طلباتي</span>
     </a>
-    <a href="account.html" class="bottom-nav-item">
+    <a href="frontend/account.html" class="bottom-nav-item">
       <span class="icon">👤</span>
       <span>حسابي</span>
     </a>
@@ -1651,10 +1650,10 @@ let slides = [];
 let slideInterval;
 
 const PLACEHOLDER_BANNERS = [
-  { image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&h=600&fit=crop', title: 'مجموعة جديدة', link: 'search.html' },
-  { image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=1600&h=600&fit=crop', title: 'أزياء نسائية', link: 'search.html' },
-  { image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&h=600&fit=crop', title: 'تخفيضات حصرية', link: 'search.html' },
-  { image: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&h=600&fit=crop', title: 'إكسسوارات فاخرة', link: 'search.html' }
+  { image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&h=600&fit=crop', title: 'مجموعة جديدة', link: 'frontend/search.html' },
+  { image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=1600&h=600&fit=crop', title: 'أزياء نسائية', link: 'frontend/search.html' },
+  { image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&h=600&fit=crop', title: 'تخفيضات حصرية', link: 'frontend/search.html' },
+  { image: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&h=600&fit=crop', title: 'إكسسوارات فاخرة', link: 'frontend/search.html' }
 ];
 
 const CATEGORY_ICONS = {
@@ -1670,7 +1669,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCart();
 });
 
-// ========== البانرات ==========
 async function loadBanners() {
   try {
     const res = await fetch(`${API_URL}/banners/active`);
@@ -1730,7 +1728,6 @@ function goToSlide(index) {
   startSlider();
 }
 
-// ========== الأكثر مبيعاً ==========
 async function loadBestSellers() {
   try {
     const res = await fetch(`${API_URL}/products/best-sellers`);
@@ -1747,7 +1744,6 @@ async function loadBestSellers() {
   }
 }
 
-// ========== العروضات ==========
 async function loadOffers() {
   try {
     const res = await fetch(`${API_URL}/offers/active`);
@@ -1787,7 +1783,6 @@ async function loadOffers() {
   }
 }
 
-// ========== الفئات مع المنتجات ==========
 async function loadCategoriesWithProducts() {
   try {
     const res = await fetch(`${API_URL}/categories`);
@@ -1819,7 +1814,7 @@ async function loadCategoriesWithProducts() {
               <p>تشكيلة مختارة من ${cat.name}</p>
             </div>
           </div>
-          <a href="search.html?category=${cat.id}" class="view-all">عرض الكل ←</a>
+          <a href="frontend/search.html?category=${cat.id}" class="view-all">عرض الكل ←</a>
         </div>
         <div class="products-grid">
           ${prodData.products.map(p => renderProductCard(p)).join('')}
@@ -1832,7 +1827,6 @@ async function loadCategoriesWithProducts() {
   }
 }
 
-// ========== بطاقة المنتج ==========
 function renderProductCard(p) {
   const inCart = cart.find(item => item.id === p.id);
   const hasDiscount = p.discount_type && p.discount_value > 0;
@@ -1899,7 +1893,6 @@ function renderProductCard(p) {
   `;
 }
 
-// ========== Modal ==========
 function openProductModal(id) {
   const product = allProducts[id];
   if (!product) return;
@@ -1992,7 +1985,6 @@ document.getElementById('productModal')?.addEventListener('click', (e) => {
   if (e.target.id === 'productModal') closeProductModal();
 });
 
-// ========== السلة ==========
 function toggleCart() {
   document.getElementById('cartSidebar').classList.toggle('open');
   document.getElementById('cartOverlay').classList.toggle('active');
@@ -2007,9 +1999,9 @@ function toggleMenu() {
       <button onclick="this.closest('div').remove()" style="width:34px;height:34px;border-radius:50%;background:#f3f4f6;font-size:1rem;cursor:pointer;">✕</button>
     </div>
     <a href="index.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">🏠 الرئيسية</a>
-    <a href="search.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">🔍 البحث والفئات</a>
-    <a href="orders.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">📦 طلباتي</a>
-    <a href="account.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">👤 حسابي</a>
+    <a href="frontend/search.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">🔍 البحث والفئات</a>
+    <a href="frontend/orders.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">📦 طلباتي</a>
+    <a href="frontend/account.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">👤 حسابي</a>
     <div style="height:1px;background:#e5e7eb;margin:15px 0;"></div>
     <a href="admin/login.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1e3a8a;font-weight:700;background:#f0f4ff;">👥 الموظفين</a>
   `;
