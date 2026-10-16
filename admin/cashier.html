@@ -86,6 +86,8 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
 }
 
+.top-bar-left { display: flex; align-items: center; gap: 10px; }
+
 .clock-box {
   display: flex;
   align-items: center;
@@ -120,6 +122,9 @@ img { max-width: 100%; display: block; }
   z-index: 900;
   transition: transform 0.3s;
 }
+
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
 .sidebar-section { margin-bottom: 25px; }
 
@@ -167,8 +172,9 @@ img { max-width: 100%; display: block; }
   padding: 80px 20px 20px;
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 20px;
+  grid-template-columns: 1fr 420px;
+  gap: 18px;
+  align-items: start;
 }
 
 /* ========== Products Panel ========== */
@@ -180,13 +186,11 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 100px);
+  height: calc(100vh - 100px);
+  overflow: hidden;
 }
 
-/* Search */
-.search-section {
-  margin-bottom: 15px;
-}
+.search-section { margin-bottom: 15px; }
 
 .search-box {
   position: relative;
@@ -194,7 +198,7 @@ img { max-width: 100%; display: block; }
 
 .search-box input {
   width: 100%;
-  padding: 15px 50px 15px 18px;
+  padding: 14px 50px 14px 18px;
   font-size: 1rem;
   font-family: 'Cairo', sans-serif;
   background: var(--bg-2);
@@ -221,13 +225,12 @@ img { max-width: 100%; display: block; }
   color: var(--primary);
 }
 
-/* Categories Filter */
 .cat-filter {
   display: flex;
   gap: 8px;
   overflow-x: auto;
   padding-bottom: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   scrollbar-width: thin;
 }
 
@@ -252,9 +255,9 @@ img { max-width: 100%; display: block; }
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: white;
   border-color: var(--primary);
+  box-shadow: 0 4px 15px rgba(30, 58, 138, 0.25);
 }
 
-/* Products Grid */
 .products-list {
   flex: 1;
   overflow-y: auto;
@@ -262,7 +265,7 @@ img { max-width: 100%; display: block; }
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 10px;
   align-content: start;
-  padding: 5px;
+  padding: 5px 5px 5px 0;
 }
 
 .products-list::-webkit-scrollbar { width: 6px; }
@@ -324,9 +327,7 @@ img { max-width: 100%; display: block; }
 .product-item-stock.low { background: rgba(245, 158, 11, 0.95); }
 .product-item-stock.out { background: rgba(239, 68, 68, 0.95); }
 
-.product-item-info {
-  padding: 8px;
-}
+.product-item-info { padding: 8px; }
 
 .product-item-name {
   font-size: 0.8rem;
@@ -359,9 +360,8 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 100px);
-  position: sticky;
-  top: 80px;
+  height: calc(100vh - 100px);
+  overflow: hidden;
 }
 
 .cart-header {
@@ -370,7 +370,8 @@ img { max-width: 100%; display: block; }
   align-items: center;
   padding-bottom: 15px;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .cart-title {
@@ -402,12 +403,12 @@ img { max-width: 100%; display: block; }
 
 .clear-cart-btn:hover { background: var(--danger); color: white; }
 
-/* Cart Items */
 .cart-items {
   flex: 1;
   overflow-y: auto;
-  margin-bottom: 15px;
-  min-height: 150px;
+  margin-bottom: 12px;
+  min-height: 100px;
+  padding-left: 5px;
 }
 
 .cart-items::-webkit-scrollbar { width: 4px; }
@@ -435,10 +436,7 @@ img { max-width: 100%; display: block; }
   align-items: center;
 }
 
-.cart-item-info {
-  flex: 1;
-  min-width: 0;
-}
+.cart-item-info { flex: 1; min-width: 0; }
 
 .cart-item-name {
   font-size: 0.8rem;
@@ -499,6 +497,7 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   gap: 2px;
+  justify-content: flex-end;
 }
 
 .cart-item-subtotal img { width: 10px; height: 10px; }
@@ -512,13 +511,14 @@ img { max-width: 100%; display: block; }
 
 .remove-item-btn:hover { transform: scale(1.2); }
 
-/* Coupon */
+/* Coupon Section */
 .coupon-section {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   padding: 12px;
   background: rgba(212, 175, 55, 0.08);
   border: 1.5px solid rgba(212, 175, 55, 0.2);
   border-radius: 12px;
+  flex-shrink: 0;
 }
 
 .coupon-label {
@@ -547,6 +547,7 @@ img { max-width: 100%; display: block; }
   font-weight: 700;
   text-transform: uppercase;
   direction: ltr;
+  min-width: 0;
 }
 
 .coupon-input-wrap input:focus {
@@ -562,6 +563,7 @@ img { max-width: 100%; display: block; }
   font-weight: 900;
   font-size: 0.8rem;
   transition: all 0.3s;
+  flex-shrink: 0;
 }
 
 .apply-coupon-btn:hover { background: var(--accent); }
@@ -583,57 +585,24 @@ img { max-width: 100%; display: block; }
   color: var(--danger);
   cursor: pointer;
   font-size: 1rem;
+  padding: 0 4px;
 }
 
-/* Summary */
-.cart-summary {
-  background: var(--bg-2);
-  border-radius: 14px;
-  padding: 15px;
-  margin-bottom: 15px;
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  font-size: 0.85rem;
-}
-
-.summary-row .label { color: var(--text-muted); font-weight: 600; }
-.summary-row .value { font-weight: 900; display: flex; align-items: center; gap: 3px; }
-.summary-row .value img { width: 12px; height: 12px; }
-
-.summary-row.discount .value { color: var(--success); }
-
-.summary-row.total {
-  padding-top: 12px;
-  margin-top: 8px;
-  border-top: 2px solid var(--border);
-  font-size: 1rem;
-}
-
-.summary-row.total .value {
-  color: var(--primary);
-  font-size: 1.4rem;
-}
-
-.summary-row.total .value img { width: 18px; height: 18px; }
-
-/* Discount buttons */
+/* Discount Buttons */
 .discount-buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .discount-btn {
-  padding: 8px 4px;
+  padding: 9px 4px;
   background: var(--bg-2);
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 900;
   cursor: pointer;
   transition: all 0.3s;
@@ -645,29 +614,67 @@ img { max-width: 100%; display: block; }
   background: linear-gradient(135deg, var(--danger), #b91c1c);
   color: white;
   border-color: var(--danger);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.25);
 }
 
-/* Payment Buttons */
+/* Summary */
+.cart-summary {
+  background: var(--bg-2);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 0.85rem;
+}
+
+.summary-row .label { color: var(--text-muted); font-weight: 600; }
+.summary-row .value { font-weight: 900; display: flex; align-items: center; gap: 3px; }
+.summary-row .value img { width: 12px; height: 12px; }
+
+.summary-row.discount .value { color: var(--success); }
+
+.summary-row.total {
+  padding-top: 10px;
+  margin-top: 6px;
+  border-top: 2px solid var(--border);
+  font-size: 1rem;
+}
+
+.summary-row.total .value {
+  color: var(--primary);
+  font-size: 1.4rem;
+}
+
+.summary-row.total .value img { width: 18px; height: 18px; }
+
+/* Payment Methods */
 .payment-methods {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 15px;
+  gap: 6px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .payment-btn {
-  padding: 12px 8px;
+  padding: 10px 6px;
   background: var(--bg-2);
   border: 1.5px solid var(--border);
   border-radius: 12px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 900;
   cursor: pointer;
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .payment-btn:hover { background: var(--bg-3); }
@@ -679,15 +686,16 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
 }
 
-.payment-btn .icon { font-size: 1.3rem; }
+.payment-btn .icon { font-size: 1.2rem; }
 
 /* Cash Input */
 .cash-input-section {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   padding: 12px;
   background: rgba(16, 185, 129, 0.08);
   border: 1.5px solid rgba(16, 185, 129, 0.2);
   border-radius: 12px;
+  flex-shrink: 0;
 }
 
 .cash-input-section label {
@@ -698,13 +706,8 @@ img { max-width: 100%; display: block; }
   margin-bottom: 8px;
 }
 
-.cash-input-wrap {
-  display: flex;
-  gap: 8px;
-}
-
 .cash-input-wrap input {
-  flex: 1;
+  width: 100%;
   padding: 12px 15px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
@@ -718,6 +721,7 @@ img { max-width: 100%; display: block; }
 .cash-input-wrap input:focus {
   outline: none;
   border-color: var(--success);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
 }
 
 .change-display {
@@ -736,13 +740,7 @@ img { max-width: 100%; display: block; }
   font-weight: 900;
 }
 
-/* Action Buttons */
-.cart-actions {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-}
-
+/* Checkout Button */
 .checkout-btn {
   width: 100%;
   padding: 16px;
@@ -757,6 +755,7 @@ img { max-width: 100%; display: block; }
   justify-content: center;
   gap: 8px;
   box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+  flex-shrink: 0;
 }
 
 .checkout-btn:hover:not(:disabled) {
@@ -806,7 +805,7 @@ img { max-width: 100%; display: block; }
 .modal-header {
   background: linear-gradient(135deg, var(--success), #059669);
   color: white;
-  padding: 22px 25px;
+  padding: 20px 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -876,13 +875,16 @@ img { max-width: 100%; display: block; }
   outline: none;
   border-color: var(--primary);
   background: white;
+  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
 }
+
+.form-group textarea { resize: vertical; min-height: 70px; }
 
 /* ========== Success Modal ========== */
 .success-icon {
   width: 90px;
   height: 90px;
-  margin: 20px auto 15px;
+  margin: 25px auto 15px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--success), #059669);
   display: flex;
@@ -931,10 +933,11 @@ img { max-width: 100%; display: block; }
   justify-content: space-between;
   padding: 5px 0;
   font-size: 0.85rem;
+  gap: 10px;
 }
 
 .invoice-row .label { color: var(--text-muted); font-weight: 600; }
-.invoice-row .value { font-weight: 900; }
+.invoice-row .value { font-weight: 900; text-align: left; }
 
 .invoice-row.total {
   padding-top: 10px;
@@ -1023,7 +1026,7 @@ img { max-width: 100%; display: block; }
 /* ========== Responsive ========== */
 @media (max-width: 1100px) {
   .cashier-layout {
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: 1fr 380px;
   }
 }
 
@@ -1034,8 +1037,13 @@ img { max-width: 100%; display: block; }
     margin-right: 0;
     grid-template-columns: 1fr;
     padding: 80px 15px 20px;
+    gap: 15px;
   }
-  .products-panel, .cart-panel { max-height: none; }
+  .products-panel, .cart-panel {
+    height: auto;
+    max-height: none;
+  }
+  .products-panel { min-height: 400px; }
   .cart-panel { position: static; }
 }
 
@@ -1050,13 +1058,18 @@ img { max-width: 100%; display: block; }
 
   .products-panel, .cart-panel { padding: 15px; border-radius: 16px; }
 
-  .search-box input { padding: 13px 45px 13px 15px; font-size: 0.9rem; }
-  .search-box .icon { right: 15px; }
+  .search-box input { padding: 12px 45px 12px 15px; font-size: 0.9rem; }
+  .search-box .icon { right: 15px; font-size: 1.1rem; }
 
-  .products-list { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .products-list { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 8px; 
+    max-height: 400px;
+  }
   .product-item-info { padding: 6px; }
   .product-item-name { font-size: 0.75rem; }
   .product-item-price { font-size: 0.8rem; }
+  .product-item-img { font-size: 2rem; }
 
   .cart-item { padding: 8px; gap: 8px; }
   .cart-item-name { font-size: 0.75rem; }
@@ -1064,12 +1077,12 @@ img { max-width: 100%; display: block; }
   .qty-btn { width: 24px; height: 24px; font-size: 0.85rem; }
   .qty-value { font-size: 0.8rem; min-width: 20px; }
 
-  .discount-buttons { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .discount-buttons { gap: 4px; }
   .discount-btn { padding: 7px 3px; font-size: 0.7rem; }
 
-  .payment-methods { gap: 6px; }
-  .payment-btn { padding: 10px 5px; font-size: 0.75rem; }
-  .payment-btn .icon { font-size: 1.1rem; }
+  .payment-methods { gap: 5px; }
+  .payment-btn { padding: 8px 4px; font-size: 0.7rem; }
+  .payment-btn .icon { font-size: 1rem; }
 
   .summary-row.total .value { font-size: 1.2rem; }
 
@@ -1102,7 +1115,7 @@ img { max-width: 100%; display: block; }
     </div>
   </div>
   <div class="top-bar-left">
-    <div class="clock-box" id="clockBox">
+    <div class="clock-box">
       <span>🕐</span>
       <span id="clockText">--:--</span>
     </div>
@@ -1187,14 +1200,12 @@ img { max-width: 100%; display: block; }
     
     <div class="search-section">
       <div class="search-box">
-        <input type="text" id="searchInput" placeholder="ابحث عن منتج بالاسم..." oninput="filterProducts()" autofocus>
+        <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج..." oninput="filterProducts()" autofocus>
         <span class="icon">🔍</span>
       </div>
     </div>
 
-    <div class="cat-filter" id="catFilter">
-      <!-- يتم إضافتها من JavaScript -->
-    </div>
+    <div class="cat-filter" id="catFilter"></div>
 
     <div class="products-list" id="productsList">
       <div style="text-align:center;padding:40px;color:var(--text-muted);grid-column:1/-1;">⏳ جاري التحميل...</div>
@@ -1279,7 +1290,7 @@ img { max-width: 100%; display: block; }
       </div>
     </div>
 
-    <!-- حقل النقد (يظهر فقط عند الدفع نقد) -->
+    <!-- حقل النقد -->
     <div class="cash-input-section" id="cashInputSection">
       <label>💵 المبلغ المدفوع:</label>
       <div class="cash-input-wrap">
@@ -1299,7 +1310,7 @@ img { max-width: 100%; display: block; }
 
 </div>
 
-<!-- ========== Modal بيانات العميل + تأكيد ========== -->
+<!-- ========== Modal بيانات العميل ========== -->
 <div class="modal" id="checkoutModal">
   <div class="modal-content large">
     <div class="modal-header primary">
@@ -1371,26 +1382,7 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- ========== Modal تسجيل الخروج ========== -->
-<div class="modal" id="logoutModal">
-  <div class="modal-content">
-    <div class="modal-header danger">
-      <h2>🚪 تسجيل الخروج</h2>
-      <button class="modal-close" onclick="closeLogoutModal()">✕</button>
-    </div>
-    <div class="modal-body" style="text-align:center;">
-      <div style="font-size: 4rem; margin-bottom: 15px;">👋</div>
-      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">هل أنت متأكد؟</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">سيتم تسجيل خروجك من لوحة التحكم</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeLogoutModal()">إلغاء</button>
-      <button class="btn btn-danger" onclick="confirmLogout()">🚪 تسجيل الخروج</button>
-    </div>
-  </div>
-</div>
-
-<!-- منطقة الطباعة (مخفية) -->
+<!-- منطقة الطباعة -->
 <div id="printArea" style="display:none;"></div>
 
 <!-- Notification -->
@@ -1437,7 +1429,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadCategories();
   await loadProducts();
 
-  // اختصار F2 لفتح نافذة الدفع
   document.addEventListener('keydown', (e) => {
     if (e.key === 'F2' && cart.length > 0) {
       e.preventDefault();
@@ -1475,14 +1466,13 @@ function applyPermissions() {
   if (!hasManagement) document.getElementById('managementSection').style.display = 'none';
 }
 
-// ========== الساعة ==========
 function updateClock() {
   const now = new Date();
   const time = now.toLocaleTimeString('ar-OM', { hour: '2-digit', minute: '2-digit', hour12: true });
   document.getElementById('clockText').textContent = time;
 }
 
-// ========== جلب الفئات ==========
+// ========== الفئات ==========
 async function loadCategories() {
   try {
     const res = await fetch(`${API_URL}/categories`);
@@ -1497,13 +1487,11 @@ async function loadCategories() {
 function renderCatFilter() {
   const container = document.getElementById('catFilter');
   let html = `<div class="cat-pill active" data-cat="all" onclick="selectCategory(null)">✨ الكل</div>`;
-  
   html += allCategories.map(c => `
     <div class="cat-pill" data-cat="${c.id}" onclick="selectCategory(${c.id})">
       ${c.icon || '🏷️'} ${c.name}
     </div>
   `).join('');
-  
   container.innerHTML = html;
 }
 
@@ -1516,7 +1504,7 @@ function selectCategory(catId) {
   filterProducts();
 }
 
-// ========== جلب المنتجات ==========
+// ========== المنتجات ==========
 async function loadProducts() {
   try {
     const res = await fetch(`${API_URL}/products`);
@@ -1539,20 +1527,19 @@ function filterProducts() {
 
 function renderProducts() {
   const container = document.getElementById('productsList');
-  
   let filtered = allProducts;
-  
+
   if (selectedCategory !== null) {
     filtered = filtered.filter(p => p.category_id === selectedCategory);
   }
-  
+
   if (searchQuery) {
     filtered = filtered.filter(p => 
       p.name.toLowerCase().includes(searchQuery) ||
       (p.category_name || '').toLowerCase().includes(searchQuery)
     );
   }
-  
+
   if (filtered.length === 0) {
     container.innerHTML = `
       <div style="text-align:center;padding:40px;color:var(--text-muted);grid-column:1/-1;">
@@ -1562,14 +1549,14 @@ function renderProducts() {
     `;
     return;
   }
-  
+
   container.innerHTML = filtered.map(p => {
     let stockClass = '';
     if (p.stock === 0) stockClass = 'out';
     else if (p.stock <= p.min_stock) stockClass = 'low';
-    
+
     const finalPrice = p.final_price || p.price;
-    
+
     return `
       <div class="product-item ${p.stock === 0 ? 'out-of-stock' : ''}" onclick="addToCart(${p.id})">
         <div class="product-item-img">
@@ -1588,7 +1575,7 @@ function renderProducts() {
   }).join('');
 }
 
-// ========== إضافة للسلة ==========
+// ========== السلة ==========
 function addToCart(productId) {
   const product = allProducts.find(p => p.id === productId);
   if (!product) return;
@@ -1603,7 +1590,7 @@ function addToCart(productId) {
 
   if (existing) {
     if (existing.quantity >= product.stock) {
-      showNotification('⚠️ لا توجد كمية كافية في المخزون', 'error');
+      showNotification('⚠️ لا توجد كمية كافية', 'error');
       return;
     }
     existing.quantity++;
@@ -1622,7 +1609,6 @@ function addToCart(productId) {
   showNotification('✅ تمت الإضافة', 'success');
 }
 
-// ========== عرض السلة ==========
 function renderCart() {
   const container = document.getElementById('cartItems');
   const clearBtn = document.getElementById('clearCartBtn');
@@ -1704,16 +1690,16 @@ function clearCart() {
   currentDiscount = 0;
   renderCart();
   updateCouponDisplay();
+  document.querySelectorAll('.discount-btn').forEach(b => b.classList.remove('active'));
   showNotification('🗑️ تم إفراغ السلة');
 }
 
-// ========== حساب الإجماليات ==========
+// ========== الإجماليات ==========
 function updateTotals() {
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  
+
   let discountAmount = 0;
-  
-  // خصم الكوبون
+
   if (appliedCoupon) {
     if (appliedCoupon.type === 'percent') {
       discountAmount += subtotal * (appliedCoupon.value / 100);
@@ -1721,16 +1707,15 @@ function updateTotals() {
       discountAmount += Math.min(appliedCoupon.value, subtotal);
     }
   }
-  
-  // الخصم اليدوي
+
   if (currentDiscount > 0) {
     discountAmount += subtotal * (currentDiscount / 100);
   }
-  
+
   const total = Math.max(0, subtotal - discountAmount);
-  
+
   document.getElementById('subtotal').textContent = subtotal.toFixed(3);
-  
+
   const discountRow = document.getElementById('discountRow');
   if (discountAmount > 0) {
     document.getElementById('discountValue').textContent = discountAmount.toFixed(3);
@@ -1738,17 +1723,15 @@ function updateTotals() {
   } else {
     discountRow.style.display = 'none';
   }
-  
+
   document.getElementById('total').textContent = total.toFixed(3);
-  
+
   const checkoutBtn = document.getElementById('checkoutBtn');
   checkoutBtn.disabled = cart.length === 0;
-  
-  // إعادة حساب الباقي
+
   calculateChange();
 }
 
-// ========== الخصم السريع ==========
 function setDiscount(percent) {
   currentDiscount = percent;
   document.querySelectorAll('.discount-btn').forEach(btn => {
@@ -1761,61 +1744,46 @@ function setDiscount(percent) {
 // ========== الكوبون ==========
 async function applyCoupon() {
   const code = document.getElementById('couponInput').value.trim().toUpperCase();
-  
+
   if (!code) {
     showNotification('⚠️ أدخل كود الخصم', 'error');
     return;
   }
-  
+
   try {
-    const res = await fetch(`${API_URL}/coupons/validate/${code}`);
+    const res = await fetch(`${API_URL}/coupons`);
     const data = await res.json();
-    
+
     if (data.success) {
-      appliedCoupon = data.coupon;
-      updateCouponDisplay();
-      updateTotals();
-      showNotification('✅ تم تطبيق الكوبون: ' + appliedCoupon.code, 'success');
-    } else {
-      showNotification('❌ ' + (data.message || 'كود غير صحيح'), 'error');
-    }
-  } catch (error) {
-    // إذا ما فيه API للتحقق، نجرب من القائمة
-    try {
-      const res = await fetch(`${API_URL}/coupons`);
-      const data = await res.json();
-      
-      if (data.success) {
-        const coupon = data.coupons.find(c => 
-          c.code === code && 
-          c.active === 1 &&
-          (!c.expires_at || new Date(c.expires_at) > new Date()) &&
-          c.used_count < c.max_uses
-        );
-        
-        if (coupon) {
-          appliedCoupon = coupon;
-          updateCouponDisplay();
-          updateTotals();
-          showNotification('✅ تم تطبيق الكوبون: ' + coupon.code, 'success');
-        } else {
-          showNotification('❌ كود غير صحيح أو منتهي', 'error');
-        }
+      const coupon = data.coupons.find(c => 
+        c.code === code && 
+        c.active === 1 &&
+        (!c.expires_at || new Date(c.expires_at) > new Date()) &&
+        c.used_count < c.max_uses
+      );
+
+      if (coupon) {
+        appliedCoupon = coupon;
+        updateCouponDisplay();
+        updateTotals();
+        showNotification('✅ تم تطبيق الكوبون: ' + coupon.code, 'success');
+      } else {
+        showNotification('❌ كود غير صحيح أو منتهي', 'error');
       }
-    } catch (e) {
-      showNotification('❌ تعذّر التحقق من الكوبون', 'error');
     }
+  } catch (e) {
+    showNotification('❌ تعذّر التحقق من الكوبون', 'error');
   }
 }
 
 function updateCouponDisplay() {
   const container = document.getElementById('appliedCoupon');
-  
+
   if (appliedCoupon) {
     const valueText = appliedCoupon.type === 'percent' 
       ? `${appliedCoupon.value}%` 
       : `${appliedCoupon.value.toFixed(3)} ر.ع`;
-    
+
     container.style.display = 'block';
     container.innerHTML = `
       <div class="coupon-applied">
@@ -1840,12 +1808,11 @@ function removeCoupon() {
 // ========== طريقة الدفع ==========
 function selectPayment(method) {
   selectedPayment = method;
-  
+
   document.querySelectorAll('.payment-btn').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('data-method') === method);
   });
-  
-  // إظهار/إخفاء حقل النقد
+
   const cashSection = document.getElementById('cashInputSection');
   if (method === 'cash') {
     cashSection.style.display = 'block';
@@ -1855,7 +1822,6 @@ function selectPayment(method) {
   }
 }
 
-// ========== حساب الباقي ==========
 function calculateChange() {
   const totalText = document.getElementById('total').textContent;
   const total = parseFloat(totalText) || 0;
@@ -1880,18 +1846,17 @@ function calculateChange() {
   }
 }
 
-// ========== فتح Modal الدفع ==========
+// ========== إتمام البيع ==========
 function openCheckoutModal() {
   if (cart.length === 0) {
     showNotification('⚠️ السلة فاضية', 'error');
     return;
   }
 
-  // إذا دفع نقد، تأكد أن المبلغ كافي
   if (selectedPayment === 'cash') {
     const total = parseFloat(document.getElementById('total').textContent) || 0;
     const cash = parseFloat(document.getElementById('cashInput').value) || 0;
-    
+
     if (cash < total) {
       showNotification('⚠️ المبلغ المدفوع أقل من الإجمالي', 'error');
       document.getElementById('cashInput').focus();
@@ -1906,7 +1871,6 @@ function closeCheckoutModal() {
   document.getElementById('checkoutModal').classList.remove('show');
 }
 
-// ========== تأكيد البيع ==========
 async function confirmSale() {
   const btn = document.getElementById('confirmSaleBtn');
   btn.disabled = true;
@@ -1916,9 +1880,8 @@ async function confirmSale() {
   const customerPhone = document.getElementById('customerPhone').value.trim();
   const customerNotes = document.getElementById('customerNotes').value.trim();
 
-  // حساب المجاميع
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  
+
   let discountAmount = 0;
   if (appliedCoupon) {
     if (appliedCoupon.type === 'percent') {
@@ -1930,7 +1893,7 @@ async function confirmSale() {
   if (currentDiscount > 0) {
     discountAmount += subtotal * (currentDiscount / 100);
   }
-  
+
   const total = Math.max(0, subtotal - discountAmount);
 
   const items = cart.map(item => ({
@@ -1963,7 +1926,6 @@ async function confirmSale() {
     const data = await res.json();
 
     if (data.success) {
-      // حفظ الفاتورة
       lastInvoice = {
         invoice_number: data.invoice_number,
         items: [...cart],
@@ -1978,7 +1940,6 @@ async function confirmSale() {
         change: selectedPayment === 'cash' ? (parseFloat(document.getElementById('cashInput').value) || 0) - total : 0
       };
 
-      // عرض نافذة النجاح
       document.getElementById('savedInvoiceNumber').textContent = data.invoice_number;
       document.getElementById('savedItemsCount').textContent = cart.length;
       document.getElementById('savedPaymentMethod').textContent = 
@@ -1989,9 +1950,7 @@ async function confirmSale() {
       closeCheckoutModal();
       document.getElementById('successModal').classList.add('show');
 
-      // إعادة تحميل المنتجات (عشان المخزون الجديد)
       await loadProducts();
-
     } else {
       showNotification('❌ ' + (data.message || 'حدث خطأ'), 'error');
       btn.disabled = false;
@@ -2004,16 +1963,13 @@ async function confirmSale() {
   }
 }
 
-// ========== بدء بيع جديد ==========
 function newSale() {
-  // إعادة تعيين
   cart = [];
   currentDiscount = 0;
   appliedCoupon = null;
   selectedPayment = 'cash';
   lastInvoice = null;
 
-  // إعادة تعيين الواجهة
   document.getElementById('cashInput').value = '';
   document.getElementById('couponInput').value = '';
   document.getElementById('customerName').value = '';
@@ -2025,14 +1981,13 @@ function newSale() {
   });
   document.getElementById('cashInputSection').style.display = 'block';
   document.getElementById('changeDisplay').style.display = 'none';
+  document.getElementById('confirmSaleBtn').disabled = false;
+  document.getElementById('confirmSaleBtn').innerHTML = '<span>✅</span><span>تأكيد البيع</span>';
 
   updateCouponDisplay();
   renderCart();
 
-  // إغلاق النافذة
   document.getElementById('successModal').classList.remove('show');
-
-  // تركيز على البحث
   document.getElementById('searchInput').focus();
 
   showNotification('✨ فاتورة جديدة جاهزة', 'success');
@@ -2056,16 +2011,12 @@ function printLastInvoice() {
 
   const printHTML = `
     <div style="font-family: 'Cairo', Arial, sans-serif; direction: rtl; padding: 25px; max-width: 400px; margin: 0 auto; background: white;">
-      
-      <!-- Header -->
       <div style="text-align: center; border-bottom: 2px dashed #1e3a8a; padding-bottom: 15px; margin-bottom: 15px;">
         <h1 style="color: #1e3a8a; font-size: 22px; margin: 0 0 5px;">✨ متجر راقي</h1>
         <p style="color: #6b7280; font-size: 11px; margin: 0;">فاتورة بيع</p>
         <p style="color: #6b7280; font-size: 10px; margin: 3px 0 0;">مسقط، سلطنة عمان</p>
         <p style="color: #6b7280; font-size: 10px; margin: 2px 0 0;">📞 +968 9000 0000</p>
       </div>
-
-      <!-- Invoice Info -->
       <div style="font-size: 11px; margin-bottom: 15px; text-align: right;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
           <strong>رقم الفاتورة:</strong>
@@ -2086,8 +2037,6 @@ function printLastInvoice() {
           </div>
         ` : ''}
       </div>
-
-      <!-- Items -->
       <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 15px;">
         <thead>
           <tr style="border-top: 1.5px solid #1e3a8a; border-bottom: 1.5px solid #1e3a8a;">
@@ -2106,8 +2055,6 @@ function printLastInvoice() {
           `).join('')}
         </tbody>
       </table>
-
-      <!-- Totals -->
       <div style="border-top: 1.5px solid #1e3a8a; padding-top: 10px; font-size: 12px;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
           <span>المجموع:</span>
@@ -2138,13 +2085,10 @@ function printLastInvoice() {
           </div>
         ` : ''}
       </div>
-
-      <!-- Footer -->
       <div style="text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px dashed #1e3a8a; color: #6b7280; font-size: 11px;">
         <p style="margin: 5px 0;">شكراً لتعاملكم معنا ✨</p>
         <p style="margin: 5px 0; font-size: 10px;">نتمنى لكم يوماً سعيداً</p>
       </div>
-
     </div>
   `;
 
@@ -2164,19 +2108,6 @@ function toggleSidebar() {
   document.getElementById('sidebarOverlay').classList.toggle('active');
 }
 
-// ========== Logout ==========
-function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
-function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
-function confirmLogout() {
-  if (cart.length > 0) {
-    if (!confirm('السلة فيها منتجات. هل أنت متأكد من تسجيل الخروج؟')) return;
-  }
-  localStorage.removeItem('raki_token');
-  localStorage.removeItem('raki_user');
-  localStorage.removeItem('raki_permissions');
-  window.location.href = 'login.html';
-}
-
 // ========== Notification ==========
 function showNotification(message, type = '') {
   const notif = document.getElementById('notification');
@@ -2189,14 +2120,13 @@ function showNotification(message, type = '') {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeCheckoutModal();
-    closeLogoutModal();
   }
 });
 
 document.querySelectorAll('.modal').forEach(modal => {
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
-      if (modal.id === 'successModal') return; // لا تقفل نافذة النجاح بالضغط
+      if (modal.id === 'successModal') return;
       modal.classList.remove('show');
     }
   });

@@ -105,7 +105,6 @@ img { max-width: 100%; display: block; }
 }
 
 .user-info { display: flex; flex-direction: column; align-items: flex-start; }
-
 .user-name { font-size: 0.85rem; font-weight: 900; line-height: 1.2; }
 .user-role { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; }
 
@@ -302,17 +301,39 @@ img { max-width: 100%; display: block; }
 .stat-mini.red { color: var(--danger); background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.15); }
 .stat-mini.gold { color: var(--gold); background: rgba(212, 175, 55, 0.08); border-color: rgba(212, 175, 55, 0.2); }
 
-/* ========== Products Table ========== */
+/* ========== Products Table (مع تمرير أفقي) ========== */
 .products-table-wrap {
   background: white;
   border: 1px solid var(--border);
   border-radius: 20px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.products-table-wrap::-webkit-scrollbar {
+  height: 8px;
+}
+
+.products-table-wrap::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 4px;
+}
+
+.products-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+.products-table-wrap::-webkit-scrollbar-track {
+  background: var(--bg-3);
+  border-radius: 4px;
 }
 
 .products-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 750px;
 }
 
 .products-table thead {
@@ -696,6 +717,16 @@ img { max-width: 100%; display: block; }
   display: flex; align-items: center; gap: 6px;
 }
 
+/* ========== Discount Type Options ========== */
+.discount-type-option {
+  transition: all 0.3s;
+}
+
+.discount-type-option:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary-light) !important;
+}
+
 /* ========== Button ========== */
 .btn {
   padding: 12px 24px;
@@ -763,9 +794,6 @@ img { max-width: 100%; display: block; }
   .sidebar { transform: translateX(100%); box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1); }
   .sidebar.open { transform: translateX(0); }
   .main-content { margin-right: 0; padding: 90px 18px 30px; }
-
-  .products-table-wrap { overflow-x: auto; }
-  .products-table { min-width: 800px; }
 }
 
 @media (max-width: 600px) {
@@ -787,6 +815,60 @@ img { max-width: 100%; display: block; }
 
   .stats-mini { gap: 8px; }
   .stat-mini { padding: 8px 12px; font-size: 0.7rem; }
+
+  /* الجدول: تمرير أفقي واضح */
+  .products-table {
+    min-width: 800px;
+  }
+
+  .products-table th,
+  .products-table td {
+    padding: 12px 10px;
+    font-size: 0.8rem;
+  }
+
+  .product-img {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+
+  .product-name {
+    font-size: 0.85rem;
+    max-width: 180px;
+  }
+
+  .product-category {
+    font-size: 0.65rem;
+  }
+
+  .stock-badge {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+  }
+
+  .icon-action {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .mini-badge {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
+
+  /* مؤشر تمرير أفقي */
+  .products-table-wrap::after {
+    content: '← اسحب للجانب لرؤية المزيد →';
+    display: block;
+    text-align: center;
+    padding: 8px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: var(--bg-3);
+    border-top: 1px solid var(--border);
+  }
 
   .modal { padding: 10px; }
   .modal-content { border-radius: 20px; }
@@ -867,6 +949,10 @@ img { max-width: 100%; display: block; }
 
   <div class="sidebar-section" id="managementSection" style="display:none;">
     <div class="sidebar-section-title">الإدارة</div>
+    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
+      <span class="icon">🎁</span>
+      <span>العروضات</span>
+    </a>
     <a href="reports.html" class="sidebar-link" data-permission="reports.view">
       <span class="icon">📈</span>
       <span>التقارير</span>
@@ -951,7 +1037,6 @@ img { max-width: 100%; display: block; }
       <form id="productForm" onsubmit="saveProduct(event)">
         <input type="hidden" id="productId">
 
-        <!-- صورة -->
         <div class="form-group">
           <label>🖼️ صورة المنتج</label>
           <div class="image-upload">
@@ -1002,11 +1087,8 @@ img { max-width: 100%; display: block; }
           </div>
         </div>
 
-        <!-- قسم الخصم -->
         <div class="discount-section">
-          <div class="discount-section-title">
-            🏷️ الخصم (اختياري)
-          </div>
+          <div class="discount-section-title">🏷️ الخصم (اختياري)</div>
           <div class="form-row">
             <div class="form-group">
               <label>نوع الخصم</label>
@@ -1022,14 +1104,13 @@ img { max-width: 100%; display: block; }
               <div class="form-hint" id="discountHint">مثال: 20 (يعني 20%)</div>
             </div>
           </div>
-          <div id="discountPreview" style="display:none; padding: 12px; background: white; border-radius: 10px; font-size: 0.85rem; text-align: center;">
+          <div id="discountPreview2" style="display:none; padding: 12px; background: white; border-radius: 10px; font-size: 0.85rem; text-align: center;">
             <span style="color: var(--text-muted);">السعر بعد الخصم:</span>
             <strong style="color: var(--primary); font-size: 1.1rem;" id="discountPreviewPrice">0.000</strong>
             <span>ر.ع</span>
           </div>
         </div>
 
-        <!-- منتج مميز -->
         <div class="checkbox-group">
           <input type="checkbox" id="isFeatured">
           <label for="isFeatured">⭐ منتج مميز (يظهر في قسم "المنتجات المميزة")</label>
@@ -1098,6 +1179,7 @@ let allCategories = [];
 let filteredProducts = [];
 let deletingId = null;
 let currentImage = null;
+let currentDiscountProductId = null;
 
 // ========== التحقق من الدخول ==========
 document.addEventListener('DOMContentLoaded', async () => {
@@ -1156,7 +1238,7 @@ function applyPermissions() {
   if (!hasManagement) document.getElementById('managementSection').style.display = 'none';
 }
 
-// ========== جلب الفئات ==========
+// ========== الفئات ==========
 async function loadCategories() {
   try {
     const res = await fetch(`${API_URL}/categories`);
@@ -1165,13 +1247,11 @@ async function loadCategories() {
     if (data.success) {
       allCategories = data.categories;
 
-      // فلتر
       document.getElementById('categoryFilter').innerHTML = `
         <option value="">كل الفئات</option>
         ${allCategories.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
       `;
 
-      // في النموذج
       document.getElementById('categoryId').innerHTML = `
         <option value="">بدون فئة</option>
         ${allCategories.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
@@ -1180,7 +1260,7 @@ async function loadCategories() {
   } catch (error) { console.error(error); }
 }
 
-// ========== جلب المنتجات ==========
+// ========== المنتجات ==========
 async function loadProducts() {
   try {
     const res = await fetch(`${API_URL}/products`);
@@ -1208,7 +1288,7 @@ function updateStats() {
   document.getElementById('countFeatured').textContent = allProducts.filter(p => p.is_featured === 1).length;
 }
 
-// ========== فلترة ==========
+// ========== الفلترة ==========
 function applyFilters() {
   const search = document.getElementById('searchInput').value.trim().toLowerCase();
   const category = document.getElementById('categoryFilter').value;
@@ -1310,18 +1390,12 @@ function renderRow(p) {
       <td><div class="badges-cell">${badges}</div></td>
       <td>
         <div class="actions-cell">
-          <button class="icon-action discount" onclick="openDiscountModal(${p.id})" title="خصم">
-            🏷️
-          </button>
+          <button class="icon-action discount" onclick="openDiscountModal(${p.id})" title="خصم">🏷️</button>
           <button class="icon-action featured" onclick="toggleFeatured(${p.id})" title="${p.is_featured === 1 ? 'إلغاء التمييز' : 'تمييز'}">
             ${p.is_featured === 1 ? '⭐' : '☆'}
           </button>
-          <button class="icon-action edit" onclick="openEditModal(${p.id})" title="تعديل">
-            ✏️
-          </button>
-          <button class="icon-action delete" onclick="openDeleteModal(${p.id})" title="حذف">
-            🗑️
-          </button>
+          <button class="icon-action edit" onclick="openEditModal(${p.id})" title="تعديل">✏️</button>
+          <button class="icon-action delete" onclick="openDeleteModal(${p.id})" title="حذف">🗑️</button>
         </div>
       </td>
     </tr>
@@ -1345,7 +1419,7 @@ function openAddModal() {
   document.getElementById('imagePreview').style.display = 'none';
   document.getElementById('uploadIcon').style.display = 'block';
   document.getElementById('uploadText').textContent = 'اضغط لاختيار صورة';
-  document.getElementById('discountPreview').style.display = 'none';
+  document.getElementById('discountPreview2').style.display = 'none';
   currentImage = null;
 
   document.getElementById('productModal').classList.add('show');
@@ -1450,28 +1524,209 @@ async function saveProduct(e) {
   }
 }
 
-// ========== الخصم السريع ==========
+// ========== Modal الخصم (المخصص) ==========
 function openDiscountModal(id) {
   const p = allProducts.find(x => x.id === id);
   if (!p) return;
 
-  const discountType = prompt('نوع الخصم:\n- اكتب "percent" للنسبة\n- اكتب "fixed" للمبلغ الثابت\n- اترك فاضي لإلغاء الخصم', p.discount_type || '');
+  currentDiscountProductId = id;
 
-  if (discountType === null) return;
+  const modalHTML = `
+    <div class="modal show" id="discountModal" style="z-index: 3500;">
+      <div class="modal-content" style="max-width: 480px;">
+        <div class="modal-header danger">
+          <h2>🏷️ تطبيق خصم</h2>
+          <button class="modal-close" onclick="closeDiscountModal()">✕</button>
+        </div>
+        
+        <div class="modal-body">
+          <div style="padding: 15px; background: var(--bg-2); border-radius: 14px; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 50px; height: 50px; border-radius: 12px; background: var(--bg-3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; overflow: hidden; flex-shrink: 0;">
+                ${p.image ? `<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;">` : '👕'}
+              </div>
+              <div style="flex: 1; min-width: 0;">
+                <div style="font-weight: 900; font-size: 0.9rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.name}</div>
+                <div style="font-size: 0.8rem; color: var(--primary); font-weight: 700;">السعر: ${p.price.toFixed(3)} ر.ع</div>
+              </div>
+            </div>
+          </div>
 
-  if (discountType === '' || (discountType !== 'percent' && discountType !== 'fixed')) {
-    if (discountType === '') {
-      applyDiscount(id, null, 0);
-      return;
+          <div class="form-group">
+            <label>📊 نوع الخصم</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div class="discount-type-option" data-type="percent" onclick="selectDiscountType('percent')" style="padding: 15px; border: 2px solid var(--border); border-radius: 14px; text-align: center; cursor: pointer;">
+                <div style="font-size: 1.5rem; margin-bottom: 5px;">%</div>
+                <div style="font-weight: 900; font-size: 0.85rem;">نسبة مئوية</div>
+                <div style="font-size: 0.7rem; color: var(--text-muted);">مثال: 20%</div>
+              </div>
+              <div class="discount-type-option" data-type="fixed" onclick="selectDiscountType('fixed')" style="padding: 15px; border: 2px solid var(--border); border-radius: 14px; text-align: center; cursor: pointer;">
+                <div style="font-size: 1.5rem; margin-bottom: 5px;">💰</div>
+                <div style="font-weight: 900; font-size: 0.85rem;">مبلغ ثابت</div>
+                <div style="font-size: 0.7rem; color: var(--text-muted);">مثال: 5 ر.ع</div>
+              </div>
+            </div>
+            <input type="hidden" id="discountTypeInput" value="${p.discount_type || ''}">
+          </div>
+
+          <div class="form-group" id="discountValueGroup" style="display: ${p.discount_type ? 'block' : 'none'};">
+            <label id="discountValueLabel">💰 قيمة الخصم</label>
+            <input type="number" id="discountValueInput" step="0.001" min="0" placeholder="0" value="${p.discount_value || ''}" style="text-align: center; font-size: 1.2rem; font-weight: 900;">
+            <div class="form-hint" id="discountHintText"></div>
+          </div>
+
+          <div id="discountPreviewBox" style="display: none; padding: 15px; background: rgba(16, 185, 129, 0.08); border: 1.5px solid rgba(16, 185, 129, 0.2); border-radius: 14px; margin-top: 15px;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 700;">💰 السعر بعد الخصم:</div>
+            <div style="display: flex; align-items: center; gap: 5px;">
+              <span style="font-size: 1.6rem; font-weight: 900; color: var(--success);" id="previewNewPrice">0.000</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">ر.ع</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted); text-decoration: line-through; margin-right: auto;" id="previewOldPrice">0.000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          ${p.discount_type ? `
+            <button class="btn" style="background: rgba(239,68,68,0.1); color: var(--danger);" onclick="removeDiscount(${p.id})">
+              🗑️ إلغاء الخصم
+            </button>
+          ` : ''}
+          <button class="btn btn-secondary" onclick="closeDiscountModal()">إلغاء</button>
+          <button class="btn btn-danger" onclick="saveDiscount(${p.id})" id="saveDiscountBtn">
+            <span>💾</span>
+            <span>تطبيق</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const existingModal = document.getElementById('discountModal');
+  if (existingModal) existingModal.remove();
+
+  const div = document.createElement('div');
+  div.innerHTML = modalHTML;
+  document.body.appendChild(div.firstElementChild);
+
+  if (p.discount_type) {
+    setTimeout(() => {
+      selectDiscountType(p.discount_type);
+      updateDiscountPreview();
+    }, 50);
+  }
+
+  document.getElementById('discountValueInput').addEventListener('input', updateDiscountPreview);
+
+  document.getElementById('discountModal').addEventListener('click', (e) => {
+    if (e.target.id === 'discountModal') closeDiscountModal();
+  });
+
+  document.addEventListener('keydown', handleDiscountEsc);
+}
+
+function handleDiscountEsc(e) {
+  if (e.key === 'Escape') {
+    closeDiscountModal();
+    document.removeEventListener('keydown', handleDiscountEsc);
+  }
+}
+
+function selectDiscountType(type) {
+  document.getElementById('discountTypeInput').value = type;
+
+  document.querySelectorAll('.discount-type-option').forEach(opt => {
+    const optType = opt.getAttribute('data-type');
+    if (optType === type) {
+      opt.style.borderColor = 'var(--primary)';
+      opt.style.background = 'rgba(30, 58, 138, 0.05)';
+      opt.style.boxShadow = '0 6px 20px rgba(30, 58, 138, 0.15)';
+    } else {
+      opt.style.borderColor = 'var(--border)';
+      opt.style.background = 'transparent';
+      opt.style.boxShadow = 'none';
     }
-    showNotification('❌ نوع غير صحيح', 'error');
+  });
+
+  document.getElementById('discountValueGroup').style.display = 'block';
+
+  const label = document.getElementById('discountValueLabel');
+  const hint = document.getElementById('discountHintText');
+  const input = document.getElementById('discountValueInput');
+
+  if (type === 'percent') {
+    label.textContent = '📊 نسبة الخصم (%)';
+    hint.textContent = 'مثال: 20 (يعني 20%)';
+    input.max = '100';
+    input.placeholder = '20';
+  } else {
+    label.textContent = '💰 مبلغ الخصم (ر.ع)';
+    hint.textContent = 'مثال: 5 (يعني 5 ر.ع)';
+    input.max = '';
+    input.placeholder = '5';
+  }
+
+  updateDiscountPreview();
+}
+
+function updateDiscountPreview() {
+  const type = document.getElementById('discountTypeInput').value;
+  const value = parseFloat(document.getElementById('discountValueInput').value) || 0;
+  const product = allProducts.find(p => p.id === currentDiscountProductId);
+
+  if (!product || !type || value <= 0) {
+    document.getElementById('discountPreviewBox').style.display = 'none';
     return;
   }
 
-  const value = prompt('قيمة الخصم:', p.discount_value || 0);
-  if (value === null) return;
+  let newPrice = product.price;
+  if (type === 'percent') {
+    newPrice = product.price - (product.price * value / 100);
+  } else {
+    newPrice = Math.max(0, product.price - value);
+  }
 
-  applyDiscount(id, discountType, parseFloat(value) || 0);
+  document.getElementById('discountPreviewBox').style.display = 'block';
+  document.getElementById('previewNewPrice').textContent = newPrice.toFixed(3);
+  document.getElementById('previewOldPrice').textContent = product.price.toFixed(3);
+}
+
+function closeDiscountModal() {
+  const modal = document.getElementById('discountModal');
+  if (modal) modal.remove();
+  currentDiscountProductId = null;
+  document.removeEventListener('keydown', handleDiscountEsc);
+}
+
+async function saveDiscount(productId) {
+  const type = document.getElementById('discountTypeInput').value;
+  const value = parseFloat(document.getElementById('discountValueInput').value) || 0;
+
+  if (!type) {
+    showNotification('⚠️ اختر نوع الخصم', 'error');
+    return;
+  }
+
+  if (value <= 0) {
+    showNotification('⚠️ أدخل قيمة الخصم', 'error');
+    return;
+  }
+
+  if (type === 'percent' && value > 100) {
+    showNotification('⚠️ النسبة يجب أن تكون 100% أو أقل', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('saveDiscountBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span><span>جاري الحفظ...</span>';
+
+  await applyDiscount(productId, type, value);
+  closeDiscountModal();
+}
+
+async function removeDiscount(productId) {
+  await applyDiscount(productId, null, 0);
+  closeDiscountModal();
 }
 
 async function applyDiscount(id, type, value) {
@@ -1542,14 +1797,14 @@ async function confirmDelete() {
   }
 }
 
-// ========== معاينة الخصم ==========
-function updateDiscountPreview() {
+// ========== معاينة الخصم في النموذج ==========
+function updateDiscountPreview2() {
   const type = document.getElementById('discountType').value;
   const value = parseFloat(document.getElementById('discountValue').value) || 0;
   const price = parseFloat(document.getElementById('price').value) || 0;
 
   const hint = document.getElementById('discountHint');
-  const preview = document.getElementById('discountPreview');
+  const preview = document.getElementById('discountPreview2');
   const previewPrice = document.getElementById('discountPreviewPrice');
 
   if (type === 'percent') {
@@ -1574,10 +1829,9 @@ function updateDiscountPreview() {
   }
 }
 
-// ربط الأحداث
-document.getElementById('discountType').addEventListener('change', updateDiscountPreview);
-document.getElementById('discountValue').addEventListener('input', updateDiscountPreview);
-document.getElementById('price').addEventListener('input', updateDiscountPreview);
+document.getElementById('discountType').addEventListener('change', updateDiscountPreview2);
+document.getElementById('discountValue').addEventListener('input', updateDiscountPreview2);
+document.getElementById('price').addEventListener('input', updateDiscountPreview2);
 
 // ========== Sidebar ==========
 function toggleSidebar() {
@@ -1612,7 +1866,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// إغلاق المودال عند الضغط على خارج المحتوى
 document.querySelectorAll('.modal').forEach(modal => {
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
