@@ -556,8 +556,9 @@ img { max-width: 100%; display: block; }
 /* ========== شبكة المنتجات ========== */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
   gap: 16px;
+  justify-content: center;
 }
 
 .product-card {
@@ -873,6 +874,63 @@ img { max-width: 100%; display: block; }
 }
 
 .modal-add:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* عدّاد الكمية في Modal */
+.modal-qty-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background: var(--bg-2);
+  border-radius: 18px;
+  border: 2px solid var(--primary);
+}
+
+.modal-qty-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+}
+
+.modal-qty-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.5);
+}
+
+.modal-qty-value {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--primary);
+  min-width: 50px;
+  text-align: center;
+}
+
+.modal-added-badge {
+  width: 100%;
+  background: var(--success);
+  color: white;
+  padding: 15px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
 
 /* ========== السلة ========== */
 .cart-overlay {
@@ -1270,7 +1328,11 @@ img { max-width: 100%; display: block; }
   .offer-title { font-size: 1rem; }
   .offer-new-price { font-size: 1.1rem; }
   
-  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  /* ✅ على الجوال: منتجين في الصف */
+  .products-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px; 
+  }
   .product-info { padding: 10px; }
   .product-image { font-size: 2.5rem; }
   .product-name { font-size: 0.8rem; }
@@ -1294,6 +1356,8 @@ img { max-width: 100%; display: block; }
   .modal-name { font-size: 1.2rem; }
   .modal-desc { font-size: 0.85rem; }
   .modal-price { font-size: 1.4rem; }
+  .modal-qty-btn { width: 42px; height: 42px; font-size: 1.3rem; }
+  .modal-qty-value { font-size: 1.5rem; }
   
   .footer { padding: 40px 15px 0; }
   .footer-logo-icon { width: 55px; height: 55px; font-size: 1.5rem; }
@@ -1657,7 +1721,7 @@ async function loadBestSellers() {
     
     if (data.success && data.products.length > 0) {
       document.getElementById('bestSellersSection').style.display = 'block';
-      const products = data.products.slice(0, 2);
+      const products = data.products.slice(0, 4);
       products.forEach(p => allProducts[p.id] = p);
       document.getElementById('bestSellersGrid').innerHTML = products.map(p => renderProductCard(p)).join('');
     }
@@ -1718,7 +1782,7 @@ async function loadCategoriesWithProducts() {
     container.innerHTML = '';
 
     for (const cat of data.categories) {
-      const prodRes = await fetch(`${API_URL}/products/category/${cat.id}?limit=2`);
+      const prodRes = await fetch(`${API_URL}/products/category/${cat.id}?limit=4`);
       const prodData = await prodRes.json();
       
       if (!prodData.success || prodData.products.length === 0) continue;
@@ -1838,6 +1902,25 @@ function openProductModal(id) {
   const stockClass = product.stock === 0 ? 'stock-out' : product.stock <= product.min_stock ? 'stock-low' : 'stock-ok';
   const stockText = product.stock === 0 ? '❌ نفذ' : product.stock <= product.min_stock ? `⚠️ آخر ${product.stock} قطع` : `✅ متوفر (${product.stock})`;
   
+  // زر السلة الذكي في Modal
+  let cartButtonHTML = '';
+  const inCart = cart.find(item => item.id === product.id);
+  
+  if (product.stock === 0) {
+    cartButtonHTML = `<button class="modal-add" disabled>❌ نفذ من المخزون</button>`;
+  } else if (inCart && inCart.quantity > 0) {
+    cartButtonHTML = `
+      <div class="modal-qty-control">
+        <button class="modal-qty-btn" onclick="modalUpdateQuantity(${product.id}, -1)">−</button>
+        <span class="modal-qty-value">${inCart.quantity}</span>
+        <button class="modal-qty-btn" onclick="modalUpdateQuantity(${product.id}, 1)">+</button>
+      </div>
+      <div class="modal-added-badge">✓ في السلة (${inCart.quantity})</div>
+    `;
+  } else {
+    cartButtonHTML = `<button class="modal-add" onclick="addToCart(${product.id}); openProductModal(${product.id});">🛒 أضف إلى السلة</button>`;
+  }
+  
   document.getElementById('productModalContent').innerHTML = `
     <button class="modal-close" onclick="closeProductModal()">✕</button>
     <div class="modal-image">${product.image ? `<img src="${product.image}" alt="${product.name}">` : '👕'}</div>
@@ -1854,13 +1937,36 @@ function openProductModal(id) {
         ${discountPercent > 0 ? `<span class="modal-discount-badge">-${discountPercent}%</span>` : ''}
       </div>
       <div class="modal-stock"><span class="stock-badge ${stockClass}">${stockText}</span></div>
-      <button class="modal-add" onclick="addToCart(${product.id}); closeProductModal();" ${product.stock === 0 ? 'disabled' : ''}>
-        🛒 أضف إلى السلة
-      </button>
+      ${cartButtonHTML}
     </div>
   `;
   document.getElementById('productModal').classList.add('show');
   document.body.style.overflow = 'hidden';
+}
+
+function modalUpdateQuantity(productId, change) {
+  const item = cart.find(i => i.id === productId);
+  if (!item) return;
+  
+  const product = allProducts[productId];
+  const newQty = item.quantity + change;
+  
+  if (newQty <= 0) {
+    cart = cart.filter(i => i.id !== productId);
+  } else if (product && newQty > product.stock) {
+    showNotification('⚠️ الكمية غير كافية', true);
+    return;
+  } else {
+    item.quantity = newQty;
+  }
+  
+  saveCart();
+  renderCart();
+  refreshAllProductCards();
+  updateBadge();
+  
+  // إعادة رندر الـ Modal
+  openProductModal(productId);
 }
 
 function closeProductModal() {
