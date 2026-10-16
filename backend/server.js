@@ -31,7 +31,7 @@ app.use(session({
 }));
 console.log('4️⃣ تم تفعيل الجلسات');
 
-// الملفات الثابتة (Static Files)
+// الملفات الثابتة
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/images', express.static(path.join(__dirname, '..', 'images')));
 app.use('/admin', express.static(path.join(__dirname, '..', 'admin')));
@@ -70,6 +70,9 @@ console.log('   ✅ banners');
 app.use('/api/staff', require('./routes/staff'));
 console.log('   ✅ staff');
 
+app.use('/api/offers', require('./routes/offers'));
+console.log('   ✅ offers');
+
 // ========================================
 // صفحة اختبار
 // ========================================
@@ -83,7 +86,7 @@ app.get('/api/test', (req, res) => {
 });
 
 // ========================================
-// معالجة الأخطاء (Error Handler)
+// معالجة الأخطاء
 // ========================================
 app.use((err, req, res, next) => {
   console.error('❌ خطأ في السيرفر:', err.message);
@@ -94,7 +97,7 @@ app.use((err, req, res, next) => {
 });
 
 // ========================================
-// 404 Handler
+// 404
 // ========================================
 app.use((req, res) => {
   res.status(404).json({ 
@@ -112,8 +115,6 @@ app.listen(PORT, () => {
   console.log(`🛍️  ${process.env.STORE_NAME || 'متجر الملابس'}`);
   console.log('═══════════════════════════════════════');
   console.log(`✅ السيرفر شغّال على: http://localhost:${PORT}`);
-  console.log(`🌐 المتجر: http://localhost:${PORT}`);
-  console.log(`🔐 لوحة التحكم: http://localhost:${PORT}/admin`);
   console.log(`🧪 اختبار: http://localhost:${PORT}/api/test`);
   console.log('═══════════════════════════════════════');
   console.log('');

@@ -5,21 +5,14 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 
-// مسار قاعدة البيانات
 const dbPath = path.join(__dirname, 'database.db');
-
-// إنشاء الاتصال بقاعدة البيانات
 const db = new Database(dbPath);
 
-// تفعيل المفاتيح الأجنبية
 db.pragma('foreign_keys = ON');
 
-// ========================================
-// إنشاء الجداول
-// ========================================
 console.log('📦 جاري تجهيز قاعدة البيانات...');
 
-// 1. جدول المستخدمين (مع الصلاحيات)
+// 1. جدول المستخدمين
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,7 +36,7 @@ db.exec(`
   )
 `);
 
-// 3. جدول المنتجات
+// 3. جدول المنتجات (مع أعمدة الخصم والمميز)
 db.exec(`
   CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,6 +49,9 @@ db.exec(`
     stock INTEGER DEFAULT 0,
     min_stock INTEGER DEFAULT 5,
     active INTEGER DEFAULT 1,
+    discount_type TEXT DEFAULT NULL,
+    discount_value REAL DEFAULT 0,
+    is_featured INTEGER DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES categories(id)
   )
@@ -129,7 +125,7 @@ db.exec(`
   )
 `);
 
-// 8. جدول البانرات (الإعلانات) - جديد ✨
+// 8. جدول البانرات
 db.exec(`
   CREATE TABLE IF NOT EXISTS banners (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -142,28 +138,29 @@ db.exec(`
   )
 `);
 
-// 9. جدول سجل النشاطات (اختياري - للمدير) - جديد ✨
+// 9. جدول العروضات (Offers) - جديد ✨
 db.exec(`
-  CREATE TABLE IF NOT EXISTS activity_log (
+  CREATE TABLE IF NOT EXISTS offers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
-    action TEXT NOT NULL,
-    details TEXT,
-    ip_address TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    title TEXT NOT NULL,
+    description TEXT,
+    image TEXT,
+    original_price REAL DEFAULT 0,
+    offer_price REAL NOT NULL,
+    product_ids TEXT DEFAULT '[]',
+    display_order INTEGER DEFAULT 0,
+    active INTEGER DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )
 `);
 
 console.log('✅ تم إنشاء جميع الجداول بنجاح');
 
 // ========================================
-// البيانات الأولية (Seed Data)
+// البيانات الأولية
 // ========================================
 
-// إنشاء حساب مدير افتراضي
 const adminExists = db.prepare('SELECT * FROM users WHERE username = ?').get('admin');
-
 if (!adminExists) {
   const hashedPassword = bcrypt.hashSync('admin123', 10);
   db.prepare(`
@@ -173,7 +170,6 @@ if (!adminExists) {
   console.log('👤 تم إنشاء حساب المدير: admin / admin123');
 }
 
-// إضافة فئات افتراضية
 const categoriesCount = db.prepare('SELECT COUNT(*) as count FROM categories').get();
 if (categoriesCount.count === 0) {
   const categories = ['قمصان', 'بناطيل', 'فساتين', 'أحذية', 'إكسسوارات', 'عبايات'];
@@ -182,7 +178,6 @@ if (categoriesCount.count === 0) {
   console.log('📁 تم إضافة الفئات الافتراضية');
 }
 
-// إضافة منتجات تجريبية
 const productsCount = db.prepare('SELECT COUNT(*) as count FROM products').get();
 if (productsCount.count === 0) {
   const sampleProducts = [
@@ -198,14 +193,10 @@ if (productsCount.count === 0) {
     INSERT INTO products (name, description, price, cost, category_id, stock)
     VALUES (?, ?, ?, ?, ?, ?)
   `);
-  
-  sampleProducts.forEach(p => {
-    insert.run(p.name, p.desc, p.price, p.cost, p.category, p.stock);
-  });
+  sampleProducts.forEach(p => insert.run(p.name, p.desc, p.price, p.cost, p.category, p.stock));
   console.log('🛍️  تم إضافة 6 منتجات تجريبية');
 }
 
-// إضافة كوبونات تجريبية
 const couponsCount = db.prepare('SELECT COUNT(*) as count FROM coupons').get();
 if (couponsCount.count === 0) {
   const coupons = [
@@ -213,19 +204,12 @@ if (couponsCount.count === 0) {
     { code: 'SAVE5', type: 'fixed', value: 5, min_order: 30, max_uses: 50 },
     { code: 'VIP20', type: 'percent', value: 20, min_order: 100, max_uses: 10 }
   ];
-  
   const insert = db.prepare(`
     INSERT INTO coupons (code, type, value, min_order, max_uses)
     VALUES (?, ?, ?, ?, ?)
   `);
-  
-  coupons.forEach(c => {
-    insert.run(c.code, c.type, c.value, c.min_order, c.max_uses);
-  });
+  coupons.forEach(c => insert.run(c.code, c.type, c.value, c.min_order, c.max_uses));
   console.log('🎟️  تم إضافة 3 كوبونات تجريبية');
 }
 
-// ========================================
-// تصدير قاعدة البيانات
-// ========================================
 module.exports = db;
