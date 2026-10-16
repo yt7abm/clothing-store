@@ -555,7 +555,6 @@ img { max-width: 100%; display: block; }
 .offer-new-price img { width: 18px; height: 18px; }
 
 /* ========== شبكة المنتجات ========== */
-/* 4 منتجات في الصف على اللابتوب */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -689,7 +688,6 @@ img { max-width: 100%; display: block; }
 
 .product-price img { width: 14px; height: 14px; object-fit: contain; }
 
-/* زر السلة الذكي */
 .cart-control {
   display: flex;
   align-items: center;
@@ -876,7 +874,6 @@ img { max-width: 100%; display: block; }
 
 .modal-add:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* عدّاد الكمية في Modal */
 .modal-qty-control {
   display: flex;
   align-items: center;
@@ -1323,17 +1320,17 @@ img { max-width: 100%; display: block; }
   .section-icon { width: 40px; height: 40px; font-size: 1.1rem; }
   .view-all { font-size: 0.8rem; padding: 6px 12px; }
   
-  .offers-grid { gap: 15px; }
-  .offer-image { aspect-ratio: 16 / 9; font-size: 3rem; }
-  .offer-info { padding: 14px; }
-  .offer-title { font-size: 1rem; }
-  .offer-new-price { font-size: 1.1rem; }
-  
-  /* ✅ على الجوال: منتجين في الصف فقط */
+  /* على الجوال: منتجين فقط، ما فيه سطر ثاني */
   .products-grid { 
     grid-template-columns: repeat(2, 1fr); 
     gap: 10px; 
   }
+  
+  /* إخفاء المنتج الثالث والرابع على الجوال */
+  .products-grid .product-card:nth-child(n+3) {
+    display: none;
+  }
+  
   .product-info { padding: 10px; }
   .product-image { font-size: 2.5rem; }
   .product-name { font-size: 0.8rem; }
@@ -1345,6 +1342,25 @@ img { max-width: 100%; display: block; }
   .cart-control.full { height: 30px; }
   .cart-control button { width: 22px; height: 22px; font-size: 0.85rem; }
   .cart-control .qty { min-width: 18px; font-size: 0.8rem; }
+  
+  /* العروضات: عرضين فقط على الجوال */
+  .offers-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .offers-grid .offer-card:nth-child(n+3) {
+    display: none;
+  }
+  
+  .offer-image { aspect-ratio: 1 / 1; font-size: 2.5rem; }
+  .offer-info { padding: 10px; }
+  .offer-title { font-size: 0.85rem; }
+  .offer-desc { display: none; }
+  .offer-products-count { font-size: 0.65rem; padding: 3px 8px; }
+  .offer-old-price { font-size: 0.7rem; }
+  .offer-new-price { font-size: 0.95rem; }
+  .offer-new-price img { width: 13px; height: 13px; }
   
   .cart-sidebar { width: 100%; left: -100%; }
   
@@ -1722,7 +1738,6 @@ async function loadBestSellers() {
     
     if (data.success && data.products.length > 0) {
       document.getElementById('bestSellersSection').style.display = 'block';
-      // ✅ 4 منتجات كحد أقصى
       const products = data.products.slice(0, 4);
       products.forEach(p => allProducts[p.id] = p);
       document.getElementById('bestSellersGrid').innerHTML = products.map(p => renderProductCard(p)).join('');
@@ -1740,7 +1755,6 @@ async function loadOffers() {
     
     if (data.success && data.offers.length > 0) {
       document.getElementById('offersSection').style.display = 'block';
-      // ✅ 4 عروض كحد أقصى
       document.getElementById('offersGrid').innerHTML = data.offers.slice(0, 4).map(o => {
         const discountPercent = o.original_price > 0 
           ? Math.round(((o.original_price - o.offer_price) / o.original_price) * 100)
@@ -1785,7 +1799,6 @@ async function loadCategoriesWithProducts() {
     container.innerHTML = '';
 
     for (const cat of data.categories) {
-      // ✅ 4 منتجات كحد أقصى لكل فئة
       const prodRes = await fetch(`${API_URL}/products/category/${cat.id}?limit=4`);
       const prodData = await prodRes.json();
       
