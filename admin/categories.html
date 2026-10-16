@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>إدارة الفئات - متجر راقي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #3b82f6;
+  --primary-dark: #1e40af;
+  --accent: #f59e0b;
+  --accent-2: #ec4899;
+  --gold: #d4af37;
+  --bg: #ffffff;
+  --bg-2: #f9fafb;
+  --bg-3: #f3f4f6;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; height: 100%; }
+
+body {
+  background: var(--bg-2);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ========== Top Bar ========== */
+.top-bar {
+  position: fixed;
+  top: 0; right: 0; left: 0;
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  box-shadow: var(--shadow-sm);
+}
+
+.top-bar-right { display: flex; align-items: center; gap: 15px; }
+
+.menu-toggle {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--bg-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+  border: 1px solid var(--border);
+}
+
+.menu-toggle:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+.top-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 1.1rem; font-weight: 900; color: var(--primary);
+}
+
+.top-logo-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+}
+
+.top-bar-left { display: flex; align-items: center; gap: 12px; }
+
+.user-badge {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 14px 6px 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 25px;
+}
+
+.user-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 900; font-size: 0.9rem;
+}
+
+.user-info { display: flex; flex-direction: column; align-items: flex-start; }
+.user-name { font-size: 0.85rem; font-weight: 900; line-height: 1.2; }
+.user-role { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; }
+
+.logout-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+}
+
+.logout-btn:hover { background: var(--danger); color: white; transform: translateY(-2px); }
+
+/* ========== Sidebar ========== */
+.sidebar {
+  position: fixed;
+  top: 70px; right: 0;
+  width: 270px;
+  height: calc(100vh - 70px);
+  background: white;
+  border-left: 1px solid var(--border);
+  padding: 20px 15px;
+  overflow-y: auto;
+  z-index: 900;
+  transition: transform 0.3s;
+}
+
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.sidebar-section { margin-bottom: 25px; }
+
+.sidebar-section-title {
+  font-size: 0.7rem; font-weight: 900;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 15px;
+  margin-bottom: 10px;
+}
+
+.sidebar-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 0.9rem; font-weight: 600;
+  transition: all 0.3s;
+  margin-bottom: 3px;
+}
+
+.sidebar-link:hover { background: var(--bg-3); color: var(--primary); padding-right: 20px; }
+.sidebar-link.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+}
+
+.sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
+
+/* ========== Main ========== */
+.main-content {
+  margin-right: 270px;
+  padding: 90px 25px 30px;
+  min-height: 100vh;
+}
+
+/* ========== Page Header ========== */
+.page-header {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 25px 30px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.page-header-info h1 {
+  font-size: 1.5rem; font-weight: 900;
+  margin-bottom: 5px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.page-header-info p { color: var(--text-muted); font-size: 0.85rem; }
+
+.add-btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+}
+
+.add-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35); }
+
+/* ========== Stats Mini ========== */
+.stats-mini {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.stat-mini {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-mini.blue { color: var(--primary); background: rgba(30, 58, 138, 0.05); border-color: rgba(30, 58, 138, 0.15); }
+
+/* ========== Categories Grid ========== */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.category-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 25px 20px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card:hover {
+  border-color: var(--primary-light);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+
+.category-card:hover::before { transform: scaleX(1); }
+
+.category-order {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--bg-3);
+  color: var(--text-muted);
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.category-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  display: block;
+  line-height: 1;
+}
+
+.category-name {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.category-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-3);
+  color: var(--primary);
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.category-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.cat-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 900;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.cat-btn.edit {
+  background: rgba(30, 58, 138, 0.1);
+  color: var(--primary);
+}
+
+.cat-btn.edit:hover { background: var(--primary); color: white; }
+
+.cat-btn.delete {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+}
+
+.cat-btn.delete:hover { background: var(--danger); color: white; }
+
+/* ========== Empty State ========== */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 20px;
+  border: 2px dashed var(--border);
+  grid-column: 1 / -1;
+}
+
+.empty-state .icon { font-size: 4rem; margin-bottom: 15px; opacity: 0.5; }
+.empty-state h3 { font-size: 1.2rem; font-weight: 900; margin-bottom: 8px; }
+.empty-state p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* ========== Loading ========== */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--primary);
+  grid-column: 1 / -1;
+}
+
+.loading::after {
+  content: '';
+  display: block;
+  width: 35px; height: 35px;
+  margin: 15px auto 0;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ========== Modal ========== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+  overflow-y: auto;
+}
+
+.modal.show { display: flex; }
+
+.modal-content {
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
+  animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  padding: 22px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 24px 24px 0 0;
+}
+
+.modal-header.danger { background: linear-gradient(135deg, var(--danger), #b91c1c); }
+
+.modal-header h2 {
+  font-size: 1.1rem;
+  font-weight: 900;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.modal-close {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.modal-close:hover { background: rgba(255, 255, 255, 0.3); transform: rotate(90deg); }
+
+.modal-body { padding: 25px; }
+
+.modal-footer {
+  padding: 18px 25px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
+  border-radius: 0 0 24px 24px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* ========== Form ========== */
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 5px;
+}
+
+.form-group label .required { color: var(--danger); }
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg-2);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  transition: all 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
+}
+
+.form-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; }
+
+/* ========== Icon Picker ========== */
+.icon-picker-wrap {
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.icon-picker-header {
+  padding: 12px 15px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.selected-icon-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.selected-icon-display .icon-preview {
+  font-size: 1.8rem;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.selected-icon-display .info {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.icon-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  padding: 12px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+}
+
+.icon-picker-grid::-webkit-scrollbar { width: 4px; }
+.icon-picker-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.icon-option {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-2);
+  border: 2px solid transparent;
+}
+
+.icon-option:hover {
+  background: var(--bg-3);
+  transform: scale(1.15);
+}
+
+.icon-option.selected {
+  background: rgba(30, 58, 138, 0.1);
+  border-color: var(--primary);
+  transform: scale(1.15);
+}
+
+/* ========== Button ========== */
+.btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+}
+
+.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35); }
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--danger), #b91c1c);
+  color: white;
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.25);
+}
+
+.btn-danger:hover:not(:disabled) { transform: translateY(-3px); }
+
+.btn-secondary {
+  background: white;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+}
+
+.btn-secondary:hover { background: var(--bg-3); }
+
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ========== Notification ========== */
+.notification {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--primary);
+  color: white;
+  padding: 14px 25px;
+  border-radius: 14px;
+  font-weight: 700;
+  z-index: 3000;
+  transform: translateX(500px);
+  transition: transform 0.4s;
+  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.3);
+  max-width: calc(100% - 60px);
+  font-size: 0.9rem;
+}
+
+.notification.show { transform: translateX(0); }
+.notification.error { background: var(--danger); }
+.notification.success { background: var(--success); }
+
+/* ========== Responsive ========== */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(100%); box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1); }
+  .sidebar.open { transform: translateX(0); }
+  .main-content { margin-right: 0; padding: 90px 18px 30px; }
+}
+
+@media (max-width: 600px) {
+  .top-bar { height: 65px; padding: 0 15px; }
+  .top-logo { font-size: 0.95rem; }
+  .top-logo-icon { width: 36px; height: 36px; font-size: 1rem; }
+  .user-info { display: none; }
+  .user-badge { padding: 6px; }
+
+  .main-content { padding: 85px 12px 25px; }
+
+  .page-header { padding: 18px; border-radius: 16px; }
+  .page-header-info h1 { font-size: 1.2rem; }
+  .page-header-info p { font-size: 0.75rem; }
+  .add-btn { padding: 10px 18px; font-size: 0.85rem; width: 100%; justify-content: center; }
+
+  .stats-mini { gap: 8px; }
+  .stat-mini { padding: 8px 12px; font-size: 0.7rem; }
+
+  .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .category-card { padding: 18px 12px; border-radius: 16px; }
+  .category-icon { font-size: 2.2rem; margin-bottom: 8px; }
+  .category-name { font-size: 0.9rem; }
+  .category-count { font-size: 0.7rem; padding: 4px 10px; }
+  .cat-btn { padding: 6px 12px; font-size: 0.7rem; }
+
+  .modal { padding: 10px; }
+  .modal-content { border-radius: 20px; }
+  .modal-header { padding: 18px 20px; border-radius: 20px 20px 0 0; }
+  .modal-header h2 { font-size: 1rem; }
+  .modal-body { padding: 20px; }
+  .modal-footer { padding: 15px 20px; border-radius: 0 0 20px 20px; flex-direction: column; }
+  .btn { width: 100%; }
+
+  .icon-picker-grid { grid-template-columns: repeat(6, 1fr); }
+
+  .notification { bottom: 15px; right: 15px; left: 15px; max-width: calc(100% - 30px); text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<header class="top-bar">
+  <div class="top-bar-right">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="top-logo">
+      <div class="top-logo-icon">🏷️</div>
+      الفئات
+    </div>
+  </div>
+  <div class="top-bar-left">
+    <div class="user-badge">
+      <div class="user-avatar" id="userAvatar">A</div>
+      <div class="user-info">
+        <span class="user-name" id="userName">المدير</span>
+        <span class="user-role" id="userRole">admin</span>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="openLogoutModal()">🚪</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">الرئيسية</div>
+    <a href="dashboard.html" class="sidebar-link">
+      <span class="icon">📊</span>
+      <span>لوحة التحكم</span>
+    </a>
+  </div>
+
+  <div class="sidebar-section" id="operationsSection" style="display:none;">
+    <div class="sidebar-section-title">العمليات</div>
+    <a href="products.html" class="sidebar-link" data-permission="products.view">
+      <span class="icon">👕</span>
+      <span>المنتجات</span>
+    </a>
+    <a href="categories.html" class="sidebar-link active" data-permission="categories.view">
+      <span class="icon">🏷️</span>
+      <span>الفئات</span>
+    </a>
+    <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
+      <span class="icon">📦</span>
+      <span>المخزون</span>
+    </a>
+    <a href="orders.html" class="sidebar-link" data-permission="orders.view">
+      <span class="icon">🛍️</span>
+      <span>الطلبات</span>
+    </a>
+    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
+      <span class="icon">💰</span>
+      <span>الكاشير</span>
+    </a>
+    <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
+      <span class="icon">🎟️</span>
+      <span>الكوبونات</span>
+    </a>
+  </div>
+
+  <div class="sidebar-section" id="managementSection" style="display:none;">
+    <div class="sidebar-section-title">الإدارة</div>
+    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
+      <span class="icon">🎁</span>
+      <span>العروضات</span>
+    </a>
+    <a href="reports.html" class="sidebar-link" data-permission="reports.view">
+      <span class="icon">📈</span>
+      <span>التقارير</span>
+    </a>
+    <a href="banners.html" class="sidebar-link" data-permission="banners.view">
+      <span class="icon">🖼️</span>
+      <span>البانرات</span>
+    </a>
+    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
+      <span class="icon">👥</span>
+      <span>الموظفين</span>
+    </a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">المتجر</div>
+    <a href="../index.html" class="sidebar-link">
+      <span class="icon">🏠</span>
+      <span>الصفحة الرئيسية</span>
+    </a>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main-content">
+
+  <div class="page-header">
+    <div class="page-header-info">
+      <h1>🏷️ إدارة الفئات</h1>
+      <p>أضف وعدل فئات المنتجات</p>
+    </div>
+    <button class="add-btn" onclick="openAddModal()">
+      <span>➕</span>
+      <span>إضافة فئة جديدة</span>
+    </button>
+  </div>
+
+  <div class="stats-mini">
+    <div class="stat-mini blue">🏷️ <span id="countAll">0</span> فئة</div>
+  </div>
+
+  <div class="categories-grid" id="categoriesGrid">
+    <div class="loading">⏳ جاري تحميل الفئات...</div>
+  </div>
+
+</main>
+
+<!-- ========== Modal إضافة/تعديل فئة ========== -->
+<div class="modal" id="categoryModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">➕ إضافة فئة جديدة</h2>
+      <button class="modal-close" onclick="closeCategoryModal()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <form id="categoryForm" onsubmit="saveCategory(event)">
+        <input type="hidden" id="categoryId">
+
+        <div class="form-group">
+          <label>🏷️ اسم الفئة <span class="required">*</span></label>
+          <input type="text" id="name" required placeholder="مثال: قمصان">
+          <div class="form-hint">الاسم اللي يظهر للعملاء</div>
+        </div>
+
+        <div class="form-group">
+          <label>🎨 الأيقونة</label>
+          <div class="icon-picker-wrap">
+            <div class="icon-picker-header">
+              <div class="selected-icon-display">
+                <div class="icon-preview" id="iconPreview">🏷️</div>
+                <div class="info">الأيقونة المختارة</div>
+              </div>
+            </div>
+            <div class="icon-picker-grid" id="iconPicker">
+              <!-- يتم إضافتها من JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>🔢 ترتيب العرض</label>
+          <input type="number" id="displayOrder" min="0" value="0" placeholder="0">
+          <div class="form-hint">الأقل يظهر أولاً في الصفحة الرئيسية</div>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeCategoryModal()">إلغاء</button>
+      <button class="btn btn-primary" onclick="document.getElementById('categoryForm').requestSubmit()" id="saveBtn">
+        <span>💾</span>
+        <span>حفظ</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Modal حذف ========== -->
+<div class="modal" id="deleteModal">
+  <div class="modal-content" style="max-width: 450px;">
+    <div class="modal-header danger">
+      <h2>🗑️ حذف الفئة</h2>
+      <button class="modal-close" onclick="closeDeleteModal()">✕</button>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <div style="font-size: 4rem; margin-bottom: 15px;">⚠️</div>
+      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">تأكيد الحذف</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">هل أنت متأكد من حذف هذه الفئة؟ لا يمكن التراجع.</p>
+      <p id="deleteWarning" style="color: var(--danger); font-size: 0.85rem; margin-top: 10px; font-weight: 700;"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeDeleteModal()">إلغاء</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">🗑️ حذف</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Modal تسجيل الخروج ========== -->
+<div class="modal" id="logoutModal">
+  <div class="modal-content" style="max-width: 450px;">
+    <div class="modal-header danger">
+      <h2>🚪 تسجيل الخروج</h2>
+      <button class="modal-close" onclick="closeLogoutModal()">✕</button>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <div style="font-size: 4rem; margin-bottom: 15px;">👋</div>
+      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">هل أنت متأكد؟</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">سيتم تسجيل خروجك من لوحة التحكم</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeLogoutModal()">إلغاء</button>
+      <button class="btn btn-danger" onclick="confirmLogout()">🚪 تسجيل الخروج</button>
+    </div>
+  </div>
+</div>
+
+<!-- Notification -->
+<div class="notification" id="notification"></div>
+
+<script>
+const API_URL = '/api';
+let user = null;
+let permissions = [];
+let allCategories = [];
+let selectedIcon = '🏷️';
+let deletingId = null;
+
+// قائمة الإيموجي المتاحة
+const AVAILABLE_ICONS = [
+  '👔', '👕', '👖', '👗', '👘', '👚', '👙', '🧥',
+  '🥻', '👟', '👞', '👠', '👡', '🥾', '🥿', '👢',
+  '🧕', '🧢', '👒', '🎩', '⌚', '👓', '🕶️', '💍',
+  '📿', '💄', '👛', '👜', '👝', '🎒', '🧣', '🧤',
+  '🧦', '🩱', '🩲', '🩳', '🎽', '🦺', '👔', '🎀',
+  '🏷️', '🛍️', '✨', '💎', '🌟', '🔥', '💫', '⭐',
+  '🪖', '⛑️', '🎓', '👑', '💐', '🌹', '🌸', '🌺',
+  '👶', '🧸', '🎁', '🎈', '🍼', '🎉', '💝', '🎊'
+];
+
+// ========== التحقق من الدخول ==========
+document.addEventListener('DOMContentLoaded', async () => {
+  const userStr = localStorage.getItem('raki_user');
+  const permStr = localStorage.getItem('raki_permissions');
+  const token = localStorage.getItem('raki_token');
+
+  if (!userStr || !token) { window.location.href = 'login.html'; return; }
+
+  try {
+    user = JSON.parse(userStr);
+    permissions = JSON.parse(permStr || '[]');
+  } catch (e) { window.location.href = 'login.html'; return; }
+
+  if (!user.is_admin && !permissions.includes('categories.view')) {
+    alert('ليس لديك صلاحية الوصول');
+    window.location.href = 'dashboard.html';
+    return;
+  }
+
+  applyUserData();
+  applyPermissions();
+  renderIconPicker();
+
+  await loadCategories();
+});
+
+function applyUserData() {
+  const fullName = user.full_name || user.username;
+  document.getElementById('userAvatar').textContent = fullName.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent = fullName;
+  document.getElementById('userRole').textContent = user.is_admin ? 'المدير العام' : 'موظف';
+}
+
+function applyPermissions() {
+  const isAdmin = user.is_admin;
+  let hasOperations = false;
+  let hasManagement = false;
+
+  document.querySelectorAll('.sidebar-link[data-permission]').forEach(link => {
+    const perm = link.getAttribute('data-permission');
+    const has = isAdmin || permissions.includes(perm);
+    if (!has) {
+      link.style.display = 'none';
+    } else {
+      const section = link.closest('.sidebar-section');
+      if (section) {
+        section.style.display = 'block';
+        if (section.id === 'operationsSection') hasOperations = true;
+        if (section.id === 'managementSection') hasManagement = true;
+      }
+    }
+  });
+
+  if (!hasOperations) document.getElementById('operationsSection').style.display = 'none';
+  if (!hasManagement) document.getElementById('managementSection').style.display = 'none';
+}
+
+// ========== عرض قائمة الإيموجي ==========
+function renderIconPicker() {
+  const container = document.getElementById('iconPicker');
+  container.innerHTML = AVAILABLE_ICONS.map(icon => `
+    <div class="icon-option ${icon === selectedIcon ? 'selected' : ''}" 
+         onclick="selectIcon('${icon}')">
+      ${icon}
+    </div>
+  `).join('');
+}
+
+function selectIcon(icon) {
+  selectedIcon = icon;
+  document.getElementById('iconPreview').textContent = icon;
+  
+  // تحديث الحالة
+  document.querySelectorAll('.icon-option').forEach(el => {
+    el.classList.toggle('selected', el.textContent.trim() === icon);
+  });
+}
+
+// ========== جلب الفئات ==========
+async function loadCategories() {
+  try {
+    const res = await fetch(`${API_URL}/categories`);
+    const data = await res.json();
+
+    if (data.success) {
+      allCategories = data.categories;
+      updateStats();
+      renderCategories();
+    }
+  } catch (error) {
+    document.getElementById('categoriesGrid').innerHTML = `
+      <div class="empty-state">
+        <div class="icon">❌</div>
+        <h3>تعذّر تحميل الفئات</h3>
+      </div>
+    `;
+  }
+}
+
+function updateStats() {
+  document.getElementById('countAll').textContent = allCategories.length;
+}
+
+function renderCategories() {
+  const grid = document.getElementById('categoriesGrid');
+
+  if (allCategories.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">🏷️</div>
+        <h3>لا توجد فئات</h3>
+        <p>ابدأ بإضافة أول فئة</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = allCategories.map(cat => `
+    <div class="category-card">
+      <div class="category-order">#${cat.display_order || 0}</div>
+      <span class="category-icon">${cat.icon || '🏷️'}</span>
+      <div class="category-name">${cat.name}</div>
+      <div class="category-count">📦 ${cat.products_count || 0} منتج</div>
+      <div class="category-actions">
+        <button class="cat-btn edit" onclick="openEditModal(${cat.id})">✏️ تعديل</button>
+        <button class="cat-btn delete" onclick="openDeleteModal(${cat.id})">🗑️ حذف</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ========== إضافة فئة ==========
+function openAddModal() {
+  selectedIcon = '🏷️';
+  
+  document.getElementById('modalTitle').innerHTML = '➕ إضافة فئة جديدة';
+  document.getElementById('categoryId').value = '';
+  document.getElementById('name').value = '';
+  document.getElementById('displayOrder').value = '0';
+  document.getElementById('iconPreview').textContent = '🏷️';
+  
+  renderIconPicker();
+  document.getElementById('categoryModal').classList.add('show');
+}
+
+// ========== تعديل فئة ==========
+function openEditModal(id) {
+  const cat = allCategories.find(c => c.id === id);
+  if (!cat) return;
+
+  selectedIcon = cat.icon || '🏷️';
+
+  document.getElementById('modalTitle').innerHTML = '✏️ تعديل الفئة';
+  document.getElementById('categoryId').value = cat.id;
+  document.getElementById('name').value = cat.name;
+  document.getElementById('displayOrder').value = cat.display_order || 0;
+  document.getElementById('iconPreview').textContent = selectedIcon;
+
+  renderIconPicker();
+  document.getElementById('categoryModal').classList.add('show');
+}
+
+function closeCategoryModal() {
+  document.getElementById('categoryModal').classList.remove('show');
+}
+
+// ========== حفظ الفئة ==========
+async function saveCategory(e) {
+  e.preventDefault();
+
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span><span>جاري الحفظ...</span>';
+
+  const id = document.getElementById('categoryId').value;
+  const data = {
+    name: document.getElementById('name').value.trim(),
+    icon: selectedIcon,
+    display_order: parseInt(document.getElementById('displayOrder').value) || 0
+  };
+
+  try {
+    const url = id ? `${API_URL}/categories/${id}` : `${API_URL}/categories`;
+    const method = id ? 'PUT' : 'POST';
+
+    const res = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      showNotification(id ? '✅ تم تعديل الفئة' : '✅ تم إضافة الفئة', 'success');
+      closeCategoryModal();
+      await loadCategories();
+    } else {
+      showNotification('❌ ' + result.message, 'error');
+    }
+  } catch (error) {
+    showNotification('❌ حدث خطأ', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>💾</span><span>حفظ</span>';
+  }
+}
+
+// ========== حذف فئة ==========
+function openDeleteModal(id) {
+  deletingId = id;
+  const cat = allCategories.find(c => c.id === id);
+  
+  if (cat && cat.products_count > 0) {
+    document.getElementById('deleteWarning').textContent = 
+      `⚠️ يوجد ${cat.products_count} منتج في هذه الفئة. لن تتمكن من حذفها إلا بعد نقل المنتجات.`;
+  } else {
+    document.getElementById('deleteWarning').textContent = '';
+  }
+  
+  document.getElementById('deleteModal').classList.add('show');
+}
+
+function closeDeleteModal() {
+  document.getElementById('deleteModal').classList.remove('show');
+  deletingId = null;
+}
+
+async function confirmDelete() {
+  if (!deletingId) return;
+
+  try {
+    const res = await fetch(`${API_URL}/categories/${deletingId}`, { method: 'DELETE' });
+    const data = await res.json();
+
+    if (data.success) {
+      showNotification('✅ تم حذف الفئة', 'success');
+      closeDeleteModal();
+      await loadCategories();
+    } else {
+      showNotification('❌ ' + data.message, 'error');
+    }
+  } catch (error) {
+    showNotification('❌ حدث خطأ', 'error');
+  }
+}
+
+// ========== Sidebar ==========
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('active');
+}
+
+// ========== Logout ==========
+function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
+function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
+function confirmLogout() {
+  localStorage.removeItem('raki_token');
+  localStorage.removeItem('raki_user');
+  localStorage.removeItem('raki_permissions');
+  window.location.href = 'login.html';
+}
+
+// ========== Notification ==========
+function showNotification(message, type = '') {
+  const notif = document.getElementById('notification');
+  notif.textContent = message;
+  notif.className = 'notification show ' + type;
+  setTimeout(() => notif.classList.remove('show'), 3000);
+}
+
+// ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeCategoryModal();
+    closeDeleteModal();
+    closeLogoutModal();
+  }
+});
+
+document.querySelectorAll('.modal').forEach(modal => {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('show');
+  });
+});
+</script>
+
+</body>
+</html>

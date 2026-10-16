@@ -12,6 +12,10 @@ db.pragma('foreign_keys = ON');
 
 console.log('📦 جاري تجهيز قاعدة البيانات...');
 
+// ========================================
+// إنشاء الجداول
+// ========================================
+
 // 1. جدول المستخدمين
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
@@ -27,16 +31,18 @@ db.exec(`
   )
 `);
 
-// 2. جدول الفئات
+// 2. جدول الفئات (مع الأيقونة والترتيب)
 db.exec(`
   CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE,
+    icon TEXT DEFAULT '🏷️',
+    display_order INTEGER DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )
 `);
 
-// 3. جدول المنتجات (مع أعمدة الخصم والمميز)
+// 3. جدول المنتجات
 db.exec(`
   CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -138,7 +144,7 @@ db.exec(`
   )
 `);
 
-// 9. جدول العروضات (Offers) - جديد ✨
+// 9. جدول العروضات
 db.exec(`
   CREATE TABLE IF NOT EXISTS offers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -157,9 +163,53 @@ db.exec(`
 console.log('✅ تم إنشاء جميع الجداول بنجاح');
 
 // ========================================
+// Migration: تحديث الجداول الموجودة
+// ========================================
+try {
+  // التحقق من أعمدة جدول categories
+  const categoriesColumns = db.prepare(`PRAGMA table_info(categories)`).all();
+  const hasIcon = categoriesColumns.some(col => col.name === 'icon');
+  const hasOrder = categoriesColumns.some(col => col.name === 'display_order');
+  
+  if (!hasIcon) {
+    db.exec(`ALTER TABLE categories ADD COLUMN icon TEXT DEFAULT '🏷️'`);
+    console.log('✅ تم إضافة عمود icon لجدول categories');
+  }
+  
+  if (!hasOrder) {
+    db.exec(`ALTER TABLE categories ADD COLUMN display_order INTEGER DEFAULT 0`);
+    console.log('✅ تم إضافة عمود display_order لجدول categories');
+  }
+
+  // التحقق من أعمدة جدول products
+  const productsColumns = db.prepare(`PRAGMA table_info(products)`).all();
+  const hasDiscountType = productsColumns.some(col => col.name === 'discount_type');
+  const hasDiscountValue = productsColumns.some(col => col.name === 'discount_value');
+  const hasFeatured = productsColumns.some(col => col.name === 'is_featured');
+  
+  if (!hasDiscountType) {
+    db.exec(`ALTER TABLE products ADD COLUMN discount_type TEXT DEFAULT NULL`);
+    console.log('✅ تم إضافة عمود discount_type لجدول products');
+  }
+  
+  if (!hasDiscountValue) {
+    db.exec(`ALTER TABLE products ADD COLUMN discount_value REAL DEFAULT 0`);
+    console.log('✅ تم إضافة عمود discount_value لجدول products');
+  }
+  
+  if (!hasFeatured) {
+    db.exec(`ALTER TABLE products ADD COLUMN is_featured INTEGER DEFAULT 0`);
+    console.log('✅ تم إضافة عمود is_featured لجدول products');
+  }
+} catch (error) {
+  console.log('ℹ️ الجداول محدثة مسبقاً');
+}
+
+// ========================================
 // البيانات الأولية
 // ========================================
 
+// حساب المدير
 const adminExists = db.prepare('SELECT * FROM users WHERE username = ?').get('admin');
 if (!adminExists) {
   const hashedPassword = bcrypt.hashSync('admin123', 10);
@@ -170,14 +220,24 @@ if (!adminExists) {
   console.log('👤 تم إنشاء حساب المدير: admin / admin123');
 }
 
+// الفئات الافتراضية (مع الأيقونات والترتيب)
 const categoriesCount = db.prepare('SELECT COUNT(*) as count FROM categories').get();
 if (categoriesCount.count === 0) {
-  const categories = ['قمصان', 'بناطيل', 'فساتين', 'أحذية', 'إكسسوارات', 'عبايات'];
-  const insert = db.prepare('INSERT INTO categories (name) VALUES (?)');
-  categories.forEach(name => insert.run(name));
-  console.log('📁 تم إضافة الفئات الافتراضية');
+  const categories = [
+    { name: 'قمصان', icon: '👔', order: 1 },
+    { name: 'بناطيل', icon: '👖', order: 2 },
+    { name: 'فساتين', icon: '👗', order: 3 },
+    { name: 'أحذية', icon: '👟', order: 4 },
+    { name: 'إكسسوارات', icon: '⌚', order: 5 },
+    { name: 'عبايات', icon: '🧕', order: 6 }
+  ];
+  
+  const insert = db.prepare('INSERT INTO categories (name, icon, display_order) VALUES (?, ?, ?)');
+  categories.forEach(cat => insert.run(cat.name, cat.icon, cat.order));
+  console.log('📁 تم إضافة 6 فئات افتراضية');
 }
 
+// المنتجات الافتراضية
 const productsCount = db.prepare('SELECT COUNT(*) as count FROM products').get();
 if (productsCount.count === 0) {
   const sampleProducts = [
@@ -197,6 +257,7 @@ if (productsCount.count === 0) {
   console.log('🛍️  تم إضافة 6 منتجات تجريبية');
 }
 
+// الكوبونات الافتراضية
 const couponsCount = db.prepare('SELECT COUNT(*) as count FROM coupons').get();
 if (couponsCount.count === 0) {
   const coupons = [
@@ -204,6 +265,7 @@ if (couponsCount.count === 0) {
     { code: 'SAVE5', type: 'fixed', value: 5, min_order: 30, max_uses: 50 },
     { code: 'VIP20', type: 'percent', value: 20, min_order: 100, max_uses: 10 }
   ];
+  
   const insert = db.prepare(`
     INSERT INTO coupons (code, type, value, min_order, max_uses)
     VALUES (?, ?, ?, ?, ?)
@@ -212,4 +274,9 @@ if (couponsCount.count === 0) {
   console.log('🎟️  تم إضافة 3 كوبونات تجريبية');
 }
 
+console.log('✅ قاعدة البيانات جاهزة');
+
+// ========================================
+// تصدير قاعدة البيانات
+// ========================================
 module.exports = db;

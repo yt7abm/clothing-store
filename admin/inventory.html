@@ -4,577 +4,527 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>إدارة المخزون - متجر راقي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-:root { 
-  --primary: #8b5cf6; 
-  --primary-light: #a78bfa; 
-  --primary-dark: #6d28d9; 
-  --accent: #fbbf24;
-  --accent-2: #f472b6;
-  --black: #0f0b1e; 
-  --dark: #1e1b3a; 
-  --dark-2: #252047; 
-  --white: #f5f3ff; 
-  --gray: #a5a1b8; 
-  --border: rgba(139,92,246,0.2); 
-  --success: #10b981; 
-  --danger: #ef4444; 
-  --warning: #fbbf24; 
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #3b82f6;
+  --primary-dark: #1e40af;
+  --accent: #f59e0b;
+  --accent-2: #ec4899;
+  --gold: #d4af37;
+  --bg: #ffffff;
+  --bg-2: #f9fafb;
+  --bg-3: #f3f4f6;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
 
-html, body { background: var(--black); color: var(--white); min-height: 100vh; overflow-x: hidden; }
+html { scroll-behavior: smooth; height: 100%; }
 
-::-webkit-scrollbar { width: 0; height: 0; display: none; }
-html { scrollbar-width: none; -ms-overflow-style: none; }
-
-.layout { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
-
-.overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 998;
-  backdrop-filter: blur(4px);
+body {
+  background: var(--bg-2);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
-.overlay.active { display: block; }
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ========== Top Bar ========== */
+.top-bar {
+  position: fixed;
+  top: 0; right: 0; left: 0;
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  box-shadow: var(--shadow-sm);
+}
+
+.top-bar-right { display: flex; align-items: center; gap: 15px; }
+
+.menu-toggle {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--bg-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+  border: 1px solid var(--border);
+}
+
+.menu-toggle:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+.top-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 1.1rem; font-weight: 900; color: var(--primary);
+}
+
+.top-logo-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+}
+
+.top-bar-left { display: flex; align-items: center; gap: 12px; }
+
+.user-badge {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 14px 6px 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 25px;
+}
+
+.user-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 900; font-size: 0.9rem;
+}
+
+.user-info { display: flex; flex-direction: column; align-items: flex-start; }
+.user-name { font-size: 0.85rem; font-weight: 900; line-height: 1.2; }
+.user-role { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; }
+
+.logout-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+}
+
+.logout-btn:hover { background: var(--danger); color: white; transform: translateY(-2px); }
 
 /* ========== Sidebar ========== */
-.sidebar { 
-  background: var(--dark); 
-  border-left: 1px solid var(--border); 
-  height: 100vh; 
-  position: sticky; 
-  top: 0; 
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 999;
-}
-
-.sidebar-header {
-  padding: 25px 20px 18px;
-  text-align: center;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-  position: relative;
-}
-
-.sidebar-logo { 
-  font-size: 1.4rem; 
-  font-weight: 900; 
-  background: linear-gradient(135deg, var(--primary), var(--accent-2)); 
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
-  background-clip: text; 
-  margin-bottom: 4px; 
-}
-
-.sidebar-sub { color: var(--gray); font-size: 0.75rem; }
-
-.close-sidebar {
-  display: none;
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background: rgba(239, 68, 68, 0.15);
-  color: var(--danger);
-  border: none;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.1rem;
-  align-items: center;
-  justify-content: center;
-}
-
-.sidebar-menu {
-  flex: 1;
-  padding: 18px 15px;
+.sidebar {
+  position: fixed;
+  top: 70px; right: 0;
+  width: 270px;
+  height: calc(100vh - 70px);
+  background: white;
+  border-left: 1px solid var(--border);
+  padding: 20px 15px;
   overflow-y: auto;
-  scrollbar-width: none;
-}
-.sidebar-menu::-webkit-scrollbar { display: none; }
-
-.menu { list-style: none; }
-.menu li { margin-bottom: 6px; }
-
-.menu a { 
-  display: flex; 
-  align-items: center; 
-  gap: 12px; 
-  padding: 13px 16px; 
-  color: var(--gray); 
-  text-decoration: none; 
-  border-radius: 10px; 
-  transition: all 0.3s; 
-  font-weight: 600; 
-  font-size: 0.9rem;
+  z-index: 900;
+  transition: transform 0.3s;
 }
 
-.menu a:hover { background: rgba(139,92,246,0.1); color: var(--primary-light); }
-.menu a.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
-.menu-icon { font-size: 1.1rem; }
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-.sidebar-footer { padding: 15px; border-top: 1px solid var(--border); flex-shrink: 0; }
+.sidebar-section { margin-bottom: 25px; }
 
-.logout-btn { 
-  width: 100%;
-  background: rgba(239,68,68,0.15); 
-  color: var(--danger); 
-  border: 1px solid var(--danger); 
-  padding: 12px; 
-  border-radius: 10px; 
-  cursor: pointer; 
-  font-weight: 700; 
-  font-family: 'Cairo', sans-serif; 
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 0.9rem;
-}
-.logout-btn:hover { background: var(--danger); color: white; }
-
-/* ========== Main ========== */
-.main { padding: 25px 35px; overflow-x: hidden; min-height: 100vh; }
-
-/* ========== Mobile Header ========== */
-.mobile-header {
-  display: none;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 14px 16px;
-  background: linear-gradient(135deg, var(--dark), var(--dark-2));
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  gap: 12px;
+.sidebar-section-title {
+  font-size: 0.7rem; font-weight: 900;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 15px;
+  margin-bottom: 10px;
 }
 
-.hamburger {
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid var(--border);
-  color: var(--primary-light);
-  width: 42px;
-  height: 42px;
+.sidebar-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 15px;
   border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  cursor: pointer;
-  flex-shrink: 0;
-  padding: 0;
-}
-
-.hamburger span { width: 20px; height: 2.5px; background: var(--primary-light); border-radius: 3px; }
-
-.mobile-title { flex: 1; text-align: center; }
-.mobile-title h1 {
-  font-size: 1.05rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--primary-light), var(--accent-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.mobile-title p { color: var(--gray); font-size: 0.72rem; }
-
-.user-avatar-small { 
-  width: 40px; 
-  height: 40px; 
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
-  color: white; 
-  border-radius: 50%; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  font-weight: 900; 
-  font-size: 1rem; 
-  flex-shrink: 0;
-  border: 2px solid var(--primary-light);
-}
-
-/* ========== Topbar ========== */
-.topbar { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  margin-bottom: 25px; 
-  padding-bottom: 18px; 
-  border-bottom: 1px solid var(--border); 
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.page-title { font-size: 1.6rem; font-weight: 800; }
-.page-title span { color: var(--primary-light); }
-
-/* ========== Stats ========== */
-.stats-grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-  gap: 15px; 
-  margin-bottom: 25px; 
-}
-
-.stat-card { 
-  background: linear-gradient(135deg, var(--dark), var(--dark-2)); 
-  border: 1px solid var(--border); 
-  border-radius: 15px; 
-  padding: 18px; 
-  display: flex; 
-  align-items: center; 
-  gap: 12px;
+  color: var(--text);
+  font-size: 0.9rem; font-weight: 600;
   transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.stat-card::before { 
-  content: ''; 
-  position: absolute; 
-  top: 0; 
-  right: 0; 
-  width: 100px; 
-  height: 100px; 
-  background: radial-gradient(circle, rgba(139,92,246,0.15), transparent 70%); 
-  border-radius: 50%; 
-}
-
-.stat-card:hover { border-color: var(--primary); transform: translateY(-3px); }
-
-.stat-icon-box {
-  width: 50px;
-  height: 50px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
-}
-
-.stat-icon-box.primary {
-  background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.1));
-  border: 1px solid var(--primary);
-}
-
-.stat-icon-box.success {
-  background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(16,185,129,0.1));
-  border: 1px solid var(--success);
-}
-
-.stat-icon-box.warning {
-  background: linear-gradient(135deg, rgba(251,191,36,0.25), rgba(251,191,36,0.1));
-  border: 1px solid var(--warning);
-}
-
-.stat-icon-box.danger {
-  background: linear-gradient(135deg, rgba(239,68,68,0.25), rgba(239,68,68,0.1));
-  border: 1px solid var(--danger);
-}
-
-.stat-content { flex: 1; min-width: 0; position: relative; z-index: 1; }
-.stat-label { color: var(--gray); font-size: 0.78rem; font-weight: 600; margin-bottom: 3px; }
-.stat-value { font-size: 1.5rem; font-weight: 900; color: var(--primary-light); line-height: 1.1; }
-.stat-value small { font-size: 0.7rem; color: var(--gray); font-weight: 500; }
-
-/* ========== Section ========== */
-.section { 
-  background: linear-gradient(135deg, var(--dark), var(--dark-2)); 
-  border: 1px solid var(--border); 
-  border-radius: 15px; 
-  padding: 20px; 
-  margin-bottom: 20px;
-}
-
-.section-title { 
-  font-size: 1.15rem; 
-  font-weight: 700; 
-  color: var(--primary-light); 
-  margin-bottom: 18px; 
-  padding-bottom: 12px; 
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* ========== Search ========== */
-.search-wrapper {
-  position: relative;
-  margin-bottom: 18px;
-}
-
-.search-icon {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.1rem;
-  color: var(--gray);
-  pointer-events: none;
-}
-
-.search-input {
-  width: 100%;
-  padding: 14px 50px 14px 16px;
-  background: var(--black);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  color: var(--white);
-  font-size: 0.95rem;
-  font-family: 'Cairo', sans-serif;
-  transition: all 0.3s;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(139,92,246,0.15);
-}
-
-/* ========== Desktop Table ========== */
-.table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-
-table { width: 100%; border-collapse: collapse; }
-th, td { padding: 14px 12px; text-align: right; border-bottom: 1px solid rgba(139,92,246,0.1); }
-th { color: var(--gray); font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
-td { font-size: 0.9rem; }
-tr:hover { background: rgba(139,92,246,0.05); }
-
-.badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
-.badge-success { background: rgba(16,185,129,0.2); color: var(--success); }
-.badge-warning { background: rgba(251,191,36,0.2); color: var(--warning); }
-.badge-danger { background: rgba(239,68,68,0.2); color: var(--danger); }
-.badge-primary { background: rgba(139,92,246,0.2); color: var(--primary-light); }
-
-.btn-icon { 
-  background: var(--black); 
-  color: var(--primary-light); 
-  width: 36px; 
-  height: 36px; 
-  border-radius: 10px; 
-  border: 1px solid var(--border); 
-  cursor: pointer; 
-  font-size: 1rem; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  transition: all 0.3s; 
-}
-
-.btn-icon:hover { background: var(--primary); color: white; border-color: var(--primary); }
-
-/* ========== Mobile Cards ========== */
-.inventory-cards { display: none; flex-direction: column; gap: 12px; }
-
-.inv-card {
-  background: var(--black);
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  padding: 14px;
-  transition: all 0.3s;
-  position: relative;
-}
-
-.inv-card.low-stock { border-right: 4px solid var(--warning); }
-.inv-card.out-stock { border-right: 4px solid var(--danger); }
-
-.inv-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.inv-card-title {
-  font-weight: 700;
-  font-size: 0.95rem;
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.inv-card-category {
-  color: var(--gray);
-  font-size: 0.75rem;
-  margin-top: 3px;
-}
-
-.inv-card-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 12px;
-  padding: 12px;
-  background: var(--dark);
-  border-radius: 10px;
-}
-
-.inv-stat {
-  text-align: center;
-}
-
-.inv-stat-label {
-  color: var(--gray);
-  font-size: 0.7rem;
   margin-bottom: 3px;
 }
 
-.inv-stat-value {
-  font-weight: 900;
-  font-size: 1.1rem;
-  color: var(--primary-light);
+.sidebar-link:hover { background: var(--bg-3); color: var(--primary); padding-right: 20px; }
+.sidebar-link.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
 }
 
-.inv-stat-value.stock {
-  color: var(--white);
-  font-size: 1.3rem;
+.sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
+
+/* ========== Main ========== */
+.main-content {
+  margin-right: 270px;
+  padding: 90px 25px 30px;
+  min-height: 100vh;
 }
 
-.inv-stat-value.low {
-  color: var(--warning);
-}
-
-.inv-stat-value.danger {
-  color: var(--danger);
-}
-
-.inv-card-footer {
+/* ========== Page Header ========== */
+.page-header {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 25px 30px;
+  margin-bottom: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-.inv-total {
-  color: var(--gray);
-  font-size: 0.8rem;
+.page-header-info h1 {
+  font-size: 1.5rem; font-weight: 900;
+  margin-bottom: 5px;
+  display: flex; align-items: center; gap: 10px;
 }
 
-.inv-total strong {
-  color: var(--success);
-  font-size: 0.95rem;
+.page-header-info p { color: var(--text-muted); font-size: 0.85rem; }
+
+/* ========== Stats Grid ========== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 25px;
 }
 
-/* ========== Movements ========== */
-.movement-item {
-  background: var(--black);
+.stat-card {
+  background: white;
   border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  opacity: 0.08;
+}
+
+.stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.stat-card.blue::before { background: var(--primary); }
+.stat-card.green::before { background: var(--success); }
+.stat-card.gold::before { background: var(--gold); }
+.stat-card.red::before { background: var(--danger); }
+
+.stat-icon {
+  width: 45px; height: 45px;
   border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+
+.stat-card.blue .stat-icon { background: rgba(30, 58, 138, 0.1); color: var(--primary); }
+.stat-card.green .stat-icon { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+.stat-card.gold .stat-icon { background: rgba(212, 175, 55, 0.15); color: var(--gold); }
+.stat-card.red .stat-icon { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+/* ========== Filters ========== */
+.filters-bar {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
   display: flex;
   gap: 12px;
+  flex-wrap: wrap;
   align-items: center;
 }
 
-.movement-icon {
-  width: 42px;
-  height: 42px;
+.filter-search {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.filter-search input {
+  width: 100%;
+  padding: 11px 45px 11px 15px;
+  background: var(--bg-2);
+  border: 1.5px solid var(--border);
   border-radius: 12px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  transition: all 0.3s;
+}
+
+.filter-search input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: white;
+}
+
+.filter-search .icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.filter-select {
+  padding: 11px 15px;
+  background: var(--bg-2);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.3s;
+  min-width: 150px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: white;
+}
+
+/* ========== Inventory Table ========== */
+.inventory-table-wrap {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-table thead {
+  background: var(--bg-2);
+  border-bottom: 2px solid var(--border);
+}
+
+.inventory-table th {
+  padding: 16px 15px;
+  text-align: right;
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.inventory-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+
+.inventory-table tbody tr:hover { background: var(--bg-2); }
+
+.inventory-table td {
+  padding: 15px;
+  font-size: 0.85rem;
+  vertical-align: middle;
+}
+
+.product-cell {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
+  gap: 12px;
+  min-width: 220px;
+}
+
+.product-img {
+  width: 55px; height: 55px;
+  border-radius: 12px;
+  background: var(--bg-3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
   flex-shrink: 0;
 }
 
-.movement-icon.add {
-  background: rgba(16,185,129,0.15);
-  border: 1px solid var(--success);
-}
+.product-img img { width: 100%; height: 100%; object-fit: cover; }
 
-.movement-icon.remove {
-  background: rgba(239,68,68,0.15);
-  border: 1px solid var(--danger);
-}
+.product-info-cell { flex: 1; min-width: 0; }
 
-.movement-content { flex: 1; min-width: 0; }
-
-.movement-title {
-  font-weight: 700;
+.product-name {
   font-size: 0.9rem;
-  margin-bottom: 4px;
+  font-weight: 900;
+  margin-bottom: 3px;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  max-width: 250px;
 }
 
-.movement-meta {
+.product-category {
+  font-size: 0.7rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Stock input */
+.stock-input-wrap {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   gap: 8px;
-  font-size: 0.75rem;
-  color: var(--gray);
+  justify-content: center;
 }
 
-.movement-qty {
+.stock-input {
+  width: 80px;
+  padding: 8px 10px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.95rem;
   font-weight: 900;
-  font-size: 1rem;
-  padding: 4px 10px;
+  text-align: center;
+  color: var(--text);
+  transition: all 0.3s;
+}
+
+.stock-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
+}
+
+.stock-input.low { border-color: var(--warning); background: rgba(245, 158, 11, 0.05); }
+.stock-input.out { border-color: var(--danger); background: rgba(239, 68, 68, 0.05); }
+
+/* Buttons small */
+.btn-mini {
+  width: 32px; height: 32px;
   border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 900;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.btn-plus {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+}
+
+.btn-plus:hover { background: var(--success); color: white; }
+
+.btn-minus {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+}
+
+.btn-minus:hover { background: var(--danger); color: white; }
+
+/* Status */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 900;
   white-space: nowrap;
 }
 
-.movement-qty.add {
-  color: var(--success);
-  background: rgba(16,185,129,0.1);
+.status-ok { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+.status-low { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.status-out { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+
+/* ========== Empty State ========== */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
 }
 
-.movement-qty.remove {
-  color: var(--danger);
-  background: rgba(239,68,68,0.1);
+.empty-state .icon { font-size: 4rem; margin-bottom: 15px; opacity: 0.5; }
+.empty-state h3 { font-size: 1.2rem; font-weight: 900; margin-bottom: 8px; }
+.empty-state p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* ========== Loading ========== */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--primary);
 }
 
-/* ========== Empty ========== */
-.empty-state { text-align: center; padding: 50px 20px; color: var(--gray); }
-.empty-state-icon { font-size: 4rem; margin-bottom: 15px; opacity: 0.5; }
-.empty-state h3 { color: var(--white); margin-bottom: 8px; font-size: 1.1rem; }
-.empty-state p { font-size: 0.9rem; }
+.loading::after {
+  content: '';
+  display: block;
+  width: 35px; height: 35px;
+  margin: 15px auto 0;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
 
-.loading { text-align: center; padding: 30px; color: var(--primary-light); }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ========== Modal ========== */
-.modal-overlay { 
-  position: fixed; 
-  top: 0; left: 0; 
-  width: 100%; height: 100%; 
-  background: rgba(0,0,0,0.85); 
-  backdrop-filter: blur(8px);
-  z-index: 2000; 
-  display: none; 
-  align-items: center; 
-  justify-content: center; 
-  padding: 20px; 
-  overflow-y: auto;
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(5px);
 }
-.modal-overlay.show { display: flex; }
 
-.modal { 
-  background: linear-gradient(135deg, var(--dark), var(--dark-2)); 
-  border: 2px solid var(--primary); 
-  border-radius: 20px; 
-  padding: 30px; 
-  width: 100%; 
-  max-width: 500px; 
-  max-height: 90vh;
-  overflow-y: auto;
+.modal.show { display: flex; }
+
+.modal-content {
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
   animation: modalIn 0.3s ease;
 }
 
@@ -583,716 +533,825 @@ tr:hover { background: rgba(139,92,246,0.05); }
   to { opacity: 1; transform: scale(1); }
 }
 
-.modal h2 { color: var(--primary-light); margin-bottom: 22px; font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+.modal-header {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  padding: 22px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header.danger { background: linear-gradient(135deg, var(--danger), #b91c1c); }
+.modal-header.green { background: linear-gradient(135deg, var(--success), #059669); }
+
+.modal-header h2 {
+  font-size: 1.1rem;
+  font-weight: 900;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.modal-close {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.modal-close:hover { background: rgba(255, 255, 255, 0.3); transform: rotate(90deg); }
+
+.modal-body { padding: 25px; }
+
+.modal-info {
+  background: var(--bg-2);
+  border-radius: 14px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.modal-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 0.85rem;
+}
+
+.modal-info-row .label { color: var(--text-muted); font-weight: 600; }
+.modal-info-row .value { font-weight: 900; color: var(--text); }
 
 .form-group { margin-bottom: 18px; }
-.form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
 
-.form-group input { 
-  width: 100%; 
-  padding: 13px 15px; 
-  background: var(--black); 
-  border: 2px solid var(--border); 
-  border-radius: 12px; 
-  color: var(--white); 
-  font-size: 0.95rem; 
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 0.95rem;
   font-family: 'Cairo', sans-serif;
+  background: var(--bg-2);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
   transition: all 0.3s;
+  text-align: center;
+  font-weight: 900;
 }
 
-.form-group input:focus { 
-  outline: none; 
-  border-color: var(--primary); 
-  box-shadow: 0 0 0 4px rgba(139,92,246,0.15);
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
 }
 
-.form-group input:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.quick-amounts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 10px;
 }
 
-.type-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.quick-amount-btn {
+  padding: 10px;
+  background: var(--bg-3);
+  border-radius: 10px;
+  font-weight: 900;
+  font-size: 0.85rem;
+  transition: all 0.3s;
+  cursor: pointer;
+  color: var(--text);
+}
 
-.type-btn { 
-  padding: 15px; 
-  background: var(--black); 
-  border: 2px solid var(--border); 
-  border-radius: 12px; 
-  color: var(--white); 
-  cursor: pointer; 
-  font-family: 'Cairo', sans-serif; 
-  font-weight: 700; 
-  font-size: 0.95rem; 
-  transition: all 0.3s; 
+.quick-amount-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.modal-footer {
+  padding: 18px 25px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
+  justify-content: center;
 }
 
-.type-btn.add-btn.selected { 
-  border-color: var(--success); 
-  background: rgba(16,185,129,0.15); 
-  color: var(--success); 
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
 }
 
-.type-btn.remove-btn.selected { 
-  border-color: var(--danger); 
-  background: rgba(239,68,68,0.15); 
-  color: var(--danger); 
+.btn-primary:hover:not(:disabled) { transform: translateY(-3px); }
+
+.btn-success {
+  background: linear-gradient(135deg, var(--success), #059669);
+  color: white;
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
 }
 
-.modal-actions { display: flex; gap: 12px; margin-top: 22px; }
+.btn-success:hover:not(:disabled) { transform: translateY(-3px); }
 
-.modal-actions button { 
-  flex: 1; 
-  padding: 14px; 
-  border-radius: 12px; 
-  font-weight: 700; 
-  font-family: 'Cairo', sans-serif; 
-  cursor: pointer; 
-  font-size: 0.95rem; 
-  border: none;
-  transition: all 0.3s;
+.btn-danger {
+  background: linear-gradient(135deg, var(--danger), #b91c1c);
+  color: white;
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.25);
 }
 
-.btn-save { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
-.btn-save:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(139,92,246,0.4); }
-.btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-danger:hover:not(:disabled) { transform: translateY(-3px); }
 
-.btn-cancel { 
-  background: transparent; 
-  color: var(--white); 
-  border: 2px solid var(--border) !important; 
+.btn-secondary {
+  background: white;
+  color: var(--text);
+  border: 1.5px solid var(--border);
 }
-.btn-cancel:hover { border-color: var(--gray) !important; }
+
+.btn-secondary:hover { background: var(--bg-3); }
+
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* ========== Notification ========== */
-.notification { 
-  position: fixed; 
-  bottom: 30px; 
-  right: 30px; 
-  background: linear-gradient(135deg, var(--success), #059669); 
-  color: white; 
-  padding: 15px 25px; 
-  border-radius: 12px; 
-  font-weight: 700; 
-  z-index: 3000; 
-  transform: translateX(500px); 
-  transition: transform 0.4s; 
-  box-shadow: 0 15px 40px rgba(16,185,129,0.4);
-  font-size: 0.95rem;
+.notification {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--primary);
+  color: white;
+  padding: 14px 25px;
+  border-radius: 14px;
+  font-weight: 700;
+  z-index: 3000;
+  transform: translateX(500px);
+  transition: transform 0.4s;
+  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.3);
+  max-width: calc(100% - 60px);
+  font-size: 0.9rem;
 }
 
 .notification.show { transform: translateX(0); }
-.notification.error { background: linear-gradient(135deg, var(--danger), #b91c1c); box-shadow: 0 15px 40px rgba(239,68,68,0.4); }
+.notification.error { background: var(--danger); }
+.notification.success { background: var(--success); }
 
-/* ========== Mobile ========== */
+/* ========== Responsive ========== */
 @media (max-width: 900px) {
-  .layout { grid-template-columns: 1fr; }
-  
-  .sidebar { 
-    position: fixed; 
-    top: 0;
-    right: -280px; 
-    width: 280px; 
-    height: 100vh;
-    z-index: 999; 
-    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1); 
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-  }
-  
-  .sidebar.open { right: 0; }
-  .close-sidebar { display: flex; }
-  .mobile-header { display: flex; }
-  .main { padding: 15px 12px; }
-  .topbar { display: none; }
-}
+  .sidebar { transform: translateX(100%); box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1); }
+  .sidebar.open { transform: translateX(0); }
+  .main-content { margin-right: 0; padding: 90px 18px 30px; }
 
-@media (max-width: 700px) {
-  .table-wrapper { display: none; }
-  .inventory-cards { display: flex; }
+  .inventory-table-wrap { overflow-x: auto; }
+  .inventory-table { min-width: 700px; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 600px) {
-  .main { padding: 12px; }
-  
-  .mobile-header {
-    margin-bottom: 16px;
-    padding: 12px 14px;
-    border-radius: 14px;
-  }
-  
-  .mobile-title h1 { font-size: 0.95rem; }
-  .mobile-title p { font-size: 0.68rem; }
-  .hamburger { width: 40px; height: 40px; }
-  .hamburger span { width: 18px; height: 2px; }
-  .user-avatar-small { width: 38px; height: 38px; font-size: 0.95rem; }
-  
-  /* Stats 2 columns */
-  .stats-grid { 
-    grid-template-columns: 1fr 1fr; 
-    gap: 10px; 
-    margin-bottom: 18px;
-  }
-  
-  .stat-card { 
-    padding: 14px 12px; 
-    border-radius: 12px;
-    flex-direction: column;
-    text-align: center;
-    gap: 6px;
-  }
-  
-  .stat-icon-box {
-    width: 42px;
-    height: 42px;
-    font-size: 1.2rem;
-    border-radius: 11px;
-  }
-  
-  .stat-label { font-size: 0.7rem; margin-bottom: 2px; }
-  .stat-value { font-size: 1.2rem; }
-  .stat-value small { font-size: 0.65rem; }
-  
-  .section { padding: 14px; border-radius: 12px; margin-bottom: 14px; }
-  .section-title { font-size: 1rem; padding-bottom: 10px; margin-bottom: 14px; }
-  
-  .search-input { padding: 12px 45px 12px 14px; font-size: 0.9rem; }
-  .search-icon { right: 14px; font-size: 1rem; }
-  
-  .inv-card { padding: 12px; }
-  .inv-card-title { font-size: 0.88rem; }
-  .inv-card-category { font-size: 0.7rem; }
-  .inv-card-stats { padding: 10px; gap: 6px; }
-  .inv-stat-label { font-size: 0.65rem; }
-  .inv-stat-value { font-size: 0.95rem; }
-  .inv-stat-value.stock { font-size: 1.15rem; }
-  .inv-total { font-size: 0.75rem; }
-  .inv-total strong { font-size: 0.85rem; }
-  
-  .movement-item { padding: 10px; gap: 10px; }
-  .movement-icon { width: 38px; height: 38px; font-size: 1.15rem; }
-  .movement-title { font-size: 0.85rem; }
-  .movement-meta { font-size: 0.7rem; }
-  .movement-qty { font-size: 0.9rem; padding: 3px 8px; }
-  
-  .modal { padding: 22px 18px; border-radius: 18px; }
-  .modal h2 { font-size: 1.1rem; margin-bottom: 18px; }
-  .form-group input { padding: 12px 14px; font-size: 0.9rem; }
-  .modal-actions { flex-direction: column-reverse; }
-  
-  .notification {
-    bottom: 15px;
-    right: 15px;
-    left: 15px;
-    text-align: center;
-    font-size: 0.9rem;
-    padding: 14px 20px;
-  }
-}
+  .top-bar { height: 65px; padding: 0 15px; }
+  .top-logo { font-size: 0.95rem; }
+  .top-logo-icon { width: 36px; height: 36px; font-size: 1rem; }
+  .user-info { display: none; }
+  .user-badge { padding: 6px; }
 
-@media (max-width: 400px) {
-  .inv-card-stats { grid-template-columns: 1fr 1fr; }
-  .inv-card-stats .inv-stat:last-child { grid-column: 1 / -1; }
+  .main-content { padding: 85px 12px 25px; }
+
+  .page-header { padding: 18px; border-radius: 16px; }
+  .page-header-info h1 { font-size: 1.2rem; }
+  .page-header-info p { font-size: 0.75rem; }
+
+  .stats-grid { gap: 10px; }
+  .stat-card { padding: 15px; border-radius: 14px; }
+  .stat-icon { width: 40px; height: 40px; font-size: 1.1rem; }
+  .stat-value { font-size: 1.4rem; }
+  .stat-label { font-size: 0.75rem; }
+
+  .filters-bar { padding: 14px; border-radius: 14px; }
+  .filter-select { min-width: 100%; }
+
+  .modal { padding: 15px; }
+  .modal-content { border-radius: 20px; }
+  .modal-header { padding: 18px 20px; }
+  .modal-header h2 { font-size: 1rem; }
+  .modal-body { padding: 20px; }
+  .modal-footer { flex-direction: column; padding: 15px 20px; }
+  .btn { width: 100%; }
+
+  .quick-amounts { grid-template-columns: repeat(2, 1fr); }
+
+  .notification { bottom: 15px; right: 15px; left: 15px; max-width: calc(100% - 30px); text-align: center; }
 }
 </style>
 </head>
 <body>
 
-<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+<!-- Top Bar -->
+<header class="top-bar">
+  <div class="top-bar-right">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="top-logo">
+      <div class="top-logo-icon">📦</div>
+      المخزون
+    </div>
+  </div>
+  <div class="top-bar-left">
+    <div class="user-badge">
+      <div class="user-avatar" id="userAvatar">A</div>
+      <div class="user-info">
+        <span class="user-name" id="userName">المدير</span>
+        <span class="user-role" id="userRole">admin</span>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="openLogoutModal()">🚪</button>
+  </div>
+</header>
 
-<div class="layout">
-  
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <button class="close-sidebar" onclick="closeSidebar()">✕</button>
-      <div class="sidebar-logo">✨ متجر راقي</div>
-      <div class="sidebar-sub">لوحة التحكم</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">الرئيسية</div>
+    <a href="dashboard.html" class="sidebar-link">
+      <span class="icon">📊</span>
+      <span>لوحة التحكم</span>
+    </a>
+  </div>
+
+  <div class="sidebar-section" id="operationsSection" style="display:none;">
+    <div class="sidebar-section-title">العمليات</div>
+    <a href="products.html" class="sidebar-link" data-permission="products.view">
+      <span class="icon">👕</span>
+      <span>المنتجات</span>
+    </a>
+    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
+      <span class="icon">🏷️</span>
+      <span>الفئات</span>
+    </a>
+    <a href="inventory.html" class="sidebar-link active" data-permission="inventory.view">
+      <span class="icon">📦</span>
+      <span>المخزون</span>
+    </a>
+    <a href="orders.html" class="sidebar-link" data-permission="orders.view">
+      <span class="icon">🛍️</span>
+      <span>الطلبات</span>
+    </a>
+    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
+      <span class="icon">💰</span>
+      <span>الكاشير</span>
+    </a>
+    <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
+      <span class="icon">🎟️</span>
+      <span>الكوبونات</span>
+    </a>
+  </div>
+
+  <div class="sidebar-section" id="managementSection" style="display:none;">
+    <div class="sidebar-section-title">الإدارة</div>
+    <a href="reports.html" class="sidebar-link" data-permission="reports.view">
+      <span class="icon">📈</span>
+      <span>التقارير</span>
+    </a>
+    <a href="banners.html" class="sidebar-link" data-permission="banners.view">
+      <span class="icon">🖼️</span>
+      <span>البانرات</span>
+    </a>
+    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
+      <span class="icon">👥</span>
+      <span>الموظفين</span>
+    </a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">المتجر</div>
+    <a href="../index.html" class="sidebar-link">
+      <span class="icon">🏠</span>
+      <span>الصفحة الرئيسية</span>
+    </a>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main-content">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-info">
+      <h1>📦 إدارة المخزون</h1>
+      <p>تابع المخزون وعدّل الكميات</p>
     </div>
-    
-    <div class="sidebar-menu">
-      <ul class="menu">
-        <li><a href="dashboard.html"><span class="menu-icon">📊</span> الرئيسية</a></li>
-        <li><a href="products.html"><span class="menu-icon">🛍️</span> المنتجات</a></li>
-        <li><a href="inventory.html" class="active"><span class="menu-icon">📦</span> المخزون</a></li>
-        <li><a href="cashier.html"><span class="menu-icon">💰</span> الكاشير</a></li>
-        <li><a href="orders.html"><span class="menu-icon">🌐</span> الطلبات الأونلاين</a></li>
-        <li><a href="coupons.html"><span class="menu-icon">🎟️</span> الكوبونات</a></li>
-        <li><a href="reports.html"><span class="menu-icon">📈</span> التقارير</a></li>
-      </ul>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <div class="stat-icon">📦</div>
+      <div class="stat-value" id="totalProducts">0</div>
+      <div class="stat-label">إجمالي المنتجات</div>
     </div>
-    
-    <div class="sidebar-footer">
-      <button class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</button>
+
+    <div class="stat-card green">
+      <div class="stat-icon">✅</div>
+      <div class="stat-value" id="totalStock">0</div>
+      <div class="stat-label">إجمالي القطع</div>
     </div>
-  </aside>
-  
-  <!-- Main -->
-  <main class="main">
-    
-    <!-- Mobile Header -->
-    <div class="mobile-header">
-      <button class="hamburger" onclick="openSidebar()">
-        <span></span>
-        <span></span>
-        <span></span>
+
+    <div class="stat-card gold">
+      <div class="stat-icon">⚠️</div>
+      <div class="stat-value" id="lowStock">0</div>
+      <div class="stat-label">مخزون منخفض</div>
+    </div>
+
+    <div class="stat-card red">
+      <div class="stat-icon">❌</div>
+      <div class="stat-value" id="outOfStock">0</div>
+      <div class="stat-label">نفذ من المخزون</div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-bar">
+    <div class="filter-search">
+      <input type="text" id="searchInput" placeholder="ابحث عن منتج..." oninput="applyFilters()">
+      <span class="icon">🔍</span>
+    </div>
+    <select class="filter-select" id="categoryFilter" onchange="applyFilters()">
+      <option value="">كل الفئات</option>
+    </select>
+    <select class="filter-select" id="stockFilter" onchange="applyFilters()">
+      <option value="">كل الحالات</option>
+      <option value="ok">مخزون جيد</option>
+      <option value="low">مخزون منخفض</option>
+      <option value="out">نفذ من المخزون</option>
+    </select>
+  </div>
+
+  <!-- Inventory Table -->
+  <div class="inventory-table-wrap" id="tableWrap">
+    <div class="loading">⏳ جاري تحميل المخزون...</div>
+  </div>
+
+</main>
+
+<!-- ========== Modal تعديل المخزون ========== -->
+<div class="modal" id="stockModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="stockModalTitle">➕ إضافة مخزون</h2>
+      <button class="modal-close" onclick="closeStockModal()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <input type="hidden" id="stockProductId">
+      <input type="hidden" id="stockAction">
+
+      <div class="modal-info">
+        <div class="modal-info-row">
+          <span class="label">المنتج:</span>
+          <span class="value" id="stockProductName">-</span>
+        </div>
+        <div class="modal-info-row">
+          <span class="label">المخزون الحالي:</span>
+          <span class="value" id="stockCurrent">0</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>📦 الكمية <span style="color: var(--danger);">*</span></label>
+        <input type="number" id="stockQuantity" min="1" value="1" required>
+        <div class="quick-amounts">
+          <button type="button" class="quick-amount-btn" onclick="setQuantity(1)">1</button>
+          <button type="button" class="quick-amount-btn" onclick="setQuantity(5)">5</button>
+          <button type="button" class="quick-amount-btn" onclick="setQuantity(10)">10</button>
+          <button type="button" class="quick-amount-btn" onclick="setQuantity(50)">50</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>📝 السبب (اختياري)</label>
+        <input type="text" id="stockReason" placeholder="مثال: دفعة جديدة">
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeStockModal()">إلغاء</button>
+      <button class="btn btn-success" onclick="saveStock()" id="saveStockBtn">
+        <span>💾</span>
+        <span>حفظ</span>
       </button>
-      <div class="mobile-title">
-        <h1>✨ متجر راقي</h1>
-        <p>المخزون</p>
-      </div>
-      <div class="user-avatar-small">ر</div>
-    </div>
-    
-    <!-- Desktop Topbar -->
-    <div class="topbar">
-      <h1 class="page-title">📦 إدارة <span>المخزون</span></h1>
-    </div>
-    
-    <!-- Stats -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon-box success">💰</div>
-        <div class="stat-content">
-          <div class="stat-label">إجمالي قيمة المخزون</div>
-          <div class="stat-value" id="totalValue">0.00 <small>ر.ع</small></div>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon-box primary">🛍️</div>
-        <div class="stat-content">
-          <div class="stat-label">عدد المنتجات</div>
-          <div class="stat-value" id="totalItems">0</div>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon-box warning">⚠️</div>
-        <div class="stat-content">
-          <div class="stat-label">منتجات منخفضة</div>
-          <div class="stat-value" id="lowCount" style="color:var(--warning);">0</div>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon-box danger">❌</div>
-        <div class="stat-content">
-          <div class="stat-label">منتجات نافذة</div>
-          <div class="stat-value" id="outCount" style="color:var(--danger);">0</div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Search + Inventory -->
-    <div class="section">
-      <h2 class="section-title">📋 تفاصيل المخزون</h2>
-      
-      <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن منتج..." oninput="filterInventory()">
-      </div>
-      
-      <!-- Desktop Table -->
-      <div class="table-wrapper" id="inventoryTable">
-        <div class="loading">⏳ جاري التحميل...</div>
-      </div>
-      
-      <!-- Mobile Cards -->
-      <div class="inventory-cards" id="inventoryCards"></div>
-    </div>
-    
-    <!-- Movements -->
-    <div class="section">
-      <h2 class="section-title">📜 سجل حركات المخزون</h2>
-      <div id="movementsList">
-        <div class="loading">⏳ جاري التحميل...</div>
-      </div>
-    </div>
-    
-  </main>
-  
-</div>
-
-<!-- Modal تعديل المخزون -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <h2 id="modalTitle">📦 تعديل المخزون</h2>
-    <input type="hidden" id="productId">
-    
-    <div class="form-group">
-      <label>المنتج</label>
-      <input type="text" id="productName" disabled>
-    </div>
-    
-    <div class="type-btns">
-      <button class="type-btn add-btn selected" onclick="selectType('add', this)">➕ إضافة</button>
-      <button class="type-btn remove-btn" onclick="selectType('remove', this)">➖ سحب</button>
-    </div>
-    
-    <div class="form-group">
-      <label>الكمية</label>
-      <input type="number" id="quantity" min="1" value="1">
-    </div>
-    
-    <div class="form-group">
-      <label>السبب (اختياري)</label>
-      <input type="text" id="reason" placeholder="مثال: إعادة تخزين، تالف، جرد...">
-    </div>
-    
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
-      <button class="btn-save" onclick="saveAdjust()" id="saveBtn">💾 حفظ</button>
     </div>
   </div>
 </div>
 
+<!-- ========== Modal تسجيل الخروج ========== -->
+<div class="modal" id="logoutModal">
+  <div class="modal-content">
+    <div class="modal-header danger">
+      <h2>🚪 تسجيل الخروج</h2>
+      <button class="modal-close" onclick="closeLogoutModal()">✕</button>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <div style="font-size: 4rem; margin-bottom: 15px;">👋</div>
+      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">هل أنت متأكد؟</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">سيتم تسجيل خروجك من لوحة التحكم</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeLogoutModal()">إلغاء</button>
+      <button class="btn btn-danger" onclick="confirmLogout()">🚪 تسجيل الخروج</button>
+    </div>
+  </div>
+</div>
+
+<!-- Notification -->
 <div class="notification" id="notification"></div>
 
 <script>
 const API_URL = '/api';
-const token = localStorage.getItem('raki_token');
-if (!token) window.location.href = 'login.html';
+let user = null;
+let permissions = [];
+let allProducts = [];
+let allCategories = [];
+let filteredProducts = [];
 
-let allInventory = [];
-let filteredInventory = [];
-let adjustType = 'add';
+document.addEventListener('DOMContentLoaded', async () => {
+  const userStr = localStorage.getItem('raki_user');
+  const permStr = localStorage.getItem('raki_permissions');
+  const token = localStorage.getItem('raki_token');
 
-// ========================================
-// Sidebar
-// ========================================
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('open');
-  document.getElementById('overlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
+  if (!userStr || !token) { window.location.href = 'login.html'; return; }
 
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
+  try {
+    user = JSON.parse(userStr);
+    permissions = JSON.parse(permStr || '[]');
+  } catch (e) { window.location.href = 'login.html'; return; }
 
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 900) closeSidebar();
+  if (!user.is_admin && !permissions.includes('inventory.view')) {
+    alert('ليس لديك صلاحية الوصول');
+    window.location.href = 'dashboard.html';
+    return;
+  }
+
+  applyUserData();
+  applyPermissions();
+
+  await loadCategories();
+  await loadProducts();
 });
 
-function logout() {
-  if (confirm('هل تريد تسجيل الخروج؟')) {
-    localStorage.removeItem('raki_token');
-    localStorage.removeItem('raki_user');
-    window.location.href = 'login.html';
-  }
+function applyUserData() {
+  const fullName = user.full_name || user.username;
+  document.getElementById('userAvatar').textContent = fullName.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent = fullName;
+  document.getElementById('userRole').textContent = user.is_admin ? 'المدير العام' : 'موظف';
 }
 
-// ========================================
-// تحميل المخزون
-// ========================================
-async function loadInventory() {
+function applyPermissions() {
+  const isAdmin = user.is_admin;
+  let hasOperations = false;
+  let hasManagement = false;
+
+  document.querySelectorAll('.sidebar-link[data-permission]').forEach(link => {
+    const perm = link.getAttribute('data-permission');
+    const has = isAdmin || permissions.includes(perm);
+    if (!has) {
+      link.style.display = 'none';
+    } else {
+      const section = link.closest('.sidebar-section');
+      if (section) {
+        section.style.display = 'block';
+        if (section.id === 'operationsSection') hasOperations = true;
+        if (section.id === 'managementSection') hasManagement = true;
+      }
+    }
+  });
+
+  if (!hasOperations) document.getElementById('operationsSection').style.display = 'none';
+  if (!hasManagement) document.getElementById('managementSection').style.display = 'none';
+}
+
+async function loadCategories() {
   try {
-    const res = await fetch(`${API_URL}/inventory`);
+    const res = await fetch(`${API_URL}/categories`);
     const data = await res.json();
-    
-    if (!data.success) throw new Error();
-    
-    allInventory = data.inventory;
-    filteredInventory = allInventory;
-    
-    document.getElementById('totalValue').innerHTML = `${data.totalValue.toFixed(2)} <small>ر.ع</small>`;
-    document.getElementById('totalItems').textContent = data.inventory.length;
-    document.getElementById('lowCount').textContent = data.lowStock.length;
-    document.getElementById('outCount').textContent = data.inventory.filter(p => p.stock === 0).length;
-    
-    renderInventory();
-  } catch (e) {
-    document.getElementById('inventoryTable').innerHTML = '<div class="empty-state">❌ خطأ في التحميل</div>';
-    document.getElementById('inventoryCards').innerHTML = '<div class="empty-state">❌ خطأ في التحميل</div>';
+    if (data.success) {
+      allCategories = data.categories;
+      document.getElementById('categoryFilter').innerHTML = `
+        <option value="">كل الفئات</option>
+        ${allCategories.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
+      `;
+    }
+  } catch (error) { console.error(error); }
+}
+
+async function loadProducts() {
+  try {
+    const res = await fetch(`${API_URL}/products`);
+    const data = await res.json();
+    if (data.success) {
+      allProducts = data.products;
+      updateStats();
+      applyFilters();
+    }
+  } catch (error) {
+    document.getElementById('tableWrap').innerHTML = `
+      <div class="empty-state">
+        <div class="icon">❌</div>
+        <h3>تعذّر تحميل المخزون</h3>
+      </div>
+    `;
   }
 }
 
-function renderInventory() {
-  renderTable();
-  renderCards();
+function updateStats() {
+  document.getElementById('totalProducts').textContent = allProducts.length;
+  document.getElementById('totalStock').textContent = allProducts.reduce((sum, p) => sum + (p.stock || 0), 0);
+  document.getElementById('lowStock').textContent = allProducts.filter(p => p.stock > 0 && p.stock <= p.min_stock).length;
+  document.getElementById('outOfStock').textContent = allProducts.filter(p => p.stock === 0).length;
 }
 
-// ========================================
-// Desktop Table
-// ========================================
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.trim().toLowerCase();
+  const category = document.getElementById('categoryFilter').value;
+  const stock = document.getElementById('stockFilter').value;
+
+  filteredProducts = allProducts.filter(p => {
+    if (search && !p.name.toLowerCase().includes(search)) return false;
+    if (category && p.category_id !== parseInt(category)) return false;
+
+    if (stock === 'ok' && (p.stock === 0 || p.stock <= p.min_stock)) return false;
+    if (stock === 'low' && (p.stock === 0 || p.stock > p.min_stock)) return false;
+    if (stock === 'out' && p.stock !== 0) return false;
+
+    return true;
+  });
+
+  renderTable();
+}
+
 function renderTable() {
-  const container = document.getElementById('inventoryTable');
-  
-  if (filteredInventory.length === 0) {
-    container.innerHTML = `
+  const wrap = document.getElementById('tableWrap');
+
+  if (filteredProducts.length === 0) {
+    wrap.innerHTML = `
       <div class="empty-state">
-        <div class="empty-state-icon">📦</div>
+        <div class="icon">📭</div>
         <h3>لا توجد منتجات</h3>
-        <p>أضف منتجات أولاً من صفحة المنتجات</p>
+        <p>جرب تغيير الفلتر</p>
       </div>
     `;
     return;
   }
-  
-  container.innerHTML = `
-    <table>
+
+  wrap.innerHTML = `
+    <table class="inventory-table">
       <thead>
         <tr>
           <th>المنتج</th>
-          <th>الفئة</th>
-          <th>السعر</th>
-          <th>المخزون</th>
+          <th>المخزون الحالي</th>
           <th>الحد الأدنى</th>
-          <th>القيمة</th>
           <th>الحالة</th>
-          <th>إجراء</th>
+          <th style="text-align: left;">تعديل سريع</th>
         </tr>
       </thead>
       <tbody>
-        ${filteredInventory.map(p => `
-          <tr>
-            <td><strong>${p.name}</strong></td>
-            <td>${p.category || '-'}</td>
-            <td style="color:var(--primary-light);white-space:nowrap;">${p.price.toFixed(3)} ر.ع</td>
-            <td style="font-weight:700;font-size:1rem;">${p.stock}</td>
-            <td>${p.min_stock}</td>
-            <td style="color:var(--success);font-weight:700;white-space:nowrap;">${(p.stock * p.price).toFixed(2)} ر.ع</td>
-            <td>
-              ${p.stock === 0 
-                ? '<span class="badge badge-danger">نفذ</span>' 
-                : p.stock <= p.min_stock 
-                  ? '<span class="badge badge-warning">منخفض</span>' 
-                  : '<span class="badge badge-success">متوفر</span>'}
-            </td>
-            <td>
-              <button class="btn-icon" onclick="openAdjust(${p.id}, '${p.name.replace(/'/g, "\\'")}')" title="تعديل">✏️</button>
-            </td>
-          </tr>
-        `).join('')}
+        ${filteredProducts.map(p => renderRow(p)).join('')}
       </tbody>
     </table>
   `;
 }
 
-// ========================================
-// Mobile Cards
-// ========================================
-function renderCards() {
-  const container = document.getElementById('inventoryCards');
-  
-  if (filteredInventory.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">📦</div>
-        <h3>لا توجد منتجات</h3>
-        <p>أضف منتجات أولاً من صفحة المنتجات</p>
-      </div>
-    `;
-    return;
-  }
-  
-  container.innerHTML = filteredInventory.map(p => {
-    const cardClass = p.stock === 0 ? 'out-stock' : (p.stock <= p.min_stock ? 'low-stock' : '');
-    const stockClass = p.stock === 0 ? 'danger' : (p.stock <= p.min_stock ? 'low' : '');
-    
-    return `
-      <div class="inv-card ${cardClass}">
-        <div class="inv-card-header">
-          <div style="flex:1;min-width:0;">
-            <div class="inv-card-title">${p.name}</div>
-            <div class="inv-card-category">🏷️ ${p.category || 'عام'}</div>
-          </div>
-        </div>
-        
-        <div class="inv-card-stats">
-          <div class="inv-stat">
-            <div class="inv-stat-label">المخزون</div>
-            <div class="inv-stat-value stock ${stockClass}">${p.stock}</div>
-          </div>
-          <div class="inv-stat">
-            <div class="inv-stat-label">السعر</div>
-            <div class="inv-stat-value">${p.price.toFixed(2)}</div>
-          </div>
-          <div class="inv-stat">
-            <div class="inv-stat-label">الحد الأدنى</div>
-            <div class="inv-stat-value">${p.min_stock}</div>
-          </div>
-        </div>
-        
-        <div class="inv-card-footer">
-          <div class="inv-total">
-            القيمة: <strong>${(p.stock * p.price).toFixed(2)} ر.ع</strong>
-          </div>
-          <button class="btn-icon" onclick="openAdjust(${p.id}, '${p.name.replace(/'/g, "\\'")}')">✏️</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
+function renderRow(p) {
+  let status = '';
+  let statusClass = '';
 
-// ========================================
-// البحث
-// ========================================
-function filterInventory() {
-  const query = document.getElementById('searchInput').value.toLowerCase().trim();
-  
-  if (!query) {
-    filteredInventory = allInventory;
+  if (p.stock === 0) {
+    status = '❌ نفذ';
+    statusClass = 'status-out';
+  } else if (p.stock <= p.min_stock) {
+    status = `⚠️ منخفض (${p.stock})`;
+    statusClass = 'status-low';
   } else {
-    filteredInventory = allInventory.filter(p => 
-      p.name.toLowerCase().includes(query) || 
-      (p.category && p.category.toLowerCase().includes(query))
-    );
+    status = '✅ جيد';
+    statusClass = 'status-ok';
   }
-  
-  renderInventory();
+
+  return `
+    <tr>
+      <td>
+        <div class="product-cell">
+          <div class="product-img">
+            ${p.image ? `<img src="${p.image}" alt="${p.name}">` : '👕'}
+          </div>
+          <div class="product-info-cell">
+            <div class="product-name">${p.name}</div>
+            <div class="product-category">🏷️ ${p.category_name || 'بدون فئة'}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="stock-input-wrap">
+          <button class="btn-mini btn-minus" onclick="openStockModal(${p.id}, 'remove')" title="خصم">−</button>
+          <input type="number" class="stock-input ${p.stock === 0 ? 'out' : p.stock <= p.min_stock ? 'low' : ''}" 
+                 value="${p.stock}" readonly>
+          <button class="btn-mini btn-plus" onclick="openStockModal(${p.id}, 'add')" title="إضافة">+</button>
+        </div>
+      </td>
+      <td style="text-align: center; color: var(--text-muted); font-weight: 700;">${p.min_stock}</td>
+      <td><span class="status-badge ${statusClass}">${status}</span></td>
+      <td style="text-align: left;">
+        <button class="btn-mini" style="background: var(--primary); color: white; width: auto; padding: 8px 14px;" onclick="openStockModal(${p.id}, 'add')">
+          📦 إضافة
+        </button>
+      </td>
+    </tr>
+  `;
 }
 
-// ========================================
-// Modal تعديل المخزون
-// ========================================
-function openAdjust(id, name) {
-  document.getElementById('productId').value = id;
-  document.getElementById('productName').value = name;
-  document.getElementById('quantity').value = 1;
-  document.getElementById('reason').value = '';
-  
-  adjustType = 'add';
-  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
-  document.querySelector('.add-btn').classList.add('selected');
-  
-  document.getElementById('modal').classList.add('show');
-  document.body.style.overflow = 'hidden';
+// ========== Modal المخزون ==========
+function openStockModal(productId, action) {
+  const product = allProducts.find(p => p.id === productId);
+  if (!product) return;
+
+  document.getElementById('stockProductId').value = productId;
+  document.getElementById('stockAction').value = action;
+  document.getElementById('stockProductName').textContent = product.name;
+  document.getElementById('stockCurrent').textContent = product.stock;
+  document.getElementById('stockQuantity').value = 1;
+  document.getElementById('stockReason').value = '';
+
+  if (action === 'add') {
+    document.getElementById('stockModalTitle').innerHTML = '➕ إضافة مخزون';
+    document.getElementById('saveStockBtn').className = 'btn btn-success';
+    document.getElementById('saveStockBtn').innerHTML = '<span>➕</span><span>إضافة</span>';
+  } else {
+    document.getElementById('stockModalTitle').innerHTML = '➖ خصم مخزون';
+    document.getElementById('saveStockBtn').className = 'btn btn-danger';
+    document.getElementById('saveStockBtn').innerHTML = '<span>➖</span><span>خصم</span>';
+  }
+
+  document.getElementById('stockModal').classList.add('show');
 }
 
-function closeModal() {
-  document.getElementById('modal').classList.remove('show');
-  document.body.style.overflow = '';
+function closeStockModal() {
+  document.getElementById('stockModal').classList.remove('show');
 }
 
-function selectType(type, btn) {
-  adjustType = type;
-  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
+function setQuantity(n) {
+  document.getElementById('stockQuantity').value = n;
 }
 
-async function saveAdjust() {
-  const product_id = document.getElementById('productId').value;
-  const quantity = parseInt(document.getElementById('quantity').value);
-  const reason = document.getElementById('reason').value.trim();
-  
-  if (!quantity || quantity < 1) {
-    showNotification('⚠️ أدخل كمية صحيحة', true);
+async function saveStock() {
+  const productId = document.getElementById('stockProductId').value;
+  const action = document.getElementById('stockAction').value;
+  const quantity = parseInt(document.getElementById('stockQuantity').value) || 0;
+  const reason = document.getElementById('stockReason').value.trim();
+
+  if (quantity <= 0) {
+    showNotification('⚠️ الكمية يجب أن تكون أكبر من 0', 'error');
     return;
   }
-  
-  const btn = document.getElementById('saveBtn');
+
+  const product = allProducts.find(p => p.id === parseInt(productId));
+  if (!product) return;
+
+  if (action === 'remove' && quantity > product.stock) {
+    showNotification('⚠️ الكمية أكبر من المخزون المتاح', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('saveStockBtn');
   btn.disabled = true;
-  btn.innerHTML = '⏳ جاري الحفظ...';
-  
+
+  // الكمية الجديدة
+  const newStock = action === 'add' 
+    ? product.stock + quantity 
+    : product.stock - quantity;
+
   try {
     const res = await fetch(`${API_URL}/inventory/adjust`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ product_id, quantity, type: adjustType, reason })
+      body: JSON.stringify({
+        product_id: parseInt(productId),
+        type: action,
+        quantity: quantity,
+        reason: reason || (action === 'add' ? 'إضافة مخزون' : 'خصم مخزون')
+      })
     });
+
     const data = await res.json();
-    
+
     if (data.success) {
-      showNotification('✅ تم تعديل المخزون');
-      closeModal();
-      loadInventory();
-      loadMovements();
+      showNotification(`✅ تم ${action === 'add' ? 'إضافة' : 'خصم'} ${quantity} قطعة`, 'success');
+      closeStockModal();
+      await loadProducts();
     } else {
-      showNotification('❌ ' + data.message, true);
+      // إذا فشل الـ API، نجرب التحديث المباشر
+      await updateStockDirect(productId, newStock);
     }
-  } catch (e) {
-    showNotification('❌ خطأ في الحفظ', true);
+  } catch (error) {
+    // في حالة الخطأ، نجرب التحديث المباشر
+    await updateStockDirect(productId, newStock);
+  } finally {
+    btn.disabled = false;
   }
-  
-  btn.disabled = false;
-  btn.innerHTML = '💾 حفظ';
 }
 
-// ========================================
-// سجل الحركات
-// ========================================
-async function loadMovements() {
+async function updateStockDirect(productId, newStock) {
+  // تحديث المنتج مباشرة عبر PUT
   try {
-    const res = await fetch(`${API_URL}/inventory/movements`);
+    const product = allProducts.find(p => p.id === parseInt(productId));
+    if (!product) return;
+
+    const formData = new FormData();
+    formData.append('name', product.name);
+    formData.append('description', product.description || '');
+    formData.append('price', product.price);
+    formData.append('cost', product.cost || 0);
+    formData.append('category_id', product.category_id || '');
+    formData.append('stock', newStock);
+    formData.append('min_stock', product.min_stock || 5);
+    formData.append('discount_type', product.discount_type || '');
+    formData.append('discount_value', product.discount_value || 0);
+    formData.append('is_featured', product.is_featured === 1 ? 'true' : 'false');
+
+    const res = await fetch(`${API_URL}/products/${productId}`, {
+      method: 'PUT',
+      body: formData
+    });
+
     const data = await res.json();
-    
-    const container = document.getElementById('movementsList');
-    
-    if (!data.success || data.movements.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state-icon">📜</div>
-          <h3>لا توجد حركات بعد</h3>
-          <p>ستظهر الحركات عند تعديل المخزون</p>
-        </div>
-      `;
-      return;
+
+    if (data.success) {
+      showNotification('✅ تم تحديث المخزون', 'success');
+      closeStockModal();
+      await loadProducts();
+    } else {
+      showNotification('❌ تعذّر التحديث', 'error');
     }
-    
-    container.innerHTML = data.movements.slice(0, 20).map(m => `
-      <div class="movement-item">
-        <div class="movement-icon ${m.type === 'add' ? 'add' : 'remove'}">
-          ${m.type === 'add' ? '➕' : '➖'}
-        </div>
-        <div class="movement-content">
-          <div class="movement-title">${m.product_name || 'منتج محذوف'}</div>
-          <div class="movement-meta">
-            <span>📅 ${formatDate(m.created_at)}</span>
-            <span>${m.reason || 'بدون سبب'}</span>
-          </div>
-        </div>
-        <div class="movement-qty ${m.type === 'add' ? 'add' : 'remove'}">
-          ${m.type === 'add' ? '+' : '-'}${m.quantity}
-        </div>
-      </div>
-    `).join('');
-  } catch (e) {
-    document.getElementById('movementsList').innerHTML = '<div class="empty-state">❌ خطأ في التحميل</div>';
+  } catch (error) {
+    showNotification('❌ حدث خطأ', 'error');
   }
 }
 
-function formatDate(dateStr) {
-  const date = new Date(dateStr);
-  return date.toLocaleString('ar-OM', { 
-    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
-  });
+// ========== Sidebar ==========
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('active');
 }
 
-// ========================================
-// Notification
-// ========================================
-function showNotification(msg, isError = false) {
-  const n = document.getElementById('notification');
-  n.textContent = msg;
-  n.className = 'notification show' + (isError ? ' error' : '');
-  setTimeout(() => n.classList.remove('show'), 2500);
+// ========== تسجيل الخروج ==========
+function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
+function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
+function confirmLogout() {
+  localStorage.removeItem('raki_token');
+  localStorage.removeItem('raki_user');
+  localStorage.removeItem('raki_permissions');
+  window.location.href = 'login.html';
 }
 
-// ========================================
-// إغلاق Modal
-// ========================================
-document.getElementById('modal')?.addEventListener('click', (e) => {
-  if (e.target.id === 'modal') closeModal();
-});
+// ========== Notification ==========
+function showNotification(message, type = '') {
+  const notif = document.getElementById('notification');
+  notif.textContent = message;
+  notif.className = 'notification show ' + type;
+  setTimeout(() => notif.classList.remove('show'), 3000);
+}
 
+// ESC
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    closeModal();
-    closeSidebar();
+    closeStockModal();
+    closeLogoutModal();
   }
 });
 
-// ========================================
-// التشغيل
-// ========================================
-loadInventory();
-loadMovements();
+document.querySelectorAll('.modal').forEach(modal => {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('show');
+  });
+});
 </script>
 
 </body>
