@@ -11,7 +11,6 @@
   --primary-light: #3b82f6;
   --primary-dark: #1e40af;
   --accent: #f59e0b;
-  --accent-2: #ec4899;
   --gold: #d4af37;
   --bg: #ffffff;
   --bg-2: #f9fafb;
@@ -21,11 +20,9 @@
   --border: #e5e7eb;
   --success: #10b981;
   --danger: #ef4444;
-  --warning: #f59e0b;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
-  --shadow-xl: 0 20px 60px rgba(30, 58, 138, 0.15);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -265,11 +262,6 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: var(--text-muted);
-}
-
 .form-group textarea { resize: vertical; min-height: 70px; }
 
 .form-row {
@@ -296,16 +288,9 @@ img { max-width: 100%; display: block; }
   text-align: center;
 }
 
-.option-card:hover {
-  border-color: var(--primary-light);
-  background: white;
-}
+.option-card:hover { border-color: var(--primary-light); background: white; }
 
-.option-card input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
+.option-card input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
 
 .option-card.selected {
   border-color: var(--primary);
@@ -313,17 +298,9 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 8px 25px rgba(30, 58, 138, 0.12);
 }
 
-.option-icon {
-  font-size: 2rem;
-  margin-bottom: 8px;
-}
+.option-icon { font-size: 2rem; margin-bottom: 8px; }
 
-.option-title {
-  font-size: 0.9rem;
-  font-weight: 900;
-  color: var(--text);
-  margin-bottom: 4px;
-}
+.option-title { font-size: 0.9rem; font-weight: 900; color: var(--text); margin-bottom: 4px; }
 
 .option-price {
   font-size: 0.8rem;
@@ -366,9 +343,7 @@ img { max-width: 100%; display: block; }
   transition: opacity 0.3s;
 }
 
-.option-card.selected .option-check::after {
-  opacity: 1;
-}
+.option-card.selected .option-check::after { opacity: 1; }
 
 /* ========== Payment Methods ========== */
 .payment-info {
@@ -385,10 +360,7 @@ img { max-width: 100%; display: block; }
 
 .payment-info.show { display: block; }
 
-.payment-info strong {
-  color: var(--primary);
-  font-weight: 900;
-}
+.payment-info strong { color: var(--primary); font-weight: 900; }
 
 /* ========== Order Summary ========== */
 .summary-card {
@@ -476,7 +448,84 @@ img { max-width: 100%; display: block; }
 
 .summary-item-subtotal img { width: 11px; height: 11px; }
 
-/* Summary totals */
+/* ========== Coupon Section ========== */
+.coupon-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1.5px dashed rgba(212, 175, 55, 0.4);
+  border-radius: 14px;
+}
+
+.coupon-label {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: var(--gold);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.coupon-input-wrap {
+  display: flex;
+  gap: 8px;
+}
+
+.coupon-input-wrap input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.9rem;
+  background: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  direction: ltr;
+  min-width: 0;
+}
+
+.coupon-input-wrap input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.apply-coupon-btn {
+  padding: 0 20px;
+  background: var(--gold);
+  color: white;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.85rem;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.apply-coupon-btn:hover { background: var(--accent); }
+
+.coupon-applied {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1.5px solid rgba(16, 185, 129, 0.2);
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--success);
+  margin-top: 10px;
+}
+
+.remove-coupon {
+  color: var(--danger);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0 4px;
+}
+
+/* ========== Summary totals ========== */
 .summary-totals {
   padding-top: 15px;
   border-top: 2px dashed var(--border);
@@ -506,7 +555,7 @@ img { max-width: 100%; display: block; }
 .summary-row .value img { width: 13px; height: 13px; }
 
 .summary-row.discount .value { color: var(--success); }
-.summary-row.tax .value { color: var(--warning); }
+.summary-row.tax .value { color: var(--accent); }
 
 .summary-row.total {
   padding-top: 15px;
@@ -984,11 +1033,29 @@ img { max-width: 100%; display: block; }
             <div style="text-align: center; padding: 20px; color: var(--text-muted);">جاري التحميل...</div>
           </div>
 
+          <!-- 🔥 قسم كود الخصم -->
+          <div class="coupon-section">
+            <div class="coupon-label">🎟️ هل لديك كود خصم؟</div>
+            <div class="coupon-input-wrap">
+              <input type="text" id="couponInput" placeholder="أدخل الكود هنا" maxlength="20">
+              <button class="apply-coupon-btn" onclick="applyCoupon()">تطبيق</button>
+            </div>
+            <div id="appliedCoupon" style="display:none;"></div>
+          </div>
+
           <div class="summary-totals">
             <div class="summary-row">
               <span class="label">المجموع:</span>
               <span class="value" id="subtotal">
                 <span>0.000</span>
+                <img src="/images/omr-dark.png" alt="ر.ع">
+              </span>
+            </div>
+
+            <div class="summary-row discount" id="discountRow" style="display: none;">
+              <span class="label">الخصم:</span>
+              <span class="value" id="discount">
+                - <span>0.000</span>
                 <img src="/images/omr-dark.png" alt="ر.ع">
               </span>
             </div>
@@ -1075,14 +1142,15 @@ let selectedDelivery = { type: 'home', price: 2 };
 let selectedPayment = 'cash';
 let currentSubtotal = 0;
 let currentTax = 0;
+let appliedCoupon = null;
+let currentDiscountAmount = 0;
 
-const TAX_RATE = 0.05; // 5%
+const TAX_RATE = 0.05;
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCart();
 });
 
-// ========== عرض السلة ==========
 function renderCart() {
   const layout = document.getElementById('checkoutLayout');
   const empty = document.getElementById('emptyState');
@@ -1096,7 +1164,6 @@ function renderCart() {
   layout.style.display = 'grid';
   empty.style.display = 'none';
 
-  // عرض المنتجات
   const itemsContainer = document.getElementById('summaryItems');
   itemsContainer.innerHTML = cart.map(item => `
     <div class="summary-item">
@@ -1119,17 +1186,38 @@ function renderCart() {
   calculateTotals();
 }
 
-// ========== حساب الإجماليات ==========
 function calculateTotals() {
   currentSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  currentTax = currentSubtotal * TAX_RATE;
+  
+  currentDiscountAmount = 0;
+  if (appliedCoupon) {
+    if (appliedCoupon.type === 'percent') {
+      currentDiscountAmount = currentSubtotal * (appliedCoupon.value / 100);
+    } else {
+      currentDiscountAmount = Math.min(appliedCoupon.value, currentSubtotal);
+    }
+  }
+
+  const discountedSubtotal = currentSubtotal - currentDiscountAmount;
+  currentTax = discountedSubtotal * TAX_RATE;
   const deliveryCost = selectedDelivery.price;
-  const total = currentSubtotal + currentTax + deliveryCost;
+  const total = discountedSubtotal + currentTax + deliveryCost;
 
   document.getElementById('subtotal').innerHTML = `
     <span>${currentSubtotal.toFixed(3)}</span>
     <img src="/images/omr-dark.png" alt="ر.ع">
   `;
+
+  const discountRow = document.getElementById('discountRow');
+  if (currentDiscountAmount > 0) {
+    discountRow.style.display = 'flex';
+    document.getElementById('discount').innerHTML = `
+      - <span>${currentDiscountAmount.toFixed(3)}</span>
+      <img src="/images/omr-dark.png" alt="ر.ع">
+    `;
+  } else {
+    discountRow.style.display = 'none';
+  }
 
   document.getElementById('tax').innerHTML = `
     <span>${currentTax.toFixed(3)}</span>
@@ -1147,32 +1235,88 @@ function calculateTotals() {
   `;
 }
 
-// ========== اختيار التوصيل ==========
+// ========== تطبيق الكوبون ==========
+async function applyCoupon() {
+  const code = document.getElementById('couponInput').value.trim().toUpperCase();
+  
+  if (!code) {
+    showNotification('⚠️ أدخل كود الخصم', true);
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/coupons`);
+    const data = await res.json();
+
+    if (data.success) {
+      const coupon = data.coupons.find(c => 
+        c.code === code && 
+        c.active === 1 &&
+        (!c.expires_at || new Date(c.expires_at) > new Date()) &&
+        (c.used_count < c.max_uses) &&
+        (currentSubtotal >= (c.min_order || 0))
+      );
+
+      if (coupon) {
+        appliedCoupon = coupon;
+        updateCouponDisplay();
+        calculateTotals();
+        showNotification('✅ تم تطبيق الكوبون: ' + coupon.code);
+      } else {
+        showNotification('❌ كود غير صحيح أو غير مطابق للشروط', true);
+      }
+    }
+  } catch (e) {
+    showNotification('❌ تعذّر التحقق من الكوبون', true);
+  }
+}
+
+function updateCouponDisplay() {
+  const container = document.getElementById('appliedCoupon');
+  
+  if (appliedCoupon) {
+    const valueText = appliedCoupon.type === 'percent' 
+      ? `${appliedCoupon.value}%` 
+      : `${appliedCoupon.value.toFixed(3)} ر.ع`;
+
+    container.style.display = 'block';
+    container.innerHTML = `
+      <div class="coupon-applied">
+        <span>✅ ${appliedCoupon.code} — خصم ${valueText}</span>
+        <span class="remove-coupon" onclick="removeCoupon()">✕</span>
+      </div>
+    `;
+  } else {
+    container.style.display = 'none';
+    container.innerHTML = '';
+  }
+}
+
+function removeCoupon() {
+  appliedCoupon = null;
+  document.getElementById('couponInput').value = '';
+  updateCouponDisplay();
+  calculateTotals();
+  showNotification('🗑️ تم إزالة الكوبون');
+}
+
 function selectDelivery(type, price) {
   selectedDelivery = { type, price };
-
   document.querySelectorAll('.option-card[data-delivery]').forEach(card => {
     card.classList.toggle('selected', card.dataset.delivery === type);
   });
-
   calculateTotals();
 }
 
-// ========== اختيار الدفع ==========
 function selectPayment(type) {
   selectedPayment = type;
-
   document.querySelectorAll('.option-card[data-payment]').forEach(card => {
     card.classList.toggle('selected', card.dataset.payment === type);
   });
-
-  // إظهار/إخفاء تفاصيل التحويل
   document.getElementById('transferInfo').classList.toggle('show', type === 'transfer');
 }
 
-// ========== تأكيد الطلب ==========
 async function submitOrder() {
-  // التحقق من البيانات
   const name = document.getElementById('customerName').value.trim();
   const phone = document.getElementById('customerPhone').value.trim();
   const email = document.getElementById('customerEmail').value.trim();
@@ -1189,7 +1333,6 @@ async function submitOrder() {
   btn.disabled = true;
   btn.innerHTML = '<span>⏳</span><span>جاري إرسال الطلب...</span>';
 
-  // تجهيز البيانات
   const items = cart.map(item => ({
     product_id: item.id,
     product_name: item.name,
@@ -1199,6 +1342,8 @@ async function submitOrder() {
 
   const orderData = {
     items: items,
+    discount: currentDiscountAmount,
+    coupon_code: appliedCoupon ? appliedCoupon.code : null,
     customer_name: name,
     customer_phone: phone,
     customer_email: email,
@@ -1220,14 +1365,9 @@ async function submitOrder() {
     const data = await res.json();
 
     if (data.success) {
-      // حفظ رقم الطلب
       document.getElementById('orderNumber').textContent = data.invoice_number;
-
-      // إفراغ السلة
       cart = [];
       localStorage.removeItem('raki_cart');
-
-      // عرض النافذة
       document.getElementById('successModal').classList.add('show');
     } else {
       showNotification('❌ ' + (data.message || 'حدث خطأ'), true);
@@ -1241,7 +1381,6 @@ async function submitOrder() {
   }
 }
 
-// ========== قائمة جانبية ==========
 function toggleMenu() {
   const menu = document.createElement('div');
   menu.style.cssText = `position:fixed;top:0;right:0;width:280px;height:100vh;background:white;z-index:3000;padding:25px;box-shadow:-5px 0 30px rgba(0,0,0,0.15);display:flex;flex-direction:column;gap:5px;`;
@@ -1264,7 +1403,6 @@ function toggleCart() {
   window.location.href = 'search.html';
 }
 
-// ========== Notification ==========
 function showNotification(message, isError = false) {
   const notif = document.getElementById('notification');
   notif.textContent = message;
