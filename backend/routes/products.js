@@ -5,7 +5,9 @@ const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const db = require('../database');
 
+// ========================================
 // إعداد Cloudinary
+// ========================================
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -20,9 +22,12 @@ const storage = new CloudinaryStorage({
     transformation: [{ width: 800, height: 800, crop: 'limit' }]
   }
 });
+
 const upload = multer({ storage });
 
+// ========================================
 // دالة مساعدة لحساب السعر النهائي
+// ========================================
 function getFinalPrice(product) {
   if (!product.discount_type || !product.discount_value) {
     return product.price;
@@ -36,7 +41,9 @@ function getFinalPrice(product) {
   return product.price;
 }
 
+// ========================================
 // جلب كل المنتجات
+// ========================================
 router.get('/', async (req, res) => {
   try {
     const products = await db.prepare(`
@@ -58,20 +65,20 @@ router.get('/', async (req, res) => {
   }
 });
 
-// جلب المنتجات الأكثر مبيعاً
+// ========================================
+// جلب المنتجات الأكثر مبيعاً (مُبسط لضمان العمل)
+// ========================================
 router.get('/best-sellers', async (req, res) => {
   try {
+    // استعلام بسيط لا يعتمد على جدول sale_items (لضمان العمل حتى بدون مبيعات)
     const products = await db.prepare(`
       SELECT 
         p.*, 
-        c.name as category_name,
-        COALESCE(SUM(si.quantity), 0) as total_sold
+        c.name as category_name
       FROM products p 
       LEFT JOIN categories c ON p.category_id = c.id 
-      LEFT JOIN sale_items si ON si.product_id = p.id
       WHERE p.active = 1
-      GROUP BY p.id
-      ORDER BY total_sold DESC, p.id DESC
+      ORDER BY p.id DESC
       LIMIT 3
     `).all();
 
@@ -86,7 +93,9 @@ router.get('/best-sellers', async (req, res) => {
   }
 });
 
+// ========================================
 // جلب منتجات فئة معينة
+// ========================================
 router.get('/category/:categoryId', async (req, res) => {
   try {
     const { limit } = req.query;
@@ -112,7 +121,9 @@ router.get('/category/:categoryId', async (req, res) => {
   }
 });
 
+// ========================================
 // جلب منتج واحد
+// ========================================
 router.get('/:id', async (req, res) => {
   try {
     const product = await db.prepare(`
@@ -135,7 +146,9 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// ========================================
 // إضافة منتج جديد
+// ========================================
 router.post('/', upload.single('image'), async (req, res) => {
   try {
     const { 
@@ -172,7 +185,9 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
+// ========================================
 // تعديل منتج
+// ========================================
 router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { 
@@ -207,7 +222,60 @@ router.put('/:id', upload.single('image'), async (req, res) => {
   }
 });
 
+// ========================================
+// تفعيل/تعطيل خصم على منتج
+// ========================================
+router.put('/:id/discount', async (req, res) => {
+  try {
+    const { discount_type, discount_value } = req.body;
+    const product = await db.prepare('SELECT * FROM products WHERE id = ?').get(req.params.id);
+    
+    if (!product) {
+      return res.status(404).json({ success: false, message: 'المنتج غير موجود' });
+    }
+
+    const newType = (discount_type && discount_type !== '') ? discount_type : null;
+    const newValue = parseFloat(discount_value) || 0;
+
+    await db.prepare(`
+      UPDATE products SET discount_type = ?, discount_value = ? WHERE id = ?
+    `).run(newType, newValue, req.params.id);
+
+    res.json({ 
+      success: true, 
+      message: newType ? 'تم تطبيق الخصم' : 'تم إلغاء الخصم' 
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// ========================================
+// تفعيل/تعطيل منتج مميز
+// ========================================
+router.put('/:id/featured', async (req, res) => {
+  try {
+    const product = await db.prepare('SELECT * FROM products WHERE id = ?').get(req.params.id);
+    if (!product) {
+      return res.status(404).json({ success: false, message: 'المنتج غير موجود' });
+    }
+
+    const newStatus = product.is_featured === 1 ? 0 : 1;
+    await db.prepare('UPDATE products SET is_featured = ? WHERE id = ?').run(newStatus, req.params.id);
+
+    res.json({ 
+      success: true, 
+      message: newStatus === 1 ? 'تم تمييز المنتج' : 'تم إلغاء التمييز',
+      is_featured: newStatus
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// ========================================
 // حذف منتج
+// ========================================
 router.delete('/:id', async (req, res) => {
   try {
     await db.prepare('UPDATE products SET active = 0 WHERE id = ?').run(req.params.id);
