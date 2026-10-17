@@ -1,33 +1,24 @@
 {
-  "name": "clothing-store",
+  "name": "clothing-store-backend",
   "version": "1.0.0",
-  "description": "متجر إلكتروني متكامل لبيع الملابس - يشمل لوحة تحكم، كاشير، ومحاسبة",
-  "main": "backend/server.js",
+  "description": "متجر راقي - Backend",
+  "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev": "node --watch backend/server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "keywords": [
-    "متجر",
-    "ملابس",
-    "ecommerce",
-    "cashier",
-    "inventory"
-  ],
-  "author": "Your Name",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "@libsql/client": "^0.18.0",
-    "bcryptjs": "^3.0.3",
-    "better-sqlite3": "^13.0.3",
-    "cloudinary": "^1.41.3",
-    "cors": "^2.8.6",
-    "dotenv": "^18.0.8",
-    "express": "^5.3.0",
-    "express-session": "^1.19.0",
-    "jsonwebtoken": "^9.0.3",
-    "multer": "^2.4.0",
-    "multer-storage-cloudinary": "^4.0.0"
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }

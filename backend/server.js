@@ -1,9 +1,9 @@
 // ========================================
-// إعدادات Turso (لازم تكون قبل تحميل المكتبات)
+// إعدادات Supabase (PostgreSQL)
 // ========================================
 require('dotenv').config();
 
-if (process.env.NODE_ENV !== 'production' && process.env.TURSO_DATABASE_URL) {
+if (process.env.NODE_ENV !== 'production' && process.env.DATABASE_URL) {
   process.env.NODE_ENV = 'production';
 }
 
@@ -89,7 +89,7 @@ app.get('/api/test', (req, res) => {
     success: true,
     message: '✅ السيرفر شغّال تمام!',
     store: process.env.STORE_NAME || 'متجر الملابس',
-    database: process.env.TURSO_DATABASE_URL ? 'Turso Cloud ✅' : 'Local SQLite 💾',
+    database: process.env.DATABASE_URL ? 'Supabase Cloud ✅' : 'Local SQLite 💾',
     time: new Date().toLocaleString('ar-OM')
   });
 });
@@ -124,7 +124,7 @@ app.listen(PORT, () => {
   console.log(`🛍️  ${process.env.STORE_NAME || 'متجر الملابس'}`);
   console.log('═══════════════════════════════════════');
   console.log(`✅ السيرفر شغّال على: http://localhost:${PORT}`);
-  console.log(`🗄️  قاعدة البيانات: ${process.env.TURSO_DATABASE_URL ? 'Turso Cloud (دائم)' : 'Local SQLite (مؤقت)'}`);
+  console.log(`🗄️  قاعدة البيانات: ${process.env.DATABASE_URL ? 'Supabase Cloud (دائم)' : 'Local SQLite (مؤقت)'}`);
   console.log(`🧪 اختبار: http://localhost:${PORT}/api/test`);
   console.log('═══════════════════════════════════════');
   console.log('');
