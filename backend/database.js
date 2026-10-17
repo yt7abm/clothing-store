@@ -22,7 +22,6 @@ if (isProduction) {
   });
 
   // محاكي متزامن (Sync Adapter) باستخدام async/await
-  // ملاحظة: سنستخدم async/await في كل مكان
   db = {
     _pool: pool,
     _isPostgres: true,
