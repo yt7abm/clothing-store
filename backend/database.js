@@ -1,14 +1,75 @@
 // ========================================
-// قاعدة البيانات - متجر الملابس
+// قاعدة البيانات - متجر الملابس (Turso)
 // ========================================
-const Database = require('better-sqlite3');
+const { createClient } = require('@libsql/client');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 
-const dbPath = path.join(__dirname, 'database.db');
-const db = new Database(dbPath);
+// ========================================
+// إنشاء الاتصال بقاعدة البيانات
+// ========================================
+const isProduction = process.env.NODE_ENV === 'production' || process.env.TURSO_DATABASE_URL;
 
-db.pragma('foreign_keys = ON');
+let db;
+
+if (isProduction) {
+  // ===== الإنتاج (Turso Cloud) =====
+  console.log('🌐 الاتصال بـ Turso Cloud...');
+  
+  const client = createClient({
+    url: process.env.TURSO_DATABASE_URL,
+    authToken: process.env.TURSO_AUTH_TOKEN
+  });
+  
+  // adapter يحاكي better-sqlite3
+  db = {
+    prepare: (sql) => {
+      return {
+        get: (...params) => {
+          const stmt = client.prepare(sql);
+          const result = stmt.get(...params);
+          return result;
+        },
+        all: (...params) => {
+          const stmt = client.prepare(sql);
+          const result = stmt.all(...params);
+          return result;
+        },
+        run: (...params) => {
+          const stmt = client.prepare(sql);
+          const result = stmt.run(...params);
+          return result;
+        }
+      };
+    },
+    exec: (sql) => {
+      const statements = sql.split(';').filter(s => s.trim());
+      for (const stmt of statements) {
+        if (stmt.trim()) {
+          client.execute(stmt.trim()).catch(e => console.error(e.message));
+        }
+      }
+    },
+    pragma: () => {},
+    transaction: (fn) => {
+      return (...args) => {
+        try {
+          const result = fn(...args);
+          return result;
+        } catch (e) {
+          throw e;
+        }
+      };
+    }
+  };
+} else {
+  // ===== التطوير المحلي (better-sqlite3) =====
+  console.log('💻 الاتصال بقاعدة بيانات محلية...');
+  const Database = require('better-sqlite3');
+  const dbPath = path.join(__dirname, 'database.db');
+  db = new Database(dbPath);
+  db.pragma('foreign_keys = ON');
+}
 
 console.log('📦 جاري تجهيز قاعدة البيانات...');
 
@@ -31,7 +92,7 @@ db.exec(`
   )
 `);
 
-// 2. جدول الفئات (مع الأيقونة والترتيب)
+// 2. جدول الفئات
 db.exec(`
   CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -166,7 +227,6 @@ console.log('✅ تم إنشاء جميع الجداول بنجاح');
 // Migration: تحديث الجداول الموجودة
 // ========================================
 try {
-  // التحقق من أعمدة جدول categories
   const categoriesColumns = db.prepare(`PRAGMA table_info(categories)`).all();
   const hasIcon = categoriesColumns.some(col => col.name === 'icon');
   const hasOrder = categoriesColumns.some(col => col.name === 'display_order');
@@ -181,7 +241,6 @@ try {
     console.log('✅ تم إضافة عمود display_order لجدول categories');
   }
 
-  // التحقق من أعمدة جدول products
   const productsColumns = db.prepare(`PRAGMA table_info(products)`).all();
   const hasDiscountType = productsColumns.some(col => col.name === 'discount_type');
   const hasDiscountValue = productsColumns.some(col => col.name === 'discount_value');
@@ -189,92 +248,95 @@ try {
   
   if (!hasDiscountType) {
     db.exec(`ALTER TABLE products ADD COLUMN discount_type TEXT DEFAULT NULL`);
-    console.log('✅ تم إضافة عمود discount_type لجدول products');
   }
   
   if (!hasDiscountValue) {
     db.exec(`ALTER TABLE products ADD COLUMN discount_value REAL DEFAULT 0`);
-    console.log('✅ تم إضافة عمود discount_value لجدول products');
   }
   
   if (!hasFeatured) {
     db.exec(`ALTER TABLE products ADD COLUMN is_featured INTEGER DEFAULT 0`);
-    console.log('✅ تم إضافة عمود is_featured لجدول products');
   }
 } catch (error) {
   console.log('ℹ️ الجداول محدثة مسبقاً');
 }
 
 // ========================================
-// البيانات الأولية
+// البيانات الأولية (Seed Data)
 // ========================================
 
 // حساب المدير
-const adminExists = db.prepare('SELECT * FROM users WHERE username = ?').get('admin');
-if (!adminExists) {
-  const hashedPassword = bcrypt.hashSync('admin123', 10);
-  db.prepare(`
-    INSERT INTO users (username, password, full_name, role, permissions, active)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `).run('admin', hashedPassword, 'المدير العام', 'admin', '["all"]', 1);
-  console.log('👤 تم إنشاء حساب المدير: admin / admin123');
-}
+setTimeout(async () => {
+  try {
+    const adminExists = db.prepare('SELECT * FROM users WHERE username = ?').get('admin');
+    if (!adminExists) {
+      const hashedPassword = bcrypt.hashSync('admin123', 10);
+      db.prepare(`
+        INSERT INTO users (username, password, full_name, role, permissions, active)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `).run('admin', hashedPassword, 'المدير العام', 'admin', '["all"]', 1);
+      console.log('👤 تم إنشاء حساب المدير: admin / admin123');
+    }
 
-// الفئات الافتراضية (مع الأيقونات والترتيب)
-const categoriesCount = db.prepare('SELECT COUNT(*) as count FROM categories').get();
-if (categoriesCount.count === 0) {
-  const categories = [
-    { name: 'قمصان', icon: '👔', order: 1 },
-    { name: 'بناطيل', icon: '👖', order: 2 },
-    { name: 'فساتين', icon: '👗', order: 3 },
-    { name: 'أحذية', icon: '👟', order: 4 },
-    { name: 'إكسسوارات', icon: '⌚', order: 5 },
-    { name: 'عبايات', icon: '🧕', order: 6 }
-  ];
-  
-  const insert = db.prepare('INSERT INTO categories (name, icon, display_order) VALUES (?, ?, ?)');
-  categories.forEach(cat => insert.run(cat.name, cat.icon, cat.order));
-  console.log('📁 تم إضافة 6 فئات افتراضية');
-}
+    // الفئات الافتراضية
+    const categoriesCount = db.prepare('SELECT COUNT(*) as count FROM categories').get();
+    if (categoriesCount.count === 0) {
+      const categories = [
+        { name: 'قمصان', icon: '👔', order: 1 },
+        { name: 'بناطيل', icon: '👖', order: 2 },
+        { name: 'فساتين', icon: '👗', order: 3 },
+        { name: 'أحذية', icon: '👟', order: 4 },
+        { name: 'إكسسوارات', icon: '⌚', order: 5 },
+        { name: 'عبايات', icon: '🧕', order: 6 }
+      ];
+      
+      const insert = db.prepare('INSERT INTO categories (name, icon, display_order) VALUES (?, ?, ?)');
+      categories.forEach(cat => insert.run(cat.name, cat.icon, cat.order));
+      console.log('📁 تم إضافة 6 فئات افتراضية');
+    }
 
-// المنتجات الافتراضية
-const productsCount = db.prepare('SELECT COUNT(*) as count FROM products').get();
-if (productsCount.count === 0) {
-  const sampleProducts = [
-    { name: 'قميص قطني كلاسيكي', price: 15.500, cost: 8.000, category: 1, stock: 25, desc: 'قميص رجالي قطن 100% - لون أبيض' },
-    { name: 'بنطال جينز أزرق', price: 22.000, cost: 12.000, category: 2, stock: 18, desc: 'بنطال جينز رجالي مقاس 32-38' },
-    { name: 'فستان سهرة أسود', price: 45.000, cost: 25.000, category: 3, stock: 10, desc: 'فستان نسائي أنيق للمناسبات' },
-    { name: 'حذاء رياضي أبيض', price: 35.000, cost: 20.000, category: 4, stock: 15, desc: 'حذاء رياضي مريح للاستخدام اليومي' },
-    { name: 'حزام جلد طبيعي', price: 12.000, cost: 6.000, category: 5, stock: 30, desc: 'حزام رجالي جلد طبيعي' },
-    { name: 'عباية سوداء مطرزة', price: 55.000, cost: 30.000, category: 6, stock: 8, desc: 'عباية نسائية بتطريز يدوي فاخر' }
-  ];
+    // المنتجات الافتراضية
+    const productsCount = db.prepare('SELECT COUNT(*) as count FROM products').get();
+    if (productsCount.count === 0) {
+      const sampleProducts = [
+        { name: 'قميص قطني كلاسيكي', price: 15.500, cost: 8.000, category: 1, stock: 25, desc: 'قميص رجالي قطن 100% - لون أبيض' },
+        { name: 'بنطال جينز أزرق', price: 22.000, cost: 12.000, category: 2, stock: 18, desc: 'بنطال جينز رجالي مقاس 32-38' },
+        { name: 'فستان سهرة أسود', price: 45.000, cost: 25.000, category: 3, stock: 10, desc: 'فستان نسائي أنيق للمناسبات' },
+        { name: 'حذاء رياضي أبيض', price: 35.000, cost: 20.000, category: 4, stock: 15, desc: 'حذاء رياضي مريح للاستخدام اليومي' },
+        { name: 'حزام جلد طبيعي', price: 12.000, cost: 6.000, category: 5, stock: 30, desc: 'حزام رجالي جلد طبيعي' },
+        { name: 'عباية سوداء مطرزة', price: 55.000, cost: 30.000, category: 6, stock: 8, desc: 'عباية نسائية بتطريز يدوي فاخر' }
+      ];
 
-  const insert = db.prepare(`
-    INSERT INTO products (name, description, price, cost, category_id, stock)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `);
-  sampleProducts.forEach(p => insert.run(p.name, p.desc, p.price, p.cost, p.category, p.stock));
-  console.log('🛍️  تم إضافة 6 منتجات تجريبية');
-}
+      const insert = db.prepare(`
+        INSERT INTO products (name, description, price, cost, category_id, stock)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `);
+      sampleProducts.forEach(p => insert.run(p.name, p.desc, p.price, p.cost, p.category, p.stock));
+      console.log('🛍️  تم إضافة 6 منتجات تجريبية');
+    }
 
-// الكوبونات الافتراضية
-const couponsCount = db.prepare('SELECT COUNT(*) as count FROM coupons').get();
-if (couponsCount.count === 0) {
-  const coupons = [
-    { code: 'WELCOME10', type: 'percent', value: 10, min_order: 20, max_uses: 100 },
-    { code: 'SAVE5', type: 'fixed', value: 5, min_order: 30, max_uses: 50 },
-    { code: 'VIP20', type: 'percent', value: 20, min_order: 100, max_uses: 10 }
-  ];
-  
-  const insert = db.prepare(`
-    INSERT INTO coupons (code, type, value, min_order, max_uses)
-    VALUES (?, ?, ?, ?, ?)
-  `);
-  coupons.forEach(c => insert.run(c.code, c.type, c.value, c.min_order, c.max_uses));
-  console.log('🎟️  تم إضافة 3 كوبونات تجريبية');
-}
+    // الكوبونات الافتراضية
+    const couponsCount = db.prepare('SELECT COUNT(*) as count FROM coupons').get();
+    if (couponsCount.count === 0) {
+      const coupons = [
+        { code: 'WELCOME10', type: 'percent', value: 10, min_order: 20, max_uses: 100 },
+        { code: 'SAVE5', type: 'fixed', value: 5, min_order: 30, max_uses: 50 },
+        { code: 'VIP20', type: 'percent', value: 20, min_order: 100, max_uses: 10 }
+      ];
+      
+      const insert = db.prepare(`
+        INSERT INTO coupons (code, type, value, min_order, max_uses)
+        VALUES (?, ?, ?, ?, ?)
+      `);
+      coupons.forEach(c => insert.run(c.code, c.type, c.value, c.min_order, c.max_uses));
+      console.log('🎟️  تم إضافة 3 كوبونات تجريبية');
+    }
 
-console.log('✅ قاعدة البيانات جاهزة');
+    console.log('✅ قاعدة البيانات جاهزة');
+  } catch (e) {
+    console.error('خطأ في البيانات الأولية:', e.message);
+  }
+}, 2000);
 
 // ========================================
 // تصدير قاعدة البيانات
