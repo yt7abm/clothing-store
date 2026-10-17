@@ -28,9 +28,9 @@ const upload = multer({ storage });
 // ========================================
 // جلب كل العروضات (للمدير)
 // ========================================
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const offers = db.prepare(`
+    const offers = await db.prepare(`
       SELECT * FROM offers 
       ORDER BY display_order ASC, id DESC
     `).all();
@@ -50,9 +50,9 @@ router.get('/', (req, res) => {
 // ========================================
 // جلب العروضات النشطة (للواجهة)
 // ========================================
-router.get('/active', (req, res) => {
+router.get('/active', async (req, res) => {
   try {
-    const offers = db.prepare(`
+    const offers = await db.prepare(`
       SELECT * FROM offers 
       WHERE active = 1
       ORDER BY display_order ASC, id DESC
@@ -60,13 +60,15 @@ router.get('/active', (req, res) => {
     `).all();
 
     // جلب تفاصيل المنتجات لكل عرض
-    const formatted = offers.map(o => {
+    const formatted = [];
+    for (const o of offers) {
       const productIds = JSON.parse(o.product_ids || '[]');
       let products = [];
       
       if (productIds.length > 0) {
+        // تحويل المصفوفة إلى صيغة IN في SQL
         const placeholders = productIds.map(() => '?').join(',');
-        products = db.prepare(`
+        products = await db.prepare(`
           SELECT p.*, c.name as category_name
           FROM products p
           LEFT JOIN categories c ON p.category_id = c.id
@@ -74,12 +76,12 @@ router.get('/active', (req, res) => {
         `).all(...productIds);
       }
 
-      return {
+      formatted.push({
         ...o,
         product_ids: productIds,
         products
-      };
-    });
+      });
+    }
 
     res.json({ success: true, offers: formatted });
   } catch (error) {
@@ -90,9 +92,9 @@ router.get('/active', (req, res) => {
 // ========================================
 // جلب عرض واحد
 // ========================================
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const offer = db.prepare('SELECT * FROM offers WHERE id = ?').get(req.params.id);
+    const offer = await db.prepare('SELECT * FROM offers WHERE id = ?').get(req.params.id);
     
     if (!offer) {
       return res.status(404).json({ success: false, message: 'العرض غير موجود' });
@@ -103,7 +105,7 @@ router.get('/:id', (req, res) => {
 
     if (productIds.length > 0) {
       const placeholders = productIds.map(() => '?').join(',');
-      products = db.prepare(`
+      products = await db.prepare(`
         SELECT p.*, c.name as category_name
         FROM products p
         LEFT JOIN categories c ON p.category_id = c.id
@@ -123,7 +125,7 @@ router.get('/:id', (req, res) => {
 // ========================================
 // إضافة عرض جديد
 // ========================================
-router.post('/', upload.single('image'), (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
   try {
     const { 
       title, description, original_price, offer_price, product_ids, display_order 
@@ -152,12 +154,13 @@ router.post('/', upload.single('image'), (req, res) => {
 
     const image = req.file ? req.file.path : null;
 
-    const result = db.prepare(`
+    const result = await db.prepare(`
       INSERT INTO offers (
         title, description, image, original_price, offer_price, 
         product_ids, display_order, active
       )
       VALUES (?, ?, ?, ?, ?, ?, ?, 1)
+      RETURNING id
     `).run(
       title,
       description || null,
@@ -182,14 +185,14 @@ router.post('/', upload.single('image'), (req, res) => {
 // ========================================
 // تعديل عرض
 // ========================================
-router.put('/:id', upload.single('image'), (req, res) => {
+router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { 
       title, description, original_price, offer_price, product_ids, 
       display_order, active 
     } = req.body;
 
-    const offer = db.prepare('SELECT * FROM offers WHERE id = ?').get(req.params.id);
+    const offer = await db.prepare('SELECT * FROM offers WHERE id = ?').get(req.params.id);
     if (!offer) {
       return res.status(404).json({ success: false, message: 'العرض غير موجود' });
     }
@@ -210,7 +213,7 @@ router.put('/:id', upload.single('image'), (req, res) => {
 
     const image = req.file ? req.file.path : offer.image;
 
-    db.prepare(`
+    await db.prepare(`
       UPDATE offers 
       SET title = ?, description = ?, image = ?, 
           original_price = ?, offer_price = ?, product_ids = ?,
@@ -238,15 +241,15 @@ router.put('/:id', upload.single('image'), (req, res) => {
 // ========================================
 // تفعيل/تعطيل عرض
 // ========================================
-router.put('/:id/toggle', (req, res) => {
+router.put('/:id/toggle', async (req, res) => {
   try {
-    const offer = db.prepare('SELECT * FROM offers WHERE id = ?').get(req.params.id);
+    const offer = await db.prepare('SELECT * FROM offers WHERE id = ?').get(req.params.id);
     if (!offer) {
       return res.status(404).json({ success: false, message: 'العرض غير موجود' });
     }
 
     const newStatus = offer.active === 1 ? 0 : 1;
-    db.prepare('UPDATE offers SET active = ? WHERE id = ?').run(newStatus, req.params.id);
+    await db.prepare('UPDATE offers SET active = ? WHERE id = ?').run(newStatus, req.params.id);
 
     res.json({ 
       success: true, 
@@ -261,14 +264,14 @@ router.put('/:id/toggle', (req, res) => {
 // ========================================
 // حذف عرض
 // ========================================
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    const offer = db.prepare('SELECT * FROM offers WHERE id = ?').get(req.params.id);
+    const offer = await db.prepare('SELECT * FROM offers WHERE id = ?').get(req.params.id);
     if (!offer) {
       return res.status(404).json({ success: false, message: 'العرض غير موجود' });
     }
 
-    db.prepare('DELETE FROM offers WHERE id = ?').run(req.params.id);
+    await db.prepare('DELETE FROM offers WHERE id = ?').run(req.params.id);
     res.json({ success: true, message: 'تم حذف العرض' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

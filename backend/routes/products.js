@@ -69,13 +69,11 @@ router.get('/', (req, res) => {
 // ========================================
 // جلب المنتجات الأكثر مبيعاً (تلقائي)
 // ========================================
-router.get('/best-sellers', (req, res) => {
+router.get('/best-sellers', async (req, res) => {
   try {
-    const products = db.prepare(`
-      SELECT 
-        p.*, 
-        c.name as category_name,
-        COALESCE(SUM(si.quantity), 0) as total_sold
+    const products = await db.prepare(`
+      SELECT p.*, c.name as category_name,
+      COALESCE(SUM(si.quantity), 0) as total_sold
       FROM products p 
       LEFT JOIN categories c ON p.category_id = c.id 
       LEFT JOIN sale_items si ON si.product_id = p.id
@@ -84,6 +82,7 @@ router.get('/best-sellers', (req, res) => {
       ORDER BY total_sold DESC, p.id DESC
       LIMIT 3
     `).all();
+    // ...
 
     const formatted = products.map(p => ({
       ...p,
