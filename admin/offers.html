@@ -420,7 +420,7 @@ img { max-width: 100%; display: block; }
 .offer-btn.delete { background: rgba(239,68,68,0.1); color: var(--danger); }
 .offer-btn.delete:hover { background: var(--danger); color: white; }
 
-/* ========== Empty State ========== */
+/* ========== Empty State & Loading ========== */
 .empty-state {
   text-align: center;
   padding: 80px 20px;
@@ -434,7 +434,6 @@ img { max-width: 100%; display: block; }
 .empty-state h3 { font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
 .empty-state p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
 
-/* ========== Loading ========== */
 .loading {
   text-align: center;
   padding: 60px 20px;
@@ -830,13 +829,13 @@ img { max-width: 100%; display: block; }
 
   .main-content { padding: 85px 12px 25px; }
 
-  .page-header { padding: 22px 18px; border-radius: 18px; }
+  .page-header { padding: 22px 18px; border-radius: 18px; flex-direction: column; align-items: stretch; }
   .page-header-info h1 { font-size: 1.3rem; }
   .page-header-info p { font-size: 0.8rem; }
   .add-btn { padding: 10px 18px; font-size: 0.85rem; width: 100%; justify-content: center; background: rgba(255,255,255,0.25); }
 
   .stats-mini { gap: 8px; }
-  .stat-mini { padding: 8px 12px; font-size: 0.7rem; }
+  .stat-mini { padding: 8px 12px; font-size: 0.7rem; flex: 1 1 45%; justify-content: center; }
 
   .offers-grid { grid-template-columns: 1fr; gap: 15px; }
   .offer-info { padding: 15px; }
@@ -881,7 +880,7 @@ img { max-width: 100%; display: block; }
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-<!-- Sidebar -->
+<!-- Sidebar (تم تنظيفها من الصفحات غير الموجودة) -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-section">
     <div class="sidebar-section-title">الرئيسية</div>
@@ -897,10 +896,6 @@ img { max-width: 100%; display: block; }
       <span class="icon">👕</span>
       <span class="label">المنتجات</span>
     </a>
-    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
-      <span class="icon">🏷️</span>
-      <span class="label">الفئات</span>
-    </a>
     <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
       <span class="icon">📦</span>
       <span class="label">المخزون</span>
@@ -908,10 +903,6 @@ img { max-width: 100%; display: block; }
     <a href="orders.html" class="sidebar-link" data-permission="orders.view">
       <span class="icon">🛍️</span>
       <span class="label">الطلبات</span>
-    </a>
-    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
-      <span class="icon">💰</span>
-      <span class="label">الكاشير</span>
     </a>
     <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
       <span class="icon">🎟️</span>
@@ -921,7 +912,7 @@ img { max-width: 100%; display: block; }
 
   <div class="sidebar-section" id="managementSection" style="display:none;">
     <div class="sidebar-section-title">الإدارة</div>
-    <a href="offers.html" class="sidebar-link active" data-permission="banners.view">
+    <a href="offers.html" class="sidebar-link active" data-permission="offers.view">
       <span class="icon">🎁</span>
       <span class="label">العروضات</span>
     </a>
@@ -932,10 +923,6 @@ img { max-width: 100%; display: block; }
     <a href="banners.html" class="sidebar-link" data-permission="banners.view">
       <span class="icon">🖼️</span>
       <span class="label">البانرات</span>
-    </a>
-    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
-      <span class="icon">👥</span>
-      <span class="label">الموظفين</span>
     </a>
   </div>
 
@@ -1126,7 +1113,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     permissions = JSON.parse(permStr || '[]');
   } catch (e) { window.location.href = 'login.html'; return; }
 
-  if (!user.is_admin && !permissions.includes('banners.view')) {
+  if (!user.is_admin && !permissions.includes('offers.view') && !permissions.includes('banners.view')) {
     alert('ليس لديك صلاحية الوصول');
     window.location.href = 'dashboard.html';
     return;

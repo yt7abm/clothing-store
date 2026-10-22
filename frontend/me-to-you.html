@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <link rel="icon" type="image/jpeg" href="../assets/12.jpeg" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>هدية مني إليك | Sukkar Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pink-stripe: #de98b5;
+      --pink-stripe-pale: #f6e6ec;
+      --mint: #b9e1dd;
+      --mint-hero: #b8e5e0;
+      --brand: #b2437b;
+      --brand-dark: #8a305f;
+      --mint-pill: #a0cdc6;
+      --pink-card: #f6c6de;
+      --ink: #4a2338;
+      --warm-white: #fffaf5;
+      --price-color: #222;
+      --success: #4caf50;
+      --whatsapp: #25d366;
+      --bg-light: #fdf6f9;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    *{box-sizing:border-box; margin:0; padding:0;}
+    html{ scroll-behavior: smooth; }
+    body{
+      font-family:'Quicksand', 'Poppins', sans-serif;
+      color: var(--ink);
+      background:var(--warm-white);
+      overflow-x:hidden;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .display{ font-family:'Baloo 2', cursive; }
+    .script{ font-family:'Caveat', cursive; }
+    img{max-width:100%; display:block;}
+    a{text-decoration:none; color:inherit;}
+    ul{list-style:none;}
+    .wrap{max-width:1180px; margin:0 auto; padding:0 16px;}
+    button{font-family:'Quicksand', sans-serif; cursor:pointer; border:none; background:none; color:inherit;}
+
+    /* AWNING & TOP BAR */
+    .awning{ width: 100%; position: sticky; top: 0; z-index: 101; }
+    .awning-stripes{
+      height: 38px;
+      background: repeating-linear-gradient(90deg, var(--pink-stripe) 0 50px, var(--pink-stripe-pale) 50px 100px);
+    }
+    .top-bar{
+      background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 38px;
+      z-index: 100; box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    }
+    .top-bar-inner{
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; gap: 16px; max-width: 1180px; margin: 0 auto;
+      position: relative; min-height: 58px;
+    }
+    .icon-group{ display: flex; align-items: center; gap: 12px; flex-shrink: 0; z-index: 2; }
+    .icon-btn{
+      background: transparent; position: relative; display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; color: #222; transition: color 0.2s;
+    }
+    .icon-btn:hover { color: var(--brand); }
+    .icon-btn svg{ width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .brand-center{
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      display: flex; align-items: center; white-space: nowrap; user-select: none; pointer-events: none;
+    }
+    .brand-logo{ height: 44px; width: auto; display: block; }
+
+    /* HERO SECTION */
+    .page-header {
+      background: linear-gradient(135deg, #fff5f7 0%, #fff 100%);
+      padding: 40px 16px; text-align: center; border-bottom: 1px solid var(--pink-card);
+    }
+    .page-title {
+      font-family: 'Baloo 2', cursive; font-size: 2.5rem; font-weight: 800;
+      color: var(--brand); margin-bottom: 10px; text-shadow: 2px 2px 0 rgba(178,67,123,0.1);
+    }
+    .page-sub { font-size: 1.1rem; font-weight: 700; color: var(--brand-dark); }
+
+    /* MAIN LAYOUT (Grid: Form + Products) */
+    .main-layout {
+      display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px;
+      max-width: 1180px; margin: 40px auto; padding: 0 16px;
+    }
+
+    /* FORM SECTION */
+    .gift-form-card {
+      background: #fff; border-radius: 24px; padding: 25px;
+      box-shadow: var(--shadow-md); border: 1px solid var(--border);
+      height: fit-content; position: sticky; top: 110px;
+    }
+    .gift-form-title {
+      font-family: 'Baloo 2', cursive; font-size: 1.3rem; color: var(--brand);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+    }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 12px 15px; border-radius: 12px; border: 1.5px solid var(--border);
+      font-family: 'Quicksand', sans-serif; font-size: 0.9rem; background: var(--bg-light); outline: none; transition: 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--brand); background: #fff; box-shadow: 0 0 0 4px rgba(178,67,123,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    /* PRODUCTS SECTION */
+    .products-section-title {
+      font-family: 'Baloo 2', cursive; font-size: 1.5rem; color: var(--brand);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+    }
+    .product-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;
+    }
+    .product-card {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+      border: 1px solid var(--border); transition: all 0.3s;
+    }
+    .product-card.selected { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand); }
+    .product-card .photo { aspect-ratio: 1/1; background: #f8f0f3; overflow: hidden; position: relative; }
+    .product-card .photo img { width: 100%; height: 100%; object-fit: cover; }
+    .product-card .info { padding: 12px; display: flex; flex-direction: column; flex: 1; gap: 8px; text-align: center; }
+    .product-card .desc { font-size: 0.85rem; color: #555; font-weight: 700; line-height: 1.3; min-height: 36px; }
+    .product-card .price { font-weight: 800; font-size: 1.1rem; color: var(--brand); direction: ltr; margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 4px;}
+    .omr-img { display: inline-block; vertical-align: middle; width: 16px; height: auto; flex-shrink: 0; }
+    
+    .qty-controls { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 5px; }
+    .qty-btn {
+      width: 32px; height: 32px; border-radius: 50%; background: var(--bg-light); color: var(--brand);
+      font-weight: 900; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+      border: 1.5px solid var(--border); transition: 0.2s;
+    }
+    .qty-btn:hover { background: var(--brand); color: #fff; border-color: var(--brand); }
+    .qty-num { font-weight: 800; font-size: 1.1rem; width: 20px; text-align: center; }
+
+    /* CHECKOUT BAR (Fixed Bottom) */
+    .checkout-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.1); padding: 15px 16px;
+      z-index: 1000; display: flex; justify-content: center; border-top: 2px dashed var(--pink-card);
+    }
+    .checkout-inner {
+      max-width: 1180px; width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap;
+    }
+    .total-info { display: flex; flex-direction: column; }
+    .total-info span { font-size: 0.85rem; color: var(--text-muted); font-weight: 700; }
+    .total-info strong {
+      font-family: 'Baloo 2', cursive; font-size: 1.8rem; color: var(--brand);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .whatsapp-btn {
+      background: var(--whatsapp); color: #fff; padding: 14px 30px; border-radius: 16px;
+      font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700;
+      display: flex; align-items: center; gap: 10px; transition: 0.3s; flex: 1; max-width: 300px; justify-content: center;
+      box-shadow: 0 6px 16px rgba(37,211,102,0.3);
+    }
+    .whatsapp-btn:hover { background: #128c7e; transform: translateY(-3px); }
+    .whatsapp-btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; transform: none; }
+
+    /* FOOTER (Simplified) */
+    .site-footer { background-color: #6a4c93; color: #fff; text-align: center; padding: 30px 20px; margin-top: 80px; }
+    .footer-bottom { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+
+    /* RESPONSIVE (Mobile) */
+    @media (max-width: 900px) {
+      .main-layout { grid-template-columns: 1fr; gap: 20px; }
+      .gift-form-card { position: static; padding: 20px; }
+      .page-title { font-size: 2rem; }
+      .checkout-inner { flex-direction: column; text-align: center; }
+      .whatsapp-btn { width: 100%; max-width: 100%; }
+      .total-info { width: 100%; align-items: center; margin-bottom: 5px; }
+    }
+    @media (max-width: 600px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .product-card .desc { font-size: 0.75rem; min-height: 30px; }
+      .product-card .price { font-size: 0.95rem; }
+      .page-title { font-size: 1.6rem; }
+      .page-sub { font-size: 0.9rem; }
+      .main-layout { padding-bottom: 120px; } /* Space for checkout bar */
+    }
+  </style>
+</head>
+<body>
+
+<!-- AWNING -->
+<div class="awning">
+  <div class="awning-stripes"></div>
+</div>
+
+<!-- TOP BAR -->
+<header class="top-bar">
+  <div class="top-bar-inner">
+    <div class="icon-group group-left">
+      <a href="../index.html" class="icon-btn" title="الرئيسية">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      </a>
+    </div>
+
+    <div class="brand-center">
+      <a href="../index.html">
+        <svg class="brand-logo" viewBox="0 0 320 85" xmlns="http://www.w3.org/2000/svg" aria-label="Sukkar Store">
+          <g transform="translate(2,30)">
+            <path d="M30 22 C 18 4, -2 6, 4 20 C 8 30, 20 30, 30 22 Z" fill="#f9a7c6" stroke="#e26a98" stroke-width="1.8"/>
+            <path d="M30 22 C 42 4, 62 6, 56 20 C 52 30, 40 30, 30 22 Z" fill="#f9a7c6" stroke="#e26a98" stroke-width="1.8"/>
+            <circle cx="30" cy="22" r="4" fill="#e26a98"/>
+          </g>
+          <g transform="translate(48,18)">
+            <circle cx="25" cy="20" r="16" fill="#f8b878" stroke="#d97e3a" stroke-width="1.5"/>
+            <circle cx="19" cy="19" r="2" fill="#3a2419"/>
+            <circle cx="31" cy="19" r="2" fill="#3a2419"/>
+            <path d="M23 24 L 27 24 L 25 26 Z" fill="#e2738d"/>
+          </g>
+          <g font-family="'Baloo 2', cursive" font-weight="800" font-size="56" fill="#b2437b">
+            <text x="100" y="58">S</text>
+            <text x="135" y="58">U</text>
+            <text x="172" y="58">K</text>
+            <text x="208" y="58">K</text>
+            <text x="244" y="58">A</text>
+            <text x="280" y="58">R</text>
+          </g>
+        </svg>
+      </a>
+    </div>
+
+    <div class="icon-group group-right">
+      <a href="search.html" class="icon-btn" title="بحث">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="page-header">
+  <h1 class="page-title display">🎀 هدية مني إليك 🎀</h1>
+  <p class="page-sub">فاجئ من تحب بهدية خاصة، وسنقوم بتوصيلها له بأجمل صورة!</p>
+</section>
+
+<!-- MAIN LAYOUT -->
+<main class="main-layout">
+  
+  <!-- RIGHT: Form (بيانات المستلم) -->
+  <aside class="gift-form-card">
+    <h2 class="gift-form-title">📝 بيانات المستلم</h2>
+    
+    <div class="form-group">
+      <label>👤 اسم الشخص (المستلم) <span style="color:var(--brand);">*</span></label>
+      <input type="text" id="receiverName" placeholder="مثال: أحمد محمد">
+    </div>
+    
+    <div class="form-group">
+      <label>📱 رقم هاتف المستلم <span style="color:var(--brand);">*</span></label>
+      <input type="tel" id="receiverPhone" placeholder="مثال: 91234567" dir="ltr" style="text-align:right;">
+    </div>
+
+    <div class="form-group">
+      <label>📍 عنوان التوصيل (اختياري)</label>
+      <input type="text" id="receiverAddress" placeholder="مثال: مسقط - الخوض - شارع الجامعة">
+    </div>
+
+    <div class="form-group">
+      <label>💌 كلمة من القلب (رسالة الإهداء)</label>
+      <textarea id="giftMessage" placeholder="اكتب رسالة يقرأها المستلم مع الهدية..."></textarea>
+    </div>
+  </aside>
+
+  <!-- LEFT: Products List (المنتجات) -->
+  <section class="products-section">
+    <h2 class="products-section-title">🎁 اختر الهدايا</h2>
+    <div class="product-grid" id="productsGrid">
+      <div style="text-align:center; padding: 40px; grid-column: 1/-1; color: #999;">⏳ جاري تحميل الهدايا...</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- CHECKOUT BAR (إجمالي وزر الواتساب) -->
+<div class="checkout-bar">
+  <div class="checkout-inner">
+    <div class="total-info">
+      <span>إجمالي الهدايا:</span>
+      <strong><span id="totalPrice">0.000</span> <img class="omr-img" src="../assets/omr-dark.png" alt="ر.ع"></strong>
+    </div>
+    <button class="whatsapp-btn" onclick="sendToWhatsApp()" id="checkoutBtn">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.086.088-.176.184-.076.361.1.177.444.731.953 1.185.654.582 1.205.763 1.377.848.173.086.274.072.375-.043.1-.115.434-.505.55-.678.116-.174.231-.144.39-.086.159.058 1.01.476 1.184.564.173.086.289.13.332.202.043.072.043.419-.101.824z"/></svg>
+      إتمام الطلب واتساب
+    </button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-bottom">
+    جميع الحقوق محفوظة &copy; 2026 Sukkar Store
+  </div>
+</footer>
+
+<script>
+  const API_URL = '/api';
+  
+  // ⚠️ ضع رقم واتساب صاحبة المحل هنا (مع رمز الدولة بدون +)
+  const STORE_PHONE = '96895544676'; // مثال: 96891234567
+  
+  let allProducts = [];
+  let cart = {}; // { productId: { product: {...}, qty: 1 } }
+
+  // تحميل المنتجات
+  async function fetchProducts() {
+    try {
+      const res = await fetch(`${API_URL}/products`);
+      const data = await res.json();
+      if (data.success && data.products) {
+        allProducts = data.products.filter(p => p.active === 1 || p.active === undefined);
+        renderProducts();
+      }
+    } catch (error) {
+      document.getElementById('productsGrid').innerHTML = `<p style="text-align:center; width:100%;">تعذر تحميل الهدايا</p>`;
+    }
+  }
+
+  // عرض المنتجات في الشاشة
+  function renderProducts() {
+    const grid = document.getElementById('productsGrid');
+    if (allProducts.length === 0) {
+      grid.innerHTML = `<p style="text-align:center; width:100%;">لا توجد هدايا متاحة حالياً</p>`;
+      return;
+    }
+
+    grid.innerHTML = allProducts.map(p => {
+      const inCart = cart[p.id] ? cart[p.id].qty : 0;
+      const isSelected = inCart > 0 ? 'selected' : '';
+      const img = p.image || '../assets/g-1.jpeg';
+      const price = (p.final_price || p.price).toFixed(3);
+
+      return `
+        <div class="product-card ${isSelected}" id="product-card-${p.id}">
+          <div class="photo"><img src="${img}" alt="${p.name}"></div>
+          <div class="info">
+            <div class="desc">${p.name}</div>
+            <div class="price">${price} <img class="omr-img" src="../assets/omr-dark.png"></div>
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="updateQty(${p.id}, -1)">−</button>
+              <span class="qty-num" id="qty-${p.id}">${inCart}</span>
+              <button class="qty-btn" onclick="updateQty(${p.id}, 1)">+</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // تحديث الكمية
+  function updateQty(productId, delta) {
+    const product = allProducts.find(p => p.id === productId);
+    if (!product) return;
+
+    if (!cart[productId]) {
+      if (delta > 0) cart[productId] = { product: product, qty: 1 };
+    } else {
+      cart[productId].qty += delta;
+      if (cart[productId].qty <= 0) delete cart[productId];
+    }
+
+    // تحديث الشكل
+    const qtyEl = document.getElementById(`qty-${productId}`);
+    const cardEl = document.getElementById(`product-card-${productId}`);
+    if (qtyEl) qtyEl.textContent = cart[productId] ? cart[productId].qty : 0;
+    if (cardEl) cardEl.classList.toggle('selected', !!cart[productId]);
+
+    calculateTotal();
+  }
+
+  // حساب الإجمالي
+  function calculateTotal() {
+    let total = 0;
+    Object.values(cart).forEach(item => {
+      const price = item.product.final_price || item.product.price;
+      total += price * item.qty;
+    });
+    document.getElementById('totalPrice').textContent = total.toFixed(3);
+  }
+
+  // إرسال الطلب للواتساب
+  function sendToWhatsApp() {
+    const name = document.getElementById('receiverName').value.trim();
+    const phone = document.getElementById('receiverPhone').value.trim();
+    const address = document.getElementById('receiverAddress').value.trim();
+    const message = document.getElementById('giftMessage').value.trim();
+
+    if (!name) { alert('يرجى إدخال اسم المستلم'); return; }
+    if (!phone) { alert('يرجى إدخال رقم هاتف المستلم'); return; }
+    if (Object.keys(cart).length === 0) { alert('يرجى اختيار هدية واحدة على الأقل'); return; }
+
+    // بناء الرسالة
+    let text = `🎀 *طلب هدية مني إليك* 🎀\n`;
+    text += `━━━━━━━━━━━━━━━\n\n`;
+    text += `👤 *بيانات المستلم:*\n`;
+    text += `• الاسم: ${name}\n`;
+    text += `• الهاتف: ${phone}\n`;
+    if (address) text += `• العنوان: ${address}\n`;
+    if (message) text += `• رسالة الإهداء: "${message}"\n`;
+    text += `\n🎁 *الهدايا المطلوبة:*\n`;
+
+    let total = 0;
+    Object.values(cart).forEach(item => {
+      const price = item.product.final_price || item.product.price;
+      const sub = price * item.qty;
+      total += sub;
+      text += `• ${item.product.name} (عدد: ${item.qty}) - ${sub.toFixed(3)} ر.ع\n`;
+    });
+
+    text += `\n💰 *الإجمالي:* ${total.toFixed(3)} ر.ع\n`;
+    text += `━━━━━━━━━━━━━━━\n`;
+    text += `✨ Sukkar Store`;
+
+    // تحويل للواتساب
+    const encoded = encodeURIComponent(text);
+    const url = `https://wa.me/${STORE_PHONE}?text=${encoded}`;
+    window.open(url, '_blank');
+  }
+
+  // بدء التشغيل
+  document.addEventListener('DOMContentLoaded', fetchProducts);
+</script>
+
+</body>
+</html>

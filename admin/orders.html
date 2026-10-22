@@ -3,32 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>إدارة الطلبات - متجر راقي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<title>إدارة الطلبات - Sukkar Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #1e3a8a;
-  --primary-light: #3b82f6;
-  --primary-dark: #1e40af;
+  --brand: #b2437b;
+  --brand-dark: #8a305f;
+  --brand-light: #d98cb4;
+  --mint-pill: #a0cdc6;
+  --pink-card: #f6c6de;
+  --ink: #4a2338;
+  --warm-white: #fffaf5;
+  --bg-light: #fdf6f9;
+  
+  --primary: var(--brand);
+  --primary-light: var(--brand-light);
+  --primary-dark: var(--brand-dark);
   --accent: #f59e0b;
-  --accent-2: #ec4899;
   --gold: #d4af37;
   --bg: #ffffff;
   --bg-2: #f9fafb;
   --bg-3: #f3f4f6;
-  --text: #1f2937;
+  --text: var(--ink);
   --text-muted: #6b7280;
   --border: #e5e7eb;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
   --whatsapp: #25d366;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
+  --courier: #7c3aed;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 40px rgba(178,67,123,0.15);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
 
 html { scroll-behavior: smooth; height: 100%; }
 
@@ -41,7 +51,7 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+button { cursor: pointer; font-family: 'Quicksand', sans-serif; border: none; background: none; color: inherit; }
 img { max-width: 100%; display: block; }
 
 /* ========== Top Bar ========== */
@@ -71,20 +81,20 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
 }
 
-.menu-toggle:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.menu-toggle:hover { background: var(--brand); color: white; border-color: var(--brand); }
 
 .top-logo {
   display: flex; align-items: center; gap: 10px;
-  font-size: 1.1rem; font-weight: 900; color: var(--primary);
+  font-size: 1.1rem; font-weight: 900; color: var(--brand);
 }
 
 .top-logo-icon {
   width: 40px; height: 40px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   border-radius: 11px;
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+  box-shadow: 0 4px 12px rgba(178,67,123,0.2);
 }
 
 .top-bar-left { display: flex; align-items: center; gap: 12px; }
@@ -100,7 +110,7 @@ img { max-width: 100%; display: block; }
 .user-avatar {
   width: 34px; height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex; align-items: center; justify-content: center;
   color: white; font-weight: 900; font-size: 0.9rem;
 }
@@ -112,7 +122,7 @@ img { max-width: 100%; display: block; }
 .logout-btn {
   width: 40px; height: 40px;
   border-radius: 10px;
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239,68,68,0.1);
   color: var(--danger);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.1rem;
@@ -159,14 +169,25 @@ img { max-width: 100%; display: block; }
   margin-bottom: 3px;
 }
 
-.sidebar-link:hover { background: var(--bg-3); color: var(--primary); padding-right: 20px; }
+.sidebar-link:hover { background: var(--bg-3); color: var(--brand); padding-right: 20px; }
 .sidebar-link.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
-  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 6px 20px rgba(178,67,123,0.25);
 }
 
 .sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
+.sidebar-link .label { flex: 1; }
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 850;
+}
+
+.sidebar-overlay.active { display: block; }
 
 /* ========== Main ========== */
 .main-content {
@@ -177,25 +198,40 @@ img { max-width: 100%; display: block; }
 
 /* ========== Page Header ========== */
 .page-header {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 25px 30px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
+  border-radius: 24px;
+  padding: 30px;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(178,67,123,0.25);
 }
 
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -20%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+  border-radius: 50%;
+}
+
+.page-header-info { position: relative; z-index: 1; }
+
 .page-header-info h1 {
-  font-size: 1.5rem; font-weight: 900;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.7rem; font-weight: 800;
   margin-bottom: 5px;
   display: flex; align-items: center; gap: 10px;
 }
 
-.page-header-info p { color: var(--text-muted); font-size: 0.85rem; }
+.page-header-info p { font-size: 0.9rem; opacity: 0.9; }
 
 /* ========== Status Tabs ========== */
 .status-tabs {
@@ -223,17 +259,17 @@ img { max-width: 100%; display: block; }
   text-align: center;
 }
 
-.status-tab:hover { border-color: var(--primary-light); background: var(--bg-2); }
+.status-tab:hover { border-color: var(--brand-light); background: var(--bg-2); }
 
 .status-tab.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
-  border-color: var(--primary);
-  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+  border-color: var(--brand);
+  box-shadow: 0 6px 20px rgba(178,67,123,0.25);
 }
 
 .status-tab .count {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255,255,255,0.3);
   padding: 2px 8px;
   border-radius: 10px;
   font-size: 0.7rem;
@@ -243,10 +279,10 @@ img { max-width: 100%; display: block; }
 
 .status-tab:not(.active) .count {
   background: var(--bg-3);
-  color: var(--primary);
+  color: var(--brand);
 }
 
-/* ========== Orders Grid (Cards) ========== */
+/* ========== Orders Grid ========== */
 .orders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -258,7 +294,6 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 18px;
-  cursor: pointer;
   transition: all 0.3s;
   position: relative;
   overflow: hidden;
@@ -266,7 +301,7 @@ img { max-width: 100%; display: block; }
 }
 
 .order-card:hover {
-  border-color: var(--primary-light);
+  border-color: var(--brand-light);
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
 }
@@ -280,7 +315,7 @@ img { max-width: 100%; display: block; }
 }
 
 .order-card.status-pending::before { background: var(--warning); }
-.order-card.status-confirmed::before { background: var(--primary-light); }
+.order-card.status-confirmed::before { background: var(--brand-light); }
 .order-card.status-completed::before { background: var(--success); }
 .order-card.status-cancelled::before { background: var(--danger); }
 
@@ -290,17 +325,16 @@ img { max-width: 100%; display: block; }
   align-items: flex-start;
   margin-bottom: 12px;
   gap: 10px;
+  cursor: pointer;
 }
 
-.order-card-info {
-  flex: 1;
-  min-width: 0;
-}
+.order-card-info { flex: 1; min-width: 0; }
 
 .order-card-number {
+  font-family: 'Baloo 2', cursive;
   font-size: 0.95rem;
-  font-weight: 900;
-  color: var(--primary);
+  font-weight: 800;
+  color: var(--brand);
   margin-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
@@ -324,10 +358,10 @@ img { max-width: 100%; display: block; }
   flex-shrink: 0;
 }
 
-.status-pending-badge { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
-.status-confirmed-badge { background: rgba(59, 130, 246, 0.15); color: var(--primary-light); }
-.status-completed-badge { background: rgba(16, 185, 129, 0.15); color: var(--success); }
-.status-cancelled-badge { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+.status-pending-badge { background: rgba(245,158,11,0.15); color: var(--warning); }
+.status-confirmed-badge { background: rgba(217,140,180,0.2); color: var(--brand); }
+.status-completed-badge { background: rgba(16,185,129,0.15); color: var(--success); }
+.status-cancelled-badge { background: rgba(239,68,68,0.15); color: var(--danger); }
 
 .order-card-customer {
   display: flex;
@@ -337,13 +371,13 @@ img { max-width: 100%; display: block; }
   background: var(--bg-2);
   border-radius: 12px;
   margin-bottom: 12px;
+  cursor: pointer;
 }
 
 .order-card-avatar {
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex; align-items: center; justify-content: center;
   color: white;
   font-weight: 900;
@@ -374,12 +408,15 @@ img { max-width: 100%; display: block; }
   align-items: center;
   padding-top: 12px;
   border-top: 1px solid var(--border);
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .order-card-total {
-  font-size: 1.1rem;
-  font-weight: 900;
-  color: var(--primary);
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--brand);
   display: flex;
   align-items: center;
   gap: 3px;
@@ -401,7 +438,7 @@ img { max-width: 100%; display: block; }
 }
 
 .quick-action.whatsapp {
-  background: rgba(37, 211, 102, 0.1);
+  background: rgba(37,211,102,0.1);
   color: var(--whatsapp);
 }
 
@@ -411,13 +448,25 @@ img { max-width: 100%; display: block; }
   transform: scale(1.1);
 }
 
+/* ← زر إرسال للمندوب */
+.quick-action.courier {
+  background: rgba(124,58,237,0.1);
+  color: var(--courier);
+}
+
+.quick-action.courier:hover {
+  background: var(--courier);
+  color: white;
+  transform: scale(1.1);
+}
+
 .quick-action.view {
-  background: rgba(30, 58, 138, 0.1);
-  color: var(--primary);
+  background: rgba(178,67,123,0.1);
+  color: var(--brand);
 }
 
 .quick-action.view:hover {
-  background: var(--primary);
+  background: var(--brand);
   color: white;
 }
 
@@ -432,14 +481,14 @@ img { max-width: 100%; display: block; }
 }
 
 .empty-state .icon { font-size: 4rem; margin-bottom: 15px; opacity: 0.5; }
-.empty-state h3 { font-size: 1.2rem; font-weight: 900; margin-bottom: 8px; }
+.empty-state h3 { font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
 .empty-state p { color: var(--text-muted); font-size: 0.9rem; }
 
 /* ========== Loading ========== */
 .loading {
   text-align: center;
   padding: 60px 20px;
-  color: var(--primary);
+  color: var(--brand);
   grid-column: 1 / -1;
 }
 
@@ -449,7 +498,7 @@ img { max-width: 100%; display: block; }
   width: 35px; height: 35px;
   margin: 15px auto 0;
   border: 3px solid var(--border);
-  border-top-color: var(--primary);
+  border-top-color: var(--brand);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -460,7 +509,7 @@ img { max-width: 100%; display: block; }
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0,0,0,0.6);
   z-index: 2500;
   display: none;
   align-items: center;
@@ -480,7 +529,7 @@ img { max-width: 100%; display: block; }
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 25px 70px rgba(178,67,123,0.25);
   animation: modalIn 0.3s ease;
 }
 
@@ -492,7 +541,7 @@ img { max-width: 100%; display: block; }
 }
 
 .modal-header {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
   padding: 22px 25px;
   border-radius: 24px 24px 0 0;
@@ -504,8 +553,9 @@ img { max-width: 100%; display: block; }
 .modal-header.danger { background: linear-gradient(135deg, var(--danger), #b91c1c); }
 
 .modal-header h2 {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 800;
   display: flex; align-items: center; gap: 10px;
   margin-bottom: 4px;
 }
@@ -518,7 +568,7 @@ img { max-width: 100%; display: block; }
   left: 15px;
   width: 36px; height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.2);
   color: white;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.1rem;
@@ -526,21 +576,19 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
 }
 
-.modal-close:hover { background: rgba(255, 255, 255, 0.3); transform: rotate(90deg); }
+.modal-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
 
 .modal-body { padding: 25px; }
 
 /* ========== Modal Sections ========== */
-.modal-section {
-  margin-bottom: 22px;
-}
-
+.modal-section { margin-bottom: 22px; }
 .modal-section:last-child { margin-bottom: 0; }
 
 .modal-section-title {
-  font-size: 0.9rem;
-  font-weight: 900;
-  color: var(--primary);
+  font-family: 'Baloo 2', cursive;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--brand);
   margin-bottom: 12px;
   display: flex;
   align-items: center;
@@ -563,7 +611,7 @@ img { max-width: 100%; display: block; }
 .customer-info-avatar {
   width: 55px; height: 55px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex; align-items: center; justify-content: center;
   color: white;
   font-weight: 900;
@@ -598,25 +646,11 @@ img { max-width: 100%; display: block; }
 
 .info-row:last-child { border-bottom: none; }
 
-.info-row .label {
-  color: var(--text-muted);
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.info-row .value {
-  color: var(--text);
-  font-weight: 700;
-  text-align: left;
-  word-break: break-word;
-}
+.info-row .label { color: var(--text-muted); font-weight: 600; flex-shrink: 0; }
+.info-row .value { color: var(--text); font-weight: 700; text-align: left; word-break: break-word; }
 
 /* Items */
-.order-items-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.order-items-list { display: flex; flex-direction: column; gap: 10px; }
 
 .order-item-modal {
   display: flex;
@@ -651,14 +685,12 @@ img { max-width: 100%; display: block; }
   text-overflow: ellipsis;
 }
 
-.order-item-meta {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
+.order-item-meta { font-size: 0.75rem; color: var(--text-muted); }
 
 .order-item-subtotal {
-  font-weight: 900;
-  color: var(--primary);
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  color: var(--brand);
   font-size: 0.9rem;
   display: flex;
   align-items: center;
@@ -694,8 +726,10 @@ img { max-width: 100%; display: block; }
 }
 
 .total-row.final .value {
-  color: var(--primary);
+  color: var(--brand);
+  font-family: 'Baloo 2', cursive;
   font-size: 1.3rem;
+  font-weight: 800;
 }
 
 .total-row.final .value img { width: 16px; height: 16px; }
@@ -708,10 +742,14 @@ img { max-width: 100%; display: block; }
   margin-top: 20px;
 }
 
+.modal-actions.three {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 .action-btn {
   padding: 14px;
   border-radius: 14px;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 0.9rem;
   transition: all 0.3s;
   display: flex;
@@ -724,18 +762,26 @@ img { max-width: 100%; display: block; }
 .action-btn.whatsapp {
   background: linear-gradient(135deg, var(--whatsapp), #128c7e);
   color: white;
-  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.25);
+  box-shadow: 0 8px 25px rgba(37,211,102,0.25);
 }
 
-.action-btn.whatsapp:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(37, 211, 102, 0.35); }
+.action-btn.whatsapp:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(37,211,102,0.35); }
+
+.action-btn.courier {
+  background: linear-gradient(135deg, var(--courier), #5b21b6);
+  color: white;
+  box-shadow: 0 8px 25px rgba(124,58,237,0.25);
+}
+
+.action-btn.courier:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(124,58,237,0.35); }
 
 .action-btn.print {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   color: white;
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 8px 25px rgba(178,67,123,0.25);
 }
 
-.action-btn.print:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35); }
+.action-btn.print:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(178,67,123,0.35); }
 
 /* Status changer */
 .status-changer {
@@ -760,20 +806,16 @@ img { max-width: 100%; display: block; }
   gap: 4px;
 }
 
-.status-option.pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
-.status-option.confirmed { background: rgba(59, 130, 246, 0.1); color: var(--primary-light); }
-.status-option.completed { background: rgba(16, 185, 129, 0.1); color: var(--success); }
-.status-option.cancelled { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+.status-option.pending { background: rgba(245,158,11,0.1); color: var(--warning); }
+.status-option.confirmed { background: rgba(217,140,180,0.15); color: var(--brand); }
+.status-option.completed { background: rgba(16,185,129,0.1); color: var(--success); }
+.status-option.cancelled { background: rgba(239,68,68,0.1); color: var(--danger); }
 
 .status-option:hover { transform: translateY(-2px); }
 
-.status-option.active {
-  border-color: currentColor;
-  box-shadow: 0 4px 15px currentColor;
-}
-
+.status-option.active { border-color: currentColor; box-shadow: 0 4px 15px currentColor; }
 .status-option.active.pending { background: var(--warning); color: white; }
-.status-option.active.confirmed { background: var(--primary-light); color: white; }
+.status-option.active.confirmed { background: var(--brand); color: white; }
 .status-option.active.completed { background: var(--success); color: white; }
 .status-option.active.cancelled { background: var(--danger); color: white; }
 
@@ -781,7 +823,7 @@ img { max-width: 100%; display: block; }
 .btn {
   padding: 12px 24px;
   border-radius: 12px;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 0.9rem;
   transition: all 0.3s;
   cursor: pointer;
@@ -821,7 +863,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background: var(--primary);
+  background: var(--brand);
   color: white;
   padding: 14px 25px;
   border-radius: 14px;
@@ -829,7 +871,7 @@ img { max-width: 100%; display: block; }
   z-index: 3000;
   transform: translateX(500px);
   transition: transform 0.4s;
-  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.3);
+  box-shadow: 0 15px 40px rgba(178,67,123,0.3);
   max-width: calc(100% - 60px);
   font-size: 0.9rem;
 }
@@ -837,13 +879,13 @@ img { max-width: 100%; display: block; }
 .notification.show { transform: translateX(0); }
 .notification.error { background: var(--danger); }
 .notification.success { background: var(--success); }
+.notification.courier { background: var(--courier); }
 
 /* ========== Responsive ========== */
 @media (max-width: 900px) {
-  .sidebar { transform: translateX(100%); box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1); }
+  .sidebar { transform: translateX(100%); box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
   .sidebar.open { transform: translateX(0); }
   .main-content { margin-right: 0; padding: 90px 18px 30px; }
-
   .status-tabs { grid-template-columns: repeat(3, 1fr); }
 }
 
@@ -858,87 +900,41 @@ img { max-width: 100%; display: block; }
 
   .main-content { padding: 80px 12px 25px; }
 
-  .page-header { padding: 18px; border-radius: 16px; }
-  .page-header-info h1 { font-size: 1.2rem; }
-  .page-header-info p { font-size: 0.75rem; }
+  .page-header { padding: 22px 18px; border-radius: 18px; flex-direction: column; align-items: stretch; }
+  .page-header-info h1 { font-size: 1.3rem; }
+  .page-header-info p { font-size: 0.8rem; }
 
-  /* التبويبات: 2 في الصف */
-  .status-tabs { 
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
+  .status-tabs { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .status-tab { padding: 10px 8px; font-size: 0.75rem; border-radius: 12px; }
+  .status-tab .count { font-size: 0.65rem; min-width: 18px; padding: 1px 6px; }
 
-  .status-tab {
-    padding: 10px 8px;
-    font-size: 0.75rem;
-    border-radius: 12px;
-  }
-
-  .status-tab .count {
-    font-size: 0.65rem;
-    min-width: 18px;
-    padding: 1px 6px;
-  }
-
-  /* البطاقات: عمود واحد */
-  .orders-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
+  .orders-grid { grid-template-columns: 1fr; gap: 12px; }
   .order-card { padding: 15px; border-radius: 16px; }
   .order-card-number { font-size: 0.85rem; }
   .order-card-avatar { width: 36px; height: 36px; font-size: 0.9rem; }
   .order-card-total { font-size: 1rem; }
   .quick-action { width: 32px; height: 32px; font-size: 0.9rem; }
 
-  /* Modal */
   .modal { padding: 0; align-items: flex-end; }
-  .modal-content {
-    border-radius: 24px 24px 0 0;
-    max-height: 95vh;
-    animation: slideUp 0.3s ease;
-  }
+  .modal-content { border-radius: 24px 24px 0 0; max-height: 95vh; animation: slideUp 0.3s ease; }
 
   @keyframes slideUp {
     from { transform: translateY(100%); }
     to { transform: translateY(0); }
   }
 
-  .modal-header { 
-    padding: 20px; 
-    border-radius: 24px 24px 0 0;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 15px;
-    left: auto;
-    right: 15px;
-  }
-
+  .modal-header { padding: 20px; border-radius: 24px 24px 0 0; }
+  .modal-close { position: absolute; top: 15px; left: auto; right: 15px; }
   .modal-body { padding: 20px; }
 
   .customer-info-avatar { width: 50px; height: 50px; font-size: 1.1rem; }
 
-  /* Actions: عمودين */
-  .modal-actions {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
+  .modal-actions { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .modal-actions.three { grid-template-columns: 1fr; }
   .action-btn { padding: 12px; font-size: 0.85rem; }
 
-  /* Status changer: عمودين */
-  .status-changer {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .status-option {
-    padding: 10px 6px;
-    font-size: 0.7rem;
-  }
+  .status-changer { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .status-option { padding: 10px 6px; font-size: 0.7rem; }
 
   .notification { bottom: 15px; right: 15px; left: 15px; max-width: calc(100% - 30px); text-align: center; }
 }
@@ -958,8 +954,10 @@ img { max-width: 100%; display: block; }
   <div class="top-bar-right">
     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     <div class="top-logo">
-      <div class="top-logo-icon">🛍️</div>
-      الطلبات
+      <svg class="top-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      Sukkar Store
     </div>
   </div>
   <div class="top-bar-left">
@@ -976,13 +974,13 @@ img { max-width: 100%; display: block; }
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-<!-- Sidebar -->
+<!-- Sidebar - بدون فئات/كاشير/موظفين -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-section">
     <div class="sidebar-section-title">الرئيسية</div>
     <a href="dashboard.html" class="sidebar-link">
       <span class="icon">📊</span>
-      <span>لوحة التحكم</span>
+      <span class="label">لوحة التحكم</span>
     </a>
   </div>
 
@@ -990,47 +988,35 @@ img { max-width: 100%; display: block; }
     <div class="sidebar-section-title">العمليات</div>
     <a href="products.html" class="sidebar-link" data-permission="products.view">
       <span class="icon">👕</span>
-      <span>المنتجات</span>
-    </a>
-    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
-      <span class="icon">🏷️</span>
-      <span>الفئات</span>
+      <span class="label">المنتجات</span>
     </a>
     <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
       <span class="icon">📦</span>
-      <span>المخزون</span>
+      <span class="label">المخزون</span>
     </a>
     <a href="orders.html" class="sidebar-link active" data-permission="orders.view">
       <span class="icon">🛍️</span>
-      <span>الطلبات</span>
-    </a>
-    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
-      <span class="icon">💰</span>
-      <span>الكاشير</span>
+      <span class="label">الطلبات</span>
     </a>
     <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
       <span class="icon">🎟️</span>
-      <span>الكوبونات</span>
+      <span class="label">الكوبونات</span>
     </a>
   </div>
 
   <div class="sidebar-section" id="managementSection" style="display:none;">
     <div class="sidebar-section-title">الإدارة</div>
-    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
+    <a href="offers.html" class="sidebar-link" data-permission="offers.view">
       <span class="icon">🎁</span>
-      <span>العروضات</span>
+      <span class="label">العروضات</span>
     </a>
     <a href="reports.html" class="sidebar-link" data-permission="reports.view">
       <span class="icon">📈</span>
-      <span>التقارير</span>
+      <span class="label">التقارير</span>
     </a>
     <a href="banners.html" class="sidebar-link" data-permission="banners.view">
       <span class="icon">🖼️</span>
-      <span>البانرات</span>
-    </a>
-    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
-      <span class="icon">👥</span>
-      <span>الموظفين</span>
+      <span class="label">البانرات</span>
     </a>
   </div>
 
@@ -1038,7 +1024,7 @@ img { max-width: 100%; display: block; }
     <div class="sidebar-section-title">المتجر</div>
     <a href="../index.html" class="sidebar-link">
       <span class="icon">🏠</span>
-      <span>الصفحة الرئيسية</span>
+      <span class="label">الصفحة الرئيسية</span>
     </a>
   </div>
 </aside>
@@ -1049,7 +1035,7 @@ img { max-width: 100%; display: block; }
   <div class="page-header">
     <div class="page-header-info">
       <h1>🛍️ إدارة الطلبات</h1>
-      <p>تابع الطلبات وحدّث حالتها</p>
+      <p>تابع الطلبات، حدّث حالتها، وأرسلها للمندوب بضغطة زر</p>
     </div>
   </div>
 
@@ -1098,7 +1084,7 @@ img { max-width: 100%; display: block; }
     </div>
     <div class="modal-body" style="text-align:center;">
       <div style="font-size: 4rem; margin-bottom: 15px;">👋</div>
-      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">هل أنت متأكد؟</h3>
+      <h3 style="font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; margin-bottom: 10px;">هل أنت متأكد؟</h3>
       <p style="color: var(--text-muted); font-size: 0.9rem;">سيتم تسجيل خروجك من لوحة التحكم</p>
     </div>
     <div class="modal-footer">
@@ -1116,6 +1102,13 @@ img { max-width: 100%; display: block; }
 
 <script>
 const API_URL = '/api';
+
+// ========================================
+// إعدادات المندوب (جيناكم)
+// ========================================
+const COURIER_PHONE = '96890000000';   // ← غيّر رقم جيناكم هنا (بدون + أو مسافات)
+const COURIER_NAME = 'جيناكم';
+
 let user = null;
 let permissions = [];
 let allOrders = [];
@@ -1131,9 +1124,9 @@ const STATUS_INFO = {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const userStr = localStorage.getItem('raki_user');
-  const permStr = localStorage.getItem('raki_permissions');
-  const token = localStorage.getItem('raki_token');
+  const userStr = localStorage.getItem('sukkar_user');
+  const permStr = localStorage.getItem('sukkar_permissions');
+  const token = localStorage.getItem('sukkar_token');
 
   if (!userStr || !token) { window.location.href = 'login.html'; return; }
 
@@ -1258,8 +1251,8 @@ function renderOrderCard(order) {
   const customerPhone = order.customer_phone || '';
 
   return `
-    <div class="order-card ${status.class}" onclick="openOrderModal(${order.id})">
-      <div class="order-card-header">
+    <div class="order-card ${status.class}">
+      <div class="order-card-header" onclick="openOrderModal(${order.id})">
         <div class="order-card-info">
           <div class="order-card-number">📦 ${order.invoice_number}</div>
           <div class="order-card-date">📅 ${date}</div>
@@ -1267,7 +1260,7 @@ function renderOrderCard(order) {
         <span class="order-status-badge ${status.badgeClass}">${status.icon} ${status.label}</span>
       </div>
 
-      <div class="order-card-customer">
+      <div class="order-card-customer" onclick="openOrderModal(${order.id})">
         <div class="order-card-avatar">${initial}</div>
         <div class="order-card-customer-info">
           <div class="order-card-name">${customerName}</div>
@@ -1278,15 +1271,18 @@ function renderOrderCard(order) {
       <div class="order-card-footer">
         <div class="order-card-total">
           ${order.final_total.toFixed(3)}
-          <img src="/images/omr-dark.png" alt="ر.ع">
+          <img src="../assets/omr-dark.png" alt="ر.ع">
         </div>
         <div class="order-card-actions">
+          <button class="quick-action courier" onclick="sendToCourier(${order.id})" title="إرسال للمندوب (${COURIER_NAME})">
+            📤
+          </button>
           ${customerPhone ? `
-            <button class="quick-action whatsapp" onclick="event.stopPropagation(); openWhatsApp('${customerPhone}', '${order.invoice_number}')" title="واتساب">
+            <button class="quick-action whatsapp" onclick="openWhatsApp('${customerPhone}', '${order.invoice_number}')" title="واتساب العميل">
               💬
             </button>
           ` : ''}
-          <button class="quick-action view" onclick="event.stopPropagation(); openOrderModal(${order.id})" title="عرض">
+          <button class="quick-action view" onclick="openOrderModal(${order.id})" title="عرض">
             👁️
           </button>
         </div>
@@ -1298,11 +1294,9 @@ function renderOrderCard(order) {
 async function openOrderModal(orderId) {
   currentOrderId = orderId;
 
-  // إذا عندنا بيانات الطلب محملة، نستخدمها
   let order = allOrders.find(o => o.id === orderId);
   let items = [];
 
-  // نجيب التفاصيل الكاملة
   try {
     const res = await fetch(`${API_URL}/sales/${orderId}`);
     const data = await res.json();
@@ -1328,7 +1322,6 @@ async function openOrderModal(orderId) {
 
   const initial = (order.customer_name || 'ع').charAt(0).toUpperCase();
 
-  // تحليل الملاحظات (لأن delivery و tax مخزنين فيها)
   let notes = order.customer_notes || '';
   let deliveryType = '';
   let deliveryCost = '';
@@ -1362,7 +1355,6 @@ async function openOrderModal(orderId) {
 
     <div class="modal-body">
 
-      <!-- بيانات العميل -->
       <div class="modal-section">
         <div class="modal-section-title">👤 بيانات العميل</div>
 
@@ -1403,7 +1395,6 @@ async function openOrderModal(orderId) {
         ` : ''}
       </div>
 
-      <!-- المنتجات -->
       <div class="modal-section">
         <div class="modal-section-title">🛍️ المنتجات (${items.length})</div>
         <div class="order-items-list">
@@ -1416,66 +1407,49 @@ async function openOrderModal(orderId) {
               </div>
               <div class="order-item-subtotal">
                 ${item.subtotal.toFixed(3)}
-                <img src="/images/omr-dark.png" alt="ر.ع">
+                <img src="../assets/omr-dark.png" alt="ر.ع">
               </div>
             </div>
           `).join('')}
         </div>
       </div>
 
-      <!-- الفاتورة -->
       <div class="modal-section">
         <div class="modal-section-title">💰 الفاتورة</div>
         <div class="totals-box">
           <div class="total-row">
             <span class="label">المجموع:</span>
-            <span class="value">
-              ${order.total.toFixed(3)}
-              <img src="/images/omr-dark.png" alt="ر.ع">
-            </span>
+            <span class="value">${order.total.toFixed(3)} <img src="../assets/omr-dark.png" alt="ر.ع"></span>
           </div>
 
           ${taxAmount ? `
             <div class="total-row">
               <span class="label">الضريبة (5%):</span>
-              <span class="value">
-                ${parseFloat(taxAmount).toFixed(3)}
-                <img src="/images/omr-dark.png" alt="ر.ع">
-              </span>
+              <span class="value">${parseFloat(taxAmount).toFixed(3)} <img src="../assets/omr-dark.png" alt="ر.ع"></span>
             </div>
           ` : ''}
 
           ${deliveryCost ? `
             <div class="total-row">
               <span class="label">التوصيل:</span>
-              <span class="value">
-                ${parseFloat(deliveryCost).toFixed(3)}
-                <img src="/images/omr-dark.png" alt="ر.ع">
-              </span>
+              <span class="value">${parseFloat(deliveryCost).toFixed(3)} <img src="../assets/omr-dark.png" alt="ر.ع"></span>
             </div>
           ` : ''}
 
           ${order.discount > 0 ? `
             <div class="total-row">
               <span class="label">الخصم:</span>
-              <span class="value" style="color: var(--success);">
-                - ${order.discount.toFixed(3)}
-                <img src="/images/omr-dark.png" alt="ر.ع">
-              </span>
+              <span class="value" style="color: var(--success);">- ${order.discount.toFixed(3)} <img src="../assets/omr-dark.png" alt="ر.ع"></span>
             </div>
           ` : ''}
 
           <div class="total-row final">
             <span class="label">الإجمالي:</span>
-            <span class="value">
-              ${order.final_total.toFixed(3)}
-              <img src="/images/omr-dark.png" alt="ر.ع">
-            </span>
+            <span class="value">${order.final_total.toFixed(3)} <img src="../assets/omr-dark.png" alt="ر.ع"></span>
           </div>
         </div>
       </div>
 
-      <!-- تغيير الحالة -->
       <div class="modal-section">
         <div class="modal-section-title">🔄 تغيير حالة الطلب</div>
         <div class="status-changer">
@@ -1498,15 +1472,17 @@ async function openOrderModal(orderId) {
         </div>
       </div>
 
-      <!-- الأزرار -->
-      <div class="modal-actions">
+      <div class="modal-actions three">
+        <button class="action-btn courier" onclick="sendToCourier(${order.id})">
+          📤 إرسال للمندوب
+        </button>
         ${order.customer_phone ? `
           <button class="action-btn whatsapp" onclick="openWhatsApp('${order.customer_phone}', '${order.invoice_number}')">
             💬 واتساب
           </button>
         ` : ''}
         <button class="action-btn print" onclick="printInvoice(${order.id})">
-          🖨️ طباعة الفاتورة
+          🖨️ طباعة
         </button>
       </div>
 
@@ -1521,18 +1497,89 @@ function closeOrderModal() {
   currentOrderId = null;
 }
 
-// ========== واتساب ==========
+// ========================================
+// 📤 إرسال للمندوب (بدون أسعار)
+// ========================================
+async function sendToCourier(orderId) {
+  try {
+    // نجيب تفاصيل الطلب كاملة
+    const res = await fetch(`${API_URL}/sales/${orderId}`);
+    const data = await res.json();
+
+    if (!data.success) {
+      showNotification('❌ تعذّر تحميل تفاصيل الطلب', 'error');
+      return;
+    }
+
+    const { sale, items } = data;
+
+    // نستخرج معلومات التوصيل من الملاحظات
+    let notes = sale.customer_notes || '';
+    const deliveryMatch = notes.match(/التوصيل:\s*(\S+)/);
+    const deliveryType = deliveryMatch 
+      ? (deliveryMatch[1] === 'للمنزل' ? '🏠 للمنزل' : '🏢 للمكتب') 
+      : '';
+
+    const cleanNotes = notes
+      .replace(/التوصيل:\s*\S+/g, '')
+      .replace(/تكلفة التوصيل:\s*[\d.]+\s*ر\.ع/g, '')
+      .replace(/الضريبة:\s*[\d.]+\s*ر\.ع/g, '')
+      .replace(/الإيميل:\s*\S+/g, '')
+      .replace(/\|/g, '')
+      .trim();
+
+    // بناء الرسالة (بدون أسعار)
+    let message = `🛵 *طلب توصيل جديد*\n`;
+    message += `━━━━━━━━━━━━━━━\n\n`;
+    message += `📦 *رقم الطلب:* ${sale.invoice_number}\n\n`;
+
+    message += `👤 *بيانات العميل:*\n`;
+    message += `• الاسم: ${sale.customer_name || 'عميل'}\n`;
+    if (sale.customer_phone) message += `• الهاتف: ${sale.customer_phone}\n`;
+    if (sale.customer_address) message += `• العنوان: ${sale.customer_address}\n`;
+    if (deliveryType) message += `• التوصيل: ${deliveryType}\n`;
+    if (cleanNotes) message += `• ملاحظات: ${cleanNotes}\n`;
+
+    message += `\n📋 *المنتجات (${items.length}):*\n`;
+    items.forEach(item => {
+      message += `• ${item.product_name} × ${item.quantity}\n`;
+    });
+
+    message += `\n━━━━━━━━━━━━━━━\n`;
+    message += `✨ Sukkar Store`;
+
+    // نفتح واتساب المندوب
+    const encodedMsg = encodeURIComponent(message);
+    const courierPhone = COURIER_PHONE.replace(/\D/g, '');
+    const whatsappUrl = `https://wa.me/${courierPhone}?text=${encodedMsg}`;
+
+    // ننسخ النص أيضاً للـ clipboard (احتياطي)
+    try {
+      await navigator.clipboard.writeText(message);
+      showNotification(`📤 تم نسخ بيانات الطلب — جاري فتح واتساب ${COURIER_NAME}`, 'courier');
+    } catch (e) {
+      showNotification(`📤 جاري فتح واتساب ${COURIER_NAME}`, 'courier');
+    }
+
+    // نفتح واتساب
+    setTimeout(() => {
+      window.open(whatsappUrl, '_blank');
+    }, 400);
+
+  } catch (error) {
+    console.error(error);
+    showNotification('❌ حدث خطأ', 'error');
+  }
+}
+
+// ========== واتساب العميل ==========
 function openWhatsApp(phone, invoiceNumber) {
-  // تنظيف الرقم
   let cleanPhone = phone.replace(/\D/g, '');
-  
-  // إذا ما يبدأ بـ 968، نضيفها
   if (!cleanPhone.startsWith('968')) {
     cleanPhone = '968' + cleanPhone;
   }
 
-  const message = encodeURIComponent(`مرحباً 👋\n\nنتواصل معك بخصوص طلبك رقم: ${invoiceNumber}\n\nمن متجر راقي ✨\n\nهل يمكننا مساعدتك؟`);
-  
+  const message = encodeURIComponent(`مرحباً 👋\n\nنتواصل معك بخصوص طلبك رقم: ${invoiceNumber}\n\nمن Sukkar Store ✨\n\nهل يمكننا مساعدتك؟`);
   window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
 }
 
@@ -1550,14 +1597,11 @@ async function changeStatus(orderId, newStatus) {
     if (data.success) {
       showNotification('✅ تم تحديث الحالة', 'success');
       
-      // تحديث في المصفوفة
       const order = allOrders.find(o => o.id === orderId);
       if (order) order.status = newStatus;
 
       updateCounts();
       renderOrders();
-      
-      // تحديث Modal
       openOrderModal(orderId);
     } else {
       showNotification('❌ ' + data.message, 'error');
@@ -1587,7 +1631,6 @@ async function printInvoice(orderId) {
       minute: '2-digit'
     });
 
-    // استخراج المعلومات الإضافية
     let notes = sale.customer_notes || '';
     const deliveryMatch = notes.match(/التوصيل:\s*(\S+)/);
     const deliveryCostMatch = notes.match(/تكلفة التوصيل:\s*([\d.]+)/);
@@ -1597,39 +1640,30 @@ async function printInvoice(orderId) {
     const deliveryCost = deliveryCostMatch ? parseFloat(deliveryCostMatch[1]) : 0;
     const taxAmount = taxMatch ? parseFloat(taxMatch[1]) : 0;
 
-    // بناء الفاتورة
     const printHTML = `
-      <div style="font-family: 'Cairo', Arial, sans-serif; direction: rtl; padding: 30px; max-width: 700px; margin: 0 auto;">
+      <div style="font-family: 'Quicksand', Arial, sans-serif; direction: rtl; padding: 30px; max-width: 700px; margin: 0 auto;">
         
-        <!-- Header -->
-        <div style="text-align: center; border-bottom: 3px solid #1e3a8a; padding-bottom: 20px; margin-bottom: 25px;">
-          <h1 style="color: #1e3a8a; font-size: 28px; margin: 0 0 8px;">✨ متجر راقي</h1>
+        <div style="text-align: center; border-bottom: 3px solid #b2437b; padding-bottom: 20px; margin-bottom: 25px;">
+          <h1 style="color: #b2437b; font-size: 28px; margin: 0 0 8px;">✨ Sukkar Store</h1>
           <p style="color: #6b7280; font-size: 14px; margin: 0;">فاتورة ضريبية مبسطة</p>
         </div>
 
-        <!-- Invoice Info -->
         <div style="display: flex; justify-content: space-between; margin-bottom: 25px; font-size: 14px;">
-          <div>
-            <strong>رقم الفاتورة:</strong> ${sale.invoice_number}
-          </div>
-          <div>
-            <strong>التاريخ:</strong> ${date}
-          </div>
+          <div><strong>رقم الفاتورة:</strong> ${sale.invoice_number}</div>
+          <div><strong>التاريخ:</strong> ${date}</div>
         </div>
 
-        <!-- Customer Info -->
         <div style="background: #f9fafb; padding: 15px; border-radius: 10px; margin-bottom: 25px;">
-          <h3 style="color: #1e3a8a; margin: 0 0 12px; font-size: 16px;">👤 بيانات العميل</h3>
+          <h3 style="color: #b2437b; margin: 0 0 12px; font-size: 16px;">👤 بيانات العميل</h3>
           <p style="margin: 5px 0; font-size: 14px;"><strong>الاسم:</strong> ${sale.customer_name || 'عميل'}</p>
           <p style="margin: 5px 0; font-size: 14px;"><strong>الهاتف:</strong> ${sale.customer_phone || '-'}</p>
           ${sale.customer_address ? `<p style="margin: 5px 0; font-size: 14px;"><strong>العنوان:</strong> ${sale.customer_address}</p>` : ''}
           ${deliveryType ? `<p style="margin: 5px 0; font-size: 14px;"><strong>التوصيل:</strong> ${deliveryType}</p>` : ''}
         </div>
 
-        <!-- Items Table -->
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
           <thead>
-            <tr style="background: #1e3a8a; color: white;">
+            <tr style="background: #b2437b; color: white;">
               <th style="padding: 12px; text-align: right; font-size: 13px;">المنتج</th>
               <th style="padding: 12px; text-align: center; font-size: 13px;">الكمية</th>
               <th style="padding: 12px; text-align: center; font-size: 13px;">السعر</th>
@@ -1648,40 +1682,32 @@ async function printInvoice(orderId) {
           </tbody>
         </table>
 
-        <!-- Totals -->
         <div style="background: #f9fafb; padding: 15px; border-radius: 10px;">
           <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px;">
-            <span>المجموع:</span>
-            <span>${sale.total.toFixed(3)} ر.ع</span>
+            <span>المجموع:</span><span>${sale.total.toFixed(3)} ر.ع</span>
           </div>
           ${taxAmount > 0 ? `
             <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px;">
-              <span>الضريبة (5%):</span>
-              <span>${taxAmount.toFixed(3)} ر.ع</span>
+              <span>الضريبة (5%):</span><span>${taxAmount.toFixed(3)} ر.ع</span>
             </div>
           ` : ''}
           ${deliveryCost > 0 ? `
             <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px;">
-              <span>التوصيل:</span>
-              <span>${deliveryCost.toFixed(3)} ر.ع</span>
+              <span>التوصيل:</span><span>${deliveryCost.toFixed(3)} ر.ع</span>
             </div>
           ` : ''}
           ${sale.discount > 0 ? `
             <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; color: #10b981;">
-              <span>الخصم:</span>
-              <span>- ${sale.discount.toFixed(3)} ر.ع</span>
+              <span>الخصم:</span><span>- ${sale.discount.toFixed(3)} ر.ع</span>
             </div>
           ` : ''}
-          <div style="display: flex; justify-content: space-between; padding: 15px 0 0; margin-top: 10px; border-top: 2px solid #1e3a8a; font-size: 18px; font-weight: bold; color: #1e3a8a;">
-            <span>الإجمالي النهائي:</span>
-            <span>${sale.final_total.toFixed(3)} ر.ع</span>
+          <div style="display: flex; justify-content: space-between; padding: 15px 0 0; margin-top: 10px; border-top: 2px solid #b2437b; font-size: 18px; font-weight: bold; color: #b2437b;">
+            <span>الإجمالي النهائي:</span><span>${sale.final_total.toFixed(3)} ر.ع</span>
           </div>
         </div>
 
-        <!-- Footer -->
         <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 13px;">
           <p style="margin: 5px 0;">شكراً لتعاملكم معنا ✨</p>
-          <p style="margin: 5px 0;">📞 +968 9000 0000 | 📧 info@raki.om</p>
         </div>
 
       </div>
@@ -1711,9 +1737,9 @@ function toggleSidebar() {
 function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
 function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
 function confirmLogout() {
-  localStorage.removeItem('raki_token');
-  localStorage.removeItem('raki_user');
-  localStorage.removeItem('raki_permissions');
+  localStorage.removeItem('sukkar_token');
+  localStorage.removeItem('sukkar_user');
+  localStorage.removeItem('sukkar_permissions');
   window.location.href = 'login.html';
 }
 
@@ -1722,7 +1748,7 @@ function showNotification(message, type = '') {
   const notif = document.getElementById('notification');
   notif.textContent = message;
   notif.className = 'notification show ' + type;
-  setTimeout(() => notif.classList.remove('show'), 3000);
+  setTimeout(() => notif.classList.remove('show'), 3500);
 }
 
 // ESC

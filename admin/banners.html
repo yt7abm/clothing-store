@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>إدارة البانرات - Sukkar Store</title>
+<title>البانرات - قيد التطوير | Sukkar Store</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -204,15 +204,6 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 15px 40px rgba(178,67,123,0.25);
 }
 
-.page-header::before {
-  content: '';
-  position: absolute;
-  top: -50%; left: -20%;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
-  border-radius: 50%;
-}
-
 .page-header-info { position: relative; z-index: 1; }
 
 .page-header-info h1 {
@@ -224,411 +215,65 @@ img { max-width: 100%; display: block; }
 
 .page-header-info p { font-size: 0.9rem; opacity: 0.9; }
 
-.add-btn {
-  background: rgba(255,255,255,0.2);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 14px;
-  font-weight: 800;
-  font-size: 0.9rem;
-  transition: all 0.3s;
-  display: flex; align-items: center; gap: 8px;
-  backdrop-filter: blur(10px);
-  border: 1.5px solid rgba(255,255,255,0.3);
-  position: relative;
-  z-index: 1;
-}
-
-.add-btn:hover { background: white; color: var(--brand); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-
-/* ========== Stats ========== */
-.stats-mini {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.stat-mini {
-  background: white;
-  border: 1px solid var(--border);
-  padding: 10px 16px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.stat-mini.blue { color: var(--brand); background: rgba(178,67,123,0.05); border-color: rgba(178,67,123,0.15); }
-.stat-mini.green { color: var(--success); background: rgba(16,185,129,0.05); border-color: rgba(16,185,129,0.15); }
-.stat-mini.gray { color: var(--text-muted); background: rgba(107,114,128,0.05); border-color: rgba(107,114,128,0.15); }
-
-/* ========== Banners Grid ========== */
-.banners-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 20px;
-}
-
-.banner-card {
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  transition: all 0.3s;
-  position: relative;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
-}
-
-.banner-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--brand-light);
-}
-
-.banner-card.inactive { opacity: 0.6; }
-
-.banner-image-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 6;
-  background: var(--bg-3);
-  overflow: hidden;
-}
-
-.banner-image-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s;
-}
-
-.banner-card:hover .banner-image-wrap img { transform: scale(1.05); }
-
-.banner-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 60%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-  color: white;
-}
-
-.banner-overlay h3 {
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.1rem;
-  font-weight: 800;
-  margin-bottom: 5px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-}
-
-.banner-overlay .banner-link {
-  font-size: 0.8rem;
-  opacity: 0.9;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  direction: ltr;
-  text-align: right;
-  word-break: break-all;
-}
-
-.banner-order-badge {
-  position: absolute;
-  top: 12px; right: 12px;
-  background: rgba(178,67,123,0.95);
-  color: white;
-  padding: 5px 12px;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 900;
-  backdrop-filter: blur(5px);
-}
-
-.banner-status-badge {
-  position: absolute;
-  top: 12px; left: 12px;
-  padding: 5px 12px;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 900;
-  backdrop-filter: blur(5px);
-}
-
-.banner-status-badge.active { background: rgba(16,185,129,0.95); color: white; }
-.banner-status-badge.inactive { background: rgba(107,114,128,0.95); color: white; }
-
-.banner-actions {
-  display: flex;
-  gap: 6px;
-  padding: 12px 20px;
-  background: var(--bg-2);
-  border-top: 1px solid var(--border);
-}
-
-.banner-btn {
-  flex: 1;
-  padding: 9px;
-  border-radius: 10px;
-  font-size: 0.75rem;
-  font-weight: 900;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  cursor: pointer;
-}
-
-.banner-btn.edit { background: rgba(178,67,123,0.1); color: var(--brand); }
-.banner-btn.edit:hover { background: var(--brand); color: white; }
-
-.banner-btn.toggle { background: rgba(245,158,11,0.1); color: var(--warning); }
-.banner-btn.toggle:hover { background: var(--warning); color: white; }
-
-.banner-btn.delete { background: rgba(239,68,68,0.1); color: var(--danger); }
-.banner-btn.delete:hover { background: var(--danger); color: white; }
-
-/* ========== Empty State ========== */
-.empty-state {
-  text-align: center;
-  padding: 80px 20px;
-  background: white;
-  border-radius: 20px;
-  border: 2px dashed var(--border);
-  grid-column: 1 / -1;
-}
-
-.empty-state .icon { font-size: 4rem; margin-bottom: 15px; opacity: 0.5; }
-.empty-state h3 { font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
-.empty-state p { color: var(--text-muted); font-size: 0.9rem; }
-
-/* ========== Loading ========== */
-.loading {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--brand);
-  grid-column: 1 / -1;
-}
-
-.loading::after {
-  content: '';
-  display: block;
-  width: 35px; height: 35px;
-  margin: 15px auto 0;
-  border: 3px solid var(--border);
-  border-top-color: var(--brand);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ========== Modal ========== */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 2500;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  backdrop-filter: blur(5px);
-  overflow-y: auto;
-}
-
-.modal.show { display: flex; }
-
-.modal-content {
+/* ========== Coming Soon ========== */
+.coming-soon-card {
   background: white;
   border-radius: 24px;
-  width: 100%;
-  max-width: 550px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 25px 70px rgba(178,67,123,0.25);
-  animation: modalIn 0.3s ease;
+  padding: 60px 20px;
+  text-align: center;
+  border: 2px dashed var(--border);
+  box-shadow: var(--shadow-sm);
+  margin-top: 20px;
 }
 
-.modal-content.small { max-width: 450px; }
-
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+.coming-soon-icon {
+  font-size: 6rem;
+  margin-bottom: 20px;
+  animation: float 3s ease-in-out infinite;
 }
 
-.modal-header {
-  background: linear-gradient(135deg, var(--brand), var(--brand-light));
-  color: white;
-  padding: 22px 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 24px 24px 0 0;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
 }
 
-.modal-header.danger { background: linear-gradient(135deg, var(--danger), #b91c1c); }
-
-.modal-header h2 {
+.coming-soon-card h2 {
   font-family: 'Baloo 2', cursive;
-  font-size: 1.1rem;
+  font-size: 2rem;
   font-weight: 800;
-  display: flex; align-items: center; gap: 10px;
-}
-
-.modal-close {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  color: white;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem;
-  transition: all 0.3s;
-  cursor: pointer;
-}
-
-.modal-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
-
-.modal-body { padding: 25px; }
-
-.modal-footer {
-  padding: 18px 25px;
-  border-top: 1px solid var(--border);
-  background: var(--bg-2);
-  border-radius: 0 0 24px 24px;
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
-}
-
-/* ========== Form ========== */
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  color: var(--brand);
   margin-bottom: 15px;
 }
 
-.form-group { margin-bottom: 18px; }
+.coming-soon-card p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  max-width: 500px;
+  margin: 0 auto 30px;
+  line-height: 1.8;
+}
 
-.form-group label {
-  display: flex;
+.back-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.form-group label .required { color: var(--danger); }
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 0.95rem;
-  font-family: 'Quicksand', sans-serif;
-  background: var(--bg-2);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  transition: all 0.3s;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--brand);
-  background: white;
-  box-shadow: 0 0 0 4px rgba(178,67,123,0.08);
-}
-
-.form-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; }
-
-/* Image Upload */
-.image-upload {
-  border: 2px dashed var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  background: var(--bg-2);
-  position: relative;
-  overflow: hidden;
-}
-
-.image-upload:hover { border-color: var(--brand); background: white; }
-
-.image-upload input[type="file"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.image-preview {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 12px;
-  display: none;
-  margin: 0 auto 10px;
-}
-
-.image-upload .upload-icon { font-size: 2.5rem; margin-bottom: 8px; }
-.image-upload p { font-size: 0.85rem; color: var(--text-muted); }
-
-/* ========== Button ========== */
-.btn {
-  padding: 12px 24px;
-  border-radius: 12px;
+  gap: 10px;
+  background: var(--brand);
+  color: white;
+  padding: 14px 30px;
+  border-radius: 14px;
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 1rem;
   transition: all 0.3s;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: center;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-  color: white;
   box-shadow: 0 8px 25px rgba(178,67,123,0.25);
+  text-decoration: none;
 }
 
-.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(178,67,123,0.35); }
-
-.btn-danger {
-  background: linear-gradient(135deg, var(--danger), #b91c1c);
-  color: white;
-  box-shadow: 0 8px 25px rgba(239,68,68,0.25);
+.back-btn:hover {
+  background: var(--brand-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(178,67,123,0.35);
 }
-
-.btn-danger:hover:not(:disabled) { transform: translateY(-3px); }
-
-.btn-secondary {
-  background: white;
-  color: var(--text);
-  border: 1.5px solid var(--border);
-}
-
-.btn-secondary:hover { background: var(--bg-3); }
-
-.btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* ========== Sidebar Overlay ========== */
 .sidebar-overlay {
@@ -659,7 +304,6 @@ img { max-width: 100%; display: block; }
   max-width: calc(100% - 60px);
   font-size: 0.9rem;
 }
-
 .notification.show { transform: translateX(0); }
 .notification.error { background: var(--danger); }
 .notification.success { background: var(--success); }
@@ -669,7 +313,6 @@ img { max-width: 100%; display: block; }
   .sidebar { transform: translateX(100%); box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
   .sidebar.open { transform: translateX(0); }
   .main-content { margin-right: 0; padding: 90px 18px 30px; }
-  .banners-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
@@ -681,32 +324,15 @@ img { max-width: 100%; display: block; }
 
   .main-content { padding: 85px 12px 25px; }
 
-  .page-header { padding: 22px 18px; border-radius: 18px; flex-direction: column; align-items: stretch; }
+  .page-header { padding: 22px 18px; border-radius: 18px; }
   .page-header-info h1 { font-size: 1.3rem; }
   .page-header-info p { font-size: 0.8rem; }
-  .add-btn { padding: 10px 18px; font-size: 0.85rem; width: 100%; justify-content: center; background: rgba(255,255,255,0.25); }
 
-  .stats-mini { gap: 8px; }
-  .stat-mini { padding: 8px 12px; font-size: 0.7rem; }
-
-  .banners-grid { grid-template-columns: 1fr; gap: 14px; }
-
-  .banner-image-wrap { aspect-ratio: 16 / 8; }
-  .banner-overlay { padding: 15px; }
-  .banner-overlay h3 { font-size: 0.95rem; }
-  .banner-overlay .banner-link { font-size: 0.7rem; }
-  .banner-actions { padding: 10px 15px; }
-  .banner-btn { padding: 8px; font-size: 0.7rem; }
-
-  .modal { padding: 10px; }
-  .modal-content { border-radius: 20px; }
-  .modal-header { padding: 18px 20px; border-radius: 20px 20px 0 0; }
-  .modal-header h2 { font-size: 1rem; }
-  .modal-body { padding: 20px; }
-  .modal-footer { padding: 15px 20px; border-radius: 0 0 20px 20px; flex-direction: column; }
-  .btn { width: 100%; }
-
-  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .coming-soon-card { padding: 40px 15px; }
+  .coming-soon-icon { font-size: 4rem; }
+  .coming-soon-card h2 { font-size: 1.5rem; }
+  .coming-soon-card p { font-size: 0.9rem; }
+  .back-btn { padding: 12px 24px; font-size: 0.9rem; width: 100%; justify-content: center; }
 
   .notification { bottom: 15px; right: 15px; left: 15px; max-width: calc(100% - 30px); text-align: center; }
 }
@@ -719,7 +345,7 @@ img { max-width: 100%; display: block; }
   <div class="top-bar-right">
     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     <div class="top-logo">
-      <div class="top-logo-icon">🖼️</div>
+      <div class="top-logo-icon">🚧</div>
       البانرات
     </div>
   </div>
@@ -753,10 +379,6 @@ img { max-width: 100%; display: block; }
       <span class="icon">👕</span>
       <span class="label">المنتجات</span>
     </a>
-    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
-      <span class="icon">🏷️</span>
-      <span class="label">الفئات</span>
-    </a>
     <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
       <span class="icon">📦</span>
       <span class="label">المخزون</span>
@@ -764,10 +386,6 @@ img { max-width: 100%; display: block; }
     <a href="orders.html" class="sidebar-link" data-permission="orders.view">
       <span class="icon">🛍️</span>
       <span class="label">الطلبات</span>
-    </a>
-    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
-      <span class="icon">💰</span>
-      <span class="label">الكاشير</span>
     </a>
     <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
       <span class="icon">🎟️</span>
@@ -777,7 +395,7 @@ img { max-width: 100%; display: block; }
 
   <div class="sidebar-section" id="managementSection" style="display:none;">
     <div class="sidebar-section-title">الإدارة</div>
-    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
+    <a href="offers.html" class="sidebar-link" data-permission="offers.view">
       <span class="icon">🎁</span>
       <span class="label">العروضات</span>
     </a>
@@ -788,10 +406,6 @@ img { max-width: 100%; display: block; }
     <a href="banners.html" class="sidebar-link active" data-permission="banners.view">
       <span class="icon">🖼️</span>
       <span class="label">البانرات</span>
-    </a>
-    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
-      <span class="icon">👥</span>
-      <span class="label">الموظفين</span>
     </a>
   </div>
 
@@ -806,113 +420,25 @@ img { max-width: 100%; display: block; }
 
 <!-- Main -->
 <main class="main-content">
-
   <div class="page-header">
     <div class="page-header-info">
       <h1>🖼️ إدارة البانرات</h1>
-      <p>أضف وعدل البانرات اللي تظهر في الصفحة الرئيسية</p>
+      <p>قسم البانرات قيد التطوير</p>
     </div>
-    <button class="add-btn" onclick="openAddModal()">
-      <span>➕</span>
-      <span>إضافة بانر جديد</span>
-    </button>
   </div>
 
-  <div class="stats-mini">
-    <div class="stat-mini blue">🖼️ <span id="countAll">0</span> بانر</div>
-    <div class="stat-mini green">✅ <span id="countActive">0</span> نشط</div>
-    <div class="stat-mini gray">🚫 <span id="countInactive">0</span> معطل</div>
+  <div class="coming-soon-card">
+    <div class="coming-soon-icon">🚧</div>
+    <h2>قيد التطوير</h2>
+    <p>نعمل حالياً على تجهيز هذا القسم ليكون أفضل. سيتم إطلاق إدارة البانرات قريباً جداً!</p>
+    <a href="dashboard.html" class="back-btn">
+      <span>⬅️</span>
+      <span>العودة للوحة التحكم</span>
+    </a>
   </div>
-
-  <div class="banners-grid" id="bannersGrid">
-    <div class="loading">⏳ جاري تحميل البانرات...</div>
-  </div>
-
 </main>
 
-<!-- ========== Modal إضافة/تعديل بانر ========== -->
-<div class="modal" id="bannerModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 id="modalTitle">➕ إضافة بانر جديد</h2>
-      <button class="modal-close" onclick="closeBannerModal()">✕</button>
-    </div>
-
-    <div class="modal-body">
-      <form id="bannerForm" onsubmit="saveBanner(event)">
-        <input type="hidden" id="bannerId">
-
-        <div class="form-group">
-          <label>🖼️ صورة البانر <span class="required">*</span></label>
-          <div class="image-upload">
-            <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
-            <img id="imagePreview" class="image-preview" alt="معاينة">
-            <div class="upload-icon" id="uploadIcon">📷</div>
-            <p id="uploadText">اضغط لاختيار صورة</p>
-          </div>
-          <div class="form-hint">يفضل صورة بعرض 1600px وارتفاع 600px</div>
-        </div>
-
-        <div class="form-group">
-          <label>📝 العنوان (اختياري)</label>
-          <input type="text" id="title" placeholder="مثال: تخفيضات صيف 2026">
-          <div class="form-hint">يظهر فوق الصورة</div>
-        </div>
-
-        <div class="form-group">
-          <label>🔗 الرابط (اختياري)</label>
-          <input type="text" id="link" placeholder="مثال: frontend/search.html" dir="ltr">
-          <div class="form-hint">عند الضغط على البانر، يفتح هذا الرابط</div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>🔢 ترتيب العرض</label>
-            <input type="number" id="displayOrder" min="0" value="0" placeholder="0">
-            <div class="form-hint">الأقل يظهر أولاً</div>
-          </div>
-          <div class="form-group">
-            <label>✅ الحالة</label>
-            <select id="active">
-              <option value="1">نشط</option>
-              <option value="0">معطل</option>
-            </select>
-          </div>
-        </div>
-
-      </form>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeBannerModal()">إلغاء</button>
-      <button class="btn btn-primary" onclick="document.getElementById('bannerForm').requestSubmit()" id="saveBtn">
-        <span>💾</span>
-        <span>حفظ</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- ========== Modal حذف ========== -->
-<div class="modal" id="deleteModal">
-  <div class="modal-content small">
-    <div class="modal-header danger">
-      <h2>🗑️ حذف البانر</h2>
-      <button class="modal-close" onclick="closeDeleteModal()">✕</button>
-    </div>
-    <div class="modal-body" style="text-align:center;">
-      <div style="font-size: 4rem; margin-bottom: 15px;">⚠️</div>
-      <h3 style="font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; margin-bottom: 10px;">تأكيد الحذف</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">هل أنت متأكد من حذف هذا البانر؟ لا يمكن التراجع.</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeDeleteModal()">إلغاء</button>
-      <button class="btn btn-danger" onclick="confirmDelete()">🗑️ حذف</button>
-    </div>
-  </div>
-</div>
-
-<!-- ========== Modal تسجيل الخروج ========== -->
+<!-- Modal تسجيل الخروج -->
 <div class="modal" id="logoutModal">
   <div class="modal-content small">
     <div class="modal-header danger">
@@ -935,13 +461,10 @@ img { max-width: 100%; display: block; }
 <div class="notification" id="notification"></div>
 
 <script>
-const API_URL = '/api';
 let user = null;
 let permissions = [];
-let allBanners = [];
-let deletingId = null;
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   const userStr = localStorage.getItem('sukkar_user');
   const permStr = localStorage.getItem('sukkar_permissions');
   const token = localStorage.getItem('sukkar_token');
@@ -961,7 +484,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   applyUserData();
   applyPermissions();
-  await loadBanners();
 });
 
 function applyUserData() {
@@ -995,233 +517,11 @@ function applyPermissions() {
   if (!hasManagement) document.getElementById('managementSection').style.display = 'none';
 }
 
-async function loadBanners() {
-  try {
-    const res = await fetch(`${API_URL}/banners`);
-    const data = await res.json();
-
-    if (data.success) {
-      allBanners = data.banners || [];
-      updateStats();
-      renderBanners();
-    }
-  } catch (error) {
-    document.getElementById('bannersGrid').innerHTML = `
-      <div class="empty-state">
-        <div class="icon">❌</div>
-        <h3>تعذّر تحميل البانرات</h3>
-      </div>
-    `;
-  }
-}
-
-function updateStats() {
-  document.getElementById('countAll').textContent = allBanners.length;
-  document.getElementById('countActive').textContent = allBanners.filter(b => b.active === 1).length;
-  document.getElementById('countInactive').textContent = allBanners.filter(b => b.active === 0).length;
-}
-
-function renderBanners() {
-  const grid = document.getElementById('bannersGrid');
-
-  if (allBanners.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state">
-        <div class="icon">🖼️</div>
-        <h3>لا توجد بانرات</h3>
-        <p>ابدأ بإضافة أول بانر للصفحة الرئيسية</p>
-      </div>
-    `;
-    return;
-  }
-
-  grid.innerHTML = allBanners.map(b => `
-    <div class="banner-card ${b.active === 0 ? 'inactive' : ''}">
-      <div class="banner-image-wrap">
-        ${b.image ? `<img src="${b.image}" alt="${b.title || 'بانر'}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;">🖼️</div>'}
-        <div class="banner-order-badge">#${b.display_order || 0}</div>
-        <div class="banner-status-badge ${b.active === 1 ? 'active' : 'inactive'}">
-          ${b.active === 1 ? '✅ نشط' : '🚫 معطل'}
-        </div>
-        ${b.title || b.link ? `
-          <div class="banner-overlay">
-            ${b.title ? `<h3>${b.title}</h3>` : ''}
-            ${b.link ? `<div class="banner-link">🔗 ${b.link}</div>` : ''}
-          </div>
-        ` : ''}
-      </div>
-
-      <div class="banner-actions">
-        <button class="banner-btn edit" onclick="openEditModal(${b.id})">✏️ تعديل</button>
-        <button class="banner-btn toggle" onclick="toggleBanner(${b.id})">
-          ${b.active === 1 ? '🚫 تعطيل' : '✅ تفعيل'}
-        </button>
-        <button class="banner-btn delete" onclick="openDeleteModal(${b.id})">🗑️</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-// ========== إضافة ==========
-function openAddModal() {
-  document.getElementById('modalTitle').innerHTML = '➕ إضافة بانر جديد';
-  document.getElementById('bannerId').value = '';
-  document.getElementById('title').value = '';
-  document.getElementById('link').value = '';
-  document.getElementById('displayOrder').value = '0';
-  document.getElementById('active').value = '1';
-  document.getElementById('imagePreview').style.display = 'none';
-  document.getElementById('uploadIcon').style.display = 'block';
-  document.getElementById('uploadText').textContent = 'اضغط لاختيار صورة';
-  document.getElementById('imageInput').value = '';
-
-  document.getElementById('bannerModal').classList.add('show');
-}
-
-function openEditModal(id) {
-  const b = allBanners.find(x => x.id === id);
-  if (!b) return;
-
-  document.getElementById('modalTitle').innerHTML = '✏️ تعديل البانر';
-  document.getElementById('bannerId').value = b.id;
-  document.getElementById('title').value = b.title || '';
-  document.getElementById('link').value = b.link || '';
-  document.getElementById('displayOrder').value = b.display_order || 0;
-  document.getElementById('active').value = b.active;
-
-  if (b.image) {
-    document.getElementById('imagePreview').src = b.image;
-    document.getElementById('imagePreview').style.display = 'block';
-    document.getElementById('uploadIcon').style.display = 'none';
-    document.getElementById('uploadText').textContent = 'اضغط لتغيير الصورة';
-  } else {
-    document.getElementById('imagePreview').style.display = 'none';
-    document.getElementById('uploadIcon').style.display = 'block';
-    document.getElementById('uploadText').textContent = 'اضغط لاختيار صورة';
-  }
-
-  document.getElementById('imageInput').value = '';
-  document.getElementById('bannerModal').classList.add('show');
-}
-
-function closeBannerModal() {
-  document.getElementById('bannerModal').classList.remove('show');
-}
-
-function previewImage(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    document.getElementById('imagePreview').src = e.target.result;
-    document.getElementById('imagePreview').style.display = 'block';
-    document.getElementById('uploadIcon').style.display = 'none';
-    document.getElementById('uploadText').textContent = file.name;
-  };
-  reader.readAsDataURL(file);
-}
-
-// ========== حفظ ==========
-async function saveBanner(e) {
-  e.preventDefault();
-
-  const id = document.getElementById('bannerId').value;
-  const imageFile = document.getElementById('imageInput').files[0];
-
-  if (!id && !imageFile) {
-    showNotification('⚠️ الصورة مطلوبة', 'error');
-    return;
-  }
-
-  const btn = document.getElementById('saveBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span>⏳</span><span>جاري الحفظ...</span>';
-
-  const formData = new FormData();
-  formData.append('title', document.getElementById('title').value);
-  formData.append('link', document.getElementById('link').value);
-  formData.append('display_order', document.getElementById('displayOrder').value || 0);
-  formData.append('active', document.getElementById('active').value);
-
-  if (imageFile) formData.append('image', imageFile);
-
-  try {
-    const url = id ? `${API_URL}/banners/${id}` : `${API_URL}/banners`;
-    const method = id ? 'PUT' : 'POST';
-
-    const res = await fetch(url, { method, body: formData });
-    const data = await res.json();
-
-    if (data.success) {
-      showNotification(id ? '✅ تم تعديل البانر' : '✅ تم إضافة البانر', 'success');
-      closeBannerModal();
-      await loadBanners();
-    } else {
-      showNotification('❌ ' + data.message, 'error');
-    }
-  } catch (error) {
-    showNotification('❌ حدث خطأ', 'error');
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '<span>💾</span><span>حفظ</span>';
-  }
-}
-
-// ========== تفعيل/تعطيل ==========
-async function toggleBanner(id) {
-  try {
-    const res = await fetch(`${API_URL}/banners/${id}/toggle`, { method: 'PUT' });
-    const data = await res.json();
-
-    if (data.success) {
-      showNotification('✅ ' + data.message, 'success');
-      await loadBanners();
-    } else {
-      showNotification('❌ ' + data.message, 'error');
-    }
-  } catch (error) {
-    showNotification('❌ حدث خطأ', 'error');
-  }
-}
-
-// ========== حذف ==========
-function openDeleteModal(id) {
-  deletingId = id;
-  document.getElementById('deleteModal').classList.add('show');
-}
-
-function closeDeleteModal() {
-  document.getElementById('deleteModal').classList.remove('show');
-  deletingId = null;
-}
-
-async function confirmDelete() {
-  if (!deletingId) return;
-
-  try {
-    const res = await fetch(`${API_URL}/banners/${deletingId}`, { method: 'DELETE' });
-    const data = await res.json();
-
-    if (data.success) {
-      showNotification('✅ تم حذف البانر', 'success');
-      closeDeleteModal();
-      await loadBanners();
-    } else {
-      showNotification('❌ ' + data.message, 'error');
-    }
-  } catch (error) {
-    showNotification('❌ حدث خطأ', 'error');
-  }
-}
-
-// ========== Sidebar ==========
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebarOverlay').classList.toggle('active');
 }
 
-// ========== Logout ==========
 function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
 function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
 function confirmLogout() {
@@ -1231,20 +531,8 @@ function confirmLogout() {
   window.location.href = 'login.html';
 }
 
-// ========== Notification ==========
-function showNotification(message, type = '') {
-  const notif = document.getElementById('notification');
-  notif.textContent = message;
-  notif.className = 'notification show ' + type;
-  setTimeout(() => notif.classList.remove('show'), 3000);
-}
-
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeBannerModal();
-    closeDeleteModal();
-    closeLogoutModal();
-  }
+  if (e.key === 'Escape') closeLogoutModal();
 });
 
 document.querySelectorAll('.modal').forEach(modal => {

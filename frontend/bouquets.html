@@ -168,10 +168,21 @@
       aspect-ratio: 1/1;
       background: #f8f0f3;
       overflow: hidden;
+      position: relative;
     }
     .product-card .photo img {
       width: 100%; height: 100%; object-fit: cover; object-position: center 15%;
     }
+    /* شارة نفذ */
+    .out-badge {
+      position: absolute;
+      top: 8px; right: 8px;
+      background: #ef4444; color: white;
+      font-size: 0.65rem; font-weight: 700;
+      padding: 3px 8px; border-radius: 8px; z-index: 2;
+    }
+    .product-card.out-of-stock { opacity: 0.75; }
+
     .product-card .info {
       padding: 15px;
       display: flex; flex-direction: column; flex: 1; gap: 10px;
@@ -199,12 +210,11 @@
     }
     .add-cart:hover { background: var(--brand-dark); }
     .add-cart.added { background: var(--success); }
+    .add-cart:disabled { background: #9ca3af; cursor: not-allowed; }
 
     /* EMPTY & LOADING */
     .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      grid-column: 1 / -1;
+      text-align: center; padding: 60px 20px; grid-column: 1 / -1;
     }
     .empty-state h3 { font-family: 'Baloo 2', cursive; font-size: 1.5rem; color: #666; margin-bottom: 8px; }
     .empty-state p { color: #999; font-size: 0.95rem; }
@@ -218,6 +228,29 @@
       animation: spin 1s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* SIDE MENU (من الصفحة الرئيسية) */
+    .side-menu{
+      position: fixed; top: 0;
+      width: 280px; max-width: 80vw;
+      height: 100vh;
+      background: #fff;
+      z-index: 1001;
+      box-shadow: 0 0 20px rgba(0,0,0,0.12);
+      padding: 22px 18px;
+      transition: transform 0.3s;
+    }
+    html[dir="rtl"] .side-menu{ right: 0; left: auto; transform: translateX(100%); }
+    html[dir="rtl"] .side-menu.open{ transform: translateX(0); }
+    .side-menu h3{
+      font-family: 'Baloo 2', cursive; color: var(--brand);
+      margin-bottom: 18px; font-size: 1.25rem;
+    }
+    .side-menu ul li{ padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+    .side-menu ul li a{
+      color: var(--ink); font-weight: 600; font-size: 0.95rem;
+      display: flex; align-items: center; gap: 10px;
+    }
 
     /* CART DRAWER */
     .cart-overlay{
@@ -347,11 +380,22 @@
       .page-title { font-size: 2rem; }
     }
     @media (max-width: 600px) {
+      .top-bar-inner { padding: 8px 10px; gap: 6px; }
+      .icon-btn { width: 30px; height:30px; }
+      .icon-btn svg { width: 20px; height: 20px; }
+      .icon-group { gap: 6px; }
+      .brand-logo { height: 34px; }
       .page-title { font-size: 1.6rem; }
       .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .product-card .desc { font-size: 0.75rem; min-height: 32px; }
       .product-card .price { font-size: 0.95rem; }
+      .product-card .info { padding: 8px; }
       .add-cart { font-size: 0.75rem; padding: 8px; }
+      .cart-drawer { width: 100%; max-width: 100%; }
+      .cart-header { font-size:1rem; padding:12px 16px; }
+      .cart-footer { padding: 12px 12px 14px; gap: 12px; }
+      .total-box .total-value { font-size: 1.25rem; }
+      .checkout-btn { font-size: 0.88rem; padding: 13px; }
       .site-footer { padding: 30px 15px 0; }
       .footer-store-name { font-size: 1.8rem; }
       .footer-desc { font-size: 0.8rem; }
@@ -372,9 +416,9 @@
 <header class="top-bar">
   <div class="top-bar-inner">
     <div class="icon-group group-left">
-      <a href="../index.html" class="icon-btn" title="الرئيسية">
-        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-      </a>
+      <button class="icon-btn" onclick="toggleMenu()" title="القائمة">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
       <a href="account.html" class="icon-btn" title="حسابي">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
       </a>
@@ -492,6 +536,22 @@
   </div>
 </footer>
 
+<!-- SIDE MENU -->
+<aside class="side-menu" id="sideMenu">
+  <h3>القائمة</h3>
+  <ul>
+    <li><a href="../index.html">الرئيسية</a></li>
+    <li><a href="boys-products.html">هدايا الأولاد</a></li>
+    <li><a href="girls-products.html">هدايا البنات</a></li>
+    <li><a href="bouquets.html">باقات الهدايا</a></li>
+    <li><a href="giveaways.html">توزيعات مميزة</a></li>
+    <li><a href="search.html?category=me-to-you">هدية مني إليك</a></li>
+    <li><a href="orders.html">طلباتي</a></li>
+    <li><a href="../admin/login.html">الموظفين</a></li>
+  </ul>
+</aside>
+<div class="cart-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
 <!-- CART DRAWER -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 <aside class="cart-drawer" id="cartDrawer">
@@ -555,46 +615,39 @@
     } catch(e){ cart = []; }
   }
 
+  function toggleMenu(){
+    document.getElementById('sideMenu').classList.toggle('open');
+    document.getElementById('menuOverlay').classList.toggle('open');
+  }
+
   function openCart(){ document.getElementById('cartDrawer').classList.add('open'); document.getElementById('cartOverlay').classList.add('open'); }
   function closeCart(){ document.getElementById('cartDrawer').classList.remove('open'); document.getElementById('cartOverlay').classList.remove('open'); }
   function goToCheckout() { if(cart.length === 0) return; window.location.href = 'checkout.html'; }
 
-  // ====== Fetch API Data ======
+  // ====== Fetch API Data (المعدلة لجلب المنتجات من لوحة التحكم مباشرة) ======
   async function fetchProducts() {
     try {
-      // 1. جلب الفئات لمعرفة ID قسم الباقات
-      const catsRes = await fetch(`${API_URL}/categories`);
-      const catsData = await catsRes.json();
-      if (!catsData.success) return;
-
-      // البحث عن فئة "باقات الهدايا" أو "باقات"
-      const bouquetCategory = catsData.categories.find(c => 
-        c.name.includes('باقات') || c.name.includes('الباقات')
-      );
-
-      if (!bouquetCategory) {
-        document.getElementById('productsGrid').innerHTML = `<div class="empty-state"><h3>القسم غير موجود</h3><p>تأكد من إنشاء فئة "باقات الهدايا" في لوحة التحكم.</p></div>`;
-        return;
-      }
-
-      // 2. جلب منتجات هذا القسم
-      const prodRes = await fetch(`${API_URL}/products/category/${bouquetCategory.id}?limit=50`);
-      const prodData = await prodRes.json();
+      // جلب كل المنتجات مباشرة من الـ API
+      const res = await fetch(`${API_URL}/products`);
+      const data = await res.json();
       
-      if (prodData.success && prodData.products) {
-        allProducts = prodData.products.map(p => ({
+      if (data.success && data.products) {
+        // فلترة المنتجات التي تنتمي لقسم "الباقات" فقط
+        const bouquetProducts = data.products.filter(p => p.category_slug === 'bouquet' && (p.active === 1 || p.active === undefined));
+
+        allProducts = bouquetProducts.map(p => ({
           id: p.id,
           name: p.name || 'منتج',
           desc: p.description || '',
           price: p.final_price || p.price,
           img: p.image || '../assets/g-1.jpeg',
-          stock: p.stock
+          stock: p.stock || 0
         }));
+        
         renderProducts();
       } else {
         document.getElementById('productsGrid').innerHTML = `<div class="empty-state"><h3>لا توجد منتجات</h3><p>لم يتم إضافة أي منتجات لهذا القسم حتى الآن.</p></div>`;
       }
-
     } catch (error) {
       document.getElementById('productsGrid').innerHTML = `<div class="empty-state"><h3>تعذر الاتصال بالخادم</h3></div>`;
     }
@@ -609,16 +662,25 @@
       return;
     }
 
-    grid.innerHTML = allProducts.map(p => `
-      <div class="product-card" onclick="openProductModal(${p.id})">
-        <div class="photo"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
-        <div class="info">
-          <div class="desc">${p.name}</div>
-          <div class="price">${p.price.toFixed(2)} ${omrImg('small')}</div>
-          <button class="add-cart" onclick="event.stopPropagation(); addToCart(${p.id}, this)">أضف للسلة</button>
+    grid.innerHTML = allProducts.map(p => {
+      const isOutOfStock = p.stock === 0;
+      return `
+        <div class="product-card ${isOutOfStock ? 'out-of-stock' : ''}" onclick="openProductModal(${p.id})">
+          <div class="photo">
+            <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='../assets/g-1.jpeg'">
+            ${isOutOfStock ? '<span class="out-badge">نفذ</span>' : ''}
+          </div>
+          <div class="info">
+            <div class="desc">${p.name}</div>
+            <div class="price">${p.price.toFixed(2)} ${omrImg('small')}</div>
+            <button class="add-cart" ${isOutOfStock ? 'disabled' : ''} 
+                    onclick="event.stopPropagation(); ${isOutOfStock ? '' : `addToCart(${p.id}, this)`}">
+              ${isOutOfStock ? 'غير متوفر' : 'أضف للسلة'}
+            </button>
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   function renderCart() {
@@ -764,6 +826,8 @@
     if(e.key === 'Escape') {
       closeCart();
       closeModal({target: {id: 'productModal'}});
+      document.getElementById('sideMenu').classList.remove('open');
+      document.getElementById('menuOverlay').classList.remove('open');
     }
   });
 </script>

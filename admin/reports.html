@@ -346,15 +346,8 @@ img { max-width: 100%; display: block; }
   color: var(--success);
 }
 
-.stat-trend.negative {
-  background: rgba(239,68,68,0.1);
-  color: var(--danger);
-}
-
-.stat-trend.neutral {
-  background: rgba(107,114,128,0.1);
-  color: var(--text-muted);
-}
+.stat-trend.negative { background: rgba(239,68,68,0.1); color: var(--danger); }
+.stat-trend.neutral { background: rgba(107,114,128,0.1); color: var(--text-muted); }
 
 .stat-value {
   font-family: 'Baloo 2', cursive;
@@ -502,10 +495,7 @@ img { max-width: 100%; display: block; }
 .product-revenue img { width: 14px; height: 14px; }
 
 /* ========== Daily Chart ========== */
-.chart-container {
-  overflow-x: auto;
-  padding: 20px 0;
-}
+.chart-container { overflow-x: auto; padding: 20px 0; }
 
 .chart-bars {
   display: flex;
@@ -544,10 +534,7 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
 }
 
-.chart-bar:hover {
-  transform: scaleY(1.05);
-  filter: brightness(1.1);
-}
+.chart-bar:hover { transform: scaleY(1.05); filter: brightness(1.1); }
 
 .chart-bar-label {
   font-size: 0.7rem;
@@ -559,66 +546,32 @@ img { max-width: 100%; display: block; }
   text-align: center;
 }
 
-/* ========== Empty Message ========== */
-.empty-message {
-  text-align: center;
-  padding: 50px 20px;
-  color: var(--text-muted);
-}
-
-.empty-message .icon {
-  font-size: 3rem;
-  margin-bottom: 12px;
-  opacity: 0.5;
-}
-
+/* ========== Empty Message & Loading ========== */
+.empty-message { text-align: center; padding: 50px 20px; color: var(--text-muted); }
+.empty-message .icon { font-size: 3rem; margin-bottom: 12px; opacity: 0.5; }
 .empty-message p { font-size: 0.9rem; }
 
-/* ========== Loading ========== */
-.loading {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--brand);
-}
-
+.loading { text-align: center; padding: 60px 20px; color: var(--brand); }
 .loading::after {
-  content: '';
-  display: block;
-  width: 35px; height: 35px;
-  margin: 15px auto 0;
-  border: 3px solid var(--border);
-  border-top-color: var(--brand);
-  border-radius: 50%;
+  content: ''; display: block; width: 35px; height: 35px; margin: 15px auto 0;
+  border: 3px solid var(--border); border-top-color: var(--brand); border-radius: 50%;
   animation: spin 1s linear infinite;
 }
-
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ========== Modal ========== */
 .modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 2500;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  backdrop-filter: blur(5px);
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  z-index: 2500; display: none; align-items: center; justify-content: center;
+  padding: 20px; backdrop-filter: blur(5px);
 }
-
 .modal.show { display: flex; }
 
 .modal-content {
-  background: white;
-  border-radius: 24px;
-  width: 100%;
-  max-width: 450px;
-  overflow: hidden;
-  box-shadow: 0 25px 70px rgba(178,67,123,0.25);
+  background: white; border-radius: 24px; width: 100%; max-width: 450px;
+  overflow: hidden; box-shadow: 0 25px 70px rgba(178,67,123,0.25);
   animation: modalIn 0.3s ease;
 }
-
 @keyframes modalIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
@@ -626,103 +579,48 @@ img { max-width: 100%; display: block; }
 
 .modal-header {
   background: linear-gradient(135deg, var(--danger), #b91c1c);
-  color: white;
-  padding: 22px 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  color: white; padding: 22px 25px; display: flex; justify-content: space-between; align-items: center;
 }
 
-.modal-header h2 {
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.1rem;
-  font-weight: 800;
-  display: flex; align-items: center; gap: 10px;
-}
+.modal-header h2 { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
 
 .modal-close {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  color: white;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem;
-  transition: all 0.3s;
-  cursor: pointer;
+  width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2);
+  color: white; display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; transition: all 0.3s; cursor: pointer;
 }
-
 .modal-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
 
 .modal-body { padding: 25px; text-align: center; }
-
 .modal-footer {
-  padding: 18px 25px;
-  border-top: 1px solid var(--border);
-  background: var(--bg-2);
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
+  padding: 18px 25px; border-top: 1px solid var(--border);
+  background: var(--bg-2); display: flex; gap: 10px; justify-content: flex-end;
 }
 
 .btn {
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 0.9rem;
-  transition: all 0.3s;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: center;
+  padding: 12px 24px; border-radius: 12px; font-weight: 800; font-size: 0.9rem;
+  transition: all 0.3s; cursor: pointer; display: flex; align-items: center; gap: 8px; justify-content: center;
 }
 
-.btn-danger {
-  background: linear-gradient(135deg, var(--danger), #b91c1c);
-  color: white;
-  box-shadow: 0 8px 25px rgba(239,68,68,0.25);
-}
-
+.btn-danger { background: linear-gradient(135deg, var(--danger), #b91c1c); color: white; box-shadow: 0 8px 25px rgba(239,68,68,0.25); }
 .btn-danger:hover { transform: translateY(-3px); }
-
-.btn-secondary {
-  background: white;
-  color: var(--text);
-  border: 1.5px solid var(--border);
-}
-
+.btn-secondary { background: white; color: var(--text); border: 1.5px solid var(--border); }
 .btn-secondary:hover { background: var(--bg-3); }
 
 /* ========== Sidebar Overlay ========== */
 .sidebar-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 850;
-  backdrop-filter: blur(3px);
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 850; backdrop-filter: blur(3px);
 }
-
 .sidebar-overlay.active { display: block; }
 
 /* ========== Notification ========== */
 .notification {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: var(--brand);
-  color: white;
-  padding: 14px 25px;
-  border-radius: 14px;
-  font-weight: 700;
-  z-index: 3000;
-  transform: translateX(500px);
-  transition: transform 0.4s;
-  box-shadow: 0 15px 40px rgba(178,67,123,0.3);
-  max-width: calc(100% - 60px);
-  font-size: 0.9rem;
+  position: fixed; bottom: 30px; right: 30px; background: var(--brand); color: white;
+  padding: 14px 25px; border-radius: 14px; font-weight: 700; z-index: 3000;
+  transform: translateX(500px); transition: transform 0.4s;
+  box-shadow: 0 15px 40px rgba(178,67,123,0.3); max-width: calc(100% - 60px); font-size: 0.9rem;
 }
-
 .notification.show { transform: translateX(0); }
 .notification.error { background: var(--danger); }
 .notification.success { background: var(--success); }
@@ -812,7 +710,7 @@ img { max-width: 100%; display: block; }
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-<!-- Sidebar -->
+<!-- Sidebar (تم حذف الصفحات غير الموجودة) -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-section">
     <div class="sidebar-section-title">الرئيسية</div>
@@ -828,10 +726,6 @@ img { max-width: 100%; display: block; }
       <span class="icon">👕</span>
       <span class="label">المنتجات</span>
     </a>
-    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
-      <span class="icon">🏷️</span>
-      <span class="label">الفئات</span>
-    </a>
     <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
       <span class="icon">📦</span>
       <span class="label">المخزون</span>
@@ -839,10 +733,6 @@ img { max-width: 100%; display: block; }
     <a href="orders.html" class="sidebar-link" data-permission="orders.view">
       <span class="icon">🛍️</span>
       <span class="label">الطلبات</span>
-    </a>
-    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
-      <span class="icon">💰</span>
-      <span class="label">الكاشير</span>
     </a>
     <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
       <span class="icon">🎟️</span>
@@ -852,7 +742,7 @@ img { max-width: 100%; display: block; }
 
   <div class="sidebar-section" id="managementSection" style="display:none;">
     <div class="sidebar-section-title">الإدارة</div>
-    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
+    <a href="offers.html" class="sidebar-link" data-permission="offers.view">
       <span class="icon">🎁</span>
       <span class="label">العروضات</span>
     </a>
@@ -863,10 +753,6 @@ img { max-width: 100%; display: block; }
     <a href="banners.html" class="sidebar-link" data-permission="banners.view">
       <span class="icon">🖼️</span>
       <span class="label">البانرات</span>
-    </a>
-    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
-      <span class="icon">👥</span>
-      <span class="label">الموظفين</span>
     </a>
   </div>
 
@@ -1006,7 +892,7 @@ let permissions = [];
 let currentRange = 'today';
 let allSales = [];
 let allProducts = [];
-let allSaleItems = []; // ← جديد: عناصر الفواتير لحساب مبيعات المنتجات الحقيقية
+let allSaleItems = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
   const userStr = localStorage.getItem('sukkar_user');
@@ -1062,7 +948,6 @@ function applyPermissions() {
   if (!hasManagement) document.getElementById('managementSection').style.display = 'none';
 }
 
-// ========== تحديد الفترة ==========
 function selectRange(range) {
   currentRange = range;
   document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -1071,7 +956,6 @@ function selectRange(range) {
   updateDisplay();
 }
 
-// ========== جلب البيانات ==========
 async function loadData() {
   try {
     const [salesRes, productsRes] = await Promise.all([
@@ -1085,8 +969,6 @@ async function loadData() {
     if (salesData.success) allSales = salesData.sales || [];
     if (productsData.success) allProducts = productsData.products || [];
 
-    // جلب sale_items لكل طلب (لحساب مبيعات المنتجات الحقيقية)
-    // نحاول أولاً من /api/sales/items ثم من /api/sale-items
     let itemsFetched = false;
     try {
       const itemsRes = await fetch(`${API_URL}/sale-items`);
@@ -1095,9 +977,8 @@ async function loadData() {
         allSaleItems = itemsData.items || itemsData.sale_items || [];
         itemsFetched = true;
       }
-    } catch (e) { /* تجاهل */ }
+    } catch (e) { }
 
-    // إذا فشل المسار الأول، نحاول جلب عناصر كل طلب على حدة
     if (!itemsFetched && allSales.length > 0) {
       const results = await Promise.all(
         allSales.map(s =>
@@ -1117,40 +998,28 @@ async function loadData() {
   }
 }
 
-// ========== تصفية المبيعات حسب الفترة ==========
 function filterSalesByRange(sales, range) {
   const now = new Date();
   return sales.filter(sale => {
     const saleDate = new Date(sale.created_at);
     switch (range) {
-      case 'today':
-        return saleDate.toDateString() === now.toDateString();
+      case 'today': return saleDate.toDateString() === now.toDateString();
       case 'week': {
-        const weekAgo = new Date(now);
-        weekAgo.setDate(now.getDate() - 7);
+        const weekAgo = new Date(now); weekAgo.setDate(now.getDate() - 7);
         return saleDate >= weekAgo;
       }
-      case 'month':
-        return saleDate.getMonth() === now.getMonth() && saleDate.getFullYear() === now.getFullYear();
-      case 'all':
-      default:
-        return true;
+      case 'month': return saleDate.getMonth() === now.getMonth() && saleDate.getFullYear() === now.getFullYear();
+      default: return true;
     }
   });
 }
 
-// ========== الفترة السابقة (لحساب النمو) ==========
 function getPreviousPeriodSales() {
   const now = new Date();
-  let start, end;
   switch (currentRange) {
     case 'today': {
       const y = new Date(now); y.setDate(now.getDate() - 1);
-      start = y; end = now;
-      return allSales.filter(s => {
-        const d = new Date(s.created_at);
-        return d.toDateString() === y.toDateString();
-      });
+      return allSales.filter(s => new Date(s.created_at).toDateString() === y.toDateString());
     }
     case 'week': {
       const wStart = new Date(now); wStart.setDate(now.getDate() - 14);
@@ -1168,42 +1037,29 @@ function getPreviousPeriodSales() {
         return d >= mStart && d < mEnd;
       });
     }
-    default:
-      return [];
+    default: return [];
   }
 }
 
-// ========== تحديث العرض ==========
 function updateDisplay() {
   const filtered = filterSalesByRange(allSales, currentRange);
   
-  // إجمالي المبيعات
   const totalSales = filtered.reduce((sum, s) => sum + (s.final_total || 0), 0);
   document.getElementById('totalSales').textContent = totalSales.toFixed(3);
-  
-  // عدد الطلبات
   document.getElementById('totalOrders').textContent = filtered.length;
   
-  // متوسط الطلب
   const avgOrder = filtered.length > 0 ? totalSales / filtered.length : 0;
   document.getElementById('avgOrder').textContent = avgOrder.toFixed(3);
   
-  // الأرباح: نحسب من cost_price الحقيقي إن توفر، وإلا 30% تقريبي
   const totalProfit = calculateProfit(filtered);
   document.getElementById('totalProfit').textContent = totalProfit.toFixed(3);
   
-  // اتجاه المبيعات (مقارنة بالفترة السابقة)
   updateSalesTrend(totalSales);
-  
-  // Top Products (بيانات حقيقية)
   renderTopProducts(filtered);
-  
-  // Daily Chart
   renderDailyChart();
 }
 
 function calculateProfit(filteredSales) {
-  // إذا لدينا sale_items، نحسب الربح = (سعر البيع - التكلفة) × الكمية
   if (allSaleItems.length > 0) {
     const filteredIds = new Set(filteredSales.map(s => s.id));
     let profit = 0;
@@ -1214,10 +1070,8 @@ function calculateProfit(filteredSales) {
       const price = item.price || item.unit_price || product?.price || 0;
       profit += (price - cost) * (item.quantity || 1);
     }
-    // إذا كان الربح سالباً أو صفراً (cost_price غير متوفر)، نرجع لتقدير 30%
     if (profit > 0) return profit;
   }
-  // تقدير احتياطي: 30% من المبيعات
   const total = filteredSales.reduce((sum, s) => sum + (s.final_total || 0), 0);
   return total * 0.3;
 }
@@ -1246,21 +1100,14 @@ function updateSalesTrend(currentTotal) {
   trendEl.className = diff >= 0 ? 'stat-trend' : 'stat-trend negative';
 }
 
-// ========== أفضل المنتجات (بيانات حقيقية) ==========
 function renderTopProducts(filteredSales) {
   const container = document.getElementById('topProducts');
   
   if (filteredSales.length === 0) {
-    container.innerHTML = `
-      <div class="empty-message">
-        <div class="icon">📭</div>
-        <p>لا توجد مبيعات في هذه الفترة</p>
-      </div>
-    `;
+    container.innerHTML = `<div class="empty-message"><div class="icon">📭</div><p>لا توجد مبيعات في هذه الفترة</p></div>`;
     return;
   }
 
-  // تجميع sale_items حسب product_id
   const productStats = {};
   const filteredIds = new Set(filteredSales.map(s => s.id));
   
@@ -1268,25 +1115,16 @@ function renderTopProducts(filteredSales) {
     if (!filteredIds.has(item.sale_id)) continue;
     const pid = item.product_id;
     if (!pid) continue;
-    if (!productStats[pid]) {
-      productStats[pid] = { quantity: 0, revenue: 0 };
-    }
+    if (!productStats[pid]) productStats[pid] = { quantity: 0, revenue: 0 };
     productStats[pid].quantity += item.quantity || 1;
     productStats[pid].revenue += (item.price || item.unit_price || 0) * (item.quantity || 1);
   }
 
-  // إذا لم توجد sale_items، نعرض رسالة واضحة بدل بيانات وهمية
   if (Object.keys(productStats).length === 0) {
-    container.innerHTML = `
-      <div class="empty-message">
-        <div class="icon">⚠️</div>
-        <p>تفاصيل المنتجات غير متوفرة في API — تأكد من endpoint <code>/api/sale-items</code></p>
-      </div>
-    `;
+    container.innerHTML = `<div class="empty-message"><div class="icon">⚠️</div><p>تفاصيل المنتجات غير متوفرة</p></div>`;
     return;
   }
 
-  // ربط المنتجات بالبيانات وترتيبها
   const productsWithStats = Object.entries(productStats)
     .map(([pid, stats]) => {
       const p = allProducts.find(x => x.id == pid);
@@ -1306,14 +1144,10 @@ function renderTopProducts(filteredSales) {
     return `
       <div class="top-product-item">
         <div class="product-rank ${rankClass}">${index + 1}</div>
-        <div class="product-thumb">
-          ${p.image ? `<img src="${p.image}" alt="${p.name}">` : '👕'}
-        </div>
+        <div class="product-thumb">${p.image ? `<img src="${p.image}" alt="${p.name}">` : '👕'}</div>
         <div class="product-info">
           <div class="product-name">${p.name}</div>
-          <div class="product-sales">
-            <span>📦 ${p.quantity} قطعة</span>
-          </div>
+          <div class="product-sales"><span>📦 ${p.quantity} قطعة</span></div>
         </div>
         <div class="product-revenue">
           ${p.revenue.toFixed(3)}
@@ -1324,7 +1158,6 @@ function renderTopProducts(filteredSales) {
   }).join('');
 }
 
-// ========== الرسم البياني اليومي ==========
 function renderDailyChart() {
   const container = document.getElementById('dailyChart');
   const days = [];
@@ -1333,12 +1166,7 @@ function renderDailyChart() {
   for (let i = 6; i >= 0; i--) {
     const date = new Date(now);
     date.setDate(now.getDate() - i);
-    
-    const daySales = allSales.filter(sale => {
-      const saleDate = new Date(sale.created_at);
-      return saleDate.toDateString() === date.toDateString();
-    });
-    
+    const daySales = allSales.filter(sale => new Date(sale.created_at).toDateString() === date.toDateString());
     const total = daySales.reduce((sum, s) => sum + (s.final_total || 0), 0);
     
     days.push({
@@ -1363,7 +1191,6 @@ function renderDailyChart() {
   }).join('');
 }
 
-// ========== تصدير CSV ==========
 function exportReport() {
   const filtered = filterSalesByRange(allSales, currentRange);
   
@@ -1384,11 +1211,7 @@ function exportReport() {
     s.status || '-'
   ]);
   
-  const csvContent = [
-    headers.join(','),
-    ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
-  ].join('\n');
-  
+  const csvContent = [headers.join(','), ...rows.map(row => row.map(cell => `"${cell}"`).join(','))].join('\n');
   const BOM = '\uFEFF';
   const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
   
@@ -1403,13 +1226,11 @@ function exportReport() {
   showNotification('✅ تم تصدير التقرير', 'success');
 }
 
-// ========== Sidebar ==========
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebarOverlay').classList.toggle('active');
 }
 
-// ========== Logout ==========
 function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
 function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
 function confirmLogout() {
@@ -1419,7 +1240,6 @@ function confirmLogout() {
   window.location.href = 'login.html';
 }
 
-// ========== Notification ==========
 function showNotification(message, type = '') {
   const notif = document.getElementById('notification');
   notif.textContent = message;
@@ -1427,14 +1247,9 @@ function showNotification(message, type = '') {
   setTimeout(() => notif.classList.remove('show'), 3000);
 }
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeLogoutModal();
-});
-
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLogoutModal(); });
 document.querySelectorAll('.modal').forEach(modal => {
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('show');
-  });
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
 });
 </script>
 
