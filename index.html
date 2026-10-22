@@ -348,8 +348,21 @@
     .product-card:hover { transform: translateY(-5px); }
     .product-card .photo{
       background:#f8f0f3; aspect-ratio: 1/1; overflow:hidden;
+      position: relative;
     }
     .product-card .photo img{ width:100%; height:100%; object-fit:cover; object-position: center 15%; }
+    
+    /* شارة نفذ من المخزون */
+    .out-badge {
+      position: absolute;
+      top: 8px; right: 8px;
+      background: #ef4444; color: white;
+      font-size: 0.65rem; font-weight: 700;
+      padding: 3px 8px; border-radius: 8px; z-index: 2;
+    }
+    .product-card.out-of-stock { opacity: 0.75; }
+    .product-card .add-cart:disabled { background: #9ca3af; cursor: not-allowed; }
+
     .product-card .info{ padding: 12px 10px 14px; display: flex; flex-direction: column; flex: 1; gap: 8px; }
     .product-card .desc{
       font-size:0.72rem; color:#555; font-weight: 700;
@@ -478,7 +491,6 @@
       color: rgba(255,255,255,0.9);
     }
     
-    /* روابط مهمة في الفوتر */
     .footer-links {
       display: flex;
       flex-wrap: wrap;
@@ -515,7 +527,6 @@
       transform: scale(1.05);
     }
     
-    /* شعار ويبورا */
     .webora-img {
       height: 80px; 
       width: auto;
@@ -891,7 +902,6 @@
     </div>
 
     <div class="icon-group group-right">
-      <!-- زر البحث ينقل لصفحة البحث -->
       <a href="frontend/search.html" class="icon-btn" title="بحث">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </a>
@@ -967,19 +977,20 @@
 <section class="choose wrap">
   <h2 class="display">💕 اختر قسمك المفضل 💕</h2>
   <div class="cat-grid">
-    <a class="cat-card bouquet" href="frontend/search.html?category=bouquet">
+    <!-- ربط الكروت بالصفحات الصحيحة في مجلد frontend -->
+    <a class="cat-card bouquet" href="frontend/bouquets.html">
       <img src="assets/paw.png" alt="">
       <span>هدايا<br>الباقات</span>
     </a>
-    <a class="cat-card events" href="frontend/search.html?category=events">
+    <a class="cat-card events" href="frontend/giveaways.html">
       <img src="assets/paw.png" alt="">
       <span>توزيعات<br>مميزة</span>
     </a>
-    <a class="cat-card girls" href="frontend/search.html?category=girls">
+    <a class="cat-card girls" href="frontend/girls-products.html">
       <img src="assets/paw.png" alt="">
       <span>هدايا<br>البنات</span>
     </a>
-    <a class="cat-card boys" href="frontend/search.html?category=boys">
+    <a class="cat-card boys" href="frontend/boys-products.html">
       <img src="assets/paw.png" alt="">
       <span>هدايا<br>الأولاد</span>
     </a>
@@ -988,19 +999,23 @@
 
 <!-- PRODUCTS (HORIZONTAL SCROLL) -->
 <section id="products">
+  <!-- قسم البنات -->
   <div id="girls" class="products-section girls">
     <div class="wrap">
       <div class="section-head">
-        <span class="view-all-btn" onclick="goToPage('frontend/search.html?category=girls')">
+        <!-- زر عرض الكل يذهب لصفحة البنات المخصصة -->
+        <a href="frontend/girls-products.html" class="view-all-btn">
           <span>عرض الكل</span> ←
-        </span>
+        </a>
         <h3 class="section-title">🌸 هدايا البنات</h3>
       </div>
       <div class="product-scroll-wrapper">
         <button class="scroll-arrow right" onclick="scrollGrid('girlsGrid', -1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <div class="product-grid" id="girlsGrid"></div>
+        <div class="product-grid" id="girlsGrid">
+          <div style="text-align:center;padding:20px;color:#999;width:100%;font-size:0.8rem;">⏳ جاري التحميل...</div>
+        </div>
         <button class="scroll-arrow left" onclick="scrollGrid('girlsGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
@@ -1008,19 +1023,22 @@
     </div>
   </div>
 
+  <!-- قسم الأولاد -->
   <div id="boys" class="products-section boys">
     <div class="wrap">
       <div class="section-head">
-        <span class="view-all-btn" onclick="goToPage('frontend/search.html?category=boys')">
+        <a href="frontend/boys-products.html" class="view-all-btn">
           <span>عرض الكل</span> ←
-        </span>
+        </a>
         <h3 class="section-title">💙 هدايا الأولاد</h3>
       </div>
       <div class="product-scroll-wrapper">
         <button class="scroll-arrow right" onclick="scrollGrid('boysGrid', -1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <div class="product-grid" id="boysGrid"></div>
+        <div class="product-grid" id="boysGrid">
+          <div style="text-align:center;padding:20px;color:#999;width:100%;font-size:0.8rem;">⏳ جاري التحميل...</div>
+        </div>
         <button class="scroll-arrow left" onclick="scrollGrid('boysGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
@@ -1028,19 +1046,22 @@
     </div>
   </div>
 
+  <!-- قسم الباقات -->
   <div id="bouquet" class="products-section bouquet">
     <div class="wrap">
       <div class="section-head">
-        <span class="view-all-btn" onclick="goToPage('frontend/search.html?category=bouquet')">
+        <a href="frontend/bouquets.html" class="view-all-btn">
           <span>عرض الكل</span> ←
-        </span>
+        </a>
         <h3 class="section-title">💐 باقات الهدايا</h3>
       </div>
       <div class="product-scroll-wrapper">
         <button class="scroll-arrow right" onclick="scrollGrid('bouquetGrid', -1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <div class="product-grid" id="bouquetGrid"></div>
+        <div class="product-grid" id="bouquetGrid">
+          <div style="text-align:center;padding:20px;color:#999;width:100%;font-size:0.8rem;">⏳ جاري التحميل...</div>
+        </div>
         <button class="scroll-arrow left" onclick="scrollGrid('bouquetGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
@@ -1048,19 +1069,22 @@
     </div>
   </div>
 
+  <!-- قسم التوزيعات -->
   <div id="events" class="products-section events">
     <div class="wrap">
       <div class="section-head">
-        <span class="view-all-btn" onclick="goToPage('frontend/search.html?category=events')">
+        <a href="frontend/giveaways.html" class="view-all-btn">
           <span>عرض الكل</span> ←
-        </span>
+        </a>
         <h3 class="section-title">🎉 توزيعات مميزة</h3>
       </div>
       <div class="product-scroll-wrapper">
         <button class="scroll-arrow right" onclick="scrollGrid('eventsGrid', -1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <div class="product-grid" id="eventsGrid"></div>
+        <div class="product-grid" id="eventsGrid">
+          <div style="text-align:center;padding:20px;color:#999;width:100%;font-size:0.8rem;">⏳ جاري التحميل...</div>
+        </div>
         <button class="scroll-arrow left" onclick="scrollGrid('eventsGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
@@ -1080,6 +1104,7 @@
   <div class="content">
     <h2 class="display">🎀 هدية مني إليك</h2>
     <div class="sub script">💕 لأحبائك 💕</div>
+    <!-- يذهب لصفحة search مع الفلتر -->
     <a href="frontend/search.html?category=me-to-you" class="go-btn display">✨ هيّا بنا ! ✨</a>
   </div>
 </section>
@@ -1102,7 +1127,6 @@
     وجهتك الأولى للهدايا الفاخرة والراقية في سلطنة عمان. نقدم لك تشكيلة حصرية من الهدايا المصممة بعناية لتناسب ذوقك الرفيع.
   </p>
   
-  <!-- روابط مهمة -->
   <div class="footer-links">
     <a href="index.html">
       <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -1128,7 +1152,6 @@
 
   <div class="webora-section">
     <a href="https://www.instagram.com/webora.om?dlrf=djE5d2lmZ3BwNW1z" target="_blank" class="webora-logo-link">
-      <!-- شعار ويبورا الخاص بك -->
       <img src="assets/webora-logo.png" alt="Webora" class="webora-img">
     </a>
     <div class="webora-text">تم التصميم والتطوير من قبل Webora</div>
@@ -1144,11 +1167,12 @@
   <h3>القائمة</h3>
   <ul>
     <li><a href="index.html">الرئيسية</a></li>
+    <!-- تحديث القائمة الجانبية بالصفحات الصحيحة -->
     <li><a href="frontend/boys-products.html">هدايا الأولاد</a></li>
     <li><a href="frontend/girls-products.html">هدايا البنات</a></li>
     <li><a href="frontend/bouquets.html">باقات الهدايا</a></li>
     <li><a href="frontend/giveaways.html">توزيعات مميزة</a></li>
-    <li><a href="frontend/me-to-you.html">هدية مني إليك</a></li>
+    <li><a href="frontend/search.html?category=me-to-you">هدية مني إليك</a></li>
     <li><a href="frontend/orders.html">طلباتي</a></li>
     <li><a href="admin/login.html">الموظفين</a></li>
   </ul>
@@ -1175,7 +1199,6 @@
       <span class="total-label">الإجمالي</span>
       <span class="total-value"><span id="totalValue">0.00</span><img class="omr-img" src="assets/omr-dark.png" alt="OMR"></span>
     </div>
-    <!-- زر إتمام الطلب ينتقل لصفحة checkout.html -->
     <button class="checkout-btn" id="checkoutBtn" onclick="goToCheckout()" disabled>إتمام الطلب</button>
   </div>
 </aside>
@@ -1237,8 +1260,6 @@
     if(cart.length === 0) return;
     window.location.href = 'frontend/checkout.html';
   }
-
-  function goToPage(url) { window.location.href = url; }
 
   // ====== PRODUCT MODAL LOGIC ======
   function openProductModal(id) {
@@ -1321,7 +1342,6 @@
   }
   function removeItem(id){ cart = cart.filter(i => i.id !== id); saveCart(); renderCart(); }
 
-  // الدالة المبسطة لعرض السلة
   function renderCart(){
     const body = document.getElementById('cartBody');
     const count = document.getElementById('cartCount');
@@ -1394,86 +1414,109 @@
     });
   }
 
-  // ====== API LOAD ======
-  async function loadProductsFromAPI() {
-    try {
-      const catsRes = await fetch(`${API_URL}/categories`);
-      const catsData = await catsRes.json();
-      if (!catsData.success) return;
+  // دالة مساعدة: رسم بطاقة منتج
+  function renderProductCard(p) {
+    const name = p.name || 'منتج';
+    const finalPrice = (p.final_price || p.price).toFixed(2);
+    const img = p.image || 'assets/g-1.jpeg';
+    const isOutOfStock = p.stock === 0;
 
-      const categoryMap = {
-        'girls':   ['هدايا البنات', 'بنات'],
-        'boys':    ['هدايا الأولاد', 'أولاد'],
-        'bouquet': ['باقات الهدايا', 'باقات'],
-        'events':  ['توزيعات مميزة', 'توزيعات']
+    return `
+      <div class="product-card ${isOutOfStock ? 'out-of-stock' : ''}" onclick="openProductModal(${p.id})">
+        <div class="photo">
+          <img src="${img}" alt="${name}" loading="lazy" onerror="this.src='assets/g-1.jpeg'">
+          ${isOutOfStock ? '<span class="out-badge">نفذ</span>' : ''}
+        </div>
+        <div class="info">
+          <div class="desc">${name}</div>
+          <div class="price">${finalPrice} ${omrImg('small')}</div>
+          <button class="add-cart" ${isOutOfStock ? 'disabled' : ''} 
+                  onclick="event.stopPropagation(); ${isOutOfStock ? '' : `addToCart(${p.id}, this)`}">
+            ${isOutOfStock ? 'غير متوفر' : 'أضف للسلة'}
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  // ====== API LOAD (المعدلة لجلب المنتجات من لوحة التحكم) ======
+  async function loadProductsFromAPI() {
+    const grids = {
+      girls:   document.getElementById('girlsGrid'),
+      boys:    document.getElementById('boysGrid'),
+      bouquet: document.getElementById('bouquetGrid'),
+      events:  document.getElementById('eventsGrid')
+    };
+
+    try {
+      // نجلب كل المنتجات مباشرة
+      const res = await fetch(`${API_URL}/products`);
+      const data = await res.json();
+
+      if (!data.success || !data.products) {
+        throw new Error('فشل تحميل المنتجات');
+      }
+
+      // تجميع المنتجات حسب category_slug
+      const grouped = {
+        girls: [], boys: [], bouquet: [], events: []
       };
 
-      let foundAny = false;
-
-      for (const cat of catsData.categories) {
-        let targetId = null;
-        for (const [key, names] of Object.entries(categoryMap)) {
-          if (names.some(n => cat.name.includes(n))) {
-            targetId = key;
-            break;
-          }
-        }
-        if (!targetId) continue;
+      data.products.forEach(p => {
+        const slug = p.category_slug; // تأتي من لوحة التحكم
+        if (!slug || !grouped[slug]) return;
         
-        const targetGrid = document.getElementById(targetId + 'Grid');
-        if(!targetGrid) continue;
+        // عرض المنتجات النشطة فقط
+        if (p.active !== 1 && p.active !== undefined) return;
 
-        const prodRes = await fetch(`${API_URL}/products/category/${cat.id}?limit=10`);
-        const prodData = await prodRes.json();
-        
-        if (!prodData.success || prodData.products.length === 0) {
-          targetGrid.innerHTML = `<div style="text-align:center;padding:20px;color:#888;width:100%;">لا توجد منتجات في هذا القسم حالياً</div>`;
-          continue;
-        }
+        grouped[slug].push(p);
 
-        foundAny = true;
-        prodData.products.forEach(p => {
-          allProducts[p.id] = {
-            id: p.id,
-            price: p.final_price || p.price,
-            img: p.image || 'assets/g-1.jpeg',
-            name: p.name || 'منتج',
-            desc: p.description || '',
-            stock: p.stock
-          };
-        });
+        allProducts[p.id] = {
+          id: p.id,
+          price: p.final_price || p.price,
+          img: p.image || 'assets/g-1.jpeg',
+          name: p.name || 'منتج',
+          desc: p.description || '',
+          stock: p.stock || 0
+        };
+      });
 
-        targetGrid.innerHTML = prodData.products.map(p => {
-          const name = p.name || 'منتج';
-          const finalPrice = (p.final_price || p.price).toFixed(2);
-          const img = p.image || 'assets/g-1.jpeg';
-          return `
-            <div class="product-card" onclick="openProductModal(${p.id})">
-              <div class="photo"><img src="${img}" alt="${name}" loading="lazy"></div>
-              <div class="info">
-                <div class="desc">${name}</div>
-                <div class="price">${finalPrice} ${omrImg('small')}</div>
-                <button class="add-cart" onclick="event.stopPropagation(); addToCart(${p.id}, this)">أضف للسلة</button>
-              </div>
+      // نرسم كل قسم
+      const slugInfo = {
+        girls:   { name: 'هدايا البنات',  icon: '🌸' },
+        boys:    { name: 'هدايا الأولاد', icon: '💙' },
+        bouquet: { name: 'باقات الهدايا', icon: '💐' },
+        events:  { name: 'توزيعات مميزة', icon: '🎉' }
+      };
+
+      Object.entries(grouped).forEach(([slug, products]) => {
+        const grid = grids[slug];
+        if (!grid) return;
+
+        if (products.length === 0) {
+          grid.innerHTML = `
+            <div style="text-align:center;padding:30px 20px;color:#999;width:100%;font-size:0.85rem;">
+              ${slugInfo[slug].icon} لا توجد منتجات في "${slugInfo[slug].name}" حالياً
             </div>
           `;
-        }).join('');
-      }
+          return;
+        }
 
-      if (!foundAny) {
-         ['girlsGrid', 'boysGrid', 'bouquetGrid', 'eventsGrid'].forEach(id => {
-             const el = document.getElementById(id);
-             if(el) el.innerHTML = `<div style="text-align:center;padding:20px;color:#888;width:100%;">لا توجد منتجات حالياً</div>`;
-         });
-      }
+        // نعرض أول 10 منتجات
+        grid.innerHTML = products.slice(0, 10).map(p => renderProductCard(p)).join('');
+      });
 
       renderCart();
-      setTimeout(checkArrows, 500);
+      setTimeout(checkArrows, 300);
+
     } catch (error) {
       console.error('خطأ في تحميل المنتجات:', error);
-      ['girlsGrid', 'boysGrid', 'bouquetGrid', 'eventsGrid'].forEach(id => {
-          const el = document.getElementById(id);
-          if(el) el.innerHTML = `<div style="text-align:center;padding:20px;color:#888;width:100%;">تعذر الاتصال بالخادم</div>`;
+      Object.values(grids).forEach(grid => {
+        if (grid) grid.innerHTML = `
+          <div style="text-align:center;padding:30px 20px;color:#999;width:100%;font-size:0.85rem;">
+            ❌ تعذر الاتصال بالخادم
+          </div>
+        `;
       });
     }
   }
