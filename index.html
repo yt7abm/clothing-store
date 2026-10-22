@@ -474,9 +474,30 @@
       font-size: 0.95rem;
       line-height: 1.8;
       max-width: 600px;
-      margin: 0 auto 40px;
+      margin: 0 auto 30px;
       color: rgba(255,255,255,0.9);
     }
+    
+    /* روابط مهمة في الفوتر */
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .footer-links a {
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-links a:hover { color: #ffde59; }
+    .footer-links svg { width: 20px; height: 20px; fill: currentColor; }
+
     .webora-section {
       border-top: 1px solid rgba(255,255,255,0.1);
       width: 100%;
@@ -494,9 +515,9 @@
       transform: scale(1.05);
     }
     
-    /* تعديل شعار Webora ليكون الصورة الخاصة بك */
+    /* شعار ويبورا */
     .webora-img {
-      height: 80px; /* يمكنك تغيير الارتفاع حسب رغبتك */
+      height: 80px; 
       width: auto;
       object-fit: contain;
     }
@@ -884,6 +905,8 @@
       .footer-store-name { font-size: 1.8rem; }
       .footer-desc { font-size: 0.8rem; }
       .webora-img { height: 60px; }
+      .footer-links { gap: 12px; }
+      .footer-links a { font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -955,9 +978,10 @@
     </div>
 
     <div class="icon-group group-right">
-      <button class="icon-btn" onclick="toggleSearch()" title="بحث">
+      <!-- زر البحث ينقل لصفحة البحث -->
+      <a href="frontend/search.html" class="icon-btn" title="بحث">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      </button>
+      </a>
       <button class="icon-btn" onclick="openCart()" title="السلة">
         <svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 11.5a2 2 0 0 0 2 1.5h8.8a2 2 0 0 0 2-1.6L22 7H6"/></svg>
         <span class="cart-badge" id="cartCount">0</span>
@@ -1063,9 +1087,7 @@
         <button class="scroll-arrow right" onclick="scrollGrid('girlsGrid', -1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <div class="product-grid" id="girlsGrid">
-          <!-- سيتم تحميل المنتجات هنا -->
-        </div>
+        <div class="product-grid" id="girlsGrid"></div>
         <button class="scroll-arrow left" onclick="scrollGrid('girlsGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
@@ -1085,9 +1107,7 @@
         <button class="scroll-arrow right" onclick="scrollGrid('boysGrid', -1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <div class="product-grid" id="boysGrid">
-          <!-- سيتم تحميل المنتجات هنا -->
-        </div>
+        <div class="product-grid" id="boysGrid"></div>
         <button class="scroll-arrow left" onclick="scrollGrid('boysGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
@@ -1107,9 +1127,7 @@
         <button class="scroll-arrow right" onclick="scrollGrid('bouquetGrid', -1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <div class="product-grid" id="bouquetGrid">
-          <!-- سيتم تحميل المنتجات هنا -->
-        </div>
+        <div class="product-grid" id="bouquetGrid"></div>
         <button class="scroll-arrow left" onclick="scrollGrid('bouquetGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
@@ -1129,9 +1147,7 @@
         <button class="scroll-arrow right" onclick="scrollGrid('eventsGrid', -1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <div class="product-grid" id="eventsGrid">
-          <!-- سيتم تحميل المنتجات هنا -->
-        </div>
+        <div class="product-grid" id="eventsGrid"></div>
         <button class="scroll-arrow left" onclick="scrollGrid('eventsGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
@@ -1173,10 +1189,34 @@
     وجهتك الأولى للهدايا الفاخرة والراقية في سلطنة عمان. نقدم لك تشكيلة حصرية من الهدايا المصممة بعناية لتناسب ذوقك الرفيع.
   </p>
   
+  <!-- روابط مهمة -->
+  <div class="footer-links">
+    <a href="index.html">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      الرئيسية
+    </a>
+    <a href="frontend/search.html">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      البحث
+    </a>
+    <a href="frontend/orders.html">
+      <svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+      طلباتي
+    </a>
+    <a href="frontend/account.html">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      حسابي
+    </a>
+    <a href="admin/login.html">
+      <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+      الموظفين
+    </a>
+  </div>
+
   <div class="webora-section">
     <a href="https://www.instagram.com/webora.om?dlrf=djE5d2lmZ3BwNW1z" target="_blank" class="webora-logo-link">
-      <!-- تم ربط صورتك الشفافة هنا -->
-      <img src="webora-logo.png" alt="Webora" class="webora-img">
+      <!-- شعار ويبورا الخاص بك -->
+      <img src="assets/webora-logo.png" alt="Webora" class="webora-img">
     </a>
     <div class="webora-text">تم التصميم والتطوير من قبل Webora</div>
   </div>
@@ -1264,7 +1304,8 @@
       <span class="total-value"><span id="totalValue">0.00</span><img class="omr-img" src="assets/omr-dark.png" alt="OMR"></span>
     </div>
 
-    <button class="checkout-btn" id="checkoutBtn" disabled onclick="checkout()">إتمام الطلب</button>
+    <!-- زر إتمام الطلب ينقل لصفحة إتمام الطلب -->
+    <button class="checkout-btn" id="checkoutBtn" onclick="goToCheckout()" disabled>إتمام الطلب</button>
   </div>
 </aside>
 
@@ -1352,6 +1393,13 @@
     });
     renderCart();
   }
+
+  function goToCheckout() {
+    if(cart.length === 0) return;
+    window.location.href = 'frontend/checkout.html';
+  }
+
+  function goToPage(url) { window.location.href = url; }
 
   // ====== PRODUCT MODAL LOGIC ======
   function openProductModal(id) {
@@ -1546,44 +1594,6 @@
       appliedBox.innerHTML = '';
     }
     btn.disabled = false;
-  }
-
-  function checkout(){
-    if(cart.length === 0) return;
-    let subtotal = 0;
-    let lines = [];
-    lines.push('🛍️ *طلب جديد من Sukkar Store*');
-    lines.push('━━━━━━━━━━━━━━━');
-    cart.forEach((item, i) => {
-      const sub = item.price * item.qty;
-      subtotal += sub;
-      lines.push(
-        `${i+1}. ${item.name}\n` +
-        `   الكمية: ${item.qty}\n` +
-        `   السعر: ${item.price} OMR\n` +
-        `   المجموع: ${sub.toFixed(2)} OMR`
-      );
-    });
-    let discount = 0;
-    let shipping = getShippingFee();
-    if(appliedCoupon){
-      if(appliedCoupon.type === 'percent'){ discount = subtotal * (appliedCoupon.value / 100); }
-      else if(appliedCoupon.type === 'freeship'){ discount = shipping; shipping = 0; }
-    }
-    const tax = (subtotal - discount) * TAX_RATE;
-    const total = subtotal - discount + tax + shipping;
-    lines.push('━━━━━━━━━━━━━━━');
-    lines.push(`المجموع الفرعي: ${subtotal.toFixed(2)} OMR`);
-    if(discount > 0){ lines.push(`الخصم (${appliedCoupon.code}): -${discount.toFixed(2)} OMR`); }
-    lines.push(`الضريبة (1.5%): ${tax.toFixed(2)} OMR`);
-    lines.push(`نوع التوصيل: ${deliveryType === 'office' ? 'توصيل للمكتب' : 'توصيل للمنزل'}`);
-    lines.push(`رسوم التوصيل: ${shipping.toFixed(2)} OMR`);
-    lines.push(`*الإجمالي: ${total.toFixed(2)} OMR*`);
-    lines.push('━━━━━━━━━━━━━━━');
-    lines.push('📍 يرجى إرسال العنوان ورقم التواصل لإتمام الطلب');
-    const message = encodeURIComponent(lines.join('\n'));
-    const phone = '96895544676';
-    window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
   }
 
   // ====== SCROLL LOGIC ======
