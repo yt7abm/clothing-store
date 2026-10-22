@@ -32,7 +32,7 @@
   --danger: #ef4444;
   --warning: #f59e0b;
   --whatsapp: #25d366;
-  --courier: #7c3aed;
+  --self: #8b5cf6;
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
   --shadow: 0 4px 20px rgba(0,0,0,0.06);
   --shadow-lg: 0 10px 40px rgba(178,67,123,0.15);
@@ -448,14 +448,13 @@ img { max-width: 100%; display: block; }
   transform: scale(1.1);
 }
 
-/* ← زر إرسال للمندوب */
-.quick-action.courier {
-  background: rgba(124,58,237,0.1);
-  color: var(--courier);
+.quick-action.self {
+  background: rgba(139,92,246,0.1);
+  color: var(--self);
 }
 
-.quick-action.courier:hover {
-  background: var(--courier);
+.quick-action.self:hover {
+  background: var(--self);
   color: white;
   transform: scale(1.1);
 }
@@ -767,21 +766,21 @@ img { max-width: 100%; display: block; }
 
 .action-btn.whatsapp:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(37,211,102,0.35); }
 
-.action-btn.courier {
-  background: linear-gradient(135deg, var(--courier), #5b21b6);
+.action-btn.self {
+  background: linear-gradient(135deg, var(--self), #6d28d9);
   color: white;
-  box-shadow: 0 8px 25px rgba(124,58,237,0.25);
+  box-shadow: 0 8px 25px rgba(139,92,246,0.25);
 }
 
-.action-btn.courier:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(124,58,237,0.35); }
+.action-btn.self:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(139,92,246,0.35); }
 
 .action-btn.print {
-  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  background: linear-gradient(135deg, var(--gold), var(--accent));
   color: white;
-  box-shadow: 0 8px 25px rgba(178,67,123,0.25);
+  box-shadow: 0 8px 25px rgba(212,175,55,0.25);
 }
 
-.action-btn.print:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(178,67,123,0.35); }
+.action-btn.print:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(212,175,55,0.35); }
 
 /* Status changer */
 .status-changer {
@@ -879,7 +878,7 @@ img { max-width: 100%; display: block; }
 .notification.show { transform: translateX(0); }
 .notification.error { background: var(--danger); }
 .notification.success { background: var(--success); }
-.notification.courier { background: var(--courier); }
+.notification.self { background: var(--self); }
 
 /* ========== Responsive ========== */
 @media (max-width: 900px) {
@@ -974,7 +973,7 @@ img { max-width: 100%; display: block; }
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-<!-- Sidebar - بدون فئات/كاشير/موظفين -->
+<!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-section">
     <div class="sidebar-section-title">الرئيسية</div>
@@ -1035,7 +1034,7 @@ img { max-width: 100%; display: block; }
   <div class="page-header">
     <div class="page-header-info">
       <h1>🛍️ إدارة الطلبات</h1>
-      <p>تابع الطلبات، حدّث حالتها، وأرسلها للمندوب بضغطة زر</p>
+      <p>تابع الطلبات، حدّث حالتها، وتواصل مع العميل بسهولة</p>
     </div>
   </div>
 
@@ -1103,11 +1102,8 @@ img { max-width: 100%; display: block; }
 <script>
 const API_URL = '/api';
 
-// ========================================
-// إعدادات المندوب (جيناكم)
-// ========================================
-const COURIER_PHONE = '96890000000';   // ← غيّر رقم جيناكم هنا (بدون + أو مسافات)
-const COURIER_NAME = 'جيناكم';
+// ⚠️ رقم الواتساب الخاص بصاحبة المحل (لتستلم هي الرسالة)
+const STORE_PHONE = '96895544676'; 
 
 let user = null;
 let permissions = [];
@@ -1274,14 +1270,19 @@ function renderOrderCard(order) {
           <img src="../assets/omr-dark.png" alt="ر.ع">
         </div>
         <div class="order-card-actions">
-          <button class="quick-action courier" onclick="sendToCourier(${order.id})" title="إرسال للمندوب (${COURIER_NAME})">
-            📤
+          <!-- زر إرسال لنفسي -->
+          <button class="quick-action self" onclick="sendToSelf(${order.id})" title="إرسال التفاصيل لنفسي (واتساب)">
+            📩
           </button>
+          
+          <!-- زر واتساب العميل -->
           ${customerPhone ? `
             <button class="quick-action whatsapp" onclick="openWhatsApp('${customerPhone}', '${order.invoice_number}')" title="واتساب العميل">
               💬
             </button>
           ` : ''}
+          
+          <!-- زر عرض -->
           <button class="quick-action view" onclick="openOrderModal(${order.id})" title="عرض">
             👁️
           </button>
@@ -1400,7 +1401,7 @@ async function openOrderModal(orderId) {
         <div class="order-items-list">
           ${items.map(item => `
             <div class="order-item-modal">
-              <div class="order-item-image">👕</div>
+              <div class="order-item-image">🎁</div>
               <div class="order-item-info">
                 <div class="order-item-name">${item.product_name}</div>
                 <div class="order-item-meta">${item.price.toFixed(3)} × ${item.quantity}</div>
@@ -1473,16 +1474,16 @@ async function openOrderModal(orderId) {
       </div>
 
       <div class="modal-actions three">
-        <button class="action-btn courier" onclick="sendToCourier(${order.id})">
-          📤 إرسال للمندوب
+        <button class="action-btn self" onclick="sendToSelf(${order.id})">
+          📩 إرسال لنفسي
         </button>
         ${order.customer_phone ? `
           <button class="action-btn whatsapp" onclick="openWhatsApp('${order.customer_phone}', '${order.invoice_number}')">
-            💬 واتساب
+            💬 واتساب العميل
           </button>
         ` : ''}
         <button class="action-btn print" onclick="printInvoice(${order.id})">
-          🖨️ طباعة
+          🖨️ تنزيل/طباعة
         </button>
       </div>
 
@@ -1498,11 +1499,10 @@ function closeOrderModal() {
 }
 
 // ========================================
-// 📤 إرسال للمندوب (بدون أسعار)
+// 📩 إرسال التفاصيل لنفسي (صاحبة المحل)
 // ========================================
-async function sendToCourier(orderId) {
+async function sendToSelf(orderId) {
   try {
-    // نجيب تفاصيل الطلب كاملة
     const res = await fetch(`${API_URL}/sales/${orderId}`);
     const data = await res.json();
 
@@ -1513,7 +1513,6 @@ async function sendToCourier(orderId) {
 
     const { sale, items } = data;
 
-    // نستخرج معلومات التوصيل من الملاحظات
     let notes = sale.customer_notes || '';
     const deliveryMatch = notes.match(/التوصيل:\s*(\S+)/);
     const deliveryType = deliveryMatch 
@@ -1528,8 +1527,8 @@ async function sendToCourier(orderId) {
       .replace(/\|/g, '')
       .trim();
 
-    // بناء الرسالة (بدون أسعار)
-    let message = `🛵 *طلب توصيل جديد*\n`;
+    // بناء رسالة منسقة (لنفسي)
+    let message = `🌸 *تفاصيل طلب جديد (خاص بي)* 🌸\n`;
     message += `━━━━━━━━━━━━━━━\n\n`;
     message += `📦 *رقم الطلب:* ${sale.invoice_number}\n\n`;
 
@@ -1540,28 +1539,25 @@ async function sendToCourier(orderId) {
     if (deliveryType) message += `• التوصيل: ${deliveryType}\n`;
     if (cleanNotes) message += `• ملاحظات: ${cleanNotes}\n`;
 
-    message += `\n📋 *المنتجات (${items.length}):*\n`;
+    message += `\n🎁 *المنتجات (${items.length}):*\n`;
     items.forEach(item => {
-      message += `• ${item.product_name} × ${item.quantity}\n`;
+      message += `• ${item.product_name} × ${item.quantity} = ${item.subtotal.toFixed(3)} ر.ع\n`;
     });
 
-    message += `\n━━━━━━━━━━━━━━━\n`;
+    message += `\n💰 *الإجمالي:* ${sale.final_total.toFixed(3)} ر.ع\n`;
+    message += `━━━━━━━━━━━━━━━\n`;
     message += `✨ Sukkar Store`;
 
-    // نفتح واتساب المندوب
     const encodedMsg = encodeURIComponent(message);
-    const courierPhone = COURIER_PHONE.replace(/\D/g, '');
-    const whatsappUrl = `https://wa.me/${courierPhone}?text=${encodedMsg}`;
+    const whatsappUrl = `https://wa.me/${STORE_PHONE}?text=${encodedMsg}`;
 
-    // ننسخ النص أيضاً للـ clipboard (احتياطي)
     try {
       await navigator.clipboard.writeText(message);
-      showNotification(`📤 تم نسخ بيانات الطلب — جاري فتح واتساب ${COURIER_NAME}`, 'courier');
+      showNotification(`📩 تم نسخ التفاصيل — جاري فتح واتساب`, 'self');
     } catch (e) {
-      showNotification(`📤 جاري فتح واتساب ${COURIER_NAME}`, 'courier');
+      showNotification(`📩 جاري فتح واتساب...`, 'self');
     }
 
-    // نفتح واتساب
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');
     }, 400);
@@ -1611,7 +1607,7 @@ async function changeStatus(orderId, newStatus) {
   }
 }
 
-// ========== طباعة الفاتورة ==========
+// ========== طباعة / تنزيل الفاتورة ==========
 async function printInvoice(orderId) {
   try {
     const res = await fetch(`${API_URL}/sales/${orderId}`);
