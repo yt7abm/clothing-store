@@ -3,31 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>إدارة المخزون - متجر راقي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<title>إدارة المخزون - Sukkar Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #1e3a8a;
-  --primary-light: #3b82f6;
-  --primary-dark: #1e40af;
+  --brand: #b2437b;
+  --brand-dark: #8a305f;
+  --brand-light: #d98cb4;
+  --mint-pill: #a0cdc6;
+  --pink-card: #f6c6de;
+  --ink: #4a2338;
+  --warm-white: #fffaf5;
+  --bg-light: #fdf6f9;
+  
+  --primary: var(--brand);
+  --primary-light: var(--brand-light);
+  --primary-dark: var(--brand-dark);
   --accent: #f59e0b;
-  --accent-2: #ec4899;
   --gold: #d4af37;
   --bg: #ffffff;
   --bg-2: #f9fafb;
   --bg-3: #f3f4f6;
-  --text: #1f2937;
+  --text: var(--ink);
   --text-muted: #6b7280;
   --border: #e5e7eb;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 40px rgba(178,67,123,0.15);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
 
 html { scroll-behavior: smooth; height: 100%; }
 
@@ -40,7 +49,7 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+button { cursor: pointer; font-family: 'Quicksand', sans-serif; border: none; background: none; color: inherit; }
 img { max-width: 100%; display: block; }
 
 /* ========== Top Bar ========== */
@@ -70,20 +79,20 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
 }
 
-.menu-toggle:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.menu-toggle:hover { background: var(--brand); color: white; border-color: var(--brand); }
 
 .top-logo {
   display: flex; align-items: center; gap: 10px;
-  font-size: 1.1rem; font-weight: 900; color: var(--primary);
+  font-size: 1.1rem; font-weight: 900; color: var(--brand);
 }
 
 .top-logo-icon {
   width: 40px; height: 40px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   border-radius: 11px;
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+  box-shadow: 0 4px 12px rgba(178,67,123,0.2);
 }
 
 .top-bar-left { display: flex; align-items: center; gap: 12px; }
@@ -99,7 +108,7 @@ img { max-width: 100%; display: block; }
 .user-avatar {
   width: 34px; height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex; align-items: center; justify-content: center;
   color: white; font-weight: 900; font-size: 0.9rem;
 }
@@ -158,14 +167,24 @@ img { max-width: 100%; display: block; }
   margin-bottom: 3px;
 }
 
-.sidebar-link:hover { background: var(--bg-3); color: var(--primary); padding-right: 20px; }
+.sidebar-link:hover { background: var(--bg-3); color: var(--brand); padding-right: 20px; }
 .sidebar-link.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
-  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 6px 20px rgba(178,67,123,0.25);
 }
 
 .sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 850;
+}
+
+.sidebar-overlay.active { display: block; }
 
 /* ========== Main ========== */
 .main-content {
@@ -189,7 +208,8 @@ img { max-width: 100%; display: block; }
 }
 
 .page-header-info h1 {
-  font-size: 1.5rem; font-weight: 900;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.5rem; font-weight: 800;
   margin-bottom: 5px;
   display: flex; align-items: center; gap: 10px;
 }
@@ -225,7 +245,7 @@ img { max-width: 100%; display: block; }
 
 .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
-.stat-card.blue::before { background: var(--primary); }
+.stat-card.blue::before { background: var(--brand); }
 .stat-card.green::before { background: var(--success); }
 .stat-card.gold::before { background: var(--gold); }
 .stat-card.red::before { background: var(--danger); }
@@ -238,14 +258,15 @@ img { max-width: 100%; display: block; }
   margin-bottom: 12px;
 }
 
-.stat-card.blue .stat-icon { background: rgba(30, 58, 138, 0.1); color: var(--primary); }
+.stat-card.blue .stat-icon { background: rgba(178,67,123,0.1); color: var(--brand); }
 .stat-card.green .stat-icon { background: rgba(16, 185, 129, 0.1); color: var(--success); }
 .stat-card.gold .stat-icon { background: rgba(212, 175, 55, 0.15); color: var(--gold); }
 .stat-card.red .stat-icon { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
 
 .stat-value {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.8rem;
-  font-weight: 900;
+  font-weight: 800;
   color: var(--text);
   line-height: 1.2;
 }
@@ -282,7 +303,7 @@ img { max-width: 100%; display: block; }
   background: var(--bg-2);
   border: 1.5px solid var(--border);
   border-radius: 12px;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 0.9rem;
   color: var(--text);
   transition: all 0.3s;
@@ -290,7 +311,7 @@ img { max-width: 100%; display: block; }
 
 .filter-search input:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--brand);
   background: white;
 }
 
@@ -308,7 +329,7 @@ img { max-width: 100%; display: block; }
   background: var(--bg-2);
   border: 1.5px solid var(--border);
   border-radius: 12px;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text);
@@ -319,7 +340,7 @@ img { max-width: 100%; display: block; }
 
 .filter-select:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--brand);
   background: white;
 }
 
@@ -397,7 +418,7 @@ img { max-width: 100%; display: block; }
 
 .product-category {
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--brand);
   font-weight: 600;
 }
 
@@ -415,7 +436,7 @@ img { max-width: 100%; display: block; }
   background: white;
   border: 2px solid var(--border);
   border-radius: 10px;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 0.95rem;
   font-weight: 900;
   text-align: center;
@@ -425,8 +446,8 @@ img { max-width: 100%; display: block; }
 
 .stock-input:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(178,67,123,0.1);
 }
 
 .stock-input.low { border-color: var(--warning); background: rgba(245, 158, 11, 0.05); }
@@ -443,18 +464,10 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
 }
 
-.btn-plus {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--success);
-}
-
+.btn-plus { background: rgba(16, 185, 129, 0.1); color: var(--success); }
 .btn-plus:hover { background: var(--success); color: white; }
 
-.btn-minus {
-  background: rgba(239, 68, 68, 0.1);
-  color: var(--danger);
-}
-
+.btn-minus { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
 .btn-minus:hover { background: var(--danger); color: white; }
 
 /* Status */
@@ -487,7 +500,7 @@ img { max-width: 100%; display: block; }
 .loading {
   text-align: center;
   padding: 60px 20px;
-  color: var(--primary);
+  color: var(--brand);
 }
 
 .loading::after {
@@ -496,7 +509,7 @@ img { max-width: 100%; display: block; }
   width: 35px; height: 35px;
   margin: 15px auto 0;
   border: 3px solid var(--border);
-  border-top-color: var(--primary);
+  border-top-color: var(--brand);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -524,7 +537,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   max-width: 480px;
   overflow: hidden;
-  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 25px 70px rgba(178,67,123,0.25);
   animation: modalIn 0.3s ease;
 }
 
@@ -534,7 +547,7 @@ img { max-width: 100%; display: block; }
 }
 
 .modal-header {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
   padding: 22px 25px;
   display: flex;
@@ -546,8 +559,9 @@ img { max-width: 100%; display: block; }
 .modal-header.green { background: linear-gradient(135deg, var(--success), #059669); }
 
 .modal-header h2 {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 800;
   display: flex; align-items: center; gap: 10px;
 }
 
@@ -597,7 +611,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   padding: 14px 16px;
   font-size: 0.95rem;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   background: var(--bg-2);
   border: 2px solid var(--border);
   border-radius: 12px;
@@ -610,9 +624,9 @@ img { max-width: 100%; display: block; }
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--brand);
   background: white;
-  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
+  box-shadow: 0 0 0 4px rgba(178,67,123,0.1);
 }
 
 .quick-amounts {
@@ -633,10 +647,7 @@ img { max-width: 100%; display: block; }
   color: var(--text);
 }
 
-.quick-amount-btn:hover {
-  background: var(--primary);
-  color: white;
-}
+.quick-amount-btn:hover { background: var(--brand); color: white; }
 
 .modal-footer {
   padding: 18px 25px;
@@ -650,7 +661,7 @@ img { max-width: 100%; display: block; }
 .btn {
   padding: 12px 24px;
   border-radius: 12px;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 0.9rem;
   transition: all 0.3s;
   cursor: pointer;
@@ -661,9 +672,9 @@ img { max-width: 100%; display: block; }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   color: white;
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 8px 25px rgba(178,67,123,0.25);
 }
 
 .btn-primary:hover:not(:disabled) { transform: translateY(-3px); }
@@ -699,7 +710,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background: var(--primary);
+  background: var(--brand);
   color: white;
   padding: 14px 25px;
   border-radius: 14px;
@@ -707,7 +718,7 @@ img { max-width: 100%; display: block; }
   z-index: 3000;
   transform: translateX(500px);
   transition: transform 0.4s;
-  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.3);
+  box-shadow: 0 15px 40px rgba(178,67,123,0.3);
   max-width: calc(100% - 60px);
   font-size: 0.9rem;
 }
@@ -771,8 +782,10 @@ img { max-width: 100%; display: block; }
   <div class="top-bar-right">
     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     <div class="top-logo">
-      <div class="top-logo-icon">📦</div>
-      المخزون
+      <svg class="top-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      Sukkar Store
     </div>
   </div>
   <div class="top-bar-left">
@@ -805,10 +818,6 @@ img { max-width: 100%; display: block; }
       <span class="icon">👕</span>
       <span>المنتجات</span>
     </a>
-    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
-      <span class="icon">🏷️</span>
-      <span>الفئات</span>
-    </a>
     <a href="inventory.html" class="sidebar-link active" data-permission="inventory.view">
       <span class="icon">📦</span>
       <span>المخزون</span>
@@ -816,10 +825,6 @@ img { max-width: 100%; display: block; }
     <a href="orders.html" class="sidebar-link" data-permission="orders.view">
       <span class="icon">🛍️</span>
       <span>الطلبات</span>
-    </a>
-    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
-      <span class="icon">💰</span>
-      <span>الكاشير</span>
     </a>
     <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
       <span class="icon">🎟️</span>
@@ -837,9 +842,9 @@ img { max-width: 100%; display: block; }
       <span class="icon">🖼️</span>
       <span>البانرات</span>
     </a>
-    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
-      <span class="icon">👥</span>
-      <span>الموظفين</span>
+    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
+      <span class="icon">🎁</span>
+      <span>العروضات</span>
     </a>
   </div>
 
@@ -854,8 +859,6 @@ img { max-width: 100%; display: block; }
 
 <!-- Main -->
 <main class="main-content">
-
-  <!-- Page Header -->
   <div class="page-header">
     <div class="page-header-info">
       <h1>📦 إدارة المخزون</h1>
@@ -863,26 +866,22 @@ img { max-width: 100%; display: block; }
     </div>
   </div>
 
-  <!-- Stats -->
   <div class="stats-grid">
     <div class="stat-card blue">
       <div class="stat-icon">📦</div>
       <div class="stat-value" id="totalProducts">0</div>
       <div class="stat-label">إجمالي المنتجات</div>
     </div>
-
     <div class="stat-card green">
       <div class="stat-icon">✅</div>
       <div class="stat-value" id="totalStock">0</div>
       <div class="stat-label">إجمالي القطع</div>
     </div>
-
     <div class="stat-card gold">
       <div class="stat-icon">⚠️</div>
       <div class="stat-value" id="lowStock">0</div>
       <div class="stat-label">مخزون منخفض</div>
     </div>
-
     <div class="stat-card red">
       <div class="stat-icon">❌</div>
       <div class="stat-value" id="outOfStock">0</div>
@@ -890,7 +889,6 @@ img { max-width: 100%; display: block; }
     </div>
   </div>
 
-  <!-- Filters -->
   <div class="filters-bar">
     <div class="filter-search">
       <input type="text" id="searchInput" placeholder="ابحث عن منتج..." oninput="applyFilters()">
@@ -907,21 +905,18 @@ img { max-width: 100%; display: block; }
     </select>
   </div>
 
-  <!-- Inventory Table -->
   <div class="inventory-table-wrap" id="tableWrap">
     <div class="loading">⏳ جاري تحميل المخزون...</div>
   </div>
-
 </main>
 
-<!-- ========== Modal تعديل المخزون ========== -->
+<!-- Modal تعديل المخزون -->
 <div class="modal" id="stockModal">
   <div class="modal-content">
     <div class="modal-header">
       <h2 id="stockModalTitle">➕ إضافة مخزون</h2>
       <button class="modal-close" onclick="closeStockModal()">✕</button>
     </div>
-
     <div class="modal-body">
       <input type="hidden" id="stockProductId">
       <input type="hidden" id="stockAction">
@@ -953,7 +948,6 @@ img { max-width: 100%; display: block; }
         <input type="text" id="stockReason" placeholder="مثال: دفعة جديدة">
       </div>
     </div>
-
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeStockModal()">إلغاء</button>
       <button class="btn btn-success" onclick="saveStock()" id="saveStockBtn">
@@ -964,7 +958,7 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- ========== Modal تسجيل الخروج ========== -->
+<!-- Modal تسجيل الخروج -->
 <div class="modal" id="logoutModal">
   <div class="modal-content">
     <div class="modal-header danger">
@@ -995,9 +989,9 @@ let allCategories = [];
 let filteredProducts = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const userStr = localStorage.getItem('raki_user');
-  const permStr = localStorage.getItem('raki_permissions');
-  const token = localStorage.getItem('raki_token');
+  const userStr = localStorage.getItem('sukkar_user');
+  const permStr = localStorage.getItem('sukkar_permissions');
+  const token = localStorage.getItem('sukkar_token');
 
   if (!userStr || !token) { window.location.href = 'login.html'; return; }
 
@@ -1180,7 +1174,7 @@ function renderRow(p) {
       <td style="text-align: center; color: var(--text-muted); font-weight: 700;">${p.min_stock}</td>
       <td><span class="status-badge ${statusClass}">${status}</span></td>
       <td style="text-align: left;">
-        <button class="btn-mini" style="background: var(--primary); color: white; width: auto; padding: 8px 14px;" onclick="openStockModal(${p.id}, 'add')">
+        <button class="btn-mini" style="background: var(--brand); color: white; width: auto; padding: 8px 14px;" onclick="openStockModal(${p.id}, 'add')">
           📦 إضافة
         </button>
       </td>
@@ -1188,7 +1182,6 @@ function renderRow(p) {
   `;
 }
 
-// ========== Modal المخزون ==========
 function openStockModal(productId, action) {
   const product = allProducts.find(p => p.id === productId);
   if (!product) return;
@@ -1243,7 +1236,6 @@ async function saveStock() {
   const btn = document.getElementById('saveStockBtn');
   btn.disabled = true;
 
-  // الكمية الجديدة
   const newStock = action === 'add' 
     ? product.stock + quantity 
     : product.stock - quantity;
@@ -1267,11 +1259,9 @@ async function saveStock() {
       closeStockModal();
       await loadProducts();
     } else {
-      // إذا فشل الـ API، نجرب التحديث المباشر
       await updateStockDirect(productId, newStock);
     }
   } catch (error) {
-    // في حالة الخطأ، نجرب التحديث المباشر
     await updateStockDirect(productId, newStock);
   } finally {
     btn.disabled = false;
@@ -1279,7 +1269,6 @@ async function saveStock() {
 }
 
 async function updateStockDirect(productId, newStock) {
-  // تحديث المنتج مباشرة عبر PUT
   try {
     const product = allProducts.find(p => p.id === parseInt(productId));
     if (!product) return;
@@ -1315,23 +1304,20 @@ async function updateStockDirect(productId, newStock) {
   }
 }
 
-// ========== Sidebar ==========
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebarOverlay').classList.toggle('active');
 }
 
-// ========== تسجيل الخروج ==========
 function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
 function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
 function confirmLogout() {
-  localStorage.removeItem('raki_token');
-  localStorage.removeItem('raki_user');
-  localStorage.removeItem('raki_permissions');
+  localStorage.removeItem('sukkar_token');
+  localStorage.removeItem('sukkar_user');
+  localStorage.removeItem('sukkar_permissions');
   window.location.href = 'login.html';
 }
 
-// ========== Notification ==========
 function showNotification(message, type = '') {
   const notif = document.getElementById('notification');
   notif.textContent = message;
@@ -1339,7 +1325,6 @@ function showNotification(message, type = '') {
   setTimeout(() => notif.classList.remove('show'), 3000);
 }
 
-// ESC
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeStockModal();

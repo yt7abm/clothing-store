@@ -3,31 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>إدارة المنتجات - متجر راقي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<title>إدارة المنتجات - Sukkar Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #1e3a8a;
-  --primary-light: #3b82f6;
-  --primary-dark: #1e40af;
+  --brand: #b2437b;
+  --brand-dark: #8a305f;
+  --brand-light: #d98cb4;
+  --mint-pill: #a0cdc6;
+  --pink-card: #f6c6de;
+  --ink: #4a2338;
+  --warm-white: #fffaf5;
+  --bg-light: #fdf6f9;
+  
+  --primary: var(--brand);
+  --primary-light: var(--brand-light);
+  --primary-dark: var(--brand-dark);
   --accent: #f59e0b;
-  --accent-2: #ec4899;
   --gold: #d4af37;
   --bg: #ffffff;
   --bg-2: #f9fafb;
   --bg-3: #f3f4f6;
-  --text: #1f2937;
+  --text: var(--ink);
   --text-muted: #6b7280;
   --border: #e5e7eb;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 40px rgba(178,67,123,0.15);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
 
 html { scroll-behavior: smooth; height: 100%; }
 
@@ -40,7 +49,7 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+button { cursor: pointer; font-family: 'Quicksand', sans-serif; border: none; background: none; color: inherit; }
 img { max-width: 100%; display: block; }
 
 /* ========== Top Bar ========== */
@@ -70,20 +79,20 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
 }
 
-.menu-toggle:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.menu-toggle:hover { background: var(--brand); color: white; border-color: var(--brand); }
 
 .top-logo {
   display: flex; align-items: center; gap: 10px;
-  font-size: 1.1rem; font-weight: 900; color: var(--primary);
+  font-size: 1.1rem; font-weight: 900; color: var(--brand);
 }
 
 .top-logo-icon {
   width: 40px; height: 40px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   border-radius: 11px;
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+  box-shadow: 0 4px 12px rgba(178,67,123,0.2);
 }
 
 .top-bar-left { display: flex; align-items: center; gap: 12px; }
@@ -99,7 +108,7 @@ img { max-width: 100%; display: block; }
 .user-avatar {
   width: 34px; height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex; align-items: center; justify-content: center;
   color: white; font-weight: 900; font-size: 0.9rem;
 }
@@ -158,11 +167,11 @@ img { max-width: 100%; display: block; }
   margin-bottom: 3px;
 }
 
-.sidebar-link:hover { background: var(--bg-3); color: var(--primary); padding-right: 20px; }
+.sidebar-link:hover { background: var(--bg-3); color: var(--brand); padding-right: 20px; }
 .sidebar-link.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
-  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 6px 20px rgba(178,67,123,0.25);
 }
 
 .sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
@@ -199,7 +208,8 @@ img { max-width: 100%; display: block; }
 }
 
 .page-header-info h1 {
-  font-size: 1.5rem; font-weight: 900;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.5rem; font-weight: 800;
   margin-bottom: 5px;
   display: flex; align-items: center; gap: 10px;
 }
@@ -207,18 +217,18 @@ img { max-width: 100%; display: block; }
 .page-header-info p { color: var(--text-muted); font-size: 0.85rem; }
 
 .add-btn {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   color: white;
   padding: 12px 24px;
   border-radius: 12px;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 0.9rem;
   transition: all 0.3s;
   display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 8px 25px rgba(178,67,123,0.25);
 }
 
-.add-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35); }
+.add-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(178,67,123,0.35); }
 
 /* ========== Stats Mini ========== */
 .stats-mini {
@@ -240,7 +250,7 @@ img { max-width: 100%; display: block; }
   gap: 6px;
 }
 
-.stat-mini.blue { color: var(--primary); background: rgba(30, 58, 138, 0.05); border-color: rgba(30, 58, 138, 0.15); }
+.stat-mini.blue { color: var(--brand); background: rgba(178,67,123,0.05); border-color: rgba(178,67,123,0.15); }
 .stat-mini.green { color: var(--success); background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.15); }
 .stat-mini.red { color: var(--danger); background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.15); }
 .stat-mini.gold { color: var(--gold); background: rgba(212, 175, 55, 0.08); border-color: rgba(212, 175, 55, 0.2); }
@@ -270,7 +280,7 @@ img { max-width: 100%; display: block; }
   background: var(--bg-2);
   border: 1.5px solid var(--border);
   border-radius: 12px;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 0.9rem;
   color: var(--text);
   transition: all 0.3s;
@@ -278,7 +288,7 @@ img { max-width: 100%; display: block; }
 
 .filter-search input:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--brand);
   background: white;
 }
 
@@ -296,7 +306,7 @@ img { max-width: 100%; display: block; }
   background: var(--bg-2);
   border: 1.5px solid var(--border);
   border-radius: 12px;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text);
@@ -307,7 +317,7 @@ img { max-width: 100%; display: block; }
 
 .filter-select:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--brand);
   background: white;
 }
 
@@ -321,23 +331,9 @@ img { max-width: 100%; display: block; }
   -webkit-overflow-scrolling: touch;
 }
 
-.products-table-wrap::-webkit-scrollbar {
-  height: 8px;
-}
-
-.products-table-wrap::-webkit-scrollbar-thumb {
-  background: var(--primary-light);
-  border-radius: 4px;
-}
-
-.products-table-wrap::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-}
-
-.products-table-wrap::-webkit-scrollbar-track {
-  background: var(--bg-3);
-  border-radius: 4px;
-}
+.products-table-wrap::-webkit-scrollbar { height: 8px; }
+.products-table-wrap::-webkit-scrollbar-thumb { background: var(--brand-light); border-radius: 4px; }
+.products-table-wrap::-webkit-scrollbar-track { background: var(--bg-3); border-radius: 4px; }
 
 .products-table {
   width: 100%;
@@ -406,11 +402,11 @@ img { max-width: 100%; display: block; }
 
 .product-category {
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--brand);
   font-weight: 600;
 }
 
-.price-cell { font-weight: 900; color: var(--primary); white-space: nowrap; }
+.price-cell { font-weight: 900; color: var(--brand); white-space: nowrap; }
 
 .price-cell .old-price {
   display: block;
@@ -472,8 +468,8 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
 }
 
-.icon-action.edit { background: rgba(30, 58, 138, 0.1); color: var(--primary); }
-.icon-action.edit:hover { background: var(--primary); color: white; }
+.icon-action.edit { background: rgba(178,67,123,0.1); color: var(--brand); }
+.icon-action.edit:hover { background: var(--brand); color: white; }
 
 .icon-action.discount { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
 .icon-action.discount:hover { background: var(--danger); color: white; }
@@ -498,7 +494,7 @@ img { max-width: 100%; display: block; }
 .loading {
   text-align: center;
   padding: 60px 20px;
-  color: var(--primary);
+  color: var(--brand);
 }
 
 .loading::after {
@@ -507,7 +503,7 @@ img { max-width: 100%; display: block; }
   width: 35px; height: 35px;
   margin: 15px auto 0;
   border: 3px solid var(--border);
-  border-top-color: var(--primary);
+  border-top-color: var(--brand);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -538,7 +534,7 @@ img { max-width: 100%; display: block; }
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 25px 70px rgba(178,67,123,0.25);
   animation: modalIn 0.3s ease;
 }
 
@@ -550,7 +546,7 @@ img { max-width: 100%; display: block; }
 }
 
 .modal-header {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
   padding: 22px 25px;
   border-radius: 24px 24px 0 0;
@@ -563,8 +559,9 @@ img { max-width: 100%; display: block; }
 .modal-header.gold { background: linear-gradient(135deg, var(--gold), var(--accent)); }
 
 .modal-header h2 {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 800;
   display: flex; align-items: center; gap: 10px;
 }
 
@@ -619,7 +616,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   padding: 12px 16px;
   font-size: 0.9rem;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   background: var(--bg-2);
   border: 2px solid var(--border);
   border-radius: 12px;
@@ -631,9 +628,9 @@ img { max-width: 100%; display: block; }
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--brand);
   background: white;
-  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
+  box-shadow: 0 0 0 4px rgba(178,67,123,0.1);
 }
 
 .form-group textarea { resize: vertical; min-height: 80px; }
@@ -653,10 +650,7 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 
-.image-upload:hover {
-  border-color: var(--primary);
-  background: white;
-}
+.image-upload:hover { border-color: var(--brand); background: white; }
 
 .image-upload input[type="file"] {
   position: absolute;
@@ -707,9 +701,7 @@ img { max-width: 100%; display: block; }
   transition: all 0.3s;
 }
 
-.checkbox-group:hover {
-  background: rgba(212, 175, 55, 0.12);
-}
+.checkbox-group:hover { background: rgba(212, 175, 55, 0.12); }
 
 .checkbox-group input[type="checkbox"] {
   width: 20px; height: 20px;
@@ -727,20 +719,14 @@ img { max-width: 100%; display: block; }
 }
 
 /* Discount Type Options */
-.discount-type-option {
-  transition: all 0.3s;
-}
-
-.discount-type-option:hover {
-  transform: translateY(-3px);
-  border-color: var(--primary-light) !important;
-}
+.discount-type-option { transition: all 0.3s; }
+.discount-type-option:hover { transform: translateY(-3px); border-color: var(--brand) !important; }
 
 /* ========== Button ========== */
 .btn {
   padding: 12px 24px;
   border-radius: 12px;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 0.9rem;
   transition: all 0.3s;
   cursor: pointer;
@@ -751,12 +737,12 @@ img { max-width: 100%; display: block; }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   color: white;
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 8px 25px rgba(178,67,123,0.25);
 }
 
-.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35); }
+.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(178,67,123,0.35); }
 
 .btn-danger {
   background: linear-gradient(135deg, var(--danger), #b91c1c);
@@ -764,7 +750,7 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 8px 25px rgba(239, 68, 68, 0.25);
 }
 
-.btn-danger:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(239, 68, 68, 0.35); }
+.btn-danger:hover:not(:disabled) { transform: translateY(-3px); }
 
 .btn-secondary {
   background: white;
@@ -781,7 +767,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background: var(--primary);
+  background: var(--brand);
   color: white;
   padding: 14px 25px;
   border-radius: 14px;
@@ -789,7 +775,7 @@ img { max-width: 100%; display: block; }
   z-index: 3000;
   transform: translateX(500px);
   transition: transform 0.4s;
-  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.3);
+  box-shadow: 0 15px 40px rgba(178,67,123,0.3);
   max-width: calc(100% - 60px);
   font-size: 0.9rem;
 }
@@ -825,46 +811,14 @@ img { max-width: 100%; display: block; }
   .stats-mini { gap: 8px; }
   .stat-mini { padding: 8px 12px; font-size: 0.7rem; }
 
-  .products-table {
-    min-width: 800px;
-  }
-
-  .products-table th,
-  .products-table td {
-    padding: 12px 10px;
-    font-size: 0.8rem;
-  }
-
-  .product-img {
-    width: 45px;
-    height: 45px;
-    font-size: 1.2rem;
-  }
-
-  .product-name {
-    font-size: 0.85rem;
-    max-width: 180px;
-  }
-
-  .product-category {
-    font-size: 0.65rem;
-  }
-
-  .stock-badge {
-    font-size: 0.65rem;
-    padding: 3px 8px;
-  }
-
-  .icon-action {
-    width: 30px;
-    height: 30px;
-    font-size: 0.8rem;
-  }
-
-  .mini-badge {
-    font-size: 0.6rem;
-    padding: 2px 6px;
-  }
+  .products-table { min-width: 800px; }
+  .products-table th, .products-table td { padding: 12px 10px; font-size: 0.8rem; }
+  .product-img { width: 45px; height: 45px; font-size: 1.2rem; }
+  .product-name { font-size: 0.85rem; max-width: 180px; }
+  .product-category { font-size: 0.65rem; }
+  .stock-badge { font-size: 0.65rem; padding: 3px 8px; }
+  .icon-action { width: 30px; height: 30px; font-size: 0.8rem; }
+  .mini-badge { font-size: 0.6rem; padding: 2px 6px; }
 
   .products-table-wrap::after {
     content: '← اسحب للجانب لرؤية المزيد →';
@@ -898,8 +852,10 @@ img { max-width: 100%; display: block; }
   <div class="top-bar-right">
     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     <div class="top-logo">
-      <div class="top-logo-icon">👕</div>
-      المنتجات
+      <svg class="top-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      Sukkar Store
     </div>
   </div>
   <div class="top-bar-left">
@@ -932,10 +888,6 @@ img { max-width: 100%; display: block; }
       <span class="icon">👕</span>
       <span>المنتجات</span>
     </a>
-    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
-      <span class="icon">🏷️</span>
-      <span>الفئات</span>
-    </a>
     <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
       <span class="icon">📦</span>
       <span>المخزون</span>
@@ -943,10 +895,6 @@ img { max-width: 100%; display: block; }
     <a href="orders.html" class="sidebar-link" data-permission="orders.view">
       <span class="icon">🛍️</span>
       <span>الطلبات</span>
-    </a>
-    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
-      <span class="icon">💰</span>
-      <span>الكاشير</span>
     </a>
     <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
       <span class="icon">🎟️</span>
@@ -956,10 +904,6 @@ img { max-width: 100%; display: block; }
 
   <div class="sidebar-section" id="managementSection" style="display:none;">
     <div class="sidebar-section-title">الإدارة</div>
-    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
-      <span class="icon">🎁</span>
-      <span>العروضات</span>
-    </a>
     <a href="reports.html" class="sidebar-link" data-permission="reports.view">
       <span class="icon">📈</span>
       <span>التقارير</span>
@@ -968,9 +912,9 @@ img { max-width: 100%; display: block; }
       <span class="icon">🖼️</span>
       <span>البانرات</span>
     </a>
-    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
-      <span class="icon">👥</span>
-      <span>الموظفين</span>
+    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
+      <span class="icon">🎁</span>
+      <span>العروضات</span>
     </a>
   </div>
 
@@ -985,7 +929,6 @@ img { max-width: 100%; display: block; }
 
 <!-- Main -->
 <main class="main-content">
-
   <div class="page-header">
     <div class="page-header-info">
       <h1>👕 إدارة المنتجات</h1>
@@ -1025,7 +968,6 @@ img { max-width: 100%; display: block; }
   <div class="products-table-wrap" id="tableWrap">
     <div class="loading">⏳ جاري تحميل المنتجات...</div>
   </div>
-
 </main>
 
 <!-- Modal إضافة/تعديل منتج -->
@@ -1035,7 +977,6 @@ img { max-width: 100%; display: block; }
       <h2 id="modalTitle">➕ إضافة منتج جديد</h2>
       <button class="modal-close" onclick="closeProductModal()">✕</button>
     </div>
-
     <div class="modal-body">
       <form id="productForm" onsubmit="saveProduct(event)">
         <input type="hidden" id="productId">
@@ -1053,7 +994,7 @@ img { max-width: 100%; display: block; }
         <div class="form-row">
           <div class="form-group">
             <label>👕 اسم المنتج <span class="required">*</span></label>
-            <input type="text" id="name" required placeholder="مثال: قميص قطني">
+            <input type="text" id="name" required placeholder="مثال: باقة انجل">
           </div>
           <div class="form-group">
             <label>🏷️ الفئة</label>
@@ -1109,7 +1050,7 @@ img { max-width: 100%; display: block; }
           </div>
           <div id="discountPreview2" style="display:none; padding: 12px; background: white; border-radius: 10px; font-size: 0.85rem; text-align: center;">
             <span style="color: var(--text-muted);">السعر بعد الخصم:</span>
-            <strong style="color: var(--primary); font-size: 1.1rem;" id="discountPreviewPrice">0.000</strong>
+            <strong style="color: var(--brand); font-size: 1.1rem;" id="discountPreviewPrice">0.000</strong>
             <span>ر.ع</span>
           </div>
         </div>
@@ -1121,13 +1062,31 @@ img { max-width: 100%; display: block; }
 
       </form>
     </div>
-
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeProductModal()">إلغاء</button>
       <button class="btn btn-primary" onclick="document.getElementById('productForm').requestSubmit()" id="saveBtn">
         <span>💾</span>
         <span>حفظ</span>
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal حذف -->
+<div class="modal" id="deleteModal">
+  <div class="modal-content small">
+    <div class="modal-header danger">
+      <h2>🗑️ حذف المنتج</h2>
+      <button class="modal-close" onclick="closeDeleteModal()">✕</button>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <div style="font-size: 4rem; margin-bottom: 15px;">⚠️</div>
+      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">تأكيد الحذف</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeDeleteModal()">إلغاء</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">🗑️ حذف</button>
     </div>
   </div>
 </div>
@@ -1151,25 +1110,6 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- Modal الحذف -->
-<div class="modal" id="deleteModal">
-  <div class="modal-content small">
-    <div class="modal-header danger">
-      <h2>🗑️ حذف المنتج</h2>
-      <button class="modal-close" onclick="closeDeleteModal()">✕</button>
-    </div>
-    <div class="modal-body" style="text-align:center;">
-      <div style="font-size: 4rem; margin-bottom: 15px;">⚠️</div>
-      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">تأكيد الحذف</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع.</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeDeleteModal()">إلغاء</button>
-      <button class="btn btn-danger" onclick="confirmDelete()">🗑️ حذف</button>
-    </div>
-  </div>
-</div>
-
 <!-- Notification -->
 <div class="notification" id="notification"></div>
 
@@ -1185,9 +1125,9 @@ let currentDiscountProductId = null;
 
 // ========== التحقق من الدخول ==========
 document.addEventListener('DOMContentLoaded', async () => {
-  const userStr = localStorage.getItem('raki_user');
-  const permStr = localStorage.getItem('raki_permissions');
-  const token = localStorage.getItem('raki_token');
+  const userStr = localStorage.getItem('sukkar_user');
+  const permStr = localStorage.getItem('sukkar_permissions');
+  const token = localStorage.getItem('sukkar_token');
 
   if (!userStr || !token) { window.location.href = 'login.html'; return; }
 
@@ -1208,7 +1148,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadCategories();
   await loadProducts();
 
-  // ربط الأحداث لدiscountPreview2 (في نموذج التعديل)
   document.getElementById('discountType').addEventListener('change', updateDiscountPreview2);
   document.getElementById('discountValue').addEventListener('input', updateDiscountPreview2);
   document.getElementById('price').addEventListener('input', updateDiscountPreview2);
@@ -1253,12 +1192,10 @@ async function loadCategories() {
 
     if (data.success) {
       allCategories = data.categories;
-
       document.getElementById('categoryFilter').innerHTML = `
         <option value="">كل الفئات</option>
         ${allCategories.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
       `;
-
       document.getElementById('categoryId').innerHTML = `
         <option value="">بدون فئة</option>
         ${allCategories.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
@@ -1295,7 +1232,6 @@ function updateStats() {
   document.getElementById('countFeatured').textContent = allProducts.filter(p => p.is_featured === 1).length;
 }
 
-// ========== الفلترة ==========
 function applyFilters() {
   const search = document.getElementById('searchInput').value.trim().toLowerCase();
   const category = document.getElementById('categoryFilter').value;
@@ -1317,7 +1253,6 @@ function applyFilters() {
   renderTable();
 }
 
-// ========== عرض الجدول ==========
 function renderTable() {
   const wrap = document.getElementById('tableWrap');
 
@@ -1389,7 +1324,7 @@ function renderRow(p) {
           ${hasDiscount ? `<span class="old-price">${p.price.toFixed(3)}</span>` : ''}
           <span class="new-price">
             ${finalPrice.toFixed(3)}
-            <img src="/images/omr-dark.png" alt="ر.ع">
+            <img src="../assets/omr-dark.png" alt="ر.ع">
           </span>
         </div>
       </td>
@@ -1409,7 +1344,6 @@ function renderRow(p) {
   `;
 }
 
-// ========== إضافة منتج ==========
 function openAddModal() {
   document.getElementById('modalTitle').innerHTML = '➕ إضافة منتج جديد';
   document.getElementById('productId').value = '';
@@ -1431,7 +1365,6 @@ function openAddModal() {
   document.getElementById('productModal').classList.add('show');
 }
 
-// ========== تعديل منتج (مُصلح) ==========
 function openEditModal(id) {
   const p = allProducts.find(x => x.id === id);
   if (!p) return;
@@ -1460,10 +1393,7 @@ function openEditModal(id) {
     document.getElementById('uploadText').textContent = 'اضغط لاختيار صورة';
   }
 
-  // افتح النافذة أولاً
   document.getElementById('productModal').classList.add('show');
-
-  // ثم حدّث معاينة الخصم
   updateDiscountPreview2();
 }
 
@@ -1471,7 +1401,6 @@ function closeProductModal() {
   document.getElementById('productModal').classList.remove('show');
 }
 
-// ========== معاينة الصورة ==========
 function previewImage(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -1486,7 +1415,6 @@ function previewImage(event) {
   reader.readAsDataURL(file);
 }
 
-// ========== حفظ المنتج ==========
 async function saveProduct(e) {
   e.preventDefault();
 
@@ -1534,7 +1462,6 @@ async function saveProduct(e) {
   }
 }
 
-// ========== معاينة الخصم في نموذج التعديل ==========
 function updateDiscountPreview2() {
   const typeEl = document.getElementById('discountType');
   const valueEl = document.getElementById('discountValue');
@@ -1543,7 +1470,6 @@ function updateDiscountPreview2() {
   const previewEl = document.getElementById('discountPreview2');
   const previewPriceEl = document.getElementById('discountPreviewPrice');
 
-  // تحقق من وجود العناصر
   if (!typeEl || !valueEl || !priceEl || !hintEl || !previewEl || !previewPriceEl) return;
 
   const type = typeEl.value;
@@ -1572,7 +1498,7 @@ function updateDiscountPreview2() {
   }
 }
 
-// ========== Modal الخصم (المخصص) ==========
+// ========== Discount Modal (تم تعديله ليتناسب مع الهوية) ==========
 function openDiscountModal(id) {
   const p = allProducts.find(x => x.id === id);
   if (!p) return;
@@ -1595,7 +1521,7 @@ function openDiscountModal(id) {
               </div>
               <div style="flex: 1; min-width: 0;">
                 <div style="font-weight: 900; font-size: 0.9rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.name}</div>
-                <div style="font-size: 0.8rem; color: var(--primary); font-weight: 700;">السعر: ${p.price.toFixed(3)} ر.ع</div>
+                <div style="font-size: 0.8rem; color: var(--brand); font-weight: 700;">السعر: ${p.price.toFixed(3)} ر.ع</div>
               </div>
             </div>
           </div>
@@ -1684,9 +1610,9 @@ function selectDiscountType(type) {
   document.querySelectorAll('.discount-type-option').forEach(opt => {
     const optType = opt.getAttribute('data-type');
     if (optType === type) {
-      opt.style.borderColor = 'var(--primary)';
-      opt.style.background = 'rgba(30, 58, 138, 0.05)';
-      opt.style.boxShadow = '0 6px 20px rgba(30, 58, 138, 0.15)';
+      opt.style.borderColor = 'var(--brand)';
+      opt.style.background = 'rgba(178,67,123,0.05)';
+      opt.style.boxShadow = '0 6px 20px rgba(178,67,123,0.15)';
     } else {
       opt.style.borderColor = 'var(--border)';
       opt.style.background = 'transparent';
@@ -1758,12 +1684,10 @@ async function saveDiscount(productId) {
     showNotification('⚠️ اختر نوع الخصم', 'error');
     return;
   }
-
   if (value <= 0) {
     showNotification('⚠️ أدخل قيمة الخصم', 'error');
     return;
   }
-
   if (type === 'percent' && value > 100) {
     showNotification('⚠️ النسبة يجب أن تكون 100% أو أقل', 'error');
     return;
@@ -1803,7 +1727,6 @@ async function applyDiscount(id, type, value) {
   }
 }
 
-// ========== تمييز منتج ==========
 async function toggleFeatured(id) {
   try {
     const res = await fetch(`${API_URL}/products/${id}/featured`, { method: 'PUT' });
@@ -1820,7 +1743,7 @@ async function toggleFeatured(id) {
   }
 }
 
-// ========== حذف ==========
+// ========== Delete ==========
 function openDeleteModal(id) {
   deletingId = id;
   document.getElementById('deleteModal').classList.add('show');
@@ -1856,13 +1779,13 @@ function toggleSidebar() {
   document.getElementById('sidebarOverlay').classList.toggle('active');
 }
 
-// ========== تسجيل الخروج ==========
+// ========== Logout ==========
 function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
 function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
 function confirmLogout() {
-  localStorage.removeItem('raki_token');
-  localStorage.removeItem('raki_user');
-  localStorage.removeItem('raki_permissions');
+  localStorage.removeItem('sukkar_token');
+  localStorage.removeItem('sukkar_user');
+  localStorage.removeItem('sukkar_permissions');
   window.location.href = 'login.html';
 }
 

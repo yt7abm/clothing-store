@@ -3,32 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>لوحة التحكم - متجر راقي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<title>لوحة التحكم - Sukkar Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #1e3a8a;
-  --primary-light: #3b82f6;
-  --primary-dark: #1e40af;
+  --brand: #b2437b;
+  --brand-dark: #8a305f;
+  --brand-light: #d98cb4;
+  --mint-pill: #a0cdc6;
+  --pink-card: #f6c6de;
+  --ink: #4a2338;
+  --warm-white: #fffaf5;
+  --bg-light: #fdf6f9;
+  
+  --primary: var(--brand);
+  --primary-light: var(--brand-light);
+  --primary-dark: var(--brand-dark);
   --accent: #f59e0b;
-  --accent-2: #ec4899;
   --gold: #d4af37;
   --bg: #ffffff;
   --bg-2: #f9fafb;
   --bg-3: #f3f4f6;
-  --text: #1f2937;
+  --text: var(--ink);
   --text-muted: #6b7280;
   --border: #e5e7eb;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
-  --shadow-xl: 0 20px 60px rgba(30, 58, 138, 0.15);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 40px rgba(178,67,123,0.15);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
 
 html { scroll-behavior: smooth; height: 100%; }
 
@@ -41,7 +49,7 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+button { cursor: pointer; font-family: 'Quicksand', sans-serif; border: none; background: none; color: inherit; }
 img { max-width: 100%; display: block; }
 
 /* ========== Top Bar ========== */
@@ -77,9 +85,9 @@ img { max-width: 100%; display: block; }
 }
 
 .menu-toggle:hover {
-  background: var(--primary);
+  background: var(--brand);
   color: white;
-  border-color: var(--primary);
+  border-color: var(--brand);
 }
 
 .top-logo {
@@ -88,20 +96,20 @@ img { max-width: 100%; display: block; }
   gap: 10px;
   font-size: 1.1rem;
   font-weight: 900;
-  color: var(--primary);
+  color: var(--brand);
 }
 
 .top-logo-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+  box-shadow: 0 4px 12px rgba(178,67,123,0.2);
 }
 
 .top-bar-left { display: flex; align-items: center; gap: 12px; }
@@ -120,7 +128,7 @@ img { max-width: 100%; display: block; }
 
 .user-badge:hover {
   background: white;
-  border-color: var(--primary-light);
+  border-color: var(--brand);
   box-shadow: var(--shadow-sm);
 }
 
@@ -128,7 +136,7 @@ img { max-width: 100%; display: block; }
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -218,27 +226,18 @@ img { max-width: 100%; display: block; }
 
 .sidebar-link:hover {
   background: var(--bg-3);
-  color: var(--primary);
+  color: var(--brand);
   padding-right: 20px;
 }
 
 .sidebar-link.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
-  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 6px 20px rgba(178,67,123,0.25);
 }
 
 .sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
 .sidebar-link .label { flex: 1; }
-
-.sidebar-link .badge-count {
-  background: var(--danger);
-  color: white;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.7rem;
-  font-weight: 900;
-}
 
 /* ========== Main Content ========== */
 .main-content {
@@ -249,14 +248,14 @@ img { max-width: 100%; display: block; }
 
 /* ========== Welcome Section ========== */
 .welcome-section {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   border-radius: 24px;
   padding: 35px 30px;
   color: white;
   margin-bottom: 25px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 15px 40px rgba(178,67,123,0.25);
 }
 
 .welcome-section::before {
@@ -273,12 +272,13 @@ img { max-width: 100%; display: block; }
 .welcome-content { position: relative; z-index: 1; }
 
 .welcome-section h1 {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.7rem;
-  font-weight: 900;
+  font-weight: 800;
   margin-bottom: 8px;
 }
 
-.welcome-section h1 span { color: var(--gold); }
+.welcome-section h1 span { color: #ffde59; }
 
 .welcome-section p {
   font-size: 0.95rem;
@@ -331,14 +331,14 @@ img { max-width: 100%; display: block; }
 
 .stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.1);
+  box-shadow: 0 15px 40px rgba(178,67,123,0.1);
   border-color: transparent;
 }
 
-.stat-card.blue::before { background: var(--primary); }
+.stat-card.blue::before { background: var(--brand); }
 .stat-card.green::before { background: var(--success); }
 .stat-card.gold::before { background: var(--gold); }
-.stat-card.pink::before { background: var(--accent-2); }
+.stat-card.pink::before { background: var(--brand-light); }
 
 .stat-card-header {
   display: flex;
@@ -357,14 +357,15 @@ img { max-width: 100%; display: block; }
   font-size: 1.5rem;
 }
 
-.stat-card.blue .stat-icon { background: rgba(30, 58, 138, 0.1); color: var(--primary); }
+.stat-card.blue .stat-icon { background: rgba(178,67,123,0.1); color: var(--brand); }
 .stat-card.green .stat-icon { background: rgba(16, 185, 129, 0.1); color: var(--success); }
 .stat-card.gold .stat-icon { background: rgba(212, 175, 55, 0.15); color: var(--gold); }
-.stat-card.pink .stat-icon { background: rgba(236, 72, 153, 0.1); color: var(--accent-2); }
+.stat-card.pink .stat-icon { background: rgba(217,140,180,0.15); color: var(--brand-light); }
 
 .stat-value {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.8rem;
-  font-weight: 900;
+  font-weight: 800;
   color: var(--text);
   line-height: 1.2;
   display: flex;
@@ -400,8 +401,9 @@ img { max-width: 100%; display: block; }
 }
 
 .section-card-title {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 800;
   color: var(--text);
   display: flex;
   align-items: center;
@@ -412,7 +414,7 @@ img { max-width: 100%; display: block; }
   width: 38px;
   height: 38px;
   border-radius: 11px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -421,7 +423,7 @@ img { max-width: 100%; display: block; }
 }
 
 .section-card-link {
-  color: var(--primary);
+  color: var(--brand);
   font-weight: 700;
   font-size: 0.85rem;
   display: flex;
@@ -470,7 +472,7 @@ img { max-width: 100%; display: block; }
   width: 45px;
   height: 45px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -491,9 +493,10 @@ img { max-width: 100%; display: block; }
 }
 
 .order-price {
+  font-family: 'Baloo 2', cursive;
   font-size: 1rem;
-  font-weight: 900;
-  color: var(--primary);
+  font-weight: 800;
+  color: var(--brand);
   display: flex;
   align-items: center;
   gap: 3px;
@@ -549,7 +552,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   max-width: 420px;
   overflow: hidden;
-  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 25px 70px rgba(178,67,123,0.25);
   animation: modalIn 0.3s ease;
 }
 
@@ -571,8 +574,9 @@ img { max-width: 100%; display: block; }
 }
 
 .modal-header h2 {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 800;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -616,7 +620,7 @@ img { max-width: 100%; display: block; }
 
 .modal-body h3 {
   font-size: 1.2rem;
-  font-weight: 900;
+  font-weight: 800;
   margin-bottom: 10px;
   color: var(--text);
 }
@@ -639,7 +643,7 @@ img { max-width: 100%; display: block; }
 .btn {
   padding: 12px 24px;
   border-radius: 12px;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 0.9rem;
   transition: all 0.3s;
   cursor: pointer;
@@ -650,14 +654,14 @@ img { max-width: 100%; display: block; }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   color: white;
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 8px 25px rgba(178,67,123,0.25);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35);
+  box-shadow: 0 12px 35px rgba(178,67,123,0.35);
 }
 
 .btn-danger {
@@ -758,8 +762,10 @@ img { max-width: 100%; display: block; }
   <div class="top-bar-right">
     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     <div class="top-logo">
-      <div class="top-logo-icon">✨</div>
-      لوحة التحكم
+      <svg class="top-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      Sukkar Store
     </div>
   </div>
   
@@ -797,11 +803,6 @@ img { max-width: 100%; display: block; }
       <span class="label">المنتجات</span>
     </a>
     
-    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
-      <span class="icon">🏷️</span>
-      <span class="label">الفئات</span>
-    </a>
-    
     <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
       <span class="icon">📦</span>
       <span class="label">المخزون</span>
@@ -810,11 +811,6 @@ img { max-width: 100%; display: block; }
     <a href="orders.html" class="sidebar-link" data-permission="orders.view">
       <span class="icon">🛍️</span>
       <span class="label">الطلبات</span>
-    </a>
-    
-    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
-      <span class="icon">💰</span>
-      <span class="label">الكاشير</span>
     </a>
     
     <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
@@ -836,9 +832,9 @@ img { max-width: 100%; display: block; }
       <span class="label">البانرات</span>
     </a>
     
-    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
-      <span class="icon">👥</span>
-      <span class="label">الموظفين</span>
+    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
+      <span class="icon">🎁</span>
+      <span class="label">العروضات</span>
     </a>
   </div>
 
@@ -848,11 +844,6 @@ img { max-width: 100%; display: block; }
     <a href="../index.html" class="sidebar-link">
       <span class="icon">🏠</span>
       <span class="label">الصفحة الرئيسية</span>
-    </a>
-    
-    <a href="../frontend/search.html" class="sidebar-link">
-      <span class="icon">🔍</span>
-      <span class="label">البحث والفئات</span>
     </a>
   </div>
 
@@ -877,7 +868,7 @@ img { max-width: 100%; display: block; }
         <div class="stat-icon">💰</div>
       </div>
       <div class="stat-value" id="todaySales">
-        0.000 <img src="/images/omr-dark.png" alt="ر.ع">
+        0.000 <img src="../assets/omr-dark.png" alt="ر.ع">
       </div>
       <div class="stat-label">مبيعات اليوم</div>
     </div>
@@ -898,7 +889,7 @@ img { max-width: 100%; display: block; }
       <div class="stat-label">المنتجات</div>
     </div>
     
-    <div class="stat-card pink" id="staffCard">
+    <div class="stat-card pink" id="staffCard" style="display:none;">
       <div class="stat-card-header">
         <div class="stat-icon">👥</div>
       </div>
@@ -956,9 +947,9 @@ let permissions = [];
 
 // ========== التحقق من تسجيل الدخول ==========
 document.addEventListener('DOMContentLoaded', async () => {
-  const userStr = localStorage.getItem('raki_user');
-  const permStr = localStorage.getItem('raki_permissions');
-  const token = localStorage.getItem('raki_token');
+  const userStr = localStorage.getItem('sukkar_user');
+  const permStr = localStorage.getItem('sukkar_permissions');
+  const token = localStorage.getItem('sukkar_token');
   
   if (!userStr || !token) {
     window.location.href = 'login.html';
@@ -1021,10 +1012,6 @@ function applyPermissions() {
   if (!isAdmin && !permissions.includes('orders.view')) {
     document.getElementById('viewAllOrders').style.display = 'none';
   }
-  
-  if (!isAdmin && !permissions.includes('staff.view')) {
-    document.getElementById('staffCard').style.display = 'none';
-  }
 }
 
 // ========== التاريخ ==========
@@ -1054,7 +1041,7 @@ async function loadStats() {
     if (salesData.success) {
       const today = salesData.today || { total: 0 };
       document.getElementById('todaySales').innerHTML = `
-        ${(today.total || 0).toFixed(3)} <img src="/images/omr-dark.png" alt="ر.ع">
+        ${(today.total || 0).toFixed(3)} <img src="../assets/omr-dark.png" alt="ر.ع">
       `;
     }
   } catch (error) {
@@ -1082,19 +1069,6 @@ async function loadStats() {
     }
   } catch (error) {
     console.error('خطأ في جلب المنتجات:', error);
-  }
-  
-  try {
-    if (user.is_admin || permissions.includes('staff.view')) {
-      const staffRes = await fetch(`${API_URL}/staff`);
-      const staffData = await staffRes.json();
-      
-      if (staffData.success) {
-        document.getElementById('totalStaff').textContent = staffData.staff.length;
-      }
-    }
-  } catch (error) {
-    console.error('خطأ في جلب الموظفين:', error);
   }
 }
 
@@ -1141,7 +1115,7 @@ async function loadRecentOrders() {
           </div>
           <div class="order-price">
             ${order.final_total.toFixed(3)}
-            <img src="/images/omr-dark.png" alt="ر.ع">
+            <img src="../assets/omr-dark.png" alt="ر.ع">
           </div>
         </div>
       `;
@@ -1182,7 +1156,7 @@ function showUserMenu() {
   
   menu.innerHTML = `
     <div style="text-align: center; padding-bottom: 15px; border-bottom: 1px solid var(--border); margin-bottom: 12px;">
-      <div style="width: 60px; height: 60px; margin: 0 auto 10px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-light)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 900;">
+      <div style="width: 60px; height: 60px; margin: 0 auto 10px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-light)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 900;">
         ${(user.full_name || user.username).charAt(0).toUpperCase()}
       </div>
       <div style="font-weight: 900; font-size: 0.95rem;">${user.full_name || user.username}</div>
@@ -1228,9 +1202,9 @@ function closeLogoutModal() {
 }
 
 function confirmLogout() {
-  localStorage.removeItem('raki_token');
-  localStorage.removeItem('raki_user');
-  localStorage.removeItem('raki_permissions');
+  localStorage.removeItem('sukkar_token');
+  localStorage.removeItem('sukkar_user');
+  localStorage.removeItem('sukkar_permissions');
   window.location.href = 'login.html';
 }
 

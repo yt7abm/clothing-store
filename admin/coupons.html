@@ -3,31 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>إدارة الكوبونات - متجر راقي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<title>إدارة الكوبونات - Sukkar Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #1e3a8a;
-  --primary-light: #3b82f6;
-  --primary-dark: #1e40af;
+  --brand: #b2437b;
+  --brand-dark: #8a305f;
+  --brand-light: #d98cb4;
+  --mint-pill: #a0cdc6;
+  --pink-card: #f6c6de;
+  --ink: #4a2338;
+  --warm-white: #fffaf5;
+  --bg-light: #fdf6f9;
+  
+  --primary: var(--brand);
+  --primary-light: var(--brand-light);
+  --primary-dark: var(--brand-dark);
   --accent: #f59e0b;
-  --accent-2: #ec4899;
   --gold: #d4af37;
   --bg: #ffffff;
   --bg-2: #f9fafb;
   --bg-3: #f3f4f6;
-  --text: #1f2937;
+  --text: var(--ink);
   --text-muted: #6b7280;
   --border: #e5e7eb;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 40px rgba(178,67,123,0.15);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
 
 html { scroll-behavior: smooth; height: 100%; }
 
@@ -40,7 +49,7 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+button { cursor: pointer; font-family: 'Quicksand', sans-serif; border: none; background: none; color: inherit; }
 img { max-width: 100%; display: block; }
 
 /* ========== Top Bar ========== */
@@ -70,20 +79,20 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
 }
 
-.menu-toggle:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.menu-toggle:hover { background: var(--brand); color: white; border-color: var(--brand); }
 
 .top-logo {
   display: flex; align-items: center; gap: 10px;
-  font-size: 1.1rem; font-weight: 900; color: var(--primary);
+  font-size: 1.1rem; font-weight: 900; color: var(--brand);
 }
 
 .top-logo-icon {
   width: 40px; height: 40px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   border-radius: 11px;
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+  box-shadow: 0 4px 12px rgba(178,67,123,0.2);
 }
 
 .top-bar-left { display: flex; align-items: center; gap: 12px; }
@@ -99,7 +108,7 @@ img { max-width: 100%; display: block; }
 .user-avatar {
   width: 34px; height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex; align-items: center; justify-content: center;
   color: white; font-weight: 900; font-size: 0.9rem;
 }
@@ -158,14 +167,24 @@ img { max-width: 100%; display: block; }
   margin-bottom: 3px;
 }
 
-.sidebar-link:hover { background: var(--bg-3); color: var(--primary); padding-right: 20px; }
+.sidebar-link:hover { background: var(--bg-3); color: var(--brand); padding-right: 20px; }
 .sidebar-link.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
-  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 6px 20px rgba(178,67,123,0.25);
 }
 
 .sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 850;
+}
+
+.sidebar-overlay.active { display: block; }
 
 /* ========== Main ========== */
 .main-content {
@@ -189,7 +208,8 @@ img { max-width: 100%; display: block; }
 }
 
 .page-header-info h1 {
-  font-size: 1.5rem; font-weight: 900;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.5rem; font-weight: 800;
   margin-bottom: 5px;
   display: flex; align-items: center; gap: 10px;
 }
@@ -197,18 +217,18 @@ img { max-width: 100%; display: block; }
 .page-header-info p { color: var(--text-muted); font-size: 0.85rem; }
 
 .add-btn {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   color: white;
   padding: 12px 24px;
   border-radius: 12px;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 0.9rem;
   transition: all 0.3s;
   display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 8px 25px rgba(178,67,123,0.25);
 }
 
-.add-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35); }
+.add-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(178,67,123,0.35); }
 
 /* ========== Stats ========== */
 .stats-mini {
@@ -230,7 +250,7 @@ img { max-width: 100%; display: block; }
   gap: 6px;
 }
 
-.stat-mini.blue { color: var(--primary); background: rgba(30, 58, 138, 0.05); border-color: rgba(30, 58, 138, 0.15); }
+.stat-mini.blue { color: var(--brand); background: rgba(178,67,123,0.05); border-color: rgba(178,67,123,0.15); }
 .stat-mini.green { color: var(--success); background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.15); }
 .stat-mini.gold { color: var(--gold); background: rgba(212, 175, 55, 0.08); border-color: rgba(212, 175, 55, 0.2); }
 .stat-mini.red { color: var(--danger); background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.15); }
@@ -255,7 +275,7 @@ img { max-width: 100%; display: block; }
 .coupon-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
-  border-color: var(--primary-light);
+  border-color: var(--brand-light);
 }
 
 .coupon-card.inactive { opacity: 0.6; }
@@ -275,14 +295,14 @@ img { max-width: 100%; display: block; }
   width: 90px;
   height: 90px;
   border-radius: 18px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: white;
   flex-shrink: 0;
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 8px 25px rgba(178,67,123,0.25);
   position: relative;
 }
 
@@ -292,8 +312,9 @@ img { max-width: 100%; display: block; }
 }
 
 .coupon-value {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.6rem;
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1;
 }
 
@@ -312,13 +333,13 @@ img { max-width: 100%; display: block; }
 .coupon-code {
   font-size: 1.2rem;
   font-weight: 900;
-  color: var(--primary);
+  color: var(--brand);
   background: var(--bg-2);
   padding: 6px 14px;
   border-radius: 10px;
   display: inline-block;
   margin-bottom: 10px;
-  border: 1.5px dashed var(--primary);
+  border: 1.5px dashed var(--brand);
   letter-spacing: 1px;
   direction: ltr;
   font-family: 'Courier New', monospace;
@@ -327,7 +348,7 @@ img { max-width: 100%; display: block; }
 }
 
 .coupon-code:hover {
-  background: var(--primary);
+  background: var(--brand);
   color: white;
 }
 
@@ -423,8 +444,8 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
 }
 
-.coupon-btn.edit { background: rgba(30, 58, 138, 0.1); color: var(--primary); }
-.coupon-btn.edit:hover { background: var(--primary); color: white; }
+.coupon-btn.edit { background: rgba(178,67,123,0.1); color: var(--brand); }
+.coupon-btn.edit:hover { background: var(--brand); color: white; }
 
 .coupon-btn.toggle { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
 .coupon-btn.toggle:hover { background: var(--warning); color: white; }
@@ -450,7 +471,7 @@ img { max-width: 100%; display: block; }
 .loading {
   text-align: center;
   padding: 60px 20px;
-  color: var(--primary);
+  color: var(--brand);
   grid-column: 1 / -1;
 }
 
@@ -460,7 +481,7 @@ img { max-width: 100%; display: block; }
   width: 35px; height: 35px;
   margin: 15px auto 0;
   border: 3px solid var(--border);
-  border-top-color: var(--primary);
+  border-top-color: var(--brand);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -490,7 +511,7 @@ img { max-width: 100%; display: block; }
   max-width: 550px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 25px 70px rgba(178,67,123,0.25);
   animation: modalIn 0.3s ease;
 }
 
@@ -502,7 +523,7 @@ img { max-width: 100%; display: block; }
 }
 
 .modal-header {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
   padding: 22px 25px;
   display: flex;
@@ -514,8 +535,9 @@ img { max-width: 100%; display: block; }
 .modal-header.danger { background: linear-gradient(135deg, var(--danger), #b91c1c); }
 
 .modal-header h2 {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 800;
   display: flex; align-items: center; gap: 10px;
 }
 
@@ -569,7 +591,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   padding: 12px 16px;
   font-size: 0.95rem;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   background: var(--bg-2);
   border: 2px solid var(--border);
   border-radius: 12px;
@@ -580,9 +602,9 @@ img { max-width: 100%; display: block; }
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--brand);
   background: white;
-  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
+  box-shadow: 0 0 0 4px rgba(178,67,123,0.1);
 }
 
 .form-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; }
@@ -607,7 +629,7 @@ img { max-width: 100%; display: block; }
   background: var(--gold);
   color: white;
   border-radius: 12px;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 0.85rem;
   transition: all 0.3s;
   white-space: nowrap;
@@ -619,7 +641,7 @@ img { max-width: 100%; display: block; }
 .btn {
   padding: 12px 24px;
   border-radius: 12px;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 0.9rem;
   transition: all 0.3s;
   cursor: pointer;
@@ -630,12 +652,12 @@ img { max-width: 100%; display: block; }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   color: white;
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 8px 25px rgba(178,67,123,0.25);
 }
 
-.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(30, 58, 138, 0.35); }
+.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(178,67,123,0.35); }
 
 .btn-danger {
   background: linear-gradient(135deg, var(--danger), #b91c1c);
@@ -660,7 +682,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background: var(--primary);
+  background: var(--brand);
   color: white;
   padding: 14px 25px;
   border-radius: 14px;
@@ -668,7 +690,7 @@ img { max-width: 100%; display: block; }
   z-index: 3000;
   transform: translateX(500px);
   transition: transform 0.4s;
-  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.3);
+  box-shadow: 0 15px 40px rgba(178,67,123,0.3);
   max-width: calc(100% - 60px);
   font-size: 0.9rem;
 }
@@ -730,8 +752,10 @@ img { max-width: 100%; display: block; }
   <div class="top-bar-right">
     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     <div class="top-logo">
-      <div class="top-logo-icon">🎟️</div>
-      الكوبونات
+      <svg class="top-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      Sukkar Store
     </div>
   </div>
   <div class="top-bar-left">
@@ -764,10 +788,6 @@ img { max-width: 100%; display: block; }
       <span class="icon">👕</span>
       <span>المنتجات</span>
     </a>
-    <a href="categories.html" class="sidebar-link" data-permission="categories.view">
-      <span class="icon">🏷️</span>
-      <span>الفئات</span>
-    </a>
     <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
       <span class="icon">📦</span>
       <span>المخزون</span>
@@ -775,10 +795,6 @@ img { max-width: 100%; display: block; }
     <a href="orders.html" class="sidebar-link" data-permission="orders.view">
       <span class="icon">🛍️</span>
       <span>الطلبات</span>
-    </a>
-    <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
-      <span class="icon">💰</span>
-      <span>الكاشير</span>
     </a>
     <a href="coupons.html" class="sidebar-link active" data-permission="coupons.view">
       <span class="icon">🎟️</span>
@@ -788,10 +804,6 @@ img { max-width: 100%; display: block; }
 
   <div class="sidebar-section" id="managementSection" style="display:none;">
     <div class="sidebar-section-title">الإدارة</div>
-    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
-      <span class="icon">🎁</span>
-      <span>العروضات</span>
-    </a>
     <a href="reports.html" class="sidebar-link" data-permission="reports.view">
       <span class="icon">📈</span>
       <span>التقارير</span>
@@ -800,9 +812,9 @@ img { max-width: 100%; display: block; }
       <span class="icon">🖼️</span>
       <span>البانرات</span>
     </a>
-    <a href="staff.html" class="sidebar-link" data-permission="staff.view">
-      <span class="icon">👥</span>
-      <span>الموظفين</span>
+    <a href="offers.html" class="sidebar-link" data-permission="banners.view">
+      <span class="icon">🎁</span>
+      <span>العروضات</span>
     </a>
   </div>
 
@@ -842,14 +854,13 @@ img { max-width: 100%; display: block; }
 
 </main>
 
-<!-- ========== Modal إضافة/تعديل كوبون ========== -->
+<!-- Modal إضافة/تعديل كوبون -->
 <div class="modal" id="couponModal">
   <div class="modal-content">
     <div class="modal-header">
       <h2 id="modalTitle">➕ إضافة كوبون جديد</h2>
       <button class="modal-close" onclick="closeCouponModal()">✕</button>
     </div>
-
     <div class="modal-body">
       <form id="couponForm" onsubmit="saveCoupon(event)">
         <input type="hidden" id="couponId">
@@ -904,10 +915,8 @@ img { max-width: 100%; display: block; }
             <option value="0">معطل</option>
           </select>
         </div>
-
       </form>
     </div>
-
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeCouponModal()">إلغاء</button>
       <button class="btn btn-primary" onclick="document.getElementById('couponForm').requestSubmit()" id="saveBtn">
@@ -918,7 +927,7 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- ========== Modal حذف ========== -->
+<!-- Modal حذف -->
 <div class="modal" id="deleteModal">
   <div class="modal-content small">
     <div class="modal-header danger">
@@ -937,7 +946,7 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- ========== Modal تسجيل الخروج ========== -->
+<!-- Modal تسجيل الخروج -->
 <div class="modal" id="logoutModal">
   <div class="modal-content small">
     <div class="modal-header danger">
@@ -967,9 +976,9 @@ let allCoupons = [];
 let deletingId = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const userStr = localStorage.getItem('raki_user');
-  const permStr = localStorage.getItem('raki_permissions');
-  const token = localStorage.getItem('raki_token');
+  const userStr = localStorage.getItem('sukkar_user');
+  const permStr = localStorage.getItem('sukkar_permissions');
+  const token = localStorage.getItem('sukkar_token');
 
   if (!userStr || !token) { window.location.href = 'login.html'; return; }
 
@@ -1154,7 +1163,6 @@ function copyCode(code) {
   navigator.clipboard.writeText(code).then(() => {
     showNotification('✅ تم نسخ الكود: ' + code, 'success');
   }).catch(() => {
-    // Fallback
     const input = document.createElement('input');
     input.value = code;
     document.body.appendChild(input);
@@ -1169,12 +1177,9 @@ function copyCode(code) {
 function generateCode() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let code = '';
-  
-  // نبدأ بحروف (عشان الكود يكون واضح)
   for (let i = 0; i < 8; i++) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
   }
-  
   document.getElementById('code').value = code;
   showNotification('🎲 تم توليد الكود', 'success');
 }
@@ -1237,8 +1242,6 @@ async function saveCoupon(e) {
   btn.innerHTML = '<span>⏳</span><span>جاري الحفظ...</span>';
 
   const id = document.getElementById('couponId').value;
-  
-  // تنظيف الكود (رفع الحروف، إزالة المسافات)
   let code = document.getElementById('code').value.trim().toUpperCase().replace(/\s/g, '');
   
   if (!code) {
@@ -1349,9 +1352,9 @@ function toggleSidebar() {
 function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
 function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
 function confirmLogout() {
-  localStorage.removeItem('raki_token');
-  localStorage.removeItem('raki_user');
-  localStorage.removeItem('raki_permissions');
+  localStorage.removeItem('sukkar_token');
+  localStorage.removeItem('sukkar_user');
+  localStorage.removeItem('sukkar_permissions');
   window.location.href = 'login.html';
 }
 

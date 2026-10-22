@@ -3,31 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>إدارة العروضات - متجر راقي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<title>إدارة العروضات - Sukkar Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #1e3a8a;
-  --primary-light: #3b82f6;
-  --primary-dark: #1e40af;
-  --accent: #f59e0b;
-  --accent-2: #ec4899;
+  --brand: #b2437b;
+  --brand-dark: #8a305f;
+  --brand-light: #d98cb4;
   --gold: #d4af37;
+  --accent: #f59e0b;
   --bg: #ffffff;
   --bg-2: #f9fafb;
   --bg-3: #f3f4f6;
-  --text: #1f2937;
+  --text: #4a2338;
   --text-muted: #6b7280;
   --border: #e5e7eb;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 40px rgba(178,67,123,0.15);
+  
+  --primary: var(--brand);
+  --primary-light: var(--brand-light);
+  --primary-dark: var(--brand-dark);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
 
 html { scroll-behavior: smooth; height: 100%; }
 
@@ -40,8 +44,10 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+button { cursor: pointer; font-family: 'Quicksand', sans-serif; border: none; background: none; color: inherit; }
 img { max-width: 100%; display: block; }
+
+.display { font-family: 'Baloo 2', cursive; }
 
 /* ========== Top Bar ========== */
 .top-bar {
@@ -70,20 +76,20 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
 }
 
-.menu-toggle:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.menu-toggle:hover { background: var(--brand); color: white; border-color: var(--brand); }
 
 .top-logo {
   display: flex; align-items: center; gap: 10px;
-  font-size: 1.1rem; font-weight: 900; color: var(--primary);
+  font-size: 1.1rem; font-weight: 900; color: var(--brand);
 }
 
 .top-logo-icon {
   width: 40px; height: 40px;
-  background: linear-gradient(135deg, var(--gold), var(--accent));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   border-radius: 11px;
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 4px 12px rgba(178,67,123,0.2);
 }
 
 .top-bar-left { display: flex; align-items: center; gap: 12px; }
@@ -94,12 +100,16 @@ img { max-width: 100%; display: block; }
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-radius: 25px;
+  transition: all 0.3s;
+  cursor: pointer;
 }
+
+.user-badge:hover { background: white; border-color: var(--brand); box-shadow: var(--shadow-sm); }
 
 .user-avatar {
   width: 34px; height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   display: flex; align-items: center; justify-content: center;
   color: white; font-weight: 900; font-size: 0.9rem;
 }
@@ -131,7 +141,7 @@ img { max-width: 100%; display: block; }
   padding: 20px 15px;
   overflow-y: auto;
   z-index: 900;
-  transition: transform 0.3s;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar::-webkit-scrollbar { width: 4px; }
@@ -158,14 +168,15 @@ img { max-width: 100%; display: block; }
   margin-bottom: 3px;
 }
 
-.sidebar-link:hover { background: var(--bg-3); color: var(--primary); padding-right: 20px; }
+.sidebar-link:hover { background: var(--bg-3); color: var(--brand); padding-right: 20px; }
 .sidebar-link.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
-  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 6px 20px rgba(178,67,123,0.25);
 }
 
 .sidebar-link .icon { font-size: 1.2rem; width: 24px; text-align: center; }
+.sidebar-link .label { flex: 1; }
 
 /* ========== Main ========== */
 .main-content {
@@ -176,39 +187,57 @@ img { max-width: 100%; display: block; }
 
 /* ========== Page Header ========== */
 .page-header {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 25px 30px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
+  border-radius: 24px;
+  padding: 30px;
   margin-bottom: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(178,67,123,0.25);
 }
 
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -20%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+  border-radius: 50%;
+}
+
+.page-header-info { position: relative; z-index: 1; }
+
 .page-header-info h1 {
-  font-size: 1.5rem; font-weight: 900;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.7rem; font-weight: 800;
   margin-bottom: 5px;
   display: flex; align-items: center; gap: 10px;
 }
 
-.page-header-info p { color: var(--text-muted); font-size: 0.85rem; }
+.page-header-info p { font-size: 0.9rem; opacity: 0.9; }
 
 .add-btn {
-  background: linear-gradient(135deg, var(--gold), var(--accent));
+  background: rgba(255,255,255,0.2);
   color: white;
   padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 900;
+  border-radius: 14px;
+  font-weight: 800;
   font-size: 0.9rem;
   transition: all 0.3s;
   display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  position: relative;
+  z-index: 1;
 }
 
-.add-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4); }
+.add-btn:hover { background: white; color: var(--brand); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
 
 /* ========== Stats ========== */
 .stats-mini {
@@ -230,9 +259,9 @@ img { max-width: 100%; display: block; }
   gap: 6px;
 }
 
-.stat-mini.blue { color: var(--primary); background: rgba(30, 58, 138, 0.05); border-color: rgba(30, 58, 138, 0.15); }
-.stat-mini.green { color: var(--success); background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.15); }
-.stat-mini.gold { color: var(--gold); background: rgba(212, 175, 55, 0.08); border-color: rgba(212, 175, 55, 0.2); }
+.stat-mini.blue { color: var(--brand); background: rgba(178,67,123,0.05); border-color: rgba(178,67,123,0.15); }
+.stat-mini.green { color: var(--success); background: rgba(16,185,129,0.05); border-color: rgba(16,185,129,0.15); }
+.stat-mini.gold { color: var(--gold); background: rgba(212,175,55,0.08); border-color: rgba(212,175,55,0.2); }
 
 /* ========== Offers Grid ========== */
 .offers-grid {
@@ -252,7 +281,7 @@ img { max-width: 100%; display: block; }
 }
 
 .offer-card:hover {
-  border-color: var(--gold);
+  border-color: var(--brand);
   box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
 }
@@ -263,9 +292,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   aspect-ratio: 16 / 9;
   background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-size: 4rem;
   position: relative;
   overflow: hidden;
@@ -275,8 +302,7 @@ img { max-width: 100%; display: block; }
 
 .offer-status {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 12px; right: 12px;
   padding: 5px 12px;
   border-radius: 12px;
   font-size: 0.7rem;
@@ -284,13 +310,12 @@ img { max-width: 100%; display: block; }
   z-index: 2;
 }
 
-.offer-status.active { background: rgba(16, 185, 129, 0.95); color: white; }
-.offer-status.inactive { background: rgba(107, 114, 128, 0.95); color: white; }
+.offer-status.active { background: rgba(16,185,129,0.95); color: white; }
+.offer-status.inactive { background: rgba(107,114,128,0.95); color: white; }
 
 .offer-discount-badge {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 12px; left: 12px;
   background: linear-gradient(135deg, var(--danger), #b91c1c);
   color: white;
   padding: 5px 12px;
@@ -298,14 +323,15 @@ img { max-width: 100%; display: block; }
   font-size: 0.7rem;
   font-weight: 900;
   z-index: 2;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+  box-shadow: 0 4px 12px rgba(239,68,68,0.4);
 }
 
 .offer-info { padding: 20px; }
 
 .offer-title {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 800;
   margin-bottom: 8px;
   color: var(--text);
 }
@@ -338,9 +364,10 @@ img { max-width: 100%; display: block; }
 }
 
 .offer-new-price {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.3rem;
-  font-weight: 900;
-  color: var(--primary);
+  font-weight: 800;
+  color: var(--brand);
   display: flex;
   align-items: center;
   gap: 3px;
@@ -362,16 +389,13 @@ img { max-width: 100%; display: block; }
   align-items: center;
   gap: 5px;
   background: var(--bg-3);
-  color: var(--primary);
+  color: var(--brand);
   padding: 4px 10px;
   border-radius: 10px;
   font-weight: 700;
 }
 
-.offer-actions {
-  display: flex;
-  gap: 8px;
-}
+.offer-actions { display: flex; gap: 8px; }
 
 .offer-btn {
   flex: 1;
@@ -387,13 +411,13 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
 }
 
-.offer-btn.edit { background: rgba(30, 58, 138, 0.1); color: var(--primary); }
-.offer-btn.edit:hover { background: var(--primary); color: white; }
+.offer-btn.edit { background: rgba(178,67,123,0.1); color: var(--brand); }
+.offer-btn.edit:hover { background: var(--brand); color: white; }
 
-.offer-btn.toggle { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.offer-btn.toggle { background: rgba(245,158,11,0.1); color: var(--warning); }
 .offer-btn.toggle:hover { background: var(--warning); color: white; }
 
-.offer-btn.delete { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+.offer-btn.delete { background: rgba(239,68,68,0.1); color: var(--danger); }
 .offer-btn.delete:hover { background: var(--danger); color: white; }
 
 /* ========== Empty State ========== */
@@ -407,14 +431,14 @@ img { max-width: 100%; display: block; }
 }
 
 .empty-state .icon { font-size: 4rem; margin-bottom: 15px; opacity: 0.5; }
-.empty-state h3 { font-size: 1.2rem; font-weight: 900; margin-bottom: 8px; }
+.empty-state h3 { font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
 .empty-state p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
 
 /* ========== Loading ========== */
 .loading {
   text-align: center;
   padding: 60px 20px;
-  color: var(--primary);
+  color: var(--brand);
   grid-column: 1 / -1;
 }
 
@@ -424,7 +448,7 @@ img { max-width: 100%; display: block; }
   width: 35px; height: 35px;
   margin: 15px auto 0;
   border: 3px solid var(--border);
-  border-top-color: var(--primary);
+  border-top-color: var(--brand);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -435,7 +459,7 @@ img { max-width: 100%; display: block; }
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0,0,0,0.6);
   z-index: 2500;
   display: none;
   align-items: center;
@@ -455,7 +479,7 @@ img { max-width: 100%; display: block; }
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 25px 70px rgba(178,67,123,0.25);
   animation: modalIn 0.3s ease;
 }
 
@@ -467,7 +491,7 @@ img { max-width: 100%; display: block; }
 }
 
 .modal-header {
-  background: linear-gradient(135deg, var(--gold), var(--accent));
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
   color: white;
   padding: 22px 25px;
   border-radius: 24px 24px 0 0;
@@ -482,15 +506,16 @@ img { max-width: 100%; display: block; }
 .modal-header.danger { background: linear-gradient(135deg, var(--danger), #b91c1c); }
 
 .modal-header h2 {
+  font-family: 'Baloo 2', cursive;
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 800;
   display: flex; align-items: center; gap: 10px;
 }
 
 .modal-close {
   width: 36px; height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.2);
   color: white;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.1rem;
@@ -498,7 +523,7 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
 }
 
-.modal-close:hover { background: rgba(255, 255, 255, 0.3); transform: rotate(90deg); }
+.modal-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
 
 .modal-body { padding: 28px; }
 
@@ -526,11 +551,12 @@ img { max-width: 100%; display: block; }
 .form-group { margin-bottom: 18px; }
 
 .form-group label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   font-size: 0.85rem;
   font-weight: 700;
   margin-bottom: 8px;
-  display: flex; align-items: center; gap: 5px;
 }
 
 .form-group label .required { color: var(--danger); }
@@ -541,7 +567,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   padding: 12px 16px;
   font-size: 0.9rem;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   background: var(--bg-2);
   border: 2px solid var(--border);
   border-radius: 12px;
@@ -553,9 +579,9 @@ img { max-width: 100%; display: block; }
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--gold);
+  border-color: var(--brand);
   background: white;
-  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 0 4px rgba(178,67,123,0.1);
 }
 
 .form-group textarea { resize: vertical; min-height: 80px; }
@@ -575,7 +601,7 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 
-.image-upload:hover { border-color: var(--gold); background: white; }
+.image-upload:hover { border-color: var(--brand); background: white; }
 
 .image-upload input[type="file"] {
   position: absolute;
@@ -616,14 +642,11 @@ img { max-width: 100%; display: block; }
   background: white;
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 0.85rem;
 }
 
-.products-search input:focus {
-  outline: none;
-  border-color: var(--gold);
-}
+.products-search input:focus { outline: none; border-color: var(--brand); }
 
 .products-search .icon {
   position: absolute;
@@ -654,11 +677,11 @@ img { max-width: 100%; display: block; }
 }
 
 .product-checkbox:hover { background: var(--bg-2); }
-.product-checkbox.selected { background: rgba(212, 175, 55, 0.1); }
+.product-checkbox.selected { background: rgba(178,67,123,0.1); }
 
 .product-checkbox input[type="checkbox"] {
   width: 18px; height: 18px;
-  accent-color: var(--gold);
+  accent-color: var(--brand);
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -695,24 +718,24 @@ img { max-width: 100%; display: block; }
 
 .product-checkbox-price {
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--brand);
   font-weight: 700;
 }
 
 .selected-summary {
   padding: 12px 15px;
-  background: rgba(212, 175, 55, 0.08);
-  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  background: rgba(178,67,123,0.08);
+  border-top: 1px solid rgba(178,67,123,0.2);
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--brand);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .selected-summary .total {
-  color: var(--primary);
+  color: var(--brand-dark);
   font-weight: 900;
 }
 
@@ -720,7 +743,7 @@ img { max-width: 100%; display: block; }
 .btn {
   padding: 12px 24px;
   border-radius: 12px;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 0.9rem;
   transition: all 0.3s;
   cursor: pointer;
@@ -731,17 +754,17 @@ img { max-width: 100%; display: block; }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--gold), var(--accent));
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   color: white;
-  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 8px 25px rgba(178,67,123,0.25);
 }
 
-.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(212, 175, 55, 0.35); }
+.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(178,67,123,0.35); }
 
 .btn-danger {
   background: linear-gradient(135deg, var(--danger), #b91c1c);
   color: white;
-  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.25);
+  box-shadow: 0 8px 25px rgba(239,68,68,0.25);
 }
 
 .btn-danger:hover:not(:disabled) { transform: translateY(-3px); }
@@ -761,7 +784,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background: var(--primary);
+  background: var(--brand);
   color: white;
   padding: 14px 25px;
   border-radius: 14px;
@@ -769,7 +792,7 @@ img { max-width: 100%; display: block; }
   z-index: 3000;
   transform: translateX(500px);
   transition: transform 0.4s;
-  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.3);
+  box-shadow: 0 15px 40px rgba(178,67,123,0.3);
   max-width: calc(100% - 60px);
   font-size: 0.9rem;
 }
@@ -778,12 +801,23 @@ img { max-width: 100%; display: block; }
 .notification.error { background: var(--danger); }
 .notification.success { background: var(--success); }
 
+/* ========== Sidebar Overlay ========== */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 850;
+  backdrop-filter: blur(3px);
+}
+
+.sidebar-overlay.active { display: block; }
+
 /* ========== Responsive ========== */
 @media (max-width: 900px) {
-  .sidebar { transform: translateX(100%); box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1); }
+  .sidebar { transform: translateX(100%); box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
   .sidebar.open { transform: translateX(0); }
   .main-content { margin-right: 0; padding: 90px 18px 30px; }
-
   .offers-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 }
 
@@ -796,10 +830,10 @@ img { max-width: 100%; display: block; }
 
   .main-content { padding: 85px 12px 25px; }
 
-  .page-header { padding: 18px; border-radius: 16px; }
-  .page-header-info h1 { font-size: 1.2rem; }
-  .page-header-info p { font-size: 0.75rem; }
-  .add-btn { padding: 10px 18px; font-size: 0.85rem; width: 100%; justify-content: center; }
+  .page-header { padding: 22px 18px; border-radius: 18px; }
+  .page-header-info h1 { font-size: 1.3rem; }
+  .page-header-info p { font-size: 0.8rem; }
+  .add-btn { padding: 10px 18px; font-size: 0.85rem; width: 100%; justify-content: center; background: rgba(255,255,255,0.25); }
 
   .stats-mini { gap: 8px; }
   .stat-mini { padding: 8px 12px; font-size: 0.7rem; }
@@ -853,7 +887,7 @@ img { max-width: 100%; display: block; }
     <div class="sidebar-section-title">الرئيسية</div>
     <a href="dashboard.html" class="sidebar-link">
       <span class="icon">📊</span>
-      <span>لوحة التحكم</span>
+      <span class="label">لوحة التحكم</span>
     </a>
   </div>
 
@@ -861,27 +895,27 @@ img { max-width: 100%; display: block; }
     <div class="sidebar-section-title">العمليات</div>
     <a href="products.html" class="sidebar-link" data-permission="products.view">
       <span class="icon">👕</span>
-      <span>المنتجات</span>
+      <span class="label">المنتجات</span>
     </a>
     <a href="categories.html" class="sidebar-link" data-permission="categories.view">
       <span class="icon">🏷️</span>
-      <span>الفئات</span>
+      <span class="label">الفئات</span>
     </a>
     <a href="inventory.html" class="sidebar-link" data-permission="inventory.view">
       <span class="icon">📦</span>
-      <span>المخزون</span>
+      <span class="label">المخزون</span>
     </a>
     <a href="orders.html" class="sidebar-link" data-permission="orders.view">
       <span class="icon">🛍️</span>
-      <span>الطلبات</span>
+      <span class="label">الطلبات</span>
     </a>
     <a href="cashier.html" class="sidebar-link" data-permission="cashier.access">
       <span class="icon">💰</span>
-      <span>الكاشير</span>
+      <span class="label">الكاشير</span>
     </a>
     <a href="coupons.html" class="sidebar-link" data-permission="coupons.view">
       <span class="icon">🎟️</span>
-      <span>الكوبونات</span>
+      <span class="label">الكوبونات</span>
     </a>
   </div>
 
@@ -889,19 +923,19 @@ img { max-width: 100%; display: block; }
     <div class="sidebar-section-title">الإدارة</div>
     <a href="offers.html" class="sidebar-link active" data-permission="banners.view">
       <span class="icon">🎁</span>
-      <span>العروضات</span>
+      <span class="label">العروضات</span>
     </a>
     <a href="reports.html" class="sidebar-link" data-permission="reports.view">
       <span class="icon">📈</span>
-      <span>التقارير</span>
+      <span class="label">التقارير</span>
     </a>
     <a href="banners.html" class="sidebar-link" data-permission="banners.view">
       <span class="icon">🖼️</span>
-      <span>البانرات</span>
+      <span class="label">البانرات</span>
     </a>
     <a href="staff.html" class="sidebar-link" data-permission="staff.view">
       <span class="icon">👥</span>
-      <span>الموظفين</span>
+      <span class="label">الموظفين</span>
     </a>
   </div>
 
@@ -909,7 +943,7 @@ img { max-width: 100%; display: block; }
     <div class="sidebar-section-title">المتجر</div>
     <a href="../index.html" class="sidebar-link">
       <span class="icon">🏠</span>
-      <span>الصفحة الرئيسية</span>
+      <span class="label">الصفحة الرئيسية</span>
     </a>
   </div>
 </aside>
@@ -931,7 +965,7 @@ img { max-width: 100%; display: block; }
   <div class="stats-mini">
     <div class="stat-mini blue">🎁 <span id="countAll">0</span> عرض</div>
     <div class="stat-mini green">✅ <span id="countActive">0</span> نشط</div>
-    <div class="stat-mini gold">💰 <span id="countSaved">0</span> ر.ع وفّرها العملاء</div>
+    <div class="stat-mini gold">💰 <span id="countSaved">0.000</span> ر.ع وفّرها العملاء</div>
   </div>
 
   <div class="offers-grid" id="offersGrid">
@@ -952,7 +986,6 @@ img { max-width: 100%; display: block; }
       <form id="offerForm" onsubmit="saveOffer(event)">
         <input type="hidden" id="offerId">
 
-        <!-- الصورة -->
         <div class="form-group">
           <label>🖼️ صورة العرض</label>
           <div class="image-upload">
@@ -973,7 +1006,6 @@ img { max-width: 100%; display: block; }
           <textarea id="description" placeholder="وصف مختصر للعرض..."></textarea>
         </div>
 
-        <!-- اختيار المنتجات -->
         <div class="form-group">
           <label>🛍️ المنتجات في العرض <span class="required">*</span></label>
           <div class="products-selector">
@@ -1018,7 +1050,6 @@ img { max-width: 100%; display: block; }
             </select>
           </div>
         </div>
-
       </form>
     </div>
 
@@ -1041,7 +1072,7 @@ img { max-width: 100%; display: block; }
     </div>
     <div class="modal-body" style="text-align:center;">
       <div style="font-size: 4rem; margin-bottom: 15px;">⚠️</div>
-      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">تأكيد الحذف</h3>
+      <h3 style="font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; margin-bottom: 10px;">تأكيد الحذف</h3>
       <p style="color: var(--text-muted); font-size: 0.9rem;">هل أنت متأكد من حذف هذا العرض؟ لا يمكن التراجع.</p>
     </div>
     <div class="modal-footer">
@@ -1060,7 +1091,7 @@ img { max-width: 100%; display: block; }
     </div>
     <div class="modal-body" style="text-align:center;">
       <div style="font-size: 4rem; margin-bottom: 15px;">👋</div>
-      <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 10px;">هل أنت متأكد؟</h3>
+      <h3 style="font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; margin-bottom: 10px;">هل أنت متأكد؟</h3>
       <p style="color: var(--text-muted); font-size: 0.9rem;">سيتم تسجيل خروجك من لوحة التحكم</p>
     </div>
     <div class="modal-footer">
@@ -1084,9 +1115,9 @@ let selectedProductIds = [];
 let deletingId = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const userStr = localStorage.getItem('raki_user');
-  const permStr = localStorage.getItem('raki_permissions');
-  const token = localStorage.getItem('raki_token');
+  const userStr = localStorage.getItem('sukkar_user');
+  const permStr = localStorage.getItem('sukkar_permissions');
+  const token = localStorage.getItem('sukkar_token');
 
   if (!userStr || !token) { window.location.href = 'login.html'; return; }
 
@@ -1223,7 +1254,7 @@ function renderOffers() {
             ${o.original_price > 0 ? `<span class="offer-old-price">${o.original_price.toFixed(3)}</span>` : ''}
             <span class="offer-new-price">
               ${o.offer_price.toFixed(3)}
-              <img src="/images/omr-dark.png" alt="ر.ع">
+              <img src="../assets/omr-dark.png" alt="ر.ع">
             </span>
           </div>
 
@@ -1240,7 +1271,6 @@ function renderOffers() {
   }).join('');
 }
 
-// ========== اختيار المنتجات ==========
 function renderProductsList() {
   const list = document.getElementById('productsList');
   const search = document.getElementById('productSearch').value.trim().toLowerCase();
@@ -1309,7 +1339,6 @@ function updateSelectedSummary() {
   document.getElementById('originalPrice').value = total.toFixed(3);
 }
 
-// ========== Modal إضافة ==========
 function openAddModal() {
   selectedProductIds = [];
 
@@ -1326,6 +1355,7 @@ function openAddModal() {
   document.getElementById('uploadIcon').style.display = 'block';
   document.getElementById('uploadText').textContent = 'اضغط لاختيار صورة';
   document.getElementById('selectedSummary').style.display = 'none';
+  document.getElementById('imageInput').value = '';
 
   renderProductsList();
   document.getElementById('offerModal').classList.add('show');
@@ -1475,23 +1505,20 @@ async function confirmDelete() {
   }
 }
 
-// ========== Sidebar ==========
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebarOverlay').classList.toggle('active');
 }
 
-// ========== Logout ==========
 function openLogoutModal() { document.getElementById('logoutModal').classList.add('show'); }
 function closeLogoutModal() { document.getElementById('logoutModal').classList.remove('show'); }
 function confirmLogout() {
-  localStorage.removeItem('raki_token');
-  localStorage.removeItem('raki_user');
-  localStorage.removeItem('raki_permissions');
+  localStorage.removeItem('sukkar_token');
+  localStorage.removeItem('sukkar_user');
+  localStorage.removeItem('sukkar_permissions');
   window.location.href = 'login.html';
 }
 
-// ========== Notification ==========
 function showNotification(message, type = '') {
   const notif = document.getElementById('notification');
   notif.textContent = message;

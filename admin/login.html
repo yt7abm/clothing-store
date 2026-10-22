@@ -3,36 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>تسجيل الدخول - متجر راقي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<title>تسجيل الدخول | Sukkar Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #1e3a8a;
-  --primary-light: #3b82f6;
-  --primary-dark: #1e40af;
+  --brand: #b2437b;
+  --brand-dark: #8a305f;
+  --brand-light: #d98cb4;
+  --mint-pill: #a0cdc6;
+  --pink-card: #f6c6de;
+  --ink: #4a2338;
+  --warm-white: #fffaf5;
+  --bg-light: #fdf6f9;
+  
+  --primary: var(--brand);
+  --primary-light: var(--brand-light);
+  --primary-dark: var(--brand-dark);
   --accent: #f59e0b;
-  --accent-2: #ec4899;
   --gold: #d4af37;
   --bg: #ffffff;
   --bg-2: #f9fafb;
-  --bg-3: #f3f4f6;
-  --text: #1f2937;
+  --text: var(--ink);
   --text-muted: #6b7280;
   --border: #e5e7eb;
-  --success: #10b981;
   --danger: #ef4444;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
-  --shadow-xl: 0 20px 60px rgba(30, 58, 138, 0.15);
+  --success: #10b981;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 40px rgba(178,67,123,0.15);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
 
 html { scroll-behavior: smooth; height: 100%; }
 
 body {
-  background: var(--bg);
+  background: var(--warm-white);
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
@@ -50,9 +56,9 @@ body::before {
   position: fixed;
   inset: 0;
   background: 
-    radial-gradient(circle at 20% 20%, rgba(30, 58, 138, 0.08), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.08), transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.04), transparent 60%);
+    radial-gradient(circle at 20% 20%, rgba(178, 67, 123, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(160, 205, 198, 0.1), transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(246, 198, 222, 0.1), transparent 60%);
   z-index: -1;
   pointer-events: none;
   animation: bgMove 15s ease infinite;
@@ -64,18 +70,18 @@ body::before {
 }
 
 a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
+button { cursor: pointer; font-family: 'Quicksand', sans-serif; border: none; background: none; color: inherit; }
 img { max-width: 100%; display: block; }
 
 /* ========== الصندوق الرئيسي ========== */
 .login-container {
   width: 100%;
   max-width: 440px;
-  background: white;
+  background: #fff;
   border-radius: 28px;
   padding: 45px 35px;
-  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.15);
-  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--pink-card);
   position: relative;
   animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
@@ -94,7 +100,7 @@ img { max-width: 100%; display: block; }
   right: 0;
   left: 0;
   height: 6px;
-  background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--gold));
+  background: repeating-linear-gradient(90deg, var(--brand) 0 30px, var(--mint-pill) 30px 60px);
 }
 
 /* ========== الشعار ========== */
@@ -107,14 +113,12 @@ img { max-width: 100%; display: block; }
   width: 80px;
   height: 80px;
   margin: 0 auto 15px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: #fff;
   border-radius: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 2.2rem;
-  box-shadow: 0 12px 30px rgba(30, 58, 138, 0.3);
+  box-shadow: 0 8px 25px rgba(178,67,123,0.2);
   animation: float 3s ease-in-out infinite;
 }
 
@@ -124,9 +128,10 @@ img { max-width: 100%; display: block; }
 }
 
 .login-logo h1 {
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: var(--primary);
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--brand);
   margin-bottom: 5px;
 }
 
@@ -134,6 +139,7 @@ img { max-width: 100%; display: block; }
   color: var(--text-muted);
   font-size: 0.85rem;
   letter-spacing: 1px;
+  font-weight: 600;
 }
 
 /* ========== رسالة الخطأ ========== */
@@ -186,9 +192,10 @@ img { max-width: 100%; display: block; }
   width: 100%;
   padding: 15px 50px 15px 18px;
   font-size: 0.95rem;
-  font-family: 'Cairo', sans-serif;
-  background: var(--bg-2);
-  border: 2px solid var(--border);
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  background: var(--bg-light);
+  border: 2px solid var(--pink-card);
   border-radius: 14px;
   color: var(--text);
   transition: all 0.3s;
@@ -196,13 +203,14 @@ img { max-width: 100%; display: block; }
 
 .input-wrapper input:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--brand);
   background: white;
-  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
+  box-shadow: 0 0 0 4px rgba(178,67,123,0.1);
 }
 
 .input-wrapper input::placeholder {
-  color: var(--text-muted);
+  color: #b08aa0;
+  font-weight: 500;
 }
 
 .input-wrapper .input-icon {
@@ -211,13 +219,13 @@ img { max-width: 100%; display: block; }
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.2rem;
-  color: var(--text-muted);
+  color: var(--brand-light);
   pointer-events: none;
   transition: color 0.3s;
 }
 
 .input-wrapper input:focus + .input-icon {
-  color: var(--primary);
+  color: var(--brand);
 }
 
 /* زر إظهار كلمة المرور */
@@ -227,7 +235,7 @@ img { max-width: 100%; display: block; }
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.1rem;
-  color: var(--text-muted);
+  color: var(--brand-light);
   cursor: pointer;
   padding: 5px;
   transition: color 0.3s;
@@ -236,26 +244,26 @@ img { max-width: 100%; display: block; }
 }
 
 .toggle-password:hover {
-  color: var(--primary);
+  color: var(--brand);
 }
 
 /* ========== زر الدخول ========== */
 .login-btn {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
   color: white;
   border-radius: 14px;
   font-size: 1rem;
-  font-weight: 900;
-  font-family: 'Cairo', sans-serif;
+  font-weight: 800;
+  font-family: 'Baloo 2', cursive;
   transition: all 0.3s;
   margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 0 10px 25px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 10px 25px rgba(178,67,123,0.25);
   position: relative;
   overflow: hidden;
 }
@@ -277,7 +285,7 @@ img { max-width: 100%; display: block; }
 
 .login-btn:hover:not(:disabled) {
   transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(30, 58, 138, 0.35);
+  box-shadow: 0 15px 35px rgba(178,67,123,0.35);
 }
 
 .login-btn:active:not(:disabled) {
@@ -294,13 +302,13 @@ img { max-width: 100%; display: block; }
   text-align: center;
   margin-top: 25px;
   padding-top: 25px;
-  border-top: 1px solid var(--border);
+  border-top: 2px dashed var(--pink-card);
 }
 
 .back-home a {
-  color: var(--text-muted);
+  color: var(--brand);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   transition: all 0.3s;
   display: inline-flex;
   align-items: center;
@@ -308,7 +316,7 @@ img { max-width: 100%; display: block; }
 }
 
 .back-home a:hover {
-  color: var(--primary);
+  color: var(--brand-dark);
   gap: 10px;
 }
 
@@ -322,10 +330,11 @@ img { max-width: 100%; display: block; }
   align-items: center;
   justify-content: center;
   gap: 6px;
+  font-weight: 600;
 }
 
 .login-info .icon {
-  color: var(--primary);
+  color: var(--brand);
   font-size: 0.9rem;
 }
 
@@ -341,11 +350,10 @@ img { max-width: 100%; display: block; }
   .login-logo-icon {
     width: 70px;
     height: 70px;
-    font-size: 1.9rem;
     border-radius: 20px;
   }
   
-  .login-logo h1 { font-size: 1.4rem; }
+  .login-logo h1 { font-size: 1.5rem; }
   .login-logo p { font-size: 0.75rem; }
   
   .input-wrapper input {
@@ -364,8 +372,8 @@ img { max-width: 100%; display: block; }
 
 @media (max-width: 360px) {
   .login-container { padding: 30px 18px; }
-  .login-logo-icon { width: 60px; height: 60px; font-size: 1.6rem; }
-  .login-logo h1 { font-size: 1.2rem; }
+  .login-logo-icon { width: 60px; height: 60px; }
+  .login-logo h1 { font-size: 1.3rem; }
 }
 </style>
 </head>
@@ -375,9 +383,55 @@ img { max-width: 100%; display: block; }
   
   <!-- الشعار -->
   <div class="login-logo">
-    <div class="login-logo-icon">🔐</div>
-    <h1>متجر راقي</h1>
-    <p>لوحة التحكم</p>
+    <div class="login-logo-icon">
+      <svg viewBox="0 0 320 85" xmlns="http://www.w3.org/2000/svg" style="width: 60px; height: auto;">
+        <g transform="translate(2,30)">
+          <path d="M30 22 C 18 4, -2 6, 4 20 C 8 30, 20 30, 30 22 Z" fill="#f9a7c6" stroke="#e26a98" stroke-width="1.8"/>
+          <path d="M30 22 C 42 4, 62 6, 56 20 C 52 30, 40 30, 30 22 Z" fill="#f9a7c6" stroke="#e26a98" stroke-width="1.8"/>
+          <circle cx="30" cy="22" r="4" fill="#e26a98"/>
+          <path d="M30 26 C 28 36, 24 46, 20 54" stroke="#e26a98" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <path d="M30 26 C 32 36, 36 46, 40 54" stroke="#e26a98" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        </g>
+        <g transform="translate(48,18)">
+          <path d="M14 10 L 10 -4 L 24 4 Z" fill="#f4a35e" stroke="#d97e3a" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M36 10 L 40 -4 L 26 4 Z" fill="#f4a35e" stroke="#d97e3a" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="25" cy="20" r="16" fill="#f8b878" stroke="#d97e3a" stroke-width="1.5"/>
+          <path d="M15 8 L 13 0 L 21 4 Z" fill="#ffd6b0"/>
+          <path d="M35 8 L 37 0 L 29 4 Z" fill="#ffd6b0"/>
+          <circle cx="19" cy="19" r="2" fill="#3a2419"/>
+          <circle cx="31" cy="19" r="2" fill="#3a2419"/>
+          <circle cx="19.5" cy="18.5" r="0.6" fill="#fff"/>
+          <circle cx="31.5" cy="18.5" r="0.6" fill="#fff"/>
+          <path d="M23 24 L 27 24 L 25 26 Z" fill="#e2738d"/>
+          <path d="M25 26 C 25 28, 22 29, 21 28" stroke="#3a2419" stroke-width="1" fill="none" stroke-linecap="round"/>
+          <path d="M25 26 C 25 28, 28 29, 29 28" stroke="#3a2419" stroke-width="1" fill="none" stroke-linecap="round"/>
+          <line x1="12" y1="22" x2="4" y2="21" stroke="#3a2419" stroke-width="0.8" stroke-linecap="round"/>
+          <line x1="12" y1="25" x2="4" y2="26" stroke="#3a2419" stroke-width="0.8" stroke-linecap="round"/>
+          <line x1="38" y1="22" x2="46" y2="21" stroke="#3a2419" stroke-width="0.8" stroke-linecap="round"/>
+          <line x1="38" y1="25" x2="46" y2="26" stroke="#3a2419" stroke-width="0.8" stroke-linecap="round"/>
+          <circle cx="16" cy="24" r="2.2" fill="#ffb0c8" opacity="0.6"/>
+          <circle cx="34" cy="24" r="2.2" fill="#ffb0c8" opacity="0.6"/>
+        </g>
+        <g font-family="'Baloo 2', cursive" font-weight="800" font-size="56" fill="#b2437b">
+          <text x="100" y="58">S</text>
+          <text x="135" y="58">U</text>
+          <text x="172" y="58">K</text>
+          <text x="208" y="58">K</text>
+          <text x="244" y="58">A</text>
+          <text x="280" y="58">R</text>
+        </g>
+        <g font-family="'Quicksand', sans-serif" font-weight="700" font-size="14" fill="#e07fa9" letter-spacing="7">
+          <text x="100" y="78">STORE</text>
+        </g>
+        <g stroke="#e8a5b8" stroke-width="2.2" stroke-linecap="round" fill="none" transform="translate(300,40)">
+          <path d="M0 0 C 4 -3, 8 0, 4 3"/>
+          <path d="M0 8 C 4 5, 8 8, 4 11"/>
+          <path d="M0 16 C 4 13, 8 16, 4 19"/>
+        </g>
+      </svg>
+    </div>
+    <h1>Sukkar Store</h1>
+    <p>لوحة التحكم الإدارية</p>
   </div>
 
   <!-- رسالة الخطأ -->
@@ -408,7 +462,7 @@ img { max-width: 100%; display: block; }
 
     <button type="submit" class="login-btn" id="loginBtn">
       <span>دخول</span>
-      <span>→</span>
+      <span>←</span>
     </button>
 
   </form>
@@ -430,7 +484,7 @@ img { max-width: 100%; display: block; }
 const API_URL = '/api';
 
 // ========== التحقق من الجلسة السابقة ==========
-const existingToken = localStorage.getItem('raki_token');
+const existingToken = localStorage.getItem('sukkar_token');
 if (existingToken) {
   verifyToken(existingToken);
 }
@@ -443,20 +497,13 @@ async function verifyToken(token) {
     const data = await res.json();
     
     if (data.success) {
-      // تحديث البيانات
-      localStorage.setItem('raki_user', JSON.stringify(data.user));
-      localStorage.setItem('raki_permissions', JSON.stringify(data.permissions));
-      
-      // التوجيه
-      if (data.user.is_admin) {
-        window.location.href = 'dashboard.html';
-      } else {
-        window.location.href = 'dashboard.html';
-      }
+      localStorage.setItem('sukkar_user', JSON.stringify(data.user));
+      localStorage.setItem('sukkar_permissions', JSON.stringify(data.permissions));
+      window.location.href = 'dashboard.html';
     } else {
-      localStorage.removeItem('raki_token');
-      localStorage.removeItem('raki_user');
-      localStorage.removeItem('raki_permissions');
+      localStorage.removeItem('sukkar_token');
+      localStorage.removeItem('sukkar_user');
+      localStorage.removeItem('sukkar_permissions');
     }
   } catch (error) {
     console.error(error);
@@ -473,13 +520,11 @@ async function handleLogin(e) {
   const errorMsg = document.getElementById('errorMessage');
   const errorText = document.getElementById('errorText');
   
-  // التحقق
   if (!username || !password) {
     showError('الرجاء إدخال اسم المستخدم وكلمة المرور');
     return;
   }
   
-  // تعطيل الزر
   btn.disabled = true;
   btn.innerHTML = '<span>⏳ جاري التحقق...</span>';
   errorMsg.classList.remove('show');
@@ -494,15 +539,12 @@ async function handleLogin(e) {
     const data = await res.json();
     
     if (data.success) {
-      // حفظ البيانات
-      localStorage.setItem('raki_token', data.token);
-      localStorage.setItem('raki_user', JSON.stringify(data.user));
-      localStorage.setItem('raki_permissions', JSON.stringify(data.permissions));
+      localStorage.setItem('sukkar_token', data.token);
+      localStorage.setItem('sukkar_user', JSON.stringify(data.user));
+      localStorage.setItem('sukkar_permissions', JSON.stringify(data.permissions));
       
-      // رسالة نجاح
       btn.innerHTML = '<span>✅ تم الدخول</span>';
       
-      // التوجيه
       setTimeout(() => {
         window.location.href = 'dashboard.html';
       }, 500);
@@ -510,7 +552,7 @@ async function handleLogin(e) {
     } else {
       showError(data.message || 'بيانات الدخول غير صحيحة');
       btn.disabled = false;
-      btn.innerHTML = '<span>دخول</span><span>→</span>';
+      btn.innerHTML = '<span>دخول</span><span>←</span>';
       document.getElementById('password').value = '';
       document.getElementById('password').focus();
     }
@@ -518,7 +560,7 @@ async function handleLogin(e) {
   } catch (error) {
     showError('تعذّر الاتصال بالسيرفر');
     btn.disabled = false;
-    btn.innerHTML = '<span>دخول</span><span>→</span>';
+    btn.innerHTML = '<span>دخول</span><span>←</span>';
   }
 }
 
@@ -544,7 +586,6 @@ function showError(msg) {
   errorText.textContent = msg;
   errorMsg.classList.add('show');
   
-  // اهتزاز
   const container = document.querySelector('.login-container');
   container.style.animation = 'none';
   setTimeout(() => {
