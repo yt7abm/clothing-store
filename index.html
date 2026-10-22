@@ -455,7 +455,7 @@
 
     /* NEW FOOTER (WEBORA) */
     .site-footer {
-      background-color: #6a4c93; /* لون بنفسجي مطابق للصورة */
+      background-color: #6a4c93; 
       color: #fff;
       text-align: center;
       padding: 50px 20px 0;
@@ -526,7 +526,7 @@
       font-family: 'Baloo 2', cursive;
       font-size: 1.5rem;
       font-weight: 800;
-      color: #ffde59; /* لون أصفر مطابق للصورة */
+      color: #ffde59; 
       margin-bottom: 20px;
     }
     .footer-bottom {
@@ -569,7 +569,7 @@
       display: flex; align-items: center; gap: 10px;
     }
 
-    /* CART DRAWER */
+    /* CART DRAWER (SIMPLIFIED) */
     .cart-overlay{
       position:fixed; inset:0;
       background: rgba(0,0,0,0.4);
@@ -637,90 +637,7 @@
       display: flex; flex-direction: column; gap: 14px;
       flex-shrink: 0;
     }
-    .cf-section-title{
-      font-family: 'Baloo 2', cursive; font-weight: 700;
-      font-size: 0.85rem; color: var(--brand);
-      display: flex; align-items: center; gap: 6px;
-    }
-    .delivery-options{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .delivery-btn{
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 4px; background: #fff;
-      border: 2px solid #f0dbe4; border-radius: 14px;
-      padding: 10px 8px; font-weight: 700; font-size: 0.78rem;
-      color: var(--ink); transition: all 0.2s; cursor: pointer; line-height: 1.2;
-    }
-    .delivery-btn .d-icon{ font-size: 1.25rem; line-height: 1; }
-    .delivery-btn .d-price{
-      display: inline-flex; align-items: center; gap: 3px;
-      font-size: 0.85rem; color: var(--brand); direction: ltr;
-      font-family: 'Baloo 2', cursive; font-weight: 800;
-    }
-    .delivery-btn.active{
-      border-color: var(--brand);
-      background: #fdf2f7;
-      box-shadow: 0 4px 12px rgba(178,67,123,0.18);
-    }
-    .coupon-section{
-      background: #fdf6f9;
-      border: 1px dashed #e8c8d6;
-      border-radius: 14px;
-      padding: 10px;
-    }
-    .coupon-wrap{ display: flex; gap: 6px; }
-    .coupon-input{
-      flex: 1; border: 2px solid #ead3de; border-radius: 10px;
-      padding: 9px 12px;
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 700; font-size: 0.78rem;
-      color: var(--ink); outline: none; text-align: center;
-      text-transform: uppercase; letter-spacing: 1px;
-      background: #fff; min-width: 0;
-    }
-    .coupon-input:focus{ border-color: var(--brand); }
-    .coupon-input::placeholder{ color: #b08aa0; letter-spacing: 0; text-transform: none; }
-    .coupon-btn{
-      background: var(--brand); color: #fff;
-      padding: 9px 16px; border-radius: 10px;
-      font-weight: 700; font-size: 0.78rem;
-      white-space: nowrap; flex-shrink: 0;
-    }
-    .coupon-msg{
-      font-size: 0.7rem; font-weight: 700;
-      text-align: center; margin-top: 6px; line-height: 1.3;
-    }
-    .coupon-msg:empty{ display: none; }
-    .coupon-msg.success{ color: var(--success); }
-    .coupon-msg.error{ color: #c94c4c; }
-    .coupon-applied{
-      display: flex; justify-content: space-between; align-items: center;
-      background: #e8f5e9;
-      border: 1px dashed var(--success);
-      border-radius: 10px; padding: 8px 10px; margin-top: 8px;
-      font-size: 0.72rem; font-weight: 700; color: #2e7d32;
-    }
-    .coupon-applied .remove-coupon{
-      background: transparent; color: #c94c4c;
-      font-size: 1rem; padding: 0 4px; font-weight: 700;
-    }
-    .summary-box{
-      background: #fdf6f9; border-radius: 14px;
-      padding: 12px 14px;
-      display: flex; flex-direction: column; gap: 9px;
-    }
-    .summary-row{
-      display: flex; justify-content: space-between; align-items: center;
-      font-weight: 600; font-size: 0.82rem; color: #666;
-    }
-    .summary-row .label{ display: inline-flex; align-items: center; gap: 6px; }
-    .summary-row .value{
-      display: inline-flex; align-items: center; gap: 4px;
-      font-weight: 700; color: var(--price-color);
-      direction: ltr;
-      font-family: 'Baloo 2', cursive;
-    }
-    .summary-row .value .omr-img{ width: 12px; }
-    .summary-row.discount .value{ color: var(--success); }
+    
     .total-box{
       background: linear-gradient(135deg, #b2437b 0%, #8a305f 100%);
       color: #fff; border-radius: 16px;
@@ -739,6 +656,7 @@
       direction: ltr;
     }
     .total-box .total-value .omr-img{ width: 18px; filter: brightness(0) invert(1); }
+    
     .checkout-btn{
       width: 100%; background: var(--brand); color: #fff;
       padding: 14px; border-radius: 16px;
@@ -893,11 +811,6 @@
       .cart-header{ font-size:1rem; padding:12px 16px; }
       
       .cart-footer{ padding: 12px 12px 14px; gap: 12px; }
-      .delivery-btn{ font-size: 0.72rem; padding: 9px 6px; }
-      .delivery-btn .d-icon{ font-size: 1.1rem; }
-      .delivery-btn .d-price{ font-size: 0.78rem; }
-      .coupon-input{ font-size: 0.75rem; padding: 8px 10px; }
-      .coupon-btn{ font-size: 0.75rem; padding: 8px 14px; }
       .total-box .total-value{ font-size: 1.25rem; }
       .checkout-btn{ font-size: 0.88rem; padding: 13px; }
       
@@ -1242,69 +1155,27 @@
 </aside>
 <div class="cart-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
 
-<!-- CART DRAWER -->
+<!-- CART DRAWER (SIMPLIFIED) -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 <aside class="cart-drawer" id="cartDrawer">
   <div class="cart-header">
     <span>سلة التسوق</span>
     <button class="cart-close" onclick="closeCart()">✕</button>
   </div>
+  
   <div class="cart-body" id="cartBody">
     <div class="cart-empty">
       <span class="emoji">🛍️</span>
       <span>السلة فارغة حالياً</span>
     </div>
   </div>
+
   <div class="cart-footer">
-    <div class="cf-section-title">طريقة التوصيل</div>
-    <div class="delivery-options" id="deliveryOptions">
-      <button class="delivery-btn active" data-delivery="office" onclick="selectDelivery('office')">
-        <span class="d-icon">🏢</span>
-        <span>توصيل للمكتب</span>
-        <span class="d-price">1 <img class="omr-img tiny" src="assets/omr-dark.png" alt="OMR"></span>
-      </button>
-      <button class="delivery-btn" data-delivery="home" onclick="selectDelivery('home')">
-        <span class="d-icon">🏠</span>
-        <span>توصيل للمنزل</span>
-        <span class="d-price">2 <img class="omr-img tiny" src="assets/omr-dark.png" alt="OMR"></span>
-      </button>
-    </div>
-
-    <div class="cf-section-title">كود الخصم</div>
-    <div class="coupon-section">
-      <div class="coupon-wrap">
-        <input type="text" class="coupon-input" id="couponInput" placeholder="كود الخصم" onkeydown="if(event.key==='Enter') applyCoupon()">
-        <button class="coupon-btn" onclick="applyCoupon()">تطبيق</button>
-      </div>
-      <div class="coupon-msg" id="couponMsg"></div>
-      <div id="couponAppliedBox"></div>
-    </div>
-
-    <div class="summary-box">
-      <div class="summary-row subtotal">
-        <span class="label">المجموع الفرعي</span>
-        <span class="value"><span id="subtotalValue">0.00</span><img class="omr-img" src="assets/omr-dark.png" alt="OMR"></span>
-      </div>
-      <div class="summary-row tax">
-        <span class="label">الضريبة (1.5%)</span>
-        <span class="value"><span id="taxValue">0.00</span><img class="omr-img" src="assets/omr-dark.png" alt="OMR"></span>
-      </div>
-      <div class="summary-row shipping">
-        <span class="label">التوصيل</span>
-        <span class="value"><span id="shippingValue">1.00</span><img class="omr-img" src="assets/omr-dark.png" alt="OMR"></span>
-      </div>
-      <div class="summary-row discount" id="discountRow" style="display:none;">
-        <span class="label">الخصم</span>
-        <span class="value">-<span id="discountValue">0.00</span><img class="omr-img" src="assets/omr-dark.png" alt="OMR"></span>
-      </div>
-    </div>
-
     <div class="total-box">
       <span class="total-label">الإجمالي</span>
       <span class="total-value"><span id="totalValue">0.00</span><img class="omr-img" src="assets/omr-dark.png" alt="OMR"></span>
     </div>
-
-    <!-- زر إتمام الطلب ينقل لصفحة إتمام الطلب -->
+    <!-- زر إتمام الطلب ينتقل لصفحة checkout.html -->
     <button class="checkout-btn" id="checkoutBtn" onclick="goToCheckout()" disabled>إتمام الطلب</button>
   </div>
 </aside>
@@ -1337,26 +1208,13 @@
 
 <script>
   const API_URL = '/api';
-  const TAX_RATE = 0.015;
-  const SHIPPING_OFFICE = 1;
-  const SHIPPING_HOME = 2;
 
-  let deliveryType = 'office';
-  let appliedCoupon = null;
   let cart = [];
   let allProducts = {}; 
   let currentModalProduct = null;
   let currentModalQty = 1;
 
-  const COUPONS = {
-    'SUKKAR10': { type: 'percent', value: 10, descAr: 'خصم 10%' },
-    'WELCOME5': { type: 'percent', value: 5, descAr: 'خصم 5%' },
-    'FREESHIP': { type: 'freeship', value: 0, descAr: 'توصيل مجاني' },
-    'SUKKAR20': { type: 'percent', value: 20, descAr: 'خصم 20%' }
-  };
-
   function omrImg(s='small'){ return `<img class="omr-img ${s}" src="assets/omr-dark.png" alt="OMR">`; }
-  function getShippingFee(){ return deliveryType === 'office' ? SHIPPING_OFFICE : SHIPPING_HOME; }
 
   function saveCart(){ try { localStorage.setItem('sukkarCart', JSON.stringify(cart)); } catch(e){} }
   function loadCart(){
@@ -1367,17 +1225,6 @@
     } catch(e){ cart = []; }
   }
 
-  function saveCoupon(){
-    try {
-      if(appliedCoupon) localStorage.setItem('sukkarCoupon', JSON.stringify(appliedCoupon));
-      else localStorage.removeItem('sukkarCoupon');
-    } catch(e){}
-  }
-  function loadCoupon(){
-    try { const s = localStorage.getItem('sukkarCoupon'); if(s) appliedCoupon = JSON.parse(s); }
-    catch(e){ appliedCoupon = null; }
-  }
-
   function toggleMenu(){
     document.getElementById('sideMenu').classList.toggle('open');
     document.getElementById('menuOverlay').classList.toggle('open');
@@ -1385,14 +1232,6 @@
 
   function openCart(){ document.getElementById('cartDrawer').classList.add('open'); document.getElementById('cartOverlay').classList.add('open'); }
   function closeCart(){ document.getElementById('cartDrawer').classList.remove('open'); document.getElementById('cartOverlay').classList.remove('open'); }
-
-  function selectDelivery(type){
-    deliveryType = type;
-    document.querySelectorAll('.delivery-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.delivery === type);
-    });
-    renderCart();
-  }
 
   function goToCheckout() {
     if(cart.length === 0) return;
@@ -1451,7 +1290,6 @@
     setTimeout(() => badge.classList.remove('pop'), 200);
     openCart(); 
   }
-  // =================================
 
   function addToCart(id, btn){
     const p = allProducts[id];
@@ -1483,54 +1321,22 @@
   }
   function removeItem(id){ cart = cart.filter(i => i.id !== id); saveCart(); renderCart(); }
 
-  function applyCoupon(){
-    const input = document.getElementById('couponInput');
-    const msg = document.getElementById('couponMsg');
-    const code = input.value.trim().toUpperCase();
-    if(!code){
-      msg.className = 'coupon-msg error';
-      msg.textContent = 'أدخل كود الخصم';
-      return;
-    }
-    if(COUPONS[code]){
-      appliedCoupon = { code, ...COUPONS[code] };
-      saveCoupon();
-      msg.className = 'coupon-msg success';
-      msg.textContent = `✅ تم تطبيق: ${appliedCoupon.descAr}`;
-      input.value = '';
-      renderCart();
-    } else {
-      msg.className = 'coupon-msg error';
-      msg.textContent = '❌ كود غير صحيح';
-    }
-  }
-
-  function removeCoupon(){
-    appliedCoupon = null;
-    saveCoupon();
-    document.getElementById('couponMsg').textContent = '';
-    document.getElementById('couponMsg').className = 'coupon-msg';
-    renderCart();
-  }
-
+  // الدالة المبسطة لعرض السلة
   function renderCart(){
     const body = document.getElementById('cartBody');
     const count = document.getElementById('cartCount');
-    const sEl = document.getElementById('subtotalValue');
-    const tEl = document.getElementById('taxValue');
-    const shEl = document.getElementById('shippingValue');
     const totEl = document.getElementById('totalValue');
     const btn = document.getElementById('checkoutBtn');
+    
     count.textContent = cart.reduce((s,i) => s + i.qty, 0);
     
     if(cart.length === 0){
       body.innerHTML = `<div class="cart-empty"><span class="emoji">🛍️</span>السلة فارغة حالياً</div>`;
-      sEl.textContent = tEl.textContent = totEl.textContent = '0.00';
-      shEl.textContent = getShippingFee().toFixed(2);
-      document.getElementById('discountRow').style.display = 'none';
-      document.getElementById('couponAppliedBox').innerHTML = '';
-      btn.disabled = true; return;
+      totEl.textContent = '0.00';
+      btn.disabled = true; 
+      return;
     }
+    
     let subtotal = 0;
     body.innerHTML = cart.map(item => {
       const sub = item.price * item.qty;
@@ -1555,44 +1361,7 @@
       `;
     }).join('');
 
-    let discount = 0;
-    let shipping = getShippingFee();
-    if(appliedCoupon){
-      if(appliedCoupon.type === 'percent'){
-        discount = subtotal * (appliedCoupon.value / 100);
-      } else if(appliedCoupon.type === 'freeship'){
-        discount = shipping;
-        shipping = 0;
-      }
-    }
-
-    const tax = (subtotal - discount) * TAX_RATE;
-    const total = subtotal - discount + tax + shipping;
-
-    sEl.textContent = subtotal.toFixed(2);
-    tEl.textContent = tax.toFixed(2);
-    shEl.textContent = shipping.toFixed(2);
-    totEl.textContent = total.toFixed(2);
-
-    const discountRow = document.getElementById('discountRow');
-    if(discount > 0){
-      discountRow.style.display = 'flex';
-      document.getElementById('discountValue').textContent = discount.toFixed(2);
-    } else {
-      discountRow.style.display = 'none';
-    }
-
-    const appliedBox = document.getElementById('couponAppliedBox');
-    if(appliedCoupon){
-      appliedBox.innerHTML = `
-        <div class="coupon-applied">
-          <span>🎁 ${appliedCoupon.code} — ${appliedCoupon.descAr}</span>
-          <button class="remove-coupon" onclick="removeCoupon()">✕</button>
-        </div>
-      `;
-    } else {
-      appliedBox.innerHTML = '';
-    }
+    totEl.textContent = subtotal.toFixed(2);
     btn.disabled = false;
   }
 
@@ -1710,7 +1479,6 @@
   }
 
   loadCart();
-  loadCoupon();
   renderCart();
   loadProductsFromAPI();
 
