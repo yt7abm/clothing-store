@@ -1,1414 +1,536 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>إتمام الطلب - متجر راقي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-<style>
-:root {
-  --primary: #1e3a8a;
-  --primary-light: #3b82f6;
-  --primary-dark: #1e40af;
-  --accent: #f59e0b;
-  --gold: #d4af37;
-  --bg: #ffffff;
-  --bg-2: #f9fafb;
-  --bg-3: #f3f4f6;
-  --text: #1f2937;
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
-  --success: #10b981;
-  --danger: #ef4444;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 40px rgba(30, 58, 138, 0.12);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
-
-html { scroll-behavior: smooth; height: 100%; }
-
-body {
-  background: var(--bg-2);
-  color: var(--text);
-  line-height: 1.6;
-  overflow-x: hidden;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: 'Cairo', sans-serif; border: none; background: none; color: inherit; }
-img { max-width: 100%; display: block; }
-
-/* ========== Header ========== */
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  z-index: 1000;
-  padding: 12px 0;
-}
-
-.nav {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 15px;
-}
-
-.nav-right, .nav-left { display: flex; align-items: center; gap: 8px; }
-.nav-right { justify-content: flex-start; }
-.nav-left { justify-content: flex-end; }
-
-.logo {
-  font-size: 1.25rem;
-  font-weight: 900;
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-  justify-content: center;
-}
-
-.logo-icon {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1rem;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
-}
-
-.icon-btn {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-}
-
-.icon-btn:hover { background: var(--bg-3); color: var(--primary); }
-
-.icon-btn svg {
-  width: 22px;
-  height: 22px;
-  stroke-width: 1.8;
-  stroke: currentColor;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.icon-btn .badge {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  background: var(--danger);
-  color: white;
-  border-radius: 50%;
-  min-width: 18px;
-  height: 18px;
-  font-size: 0.6rem;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid white;
-  padding: 0 4px;
-}
-
-/* ========== Main ========== */
-.main-content {
-  flex: 1 0 auto;
-  padding-top: 90px;
-  padding-bottom: 50px;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* ========== Page Header ========== */
-.page-header {
-  text-align: center;
-  margin-bottom: 35px;
-}
-
-.page-header h1 {
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: 900;
-  color: var(--text);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.page-header h1 span { color: var(--primary); }
-
-.page-header p {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-/* ========== Checkout Layout ========== */
-.checkout-layout {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 25px;
-  align-items: start;
-}
-
-/* ========== Section Card ========== */
-.section-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 25px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-sm);
-}
-
-.section-card-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid var(--border);
-}
-
-.section-card-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.2rem;
-  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.2);
-}
-
-.section-card-title {
-  font-size: 1.05rem;
-  font-weight: 900;
-  color: var(--text);
-}
-
-.section-card-subtitle {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-/* ========== Form ========== */
-.form-group {
-  margin-bottom: 18px;
-}
-
-.form-group label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.form-group label .required { color: var(--danger); }
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 14px 16px;
-  font-size: 0.9rem;
-  font-family: 'Cairo', sans-serif;
-  background: var(--bg-2);
-  border: 2px solid var(--border);
-  border-radius: 14px;
-  color: var(--text);
-  transition: all 0.3s;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--primary);
-  background: white;
-  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08);
-}
-
-.form-group textarea { resize: vertical; min-height: 70px; }
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-/* ========== Delivery Options ========== */
-.options-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.option-card {
-  position: relative;
-  padding: 18px 15px;
-  background: var(--bg-2);
-  border: 2px solid var(--border);
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-align: center;
-}
-
-.option-card:hover { border-color: var(--primary-light); background: white; }
-
-.option-card input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
-
-.option-card.selected {
-  border-color: var(--primary);
-  background: rgba(30, 58, 138, 0.05);
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.12);
-}
-
-.option-icon { font-size: 2rem; margin-bottom: 8px; }
-
-.option-title { font-size: 0.9rem; font-weight: 900; color: var(--text); margin-bottom: 4px; }
-
-.option-price {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-}
-
-.option-price img { width: 12px; height: 12px; }
-
-.option-check {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--bg-3);
-  border: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-}
-
-.option-card.selected .option-check {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: white;
-}
-
-.option-check::after {
-  content: '✓';
-  font-size: 0.75rem;
-  font-weight: 900;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.option-card.selected .option-check::after { opacity: 1; }
-
-/* ========== Payment Methods ========== */
-.payment-info {
-  display: none;
-  margin-top: 15px;
-  padding: 15px;
-  background: rgba(30, 58, 138, 0.05);
-  border: 1.5px solid rgba(30, 58, 138, 0.15);
-  border-radius: 14px;
-  font-size: 0.85rem;
-  color: var(--text);
-  line-height: 1.8;
-}
-
-.payment-info.show { display: block; }
-
-.payment-info strong { color: var(--primary); font-weight: 900; }
-
-/* ========== Order Summary ========== */
-.summary-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 25px;
-  position: sticky;
-  top: 90px;
-  box-shadow: var(--shadow-sm);
-}
-
-.summary-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid var(--border);
-}
-
-.summary-items {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-bottom: 20px;
-}
-
-.summary-items::-webkit-scrollbar { width: 4px; }
-.summary-items::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-.summary-item {
-  display: flex;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--bg-3);
-  align-items: center;
-}
-
-.summary-item:last-child { border-bottom: none; }
-
-.summary-item-image {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  background: var(--bg-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  flex-shrink: 0;
-  overflow: hidden;
-  border: 1px solid var(--border);
-}
-
-.summary-item-image img { width: 100%; height: 100%; object-fit: cover; }
-
-.summary-item-info { flex: 1; min-width: 0; }
-
-.summary-item-name {
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: 3px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.summary-item-meta {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.summary-item-subtotal {
-  font-size: 0.9rem;
-  font-weight: 900;
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  white-space: nowrap;
-}
-
-.summary-item-subtotal img { width: 11px; height: 11px; }
-
-/* ========== Coupon Section ========== */
-.coupon-section {
-  margin-bottom: 20px;
-  padding: 15px;
-  background: rgba(212, 175, 55, 0.08);
-  border: 1.5px dashed rgba(212, 175, 55, 0.4);
-  border-radius: 14px;
-}
-
-.coupon-label {
-  font-size: 0.85rem;
-  font-weight: 900;
-  color: var(--gold);
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.coupon-input-wrap {
-  display: flex;
-  gap: 8px;
-}
-
-.coupon-input-wrap input {
-  flex: 1;
-  padding: 12px 16px;
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  font-family: 'Cairo', sans-serif;
-  font-size: 0.9rem;
-  background: white;
-  font-weight: 700;
-  text-transform: uppercase;
-  direction: ltr;
-  min-width: 0;
-}
-
-.coupon-input-wrap input:focus {
-  outline: none;
-  border-color: var(--gold);
-}
-
-.apply-coupon-btn {
-  padding: 0 20px;
-  background: var(--gold);
-  color: white;
-  border-radius: 12px;
-  font-weight: 900;
-  font-size: 0.85rem;
-  transition: all 0.3s;
-  flex-shrink: 0;
-}
-
-.apply-coupon-btn:hover { background: var(--accent); }
-
-.coupon-applied {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 14px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1.5px solid rgba(16, 185, 129, 0.2);
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--success);
-  margin-top: 10px;
-}
-
-.remove-coupon {
-  color: var(--danger);
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0 4px;
-}
-
-/* ========== Summary totals ========== */
-.summary-totals {
-  padding-top: 15px;
-  border-top: 2px dashed var(--border);
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  font-size: 0.9rem;
-}
-
-.summary-row .label {
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.summary-row .value {
-  font-weight: 900;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-
-.summary-row .value img { width: 13px; height: 13px; }
-
-.summary-row.discount .value { color: var(--success); }
-.summary-row.tax .value { color: var(--accent); }
-
-.summary-row.total {
-  padding-top: 15px;
-  margin-top: 10px;
-  border-top: 2px solid var(--border);
-  font-size: 1rem;
-}
-
-.summary-row.total .value {
-  color: var(--primary);
-  font-size: 1.4rem;
-}
-
-.summary-row.total .value img { width: 18px; height: 18px; }
-
-/* ========== Buttons ========== */
-.checkout-btn {
-  width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
-  border-radius: 14px;
-  font-size: 1rem;
-  font-weight: 900;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-  box-shadow: 0 10px 30px rgba(30, 58, 138, 0.25);
-}
-
-.checkout-btn:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.35);
-}
-
-.checkout-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background: var(--bg-3);
-  color: var(--text);
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 0.85rem;
-  transition: all 0.3s;
-  margin-bottom: 20px;
-}
-
-.back-btn:hover {
-  background: var(--primary);
-  color: white;
-  gap: 12px;
-}
-
-/* ========== Empty State ========== */
-.empty-state {
-  text-align: center;
-  padding: 80px 20px;
-  background: white;
-  border-radius: 20px;
-  border: 2px dashed var(--border);
-}
-
-.empty-state .icon { font-size: 5rem; margin-bottom: 20px; opacity: 0.5; }
-.empty-state h3 { font-size: 1.3rem; font-weight: 900; margin-bottom: 10px; }
-.empty-state p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
-
-.empty-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
-  padding: 12px 30px;
-  border-radius: 25px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  transition: all 0.3s;
-}
-
-.empty-btn:hover { transform: translateY(-3px); }
-
-/* ========== Success Modal ========== */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 2500;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  backdrop-filter: blur(5px);
-}
-
-.modal.show { display: flex; }
-
-.modal-content {
-  background: white;
-  border-radius: 24px;
-  width: 100%;
-  max-width: 450px;
-  overflow: hidden;
-  box-shadow: 0 25px 70px rgba(30, 58, 138, 0.25);
-  animation: modalIn 0.3s ease;
-  text-align: center;
-}
-
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.success-icon {
-  width: 90px;
-  height: 90px;
-  margin: 35px auto 15px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--success), #059669);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  color: white;
-  box-shadow: 0 15px 40px rgba(16, 185, 129, 0.3);
-  animation: bounceIn 0.6s ease;
-}
-
-@keyframes bounceIn {
-  0% { transform: scale(0); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-.modal-body { padding: 0 30px 30px; }
-
-.modal-body h2 {
-  font-size: 1.4rem;
-  font-weight: 900;
-  margin-bottom: 10px;
-  color: var(--text);
-}
-
-.modal-body p {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 20px;
-  line-height: 1.7;
-}
-
-.order-number-box {
-  background: var(--bg-2);
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-
-.order-number-box .label {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-bottom: 5px;
-}
-
-.order-number-box .number {
-  font-size: 1.1rem;
-  font-weight: 900;
-  color: var(--primary);
-  letter-spacing: 1px;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.modal-actions a,
-.modal-actions button {
-  flex: 1;
-  padding: 14px;
-  border-radius: 12px;
-  font-weight: 900;
-  font-size: 0.9rem;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
-}
-
-.btn-primary:hover { transform: translateY(-3px); }
-
-.btn-secondary {
-  background: var(--bg-3);
-  color: var(--text);
-}
-
-.btn-secondary:hover { background: var(--bg-2); }
-
-/* ========== Notification ========== */
-.notification {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: var(--primary);
-  color: white;
-  padding: 14px 25px;
-  border-radius: 14px;
-  font-weight: 700;
-  z-index: 3000;
-  transform: translateX(500px);
-  transition: transform 0.4s;
-  box-shadow: 0 15px 40px rgba(30, 58, 138, 0.3);
-  max-width: calc(100% - 60px);
-  font-size: 0.9rem;
-}
-
-.notification.show { transform: translateX(0); }
-.notification.error { background: var(--danger); }
-
-/* ========== Responsive ========== */
-@media (max-width: 900px) {
-  .checkout-layout {
-    grid-template-columns: 1fr;
-  }
-  
-  .summary-card { position: relative; top: 0; }
-}
-
-@media (max-width: 600px) {
-  .main-content { padding-top: 75px; padding-bottom: 30px; }
-  
-  .nav { padding: 0 12px; gap: 8px; }
-  .logo { font-size: 1rem; }
-  .logo-icon { width: 32px; height: 32px; font-size: 0.9rem; }
-  .icon-btn { width: 38px; height: 38px; }
-  .icon-btn svg { width: 20px; height: 20px; }
-  
-  .container { padding: 0 12px; }
-  
-  .page-header h1 { font-size: 1.3rem; }
-  .page-header p { font-size: 0.8rem; }
-  
-  .section-card { padding: 18px; border-radius: 16px; margin-bottom: 15px; }
-  .section-card-header { gap: 10px; margin-bottom: 15px; padding-bottom: 12px; }
-  .section-card-icon { width: 36px; height: 36px; font-size: 1rem; border-radius: 10px; }
-  .section-card-title { font-size: 0.95rem; }
-  .section-card-subtitle { font-size: 0.7rem; }
-  
-  .form-group { margin-bottom: 14px; }
-  .form-group label { font-size: 0.8rem; margin-bottom: 6px; }
-  .form-group input,
-  .form-group textarea { padding: 12px 14px; font-size: 0.85rem; border-radius: 12px; }
-  
-  .form-row { grid-template-columns: 1fr; gap: 0; }
-  
-  .options-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .option-card { padding: 14px 10px; border-radius: 14px; }
-  .option-icon { font-size: 1.5rem; margin-bottom: 6px; }
-  .option-title { font-size: 0.8rem; }
-  .option-price { font-size: 0.7rem; }
-  .option-check { width: 18px; height: 18px; top: 8px; left: 8px; }
-  .option-check::after { font-size: 0.65rem; }
-  
-  .summary-card { padding: 18px; border-radius: 16px; }
-  .summary-header { margin-bottom: 15px; padding-bottom: 12px; }
-  .summary-item { padding: 8px 0; }
-  .summary-item-image { width: 45px; height: 45px; font-size: 1.2rem; }
-  .summary-item-name { font-size: 0.8rem; }
-  .summary-item-subtotal { font-size: 0.85rem; }
-  
-  .summary-row { font-size: 0.85rem; padding: 6px 0; }
-  .summary-row.total { font-size: 0.95rem; }
-  .summary-row.total .value { font-size: 1.2rem; }
-  
-  .checkout-btn { padding: 14px; font-size: 0.95rem; border-radius: 12px; }
-  
-  .back-btn { padding: 8px 16px; font-size: 0.8rem; }
-  
-  .modal-content { border-radius: 20px; }
-  .success-icon { width: 70px; height: 70px; font-size: 2.2rem; margin: 25px auto 12px; }
-  .modal-body { padding: 0 20px 25px; }
-  .modal-body h2 { font-size: 1.15rem; }
-  .modal-body p { font-size: 0.85rem; }
-  .modal-actions { flex-direction: column; }
-  
-  .notification { bottom: 15px; right: 15px; left: 15px; max-width: calc(100% - 30px); text-align: center; }
-}
-</style>
+  <link rel="icon" type="image/jpeg" href="../assets/12.jpeg" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>إتمام الطلب | Sukkar Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pink-stripe: #de98b5;
+      --pink-stripe-pale: #f6e6ec;
+      --mint: #b9e1dd;
+      --mint-hero: #b8e5e0;
+      --brand: #b2437b;
+      --brand-dark: #8a305f;
+      --mint-pill: #a0cdc6;
+      --pink-card: #f6c6de;
+      --ink: #4a2338;
+      --warm-white: #fffaf5;
+      --price-color: #222;
+      --success: #4caf50;
+      --danger: #ef4444;
+      --whatsapp: #25d366;
+      --bg-light: #fdf6f9;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    *{box-sizing:border-box; margin:0; padding:0;}
+    html{ scroll-behavior: smooth; }
+    body{
+      font-family:'Quicksand', 'Poppins', sans-serif;
+      color: var(--ink);
+      background:var(--warm-white);
+      overflow-x:hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .display{ font-family:'Baloo 2', cursive; }
+    img{max-width:100%; display:block;}
+    a{text-decoration:none; color:inherit;}
+    ul{list-style:none;}
+    .wrap{max-width:1180px; margin:0 auto; padding:0 16px;}
+    button{font-family:'Quicksand', sans-serif; cursor:pointer; border:none; background:none; color:inherit;}
+
+    /* AWNING & TOP BAR */
+    .awning{ width: 100%; position: sticky; top: 0; z-index: 101; }
+    .awning-stripes{
+      height: 38px;
+      background: repeating-linear-gradient(90deg, var(--pink-stripe) 0 50px, var(--pink-stripe-pale) 50px 100px);
+    }
+    .top-bar{
+      background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 38px;
+      z-index: 100; box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    }
+    .top-bar-inner{
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; gap: 16px; max-width: 1180px; margin: 0 auto;
+      position: relative; min-height: 58px;
+    }
+    .icon-group{ display: flex; align-items: center; gap: 12px; flex-shrink: 0; z-index: 2; }
+    .icon-btn{
+      background: transparent; position: relative; display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; color: #222; transition: color 0.2s;
+    }
+    .icon-btn:hover { color: var(--brand); }
+    .icon-btn svg{ width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .brand-center{
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      display: flex; align-items: center; white-space: nowrap; user-select: none; pointer-events: none;
+    }
+    .brand-logo{ height: 44px; width: auto; display: block; }
+
+    /* PAGE HEADER */
+    .page-header { padding: 30px 16px 20px; text-align: center; }
+    .page-title { font-family: 'Baloo 2', cursive; font-size: 2.2rem; font-weight: 800; color: var(--brand); margin-bottom: 10px; }
+    .page-sub { font-size: 1rem; font-weight: 700; color: #666; }
+
+    /* MAIN LAYOUT */
+    .checkout-layout {
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px;
+      max-width: 1180px; margin: 0 auto 60px; padding: 0 16px;
+    }
+
+    /* CARDS */
+    .section-card {
+      background: #fff; border-radius: 20px; padding: 25px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .section-card-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--pink-card);
+    }
+    .section-icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .section-title { font-family: 'Baloo 2', cursive; font-size: 1.2rem; color: var(--brand); }
+
+    /* FORM */
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 12px 15px; border-radius: 12px; border: 1.5px solid #ddd;
+      font-family: 'Quicksand', sans-serif; font-size: 0.9rem; background: var(--bg-light); outline: none; transition: 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--brand); background: #fff; box-shadow: 0 0 0 4px rgba(178,67,123,0.1);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+    /* PAYMENT OPTIONS */
+    .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .payment-card {
+      background: var(--bg-light); border: 2px solid #ddd; border-radius: 16px;
+      padding: 20px 15px; text-align: center; cursor: pointer; transition: all 0.3s;
+      position: relative;
+    }
+    .payment-card.selected { border-color: var(--brand); background: #fff; box-shadow: 0 4px 15px rgba(178,67,123,0.15); }
+    .payment-icon { font-size: 2rem; margin-bottom: 10px; }
+    .payment-title { font-weight: 800; font-size: 1rem; color: var(--ink); }
+
+    /* TRANSFER DETAILS (الرقم فقط وزر النسخ) */
+    .transfer-info {
+      display: none; margin-top: 20px; padding: 20px;
+      background: rgba(178,67,123,0.05); border: 1.5px dashed var(--brand); border-radius: 16px;
+      text-align: center;
+    }
+    .transfer-info.show { display: block; }
+    .transfer-phone {
+      font-size: 2rem; font-weight: 900; color: var(--brand); letter-spacing: 2px;
+      margin: 10px 0; font-family: 'Baloo 2', cursive; direction: ltr;
+    }
+    .copy-btn {
+      background: var(--brand); color: #fff; padding: 10px 20px; border-radius: 20px;
+      font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
+    }
+    .copy-btn:hover { background: var(--brand-dark); }
+
+    /* ORDER SUMMARY */
+    .summary-card {
+      background: #fff; border-radius: 20px; padding: 25px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+      position: sticky; top: 110px;
+    }
+    .summary-items { max-height: 250px; overflow-y: auto; margin-bottom: 20px; }
+    .summary-item { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--bg-light); }
+    .summary-item-img { width: 50px; height: 50px; border-radius: 10px; overflow: hidden; background: #eee; }
+    .summary-item-info { flex: 1; }
+    .summary-item-name { font-size: 0.85rem; font-weight: 700; }
+    .summary-item-price { font-size: 0.9rem; font-weight: 900; color: var(--brand); }
+    
+    .summary-totals { border-top: 2px dashed var(--pink-card); padding-top: 15px; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; font-weight: 600; }
+    .summary-row.total { font-size: 1.2rem; font-weight: 900; color: var(--brand); margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+
+    .submit-btn {
+      width: 100%; background: var(--brand); color: #fff; padding: 16px; border-radius: 16px;
+      font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      box-shadow: 0 6px 20px rgba(178,67,123,0.3); transition: 0.3s; margin-top: 20px;
+    }
+    .submit-btn:hover { background: var(--brand-dark); transform: translateY(-3px); }
+    .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* SUCCESS MODAL */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+    .modal.show { display: flex; }
+    .modal-content { background: #fff; border-radius: 24px; padding: 30px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+    .success-icon { font-size: 4rem; margin-bottom: 15px; display: inline-block; animation: float 2s infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .modal h2 { font-family: 'Baloo 2', cursive; color: var(--brand); margin-bottom: 10px; font-size: 1.5rem; }
+    .modal p { color: #666; margin-bottom: 20px; font-size: 0.95rem; }
+    .modal-btn { background: var(--brand); color: #fff; padding: 12px 30px; border-radius: 12px; font-weight: 700; text-decoration: none; display: inline-block; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .checkout-layout { grid-template-columns: 1fr; }
+      .summary-card { position: static; }
+    }
+    @media (max-width: 600px) {
+      .top-bar-inner { padding: 8px 10px; gap: 6px; }
+      .icon-btn { width: 30px; height: 30px; }
+      .icon-btn svg { width: 20px; height: 20px; }
+      .brand-logo { height: 34px; }
+      .page-title { font-size: 1.8rem; }
+      .section-card { padding: 18px; }
+      .form-row { grid-template-columns: 1fr; gap: 10px; }
+      .payment-grid { grid-template-columns: 1fr 1fr; }
+      .transfer-phone { font-size: 1.6rem; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Header -->
-<header class="header">
-  <nav class="nav">
-    <div class="nav-right">
-      <button class="icon-btn" onclick="toggleMenu()" title="القائمة">
-        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-    </div>
-    <a href="../index.html" class="logo">
-      <div class="logo-icon">✨</div>
-      متجر راقي
-    </a>
-    <div class="nav-left">
-      <a href="search.html" class="icon-btn" title="البحث">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+<!-- AWNING -->
+<div class="awning">
+  <div class="awning-stripes"></div>
+</div>
+
+<!-- TOP BAR -->
+<header class="top-bar">
+  <div class="top-bar-inner">
+    <div class="icon-group group-left">
+      <a href="../index.html" class="icon-btn" title="الرئيسية">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
       </a>
-      <button class="icon-btn" onclick="toggleCart()" title="السلة">
-        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        <span class="badge" id="cartBadge">0</span>
-      </button>
     </div>
-  </nav>
+    <div class="brand-center">
+      <a href="../index.html">
+        <svg class="brand-logo" viewBox="0 0 320 85" xmlns="http://www.w3.org/2000/svg" aria-label="Sukkar Store">
+          <g transform="translate(2,30)">
+            <path d="M30 22 C 18 4, -2 6, 4 20 C 8 30, 20 30, 30 22 Z" fill="#f9a7c6" stroke="#e26a98" stroke-width="1.8"/>
+            <path d="M30 22 C 42 4, 62 6, 56 20 C 52 30, 40 30, 30 22 Z" fill="#f9a7c6" stroke="#e26a98" stroke-width="1.8"/>
+            <circle cx="30" cy="22" r="4" fill="#e26a98"/>
+            <path d="M30 26 C 28 36, 24 46, 20 54" stroke="#e26a98" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M30 26 C 32 36, 36 46, 40 54" stroke="#e26a98" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(48,18)">
+            <circle cx="25" cy="20" r="16" fill="#f8b878" stroke="#d97e3a" stroke-width="1.5"/>
+            <circle cx="19" cy="19" r="2" fill="#3a2419"/>
+            <circle cx="31" cy="19" r="2" fill="#3a2419"/>
+            <path d="M23 24 L 27 24 L 25 26 Z" fill="#e2738d"/>
+          </g>
+          <g font-family="'Baloo 2', cursive" font-weight="800" font-size="56" fill="#b2437b">
+            <text x="100" y="58">S</text>
+            <text x="135" y="58">U</text>
+            <text x="172" y="58">K</text>
+            <text x="208" y="58">K</text>
+            <text x="244" y="58">A</text>
+            <text x="280" y="58">R</text>
+          </g>
+        </svg>
+      </a>
+    </div>
+    <div class="icon-group group-right">
+      <a href="search.html" class="icon-btn" title="بحث">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </a>
+    </div>
+  </div>
 </header>
 
-<div class="main-content">
-  <div class="container">
+<!-- MAIN -->
+<div class="wrap">
+  <div class="page-header">
+    <h1 class="page-title display">🛒 إتمام الطلب</h1>
+    <p class="page-sub">أكمل بياناتك لتأكيد طلبك</p>
+  </div>
 
-    <!-- Back Button -->
-    <a href="search.html" class="back-btn">← مواصلة التسوق</a>
-
-    <!-- Page Header -->
-    <div class="page-header">
-      <h1>🛒 إتمام <span>الطلب</span></h1>
-      <p>أكمل بياناتك لتأكيد الطلب</p>
-    </div>
-
-    <!-- Checkout Layout -->
-    <div class="checkout-layout" id="checkoutLayout">
-
-      <!-- بيانات العميل + التوصيل + الدفع -->
-      <div class="checkout-main">
-
-        <!-- بيانات العميل -->
-        <div class="section-card">
-          <div class="section-card-header">
-            <div class="section-card-icon">👤</div>
-            <div>
-              <div class="section-card-title">بيانات العميل</div>
-              <div class="section-card-subtitle">نحتاجها لتوصيل طلبك</div>
-            </div>
-          </div>
-
+  <div class="checkout-layout" id="checkoutLayout">
+    
+    <!-- RIGHT: Form -->
+    <div class="checkout-main">
+      
+      <!-- Customer Data -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-icon">👤</div>
+          <div class="section-title">بيانات المستلم</div>
+        </div>
+        <div class="form-group">
+          <label>الاسم الكامل <span style="color:var(--brand);">*</span></label>
+          <input type="text" id="customerName" placeholder="مثال: أحمد محمد">
+        </div>
+        <div class="form-row">
           <div class="form-group">
-            <label>👤 الاسم الكامل <span class="required">*</span></label>
-            <input type="text" id="customerName" placeholder="مثال: أحمد محمد" required>
+            <label>رقم الهاتف <span style="color:var(--brand);">*</span></label>
+            <input type="tel" id="customerPhone" placeholder="91234567" dir="ltr">
           </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>📱 رقم الهاتف <span class="required">*</span></label>
-              <input type="tel" id="customerPhone" placeholder="مثال: 91234567" required dir="ltr">
-            </div>
-            <div class="form-group">
-              <label>📧 البريد الإلكتروني</label>
-              <input type="email" id="customerEmail" placeholder="example@email.com" dir="ltr">
-            </div>
-          </div>
-
           <div class="form-group">
-            <label>📍 العنوان الكامل <span class="required">*</span></label>
-            <input type="text" id="customerAddress" placeholder="الولاية، الحي، الشارع، رقم المنزل" required>
-          </div>
-
-          <div class="form-group">
-            <label>📝 ملاحظات إضافية</label>
-            <textarea id="customerNotes" placeholder="أي ملاحظات على الطلب..."></textarea>
+            <label>البريد الإلكتروني (اختياري)</label>
+            <input type="email" id="customerEmail" placeholder="email@example.com" dir="ltr">
           </div>
         </div>
-
-        <!-- طريقة التوصيل -->
-        <div class="section-card">
-          <div class="section-card-header">
-            <div class="section-card-icon">🚚</div>
-            <div>
-              <div class="section-card-title">طريقة التوصيل</div>
-              <div class="section-card-subtitle">اختر طريقة الاستلام</div>
-            </div>
-          </div>
-
-          <div class="options-grid">
-            <div class="option-card selected" data-delivery="home" data-price="2" onclick="selectDelivery('home', 2)">
-              <input type="radio" name="delivery" value="home" checked>
-              <div class="option-check"></div>
-              <div class="option-icon">🏠</div>
-              <div class="option-title">توصيل للمنزل</div>
-              <div class="option-price">
-                2.000 <img src="/images/omr-dark.png" alt="ر.ع">
-              </div>
-            </div>
-
-            <div class="option-card" data-delivery="office" data-price="1" onclick="selectDelivery('office', 1)">
-              <input type="radio" name="delivery" value="office">
-              <div class="option-check"></div>
-              <div class="option-icon">🏢</div>
-              <div class="option-title">توصيل للمكتب</div>
-              <div class="option-price">
-                1.000 <img src="/images/omr-dark.png" alt="ر.ع">
-              </div>
-            </div>
-          </div>
+        <div class="form-group">
+          <label>العنوان الكامل <span style="color:var(--brand);">*</span></label>
+          <input type="text" id="customerAddress" placeholder="الولاية، الحي، الشارع، رقم المنزل">
         </div>
-
-        <!-- طريقة الدفع -->
-        <div class="section-card">
-          <div class="section-card-header">
-            <div class="section-card-icon">💳</div>
-            <div>
-              <div class="section-card-title">طريقة الدفع</div>
-              <div class="section-card-subtitle">اختر طريقة الدفع المناسبة</div>
-            </div>
-          </div>
-
-          <div class="options-grid">
-            <div class="option-card selected" data-payment="cash" onclick="selectPayment('cash')">
-              <input type="radio" name="payment" value="cash" checked>
-              <div class="option-check"></div>
-              <div class="option-icon">💵</div>
-              <div class="option-title">نقد عند الاستلام</div>
-              <div class="option-price">ادفع عند وصول الطلب</div>
-            </div>
-
-            <div class="option-card" data-payment="transfer" onclick="selectPayment('transfer')">
-              <input type="radio" name="payment" value="transfer">
-              <div class="option-check"></div>
-              <div class="option-icon">🏦</div>
-              <div class="option-title">تحويل بنكي</div>
-              <div class="option-price">تحويل مباشر</div>
-            </div>
-          </div>
-
-          <!-- تفاصيل التحويل البنكي -->
-          <div class="payment-info" id="transferInfo">
-            <div style="font-weight: 900; margin-bottom: 8px; font-size: 0.95rem;">🏦 تفاصيل الحساب البنكي:</div>
-            <div><strong>البنك:</strong> بنك مسقط</div>
-            <div><strong>رقم الحساب:</strong> 0123456789012</div>
-            <div><strong>اسم الحساب:</strong> متجر راقي ش.م.م</div>
-            <div><strong>الآيبان:</strong> OM12 3456 7890 1234 5678 90</div>
-            <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 10px; font-size: 0.8rem; color: var(--text-muted);">
-              💡 بعد التحويل، أرسل صورة الإيصال على واتساب: <strong>+968 9000 0000</strong>
-            </div>
-          </div>
+        <div class="form-group">
+          <label>ملاحظات إضافية</label>
+          <textarea id="customerNotes" placeholder="أي ملاحظات على الطلب..."></textarea>
         </div>
-
       </div>
 
-      <!-- ملخص الطلب -->
-      <div class="checkout-side">
-        <div class="summary-card">
-          <div class="summary-header">
-            <div class="section-card-icon">📋</div>
-            <div>
-              <div class="section-card-title">ملخص الطلب</div>
-              <div class="section-card-subtitle" id="itemsCount">0 منتج</div>
-            </div>
+      <!-- Payment Methods -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-icon">💳</div>
+          <div class="section-title">طريقة الدفع</div>
+        </div>
+        
+        <div class="payment-grid">
+          <!-- Transfer -->
+          <div class="payment-card selected" onclick="selectPayment('transfer')">
+            <div class="payment-icon">🏦</div>
+            <div class="payment-title">تحويل بنكي</div>
           </div>
-
-          <div class="summary-items" id="summaryItems">
-            <div style="text-align: center; padding: 20px; color: var(--text-muted);">جاري التحميل...</div>
+          <!-- WhatsApp -->
+          <div class="payment-card" onclick="selectPayment('whatsapp')">
+            <div class="payment-icon">💬</div>
+            <div class="payment-title">تواصل واتساب</div>
           </div>
+        </div>
 
-          <!-- 🔥 قسم كود الخصم -->
-          <div class="coupon-section">
-            <div class="coupon-label">🎟️ هل لديك كود خصم؟</div>
-            <div class="coupon-input-wrap">
-              <input type="text" id="couponInput" placeholder="أدخل الكود هنا" maxlength="20">
-              <button class="apply-coupon-btn" onclick="applyCoupon()">تطبيق</button>
-            </div>
-            <div id="appliedCoupon" style="display:none;"></div>
-          </div>
-
-          <div class="summary-totals">
-            <div class="summary-row">
-              <span class="label">المجموع:</span>
-              <span class="value" id="subtotal">
-                <span>0.000</span>
-                <img src="/images/omr-dark.png" alt="ر.ع">
-              </span>
-            </div>
-
-            <div class="summary-row discount" id="discountRow" style="display: none;">
-              <span class="label">الخصم:</span>
-              <span class="value" id="discount">
-                - <span>0.000</span>
-                <img src="/images/omr-dark.png" alt="ر.ع">
-              </span>
-            </div>
-
-            <div class="summary-row tax">
-              <span class="label">الضريبة (5%):</span>
-              <span class="value" id="tax">
-                <span>0.000</span>
-                <img src="/images/omr-dark.png" alt="ر.ع">
-              </span>
-            </div>
-
-            <div class="summary-row">
-              <span class="label">التوصيل:</span>
-              <span class="value" id="deliveryCost">
-                <span>2.000</span>
-                <img src="/images/omr-dark.png" alt="ر.ع">
-              </span>
-            </div>
-
-            <div class="summary-row total">
-              <span class="label" style="color: var(--text); font-weight: 900;">الإجمالي النهائي:</span>
-              <span class="value" id="total">
-                <span>0.000</span>
-                <img src="/images/omr-dark.png" alt="ر.ع">
-              </span>
-            </div>
-          </div>
-
-          <button class="checkout-btn" onclick="submitOrder()" id="submitBtn">
-            <span>✅</span>
-            <span>تأكيد الطلب</span>
+        <!-- Transfer Details -->
+        <div class="transfer-info show" id="transferInfo">
+          <p style="font-weight:700; color:var(--ink); margin-bottom:10px;">الرجاء تحويل المبلغ إلى الرقم التالي:</p>
+          <div class="transfer-phone" id="transferPhone">95544676</div>
+          <button class="copy-btn" onclick="copyPhone()">
+            📋 نسخ الرقم
           </button>
         </div>
       </div>
 
     </div>
 
-    <!-- Empty State -->
-    <div id="emptyState" style="display:none;">
-      <div class="empty-state">
-        <div class="icon">🛒</div>
-        <h3>السلة فاضية</h3>
-        <p>أضف منتجات للسلة أولاً</p>
-        <a href="search.html" class="empty-btn">🛍️ تسوق الآن</a>
+    <!-- LEFT: Summary -->
+    <div class="checkout-side">
+      <div class="summary-card">
+        <div class="section-card-header" style="border-bottom:none; margin-bottom:10px; padding-bottom:0;">
+          <div class="section-title">ملخص الطلب</div>
+        </div>
+        
+        <div class="summary-items" id="summaryItems">
+          <!-- Items will be loaded here -->
+        </div>
+
+        <div class="summary-totals">
+          <div class="summary-row">
+            <span>المجموع:</span>
+            <span id="subtotal">0.000 ر.ع</span>
+          </div>
+          <div class="summary-row">
+            <span>الضريبة (5%):</span>
+            <span id="tax">0.000 ر.ع</span>
+          </div>
+          <div class="summary-row">
+            <span>التوصيل:</span>
+            <span id="deliveryCost">1.000 ر.ع</span>
+          </div>
+          <div class="summary-row total">
+            <span>الإجمالي:</span>
+            <span id="total">0.000 ر.ع</span>
+          </div>
+        </div>
+
+        <button class="submit-btn" id="submitBtn" onclick="submitOrder()">
+          <span>✅</span>
+          <span>تأكيد الطلب</span>
+        </button>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- Success Modal -->
+<!-- SUCCESS MODAL -->
 <div class="modal" id="successModal">
   <div class="modal-content">
-    <div class="success-icon">✓</div>
-    <div class="modal-body">
-      <h2>تم تأكيد الطلب! 🎉</h2>
-      <p>شكراً لك! سيتم التواصل معك قريباً لتأكيد التوصيل.</p>
-
-      <div class="order-number-box">
-        <div class="label">رقم الطلب:</div>
-        <div class="number" id="orderNumber">-</div>
-      </div>
-
-      <div class="modal-actions">
-        <a href="orders.html" class="btn-primary">
-          📦 طلباتي
-        </a>
-        <a href="search.html" class="btn-secondary">
-          🛍️ متابعة التسوق
-        </a>
-      </div>
-    </div>
+    <div class="success-icon">🎉</div>
+    <h2>تم تأكيد الطلب!</h2>
+    <p>سيتم التواصل معك قريباً لتأكيد التوصيل. شكراً لثقتك بنا!</p>
+    <a href="../index.html" class="modal-btn">العودة للرئيسية</a>
   </div>
 </div>
 
-<!-- Notification -->
-<div class="notification" id="notification"></div>
-
 <script>
-const API_URL = '/api';
-let cart = JSON.parse(localStorage.getItem('raki_cart') || '[]');
-let selectedDelivery = { type: 'home', price: 2 };
-let selectedPayment = 'cash';
-let currentSubtotal = 0;
-let currentTax = 0;
-let appliedCoupon = null;
-let currentDiscountAmount = 0;
-
-const TAX_RATE = 0.05;
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderCart();
-});
-
-function renderCart() {
-  const layout = document.getElementById('checkoutLayout');
-  const empty = document.getElementById('emptyState');
-
-  if (cart.length === 0) {
-    layout.style.display = 'none';
-    empty.style.display = 'block';
-    return;
-  }
-
-  layout.style.display = 'grid';
-  empty.style.display = 'none';
-
-  const itemsContainer = document.getElementById('summaryItems');
-  itemsContainer.innerHTML = cart.map(item => `
-    <div class="summary-item">
-      <div class="summary-item-image">
-        ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '👕'}
-      </div>
-      <div class="summary-item-info">
-        <div class="summary-item-name">${item.name}</div>
-        <div class="summary-item-meta">${item.price.toFixed(3)} × ${item.quantity}</div>
-      </div>
-      <div class="summary-item-subtotal">
-        ${(item.price * item.quantity).toFixed(3)}
-        <img src="/images/omr-dark.png" alt="ر.ع">
-      </div>
-    </div>
-  `).join('');
-
-  document.getElementById('itemsCount').textContent = `${cart.length} منتج`;
-
-  calculateTotals();
-}
-
-function calculateTotals() {
-  currentSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const API_URL = '/api';
+  // ⚠️ الرقم الخاص بك (التحويل والواتساب)
+  const STORE_PHONE = '96895544676'; 
   
-  currentDiscountAmount = 0;
-  if (appliedCoupon) {
-    if (appliedCoupon.type === 'percent') {
-      currentDiscountAmount = currentSubtotal * (appliedCoupon.value / 100);
-    } else {
-      currentDiscountAmount = Math.min(appliedCoupon.value, currentSubtotal);
+  let cart = JSON.parse(localStorage.getItem('sukkarCart') || '[]');
+  let selectedPayment = 'transfer';
+  let currentSubtotal = 0;
+  let currentTax = 0;
+  let deliveryCost = 1; // مثلاً 1 ريال توصيل
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if(cart.length === 0) {
+      alert('السلة فارغة! سيتم تحويلك للمتجر.');
+      window.location.href = 'search.html';
+      return;
     }
-  }
-
-  const discountedSubtotal = currentSubtotal - currentDiscountAmount;
-  currentTax = discountedSubtotal * TAX_RATE;
-  const deliveryCost = selectedDelivery.price;
-  const total = discountedSubtotal + currentTax + deliveryCost;
-
-  document.getElementById('subtotal').innerHTML = `
-    <span>${currentSubtotal.toFixed(3)}</span>
-    <img src="/images/omr-dark.png" alt="ر.ع">
-  `;
-
-  const discountRow = document.getElementById('discountRow');
-  if (currentDiscountAmount > 0) {
-    discountRow.style.display = 'flex';
-    document.getElementById('discount').innerHTML = `
-      - <span>${currentDiscountAmount.toFixed(3)}</span>
-      <img src="/images/omr-dark.png" alt="ر.ع">
-    `;
-  } else {
-    discountRow.style.display = 'none';
-  }
-
-  document.getElementById('tax').innerHTML = `
-    <span>${currentTax.toFixed(3)}</span>
-    <img src="/images/omr-dark.png" alt="ر.ع">
-  `;
-
-  document.getElementById('deliveryCost').innerHTML = `
-    <span>${deliveryCost.toFixed(3)}</span>
-    <img src="/images/omr-dark.png" alt="ر.ع">
-  `;
-
-  document.getElementById('total').innerHTML = `
-    <span>${total.toFixed(3)}</span>
-    <img src="/images/omr-dark.png" alt="ر.ع">
-  `;
-}
-
-// ========== تطبيق الكوبون ==========
-async function applyCoupon() {
-  const code = document.getElementById('couponInput').value.trim().toUpperCase();
-  
-  if (!code) {
-    showNotification('⚠️ أدخل كود الخصم', true);
-    return;
-  }
-
-  try {
-    const res = await fetch(`${API_URL}/coupons`);
-    const data = await res.json();
-
-    if (data.success) {
-      const coupon = data.coupons.find(c => 
-        c.code === code && 
-        c.active === 1 &&
-        (!c.expires_at || new Date(c.expires_at) > new Date()) &&
-        (c.used_count < c.max_uses) &&
-        (currentSubtotal >= (c.min_order || 0))
-      );
-
-      if (coupon) {
-        appliedCoupon = coupon;
-        updateCouponDisplay();
-        calculateTotals();
-        showNotification('✅ تم تطبيق الكوبون: ' + coupon.code);
-      } else {
-        showNotification('❌ كود غير صحيح أو غير مطابق للشروط', true);
-      }
-    }
-  } catch (e) {
-    showNotification('❌ تعذّر التحقق من الكوبون', true);
-  }
-}
-
-function updateCouponDisplay() {
-  const container = document.getElementById('appliedCoupon');
-  
-  if (appliedCoupon) {
-    const valueText = appliedCoupon.type === 'percent' 
-      ? `${appliedCoupon.value}%` 
-      : `${appliedCoupon.value.toFixed(3)} ر.ع`;
-
-    container.style.display = 'block';
-    container.innerHTML = `
-      <div class="coupon-applied">
-        <span>✅ ${appliedCoupon.code} — خصم ${valueText}</span>
-        <span class="remove-coupon" onclick="removeCoupon()">✕</span>
-      </div>
-    `;
-  } else {
-    container.style.display = 'none';
-    container.innerHTML = '';
-  }
-}
-
-function removeCoupon() {
-  appliedCoupon = null;
-  document.getElementById('couponInput').value = '';
-  updateCouponDisplay();
-  calculateTotals();
-  showNotification('🗑️ تم إزالة الكوبون');
-}
-
-function selectDelivery(type, price) {
-  selectedDelivery = { type, price };
-  document.querySelectorAll('.option-card[data-delivery]').forEach(card => {
-    card.classList.toggle('selected', card.dataset.delivery === type);
+    renderSummary();
   });
-  calculateTotals();
-}
 
-function selectPayment(type) {
-  selectedPayment = type;
-  document.querySelectorAll('.option-card[data-payment]').forEach(card => {
-    card.classList.toggle('selected', card.dataset.payment === type);
-  });
-  document.getElementById('transferInfo').classList.toggle('show', type === 'transfer');
-}
+  function renderSummary() {
+    const container = document.getElementById('summaryItems');
+    let subtotal = 0;
 
-async function submitOrder() {
-  const name = document.getElementById('customerName').value.trim();
-  const phone = document.getElementById('customerPhone').value.trim();
-  const email = document.getElementById('customerEmail').value.trim();
-  const address = document.getElementById('customerAddress').value.trim();
-  const notes = document.getElementById('customerNotes').value.trim();
+    container.innerHTML = cart.map(item => {
+      const sub = item.price * item.qty;
+      subtotal += sub;
+      return `
+        <div class="summary-item">
+          <div class="summary-item-img">
+            ${item.img ? `<img src="${item.img}">` : '🎁'}
+          </div>
+          <div class="summary-item-info">
+            <div class="summary-item-name">${item.name}</div>
+            <div class="summary-item-price">${item.qty} × ${item.price.toFixed(3)}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
 
-  if (!name) { showNotification('⚠️ الرجاء إدخال الاسم', true); return; }
-  if (!phone) { showNotification('⚠️ الرجاء إدخال رقم الهاتف', true); return; }
-  if (!address) { showNotification('⚠️ الرجاء إدخال العنوان', true); return; }
+    currentSubtotal = subtotal;
+    currentTax = subtotal * 0.05;
+    const total = currentSubtotal + currentTax + deliveryCost;
 
-  if (cart.length === 0) { showNotification('⚠️ السلة فاضية', true); return; }
+    document.getElementById('subtotal').textContent = currentSubtotal.toFixed(3) + ' ر.ع';
+    document.getElementById('tax').textContent = currentTax.toFixed(3) + ' ر.ع';
+    document.getElementById('deliveryCost').textContent = deliveryCost.toFixed(3) + ' ر.ع';
+    document.getElementById('total').textContent = total.toFixed(3) + ' ر.ع';
+  }
 
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span>⏳</span><span>جاري إرسال الطلب...</span>';
-
-  const items = cart.map(item => ({
-    product_id: item.id,
-    product_name: item.name,
-    price: item.price,
-    quantity: item.quantity
-  }));
-
-  const orderData = {
-    items: items,
-    discount: currentDiscountAmount,
-    coupon_code: appliedCoupon ? appliedCoupon.code : null,
-    customer_name: name,
-    customer_phone: phone,
-    customer_email: email,
-    customer_address: address + (notes ? ' | ملاحظات: ' + notes : ''),
-    delivery_type: selectedDelivery.type,
-    delivery_cost: selectedDelivery.price,
-    payment_method: selectedPayment,
-    tax: currentTax,
-    sale_type: 'online'
-  };
-
-  try {
-    const res = await fetch(`${API_URL}/sales`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(orderData)
+  function selectPayment(type) {
+    selectedPayment = type;
+    document.querySelectorAll('.payment-card').forEach(card => {
+      card.classList.toggle('selected', card.textContent.includes(type === 'transfer' ? 'تحويل' : 'واتساب'));
     });
-
-    const data = await res.json();
-
-    if (data.success) {
-      document.getElementById('orderNumber').textContent = data.invoice_number;
-      cart = [];
-      localStorage.removeItem('raki_cart');
-      document.getElementById('successModal').classList.add('show');
+    
+    const transferInfo = document.getElementById('transferInfo');
+    if (type === 'transfer') {
+      transferInfo.classList.add('show');
     } else {
-      showNotification('❌ ' + (data.message || 'حدث خطأ'), true);
+      transferInfo.classList.remove('show');
+    }
+  }
+
+  function copyPhone() {
+    navigator.clipboard.writeText('95544676').then(() => {
+      alert('✅ تم نسخ الرقم بنجاح: 95544676');
+    }).catch(() => {
+      alert('تعذر النسخ، يرجى النسخ يدوياً: 95544676');
+    });
+  }
+
+  async function submitOrder() {
+    const name = document.getElementById('customerName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
+    const address = document.getElementById('customerAddress').value.trim();
+    const notes = document.getElementById('customerNotes').value.trim();
+
+    if (!name) return alert('الرجاء إدخال الاسم');
+    if (!phone) return alert('الرجاء إدخال رقم الهاتف');
+    if (!address) return alert('الرجاء إدخال العنوان');
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳</span><span>جاري إرسال الطلب...</span>';
+
+    // 1. تجهيز البيانات للـ API
+    const orderData = {
+      customer_name: name,
+      customer_phone: phone,
+      customer_address: address + (notes ? ' | ' + notes : ''),
+      payment_method: selectedPayment,
+      sale_type: 'online',
+      total: currentSubtotal,
+      tax: currentTax,
+      delivery_cost: deliveryCost,
+      final_total: currentSubtotal + currentTax + deliveryCost,
+      items: cart.map(i => ({
+        product_id: i.id,
+        product_name: i.name,
+        price: i.price,
+        quantity: i.qty
+      }))
+    };
+
+    try {
+      // إرسال الطلب للوحة التحكم
+      const res = await fetch(`${API_URL}/sales`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        // 2. تجهيز رسالة الواتساب
+        let invoiceNumber = data.invoice_number || 'جديد';
+        let message = `مرحباً، لقد قمت بطلب من متجر سكر 🎀\n\n`;
+        message += `رقم الطلب: ${invoiceNumber}\n`;
+        message += `الاسم: ${name}\n`;
+        message += `الهاتف: ${phone}\n`;
+        message += `العنوان: ${address}\n`;
+        if(notes) message += `ملاحظات: ${notes}\n`;
+        message += `طريقة الدفع: ${selectedPayment === 'transfer' ? 'تحويل بنكي' : 'واتساب'}\n\n`;
+        
+        message += `المنتجات:\n`;
+        cart.forEach(i => message += `- ${i.name} (${i.qty}) = ${(i.price*i.qty).toFixed(3)} ر.ع\n`);
+        
+        message += `\nالإجمالي: ${(currentSubtotal + currentTax + deliveryCost).toFixed(3)} ر.ع\n`;
+        
+        if (selectedPayment === 'transfer') {
+          message += `\n📸 (سأرسل صورة الإيصال الآن)`;
+        }
+
+        // 3. فتح الواتساب
+        const encoded = encodeURIComponent(message);
+        const url = `https://wa.me/${STORE_PHONE}?text=${encoded}`;
+        
+        // تفريغ السلة
+        localStorage.removeItem('sukkarCart');
+        
+        // إظهار النجاح والتحويل للواتساب
+        document.getElementById('successModal').classList.add('show');
+        setTimeout(() => {
+          window.open(url, '_blank');
+        }, 1500);
+
+      } else {
+        alert('حدث خطأ في لوحة التحكم: ' + data.message);
+        btn.disabled = false;
+        btn.innerHTML = '<span>✅</span><span>تأكيد الطلب</span>';
+      }
+    } catch (error) {
+      console.error(error);
+      alert('تعذر الاتصال بالخادم');
       btn.disabled = false;
       btn.innerHTML = '<span>✅</span><span>تأكيد الطلب</span>';
     }
-  } catch (error) {
-    showNotification('❌ تعذّر الاتصال بالسيرفر', true);
-    btn.disabled = false;
-    btn.innerHTML = '<span>✅</span><span>تأكيد الطلب</span>';
   }
-}
-
-function toggleMenu() {
-  const menu = document.createElement('div');
-  menu.style.cssText = `position:fixed;top:0;right:0;width:280px;height:100vh;background:white;z-index:3000;padding:25px;box-shadow:-5px 0 30px rgba(0,0,0,0.15);display:flex;flex-direction:column;gap:5px;`;
-  menu.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #e5e7eb;">
-      <h3 style="color:#1e3a8a;font-weight:900;">القائمة</h3>
-      <button onclick="this.closest('div').remove()" style="width:34px;height:34px;border-radius:50%;background:#f3f4f6;font-size:1rem;cursor:pointer;">✕</button>
-    </div>
-    <a href="../index.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">🏠 الرئيسية</a>
-    <a href="search.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">🔍 البحث والفئات</a>
-    <a href="orders.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">📦 طلباتي</a>
-    <a href="account.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;color:#1f2937;font-weight:600;">👤 حسابي</a>
-  `;
-  document.body.appendChild(menu);
-  const closeMenu = (e) => { if (!menu.contains(e.target)) { menu.remove(); document.removeEventListener('click', closeMenu); } };
-  setTimeout(() => document.addEventListener('click', closeMenu), 100);
-}
-
-function toggleCart() {
-  window.location.href = 'search.html';
-}
-
-function showNotification(message, isError = false) {
-  const notif = document.getElementById('notification');
-  notif.textContent = message;
-  notif.className = 'notification show' + (isError ? ' error' : '');
-  setTimeout(() => notif.classList.remove('show'), 3000);
-}
 </script>
 
 </body>
