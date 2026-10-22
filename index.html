@@ -330,6 +330,7 @@
       padding-bottom: 10px;
       -ms-overflow-style: none;
       scrollbar-width: none;
+      width: 100%;
     }
     .product-grid::-webkit-scrollbar {
       display: none;
@@ -454,7 +455,7 @@
 
     /* NEW FOOTER (WEBORA) */
     .site-footer {
-      background-color: #6a4c93;
+      background-color: #6a4c93; /* لون بنفسجي مطابق للصورة */
       color: #fff;
       text-align: center;
       padding: 50px 20px 0;
@@ -487,20 +488,24 @@
     .webora-logo-link {
       display: inline-block;
       transition: transform 0.3s;
+      margin-bottom: 15px;
     }
     .webora-logo-link:hover {
       transform: scale(1.05);
     }
+    
+    /* تعديل شعار Webora ليكون الصورة الخاصة بك */
     .webora-img {
-      height: 60px;
+      height: 80px; /* يمكنك تغيير الارتفاع حسب رغبتك */
       width: auto;
-      margin-bottom: 15px;
+      object-fit: contain;
     }
+
     .webora-text {
       font-family: 'Baloo 2', cursive;
       font-size: 1.5rem;
       font-weight: 800;
-      color: #ffde59;
+      color: #ffde59; /* لون أصفر مطابق للصورة */
       margin-bottom: 20px;
     }
     .footer-bottom {
@@ -878,6 +883,7 @@
       .site-footer { padding: 30px 15px 0; }
       .footer-store-name { font-size: 1.8rem; }
       .footer-desc { font-size: 0.8rem; }
+      .webora-img { height: 60px; }
     }
   </style>
 </head>
@@ -1058,7 +1064,7 @@
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         <div class="product-grid" id="girlsGrid">
-          <div style="text-align:center;padding:20px;color:#888;width:100%;">⏳ جاري التحميل...</div>
+          <!-- سيتم تحميل المنتجات هنا -->
         </div>
         <button class="scroll-arrow left" onclick="scrollGrid('girlsGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
@@ -1080,7 +1086,7 @@
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         <div class="product-grid" id="boysGrid">
-          <div style="text-align:center;padding:20px;color:#888;width:100%;">⏳ جاري التحميل...</div>
+          <!-- سيتم تحميل المنتجات هنا -->
         </div>
         <button class="scroll-arrow left" onclick="scrollGrid('boysGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
@@ -1102,7 +1108,7 @@
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         <div class="product-grid" id="bouquetGrid">
-          <div style="text-align:center;padding:20px;color:#888;width:100%;">⏳ جاري التحميل...</div>
+          <!-- سيتم تحميل المنتجات هنا -->
         </div>
         <button class="scroll-arrow left" onclick="scrollGrid('bouquetGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
@@ -1124,7 +1130,7 @@
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         <div class="product-grid" id="eventsGrid">
-          <div style="text-align:center;padding:20px;color:#888;width:100%;">⏳ جاري التحميل...</div>
+          <!-- سيتم تحميل المنتجات هنا -->
         </div>
         <button class="scroll-arrow left" onclick="scrollGrid('eventsGrid', 1)" style="display:none;">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
@@ -1169,11 +1175,8 @@
   
   <div class="webora-section">
     <a href="https://www.instagram.com/webora.om?dlrf=djE5d2lmZ3BwNW1z" target="_blank" class="webora-logo-link">
-      <!-- لوجو ويبورا -->
-      <svg class="webora-img" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-         <text x="10" y="40" font-family="'Baloo 2', sans-serif" font-size="30" font-weight="800" fill="#fff">Webora</text>
-         <text x="10" y="55" font-family="sans-serif" font-size="8" fill="#ccc" letter-spacing="2">WEB DESIGN STUDIO</text>
-      </svg>
+      <!-- تم ربط صورتك الشفافة هنا -->
+      <img src="webora-logo.png" alt="Webora" class="webora-img">
     </a>
     <div class="webora-text">تم التصميم والتطوير من قبل Webora</div>
   </div>
@@ -1300,7 +1303,7 @@
   let deliveryType = 'office';
   let appliedCoupon = null;
   let cart = [];
-  let allProducts = {}; // لتخزين المنتجات للبحث والوصف
+  let allProducts = {}; 
   let currentModalProduct = null;
   let currentModalQty = 1;
 
@@ -1378,7 +1381,6 @@
     if(newQty < 1) newQty = 1;
     if(newQty > currentModalProduct.stock) {
       newQty = currentModalProduct.stock;
-      // alert('الكمية المطلوبة غير متوفرة');
     }
     currentModalQty = newQty;
     document.getElementById('modalQty').textContent = currentModalQty;
@@ -1396,11 +1398,10 @@
     renderCart();
     closeModal();
     
-    // Animation
     const badge = document.getElementById('cartCount');
     badge.classList.add('pop');
     setTimeout(() => badge.classList.remove('pop'), 200);
-    openCart(); // فتح السلة بعد الإضافة
+    openCart(); 
   }
   // =================================
 
@@ -1589,9 +1590,7 @@
   function scrollGrid(gridId, direction) {
     const grid = document.getElementById(gridId);
     if(!grid) return;
-    // direction: -1 for right arrow (scroll left visually because RTL), 1 for left arrow
-    const scrollAmount = 220; // width of card + gap
-    // In RTL, scrollLeft is 0 or negative depending on browser. We'll use a robust way.
+    const scrollAmount = 220;
     if (direction === 1) {
        grid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     } else {
@@ -1606,13 +1605,9 @@
       const leftArrow = wrapper.querySelector('.scroll-arrow.left');
       if(!rightArrow || !leftArrow) return;
       
-      // Simple logic: show arrows if there is scrollable content
       if (grid.scrollWidth > grid.clientWidth) {
         rightArrow.style.display = 'flex';
         leftArrow.style.display = 'flex';
-        // Hide arrows at the ends
-        // Note: RTL scrollLeft behaves differently across browsers.
-        // This is a basic implementation.
       } else {
         rightArrow.style.display = 'none';
         leftArrow.style.display = 'none';
@@ -1634,6 +1629,8 @@
         'events':  ['توزيعات مميزة', 'توزيعات']
       };
 
+      let foundAny = false;
+
       for (const cat of catsData.categories) {
         let targetId = null;
         for (const [key, names] of Object.entries(categoryMap)) {
@@ -1647,15 +1644,15 @@
         const targetGrid = document.getElementById(targetId + 'Grid');
         if(!targetGrid) continue;
 
-        // جلب عدد أكبر من المنتجات لتمكين السهم
         const prodRes = await fetch(`${API_URL}/products/category/${cat.id}?limit=10`);
         const prodData = await prodRes.json();
         
         if (!prodData.success || prodData.products.length === 0) {
-          targetGrid.innerHTML = `<div style="text-align:center;padding:20px;color:#888;width:100%;">لا توجد منتجات حالياً</div>`;
+          targetGrid.innerHTML = `<div style="text-align:center;padding:20px;color:#888;width:100%;">لا توجد منتجات في هذا القسم حالياً</div>`;
           continue;
         }
 
+        foundAny = true;
         prodData.products.forEach(p => {
           allProducts[p.id] = {
             id: p.id,
@@ -1683,11 +1680,22 @@
           `;
         }).join('');
       }
+
+      if (!foundAny) {
+         ['girlsGrid', 'boysGrid', 'bouquetGrid', 'eventsGrid'].forEach(id => {
+             const el = document.getElementById(id);
+             if(el) el.innerHTML = `<div style="text-align:center;padding:20px;color:#888;width:100%;">لا توجد منتجات حالياً</div>`;
+         });
+      }
+
       renderCart();
-      // تحقق من الأسهم بعد التحميل
       setTimeout(checkArrows, 500);
     } catch (error) {
       console.error('خطأ في تحميل المنتجات:', error);
+      ['girlsGrid', 'boysGrid', 'bouquetGrid', 'eventsGrid'].forEach(id => {
+          const el = document.getElementById(id);
+          if(el) el.innerHTML = `<div style="text-align:center;padding:20px;color:#888;width:100%;">تعذر الاتصال بالخادم</div>`;
+      });
     }
   }
 
@@ -1700,7 +1708,7 @@
   document.addEventListener('keydown', e => {
     if(e.key === 'Escape'){
       closeCart();
-      closeModal({target: {id: 'productModal'}}); // fake call to close
+      closeModal({target: {id: 'productModal'}}); 
       document.getElementById('sideMenu').classList.remove('open');
       document.getElementById('menuOverlay').classList.remove('open');
     }
