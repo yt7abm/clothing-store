@@ -545,10 +545,10 @@ const MAX_IMG_MB = 5;
 
 /* نفس الفئات ونفس طريقة التعرف عليها في صفحات المتجر */
 const CATS = [
-  {slug:'girls',   title:'هدايا البنات',  icon:'heart',  keys:['girl','بنات','بنت']},
-  {slug:'boys',    title:'هدايا الأولاد', icon:'star',   keys:['boy','أولاد','اولاد','ولاد','ولد']},
-  {slug:'bouquet', title:'باقات الهدايا', icon:'flower', keys:['bouquet','باقة','باقات','بوكيه']},
-  {slug:'events',  title:'توزيعات مميزة', icon:'gift',   keys:['event','giveaway','توزيع','مناسب']}
+  {id: 1, slug:'girls',   title:'هدايا البنات',  icon:'heart',  keys:['girl','بنات','بنت']},
+  {id: 2, slug:'boys',    title:'هدايا الأولاد', icon:'star',   keys:['boy','أولاد','اولاد','ولاد','ولد']},
+  {id: 3, slug:'bouquet', title:'باقات الهدايا', icon:'flower', keys:['bouquet','باقة','باقات','بوكيه']},
+  {id: 4, slug:'events',  title:'توزيعات مميزة', icon:'gift',   keys:['event','giveaway','توزيع','مناسب']}
 ];
 const catInfo = s => CATS.find(c => c.slug === s) || null;
 
@@ -570,22 +570,22 @@ const isOn = v => v === 1 || v === true || v === '1' || v === 'true';
 const norm = s => String(s == null ? '' : s).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).toLowerCase()
   .replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ').trim();
 
-/* ---------- التعرف على الفئة (تم تعديلها لتقرأ ID أو slug) ---------- */
+/* ---------- التعرف على الفئة (مضمون 100%) ---------- */
 function catOf(p){
-  // إذا كان الـ API يرجع category_slug أو الاسم، نبحث عنها
+  // 1. إذا وجدنا category_id نستخدمه فوراً
+  const id = String(p.category_id || '').trim();
+  if(id === '1') return 'girls';
+  if(id === '2') return 'boys';
+  if(id === '3') return 'bouquet';
+  if(id === '4') return 'events';
+
+  // 2. كحل بديل، نبحث بالـ slug أو الاسم
   const vals = [p.category_slug, p.category, p.category_name, p.section, p.type]
     .filter(v => v != null && typeof v !== 'object').map(v => String(v).toLowerCase().trim());
   
   for(const c of CATS){
     if(vals.includes(c.slug) || vals.some(v => c.keys.some(k => v.includes(k)))) return c.slug;
   }
-
-  // كحل احتياطي: إذا كان الـ API يرجع category_id فقط، نحوله لـ slug
-  const id = String(p.category_id || '').trim();
-  if(id === '1') return 'girls';
-  if(id === '2') return 'boys';
-  if(id === '3') return 'bouquet';
-  if(id === '4') return 'events';
 
   return '';
 }
@@ -664,7 +664,7 @@ async function loadProducts(){
     if(!res.ok) throw new Error('HTTP ' + res.status);
     products = pick(data).map(normalize);
     const unknown = products.filter(p => !p.cat);
-    if(unknown.length) console.warn('منتجات بدون فئة معروفة (تأكد من قيمة الفئة القادمة من الـ API):', unknown.slice(0, 3));
+    if(unknown.length) console.warn('منتجات بدون فئة معروفة:', unknown.slice(0, 3));
     render();
   }catch(err){
     console.error(err);
@@ -811,7 +811,7 @@ function openEdit(id){
   fId.value = p.id; fName.value = p.name; fDesc.value = p.desc;
   fPrice.value = p.price; fCost.value = p.cost || ''; fStock.value = p.stock == null ? '' : p.stock;
   fMin.value = p.min; fFeat.checked = p.featured; fImg.value = '';
-  setFormCat(p.cat); // سيتم قراءتها بناءً على الدالة المعدلة
+  setFormCat(p.cat);
   setFormDisc(p.hasDisc ? p.dtype : ''); fDiscVal.value = p.hasDisc ? p.dval : '';
   updatePrev('f');
   setUpload(p.img ? src(p.img) : '', p.img ? 'الصورة الحالية' : '');
@@ -843,7 +843,12 @@ async function saveProduct(){
   fd.append('description', fDesc.value.trim());
   fd.append('price', price);
   fd.append('cost', fCost.value || 0);
-  fd.append('category_slug', formCat); // نرسل الـ slug
+  
+  // هذا هو الحل الجذري: نرسل الـ id بدلاً من الـ slug ليتوافق مع الـ Backend
+  const catId = CATS.find(c => c.slug === formCat)?.id || '';
+  fd.append('category_id', catId); 
+  fd.append('category_slug', formCat); // نرسلها أيضاً للاحتياط
+  
   fd.append('stock', fStock.value || 0);
   fd.append('min_stock', fMin.value || 5);
   fd.append('discount_type', formDisc || '');
