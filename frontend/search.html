@@ -307,8 +307,7 @@ body.has-cart .cart-bar{display:flex}
   <h3>القائمة</h3>
   <ul>
     <li><a href="../index.html">الرئيسية</a></li>
-    <li><a href="girls-products.html">هدايا البنات</a></li>
-    <li><a href="boys-products.html">هدايا الأولاد</a></li>
+    <li><a href="girls-products.html">هدايا البوكسات</a></li>
     <li><a href="bouquets.html">باقات الهدايا</a></li>
     <li><a href="giveaways.html">توزيعات مميزة</a></li>
     <li><a href="me-to-you.html">هدية مني إليك</a></li>
@@ -349,8 +348,7 @@ const API_URL = '/api';
 const FALLBACK = 'assets/g-1.jpeg';
 
 const CATS = [
-  {slug:'girls',   title:'هدايا البنات',  icon:'heart',  keys:['girl','بنات','بنت']},
-  {slug:'boys',    title:'هدايا الأولاد', icon:'star',   keys:['boy','أولاد','اولاد','ولاد','ولد']},
+  {slug:'girls',   title:'هدايا البوكسات',  icon:'gift',  keys:['girl','بنات','بنت','box','بوكس']},
   {slug:'bouquet', title:'باقات الهدايا', icon:'flower', keys:['bouquet','باقة','باقات','بوكيه']},
   {slug:'events',  title:'توزيعات مميزة', icon:'gift',   keys:['event','giveaway','توزيع','مناسب']}
 ];
@@ -463,7 +461,6 @@ function catOf(p){
   // 1. الحل الجذري: إذا كان الـ API يرجع category_id نتحقق منه فوراً
   const id = String(p.category_id || '').trim();
   if(id === '1') return 'girls';
-  if(id === '2') return 'boys';
   if(id === '3') return 'bouquet';
   if(id === '4') return 'events';
 

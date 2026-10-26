@@ -545,8 +545,7 @@ const MAX_IMG_MB = 5;
 
 /* نفس الفئات ونفس طريقة التعرف عليها في صفحات المتجر */
 const CATS = [
-  {id: 1, slug:'girls',   title:'هدايا البنات',  icon:'heart',  keys:['girl','بنات','بنت']},
-  {id: 2, slug:'boys',    title:'هدايا الأولاد', icon:'star',   keys:['boy','أولاد','اولاد','ولاد','ولد']},
+  {id: 1, slug:'girls',   title:'هدايا البوكسات',  icon:'gift',  keys:['girl','بنات','بنت','box','بوكس']},
   {id: 3, slug:'bouquet', title:'باقات الهدايا', icon:'flower', keys:['bouquet','باقة','باقات','بوكيه']},
   {id: 4, slug:'events',  title:'توزيعات مميزة', icon:'gift',   keys:['event','giveaway','توزيع','مناسب']}
 ];
@@ -575,7 +574,6 @@ function catOf(p){
   // 1. إذا وجدنا category_id نستخدمه فوراً
   const id = String(p.category_id || '').trim();
   if(id === '1') return 'girls';
-  if(id === '2') return 'boys';
   if(id === '3') return 'bouquet';
   if(id === '4') return 'events';
 

@@ -61,12 +61,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 /* CATEGORIES */
 .choose{background:#fff;padding:18px 0 30px}
-.cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .cat-card{border-radius:20px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px 8px;min-height:128px;font-weight:800;font-size:1.2rem;line-height:1.2;text-align:center;box-shadow:0 6px 16px rgba(94,31,65,.18)}
 .cat-card:active{transform:scale(.97)}
 .cat-ic{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:30px}
 .c-girls{background:linear-gradient(145deg,#e26a9c,#c9477f)}
-.c-boys{background:linear-gradient(145deg,#4fa89f,#2f7a72)}
 .c-bouquet{background:linear-gradient(145deg,#b2437b,#8a305f)}
 .c-events{background:linear-gradient(145deg,#e8a900,#c68a00)}
 
@@ -79,11 +78,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 /* PRODUCTS */
 .psec{padding:28px 0 22px}
-.psec.girls{background:#fde8f0}.psec.boys{background:#e3f3f1}.psec.bouquet{background:#fbdbe8}.psec.events{background:#fff1c9}
+.psec.girls{background:#fde8f0}.psec.bouquet{background:#fbdbe8}.psec.events{background:#fff1c9}
 .sec-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
 .sec-title{display:flex;align-items:center;gap:8px;color:#fff;font-weight:800;font-size:1.2rem;padding:7px 18px;border-radius:30px}
 .sec-title .ic{font-size:22px}
-.girls .sec-title{background:var(--brand)}.boys .sec-title{background:#2f7a72}.bouquet .sec-title{background:var(--brand-dark)}.events .sec-title{background:#a87400}
+.girls .sec-title{background:var(--brand)}.bouquet .sec-title{background:var(--brand-dark)}.events .sec-title{background:#a87400}
 .view-all{display:inline-flex;align-items:center;gap:4px;background:#fff;color:var(--brand);font-weight:800;font-size:.95rem;padding:8px 16px;border-radius:30px;box-shadow:0 3px 10px rgba(0,0,0,.08)}
 .view-all .ic{font-size:16px}
 .pscroll{position:relative}
@@ -209,7 +208,7 @@ body.has-cart .cart-bar{display:flex}
 @media(min-width:700px){
   .logo-text{font-size:4.4rem}
   .steps-grid{gap:18px}.step{font-size:1.05rem;padding:20px 10px}
-  .cat-grid{grid-template-columns:repeat(4,1fr);gap:16px}
+  .cat-grid{grid-template-columns:repeat(3,1fr);gap:16px}
   .cat-card{min-height:170px;font-size:1.35rem}
   .arrival-gallery{grid-template-columns:repeat(4,1fr)}
   .pcard{flex-basis:210px}
@@ -291,8 +290,7 @@ body.has-cart .cart-bar{display:flex}
   <div class="wrap">
     <h2>اختر قسمك المفضل</h2>
     <div class="cat-grid">
-      <a class="cat-card c-girls" href="frontend/girls-products.html"><span class="cat-ic"><svg class="ic"><use href="#i-heart"/></svg></span>هدايا البنات</a>
-      <a class="cat-card c-boys" href="frontend/boys-products.html"><span class="cat-ic"><svg class="ic"><use href="#i-star"/></svg></span>هدايا الأولاد</a>
+      <a class="cat-card c-girls" href="frontend/girls-products.html"><span class="cat-ic"><svg class="ic"><use href="#i-heart"/></svg></span>هدايا البوكسات</a>
       <a class="cat-card c-bouquet" href="frontend/bouquets.html"><span class="cat-ic"><svg class="ic"><use href="#i-flower"/></svg></span>باقات الهدايا</a>
       <a class="cat-card c-events" href="frontend/giveaways.html"><span class="cat-ic"><svg class="ic"><use href="#i-gift"/></svg></span>توزيعات مميزة</a>
     </div>
@@ -359,8 +357,7 @@ body.has-cart .cart-bar{display:flex}
   <h3>القائمة</h3>
   <ul>
     <li><a href="index.html">الرئيسية</a></li>
-    <li><a href="frontend/girls-products.html">هدايا البنات</a></li>
-    <li><a href="frontend/boys-products.html">هدايا الأولاد</a></li>
+    <li><a href="frontend/girls-products.html">هدايا البوكسات</a></li>
     <li><a href="frontend/bouquets.html">باقات الهدايا</a></li>
     <li><a href="frontend/giveaways.html">توزيعات مميزة</a></li>
     <li><a href="frontend/me-to-you.html">هدية مني إليك</a></li>
@@ -406,8 +403,7 @@ const API_URL = '/api';
 const FALLBACK_IMG = 'assets/g-1.jpeg';
 
 const CATS = [
-  {slug:'girls',   title:'هدايا البنات',  icon:'heart',  href:'frontend/girls-products.html', keys:['girl','بنات','بنت']},
-  {slug:'boys',    title:'هدايا الأولاد', icon:'star',   href:'frontend/boys-products.html',  keys:['boy','أولاد','اولاد','ولاد','ولد']},
+  {slug:'girls',   title:'هدايا البوكسات',  icon:'gift',  href:'frontend/girls-products.html', keys:['girl','بنات','بنت','box','بوكس']},
   {slug:'bouquet', title:'باقات الهدايا', icon:'flower', href:'frontend/bouquets.html',       keys:['bouquet','باقة','باقات','بوكيه']},
   {slug:'events',  title:'توزيعات مميزة', icon:'gift',   href:'frontend/giveaways.html',      keys:['event','giveaway','توزيع','مناسب']}
 ];
@@ -542,7 +538,6 @@ function catOf(p){
   // 1. الحل الجذري: إذا كان الـ API يرجع category_id نترجمه فوراً
   const id = String(p.category_id || '').trim();
   if(id === '1') return 'girls';
-  if(id === '2') return 'boys';
   if(id === '3') return 'bouquet';
   if(id === '4') return 'events';
 

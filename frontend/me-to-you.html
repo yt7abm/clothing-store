@@ -65,10 +65,10 @@ button{cursor:pointer;border:none;background:none;color:inherit}
 
 /* GROUPS */
 .group{border-radius:22px;padding:16px 14px 6px;margin-bottom:18px;scroll-margin-top:130px}
-.g-girls{background:#fde8f0}.g-boys{background:#e3f3f1}.g-bouquet{background:#fbdbe8}.g-events{background:#fff1c9}.g-other{background:#f3ecef}
+.g-girls{background:#fde8f0}.g-bouquet{background:#fbdbe8}.g-events{background:#fff1c9}.g-other{background:#f3ecef}
 .g-title{display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:800;font-size:1.15rem;padding:7px 18px;border-radius:30px;margin-bottom:14px}
 .g-title .ic{font-size:21px}
-.g-girls .g-title{background:var(--brand)}.g-boys .g-title{background:#2f7a72}.g-bouquet .g-title{background:var(--brand-dark)}.g-events .g-title{background:#a87400}.g-other .g-title{background:#7a6570}
+.g-girls .g-title{background:var(--brand)}.g-bouquet .g-title{background:var(--brand-dark)}.g-events .g-title{background:#a87400}.g-other .g-title{background:#7a6570}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding-bottom:10px}
 .pcard{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 14px rgba(94,31,65,.1);display:flex;flex-direction:column;border:3px solid transparent;transition:border-color .2s}
 .pcard.sel{border-color:var(--brand)}
@@ -273,8 +273,7 @@ body.has-cart .copy{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
   <h3>القائمة</h3>
   <ul>
     <li><a href="../index.html">الرئيسية</a></li>
-    <li><a href="girls-products.html">هدايا البنات</a></li>
-    <li><a href="boys-products.html">هدايا الأولاد</a></li>
+    <li><a href="girls-products.html">هدايا البوكسات</a></li>
     <li><a href="bouquets.html">باقات الهدايا</a></li>
     <li><a href="giveaways.html">توزيعات مميزة</a></li>
     <li><a href="me-to-you.html" class="on">هدية مني إليك</a></li>
@@ -302,8 +301,7 @@ const ORDERS_ENDPOINT = API_URL + '/orders'; // مسار تسجيل الطلب �
 const FALLBACK = 'assets/g-1.jpeg';
 
 const CATS = [
-  {slug:'girls',   title:'هدايا البنات',  icon:'heart',  keys:['girl','بنات','بنت']},
-  {slug:'boys',    title:'هدايا الأولاد', icon:'star',   keys:['boy','أولاد','اولاد','ولاد','ولد']},
+  {slug:'girls',   title:'هدايا البوكسات',  icon:'gift',  keys:['girl','بنات','بنت','box','بوكس']},
   {slug:'bouquet', title:'باقات الهدايا', icon:'flower', keys:['bouquet','باقة','باقات','بوكيه']},
   {slug:'events',  title:'توزيعات مميزة', icon:'gift',   keys:['event','giveaway','توزيع','مناسب']},
   {slug:'other',   title:'هدايا أخرى',    icon:'gift',   keys:[]}
@@ -328,7 +326,6 @@ function catOf(p){
   // 1. الحل الجذري: إذا كان الـ API يرجع category_id نتحقق منه فوراً
   const id = String(p.category_id || '').trim();
   if(id === '1') return 'girls';
-  if(id === '2') return 'boys';
   if(id === '3') return 'bouquet';
   if(id === '4') return 'events';
 

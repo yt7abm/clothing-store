@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>هدايا البنات | Sukkar Store</title>
+<title>هدايا البوكسات | Sukkar Store</title>
 <link rel="icon" type="image/jpeg" href="../assets/12.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -217,16 +217,15 @@ body.has-cart .cart-bar{display:flex}
 </header>
 
 <section class="phero">
-  <div class="crumb"><a href="../index.html">الرئيسية</a><svg class="ic"><use href="#i-cl"/></svg><span>هدايا البنات</span></div>
+  <div class="crumb"><a href="../index.html">الرئيسية</a><svg class="ic"><use href="#i-cl"/></svg><span>هدايا البوكسات</span></div>
   <div class="p-ic"><svg class="ic"><use href="#i-heart"/></svg></div>
-  <h1>هدايا البنات</h1>
-  <p>مجموعة مميزة من الهدايا المختارة بعناية للبنات</p>
+  <h1>هدايا البوكسات</h1>
+  <p>مجموعة مميزة من الهدايا المختارة بعناية</p>
 </section>
 
 <nav class="chips-wrap" aria-label="الأقسام">
   <div class="chips">
-    <a class="chip on" href="girls-products.html"><svg class="ic"><use href="#i-heart"/></svg>هدايا البنات</a>
-    <a class="chip" href="boys-products.html"><svg class="ic"><use href="#i-star"/></svg>هدايا الأولاد</a>
+    <a class="chip on" href="girls-products.html"><svg class="ic"><use href="#i-gift"/></svg>هدايا البوكسات</a>
     <a class="chip" href="bouquets.html"><svg class="ic"><use href="#i-flower"/></svg>باقات الهدايا</a>
     <a class="chip" href="giveaways.html"><svg class="ic"><use href="#i-gift"/></svg>توزيعات مميزة</a>
   </div>
@@ -234,7 +233,7 @@ body.has-cart .cart-bar{display:flex}
 
 <main class="main">
   <div class="toolbar">
-    <label class="search"><svg class="ic"><use href="#i-search"/></svg><input type="search" id="q" placeholder="ابحث في هدايا البنات" autocomplete="off"></label>
+    <label class="search"><svg class="ic"><use href="#i-search"/></svg><input type="search" id="q" placeholder="ابحث في هدايا البوكسات" autocomplete="off"></label>
     <span class="count" id="count" hidden></span>
   </div>
   <div class="grid" id="grid">
@@ -272,8 +271,7 @@ body.has-cart .cart-bar{display:flex}
   <h3>القائمة</h3>
   <ul>
     <li><a href="../index.html">الرئيسية</a></li>
-    <li><a href="girls-products.html" class="on">هدايا البنات</a></li>
-    <li><a href="boys-products.html">هدايا الأولاد</a></li>
+    <li><a href="girls-products.html" class="on">هدايا البوكسات</a></li>
     <li><a href="bouquets.html">باقات الهدايا</a></li>
     <li><a href="giveaways.html">توزيعات مميزة</a></li>
     <li><a href="me-to-you.html">هدية مني إليك</a></li>
@@ -312,7 +310,7 @@ body.has-cart .cart-bar{display:flex}
 <script>
 const API_URL = '/api';
 const SLUG = 'girls';
-const KEYS = ['girl','بنات','بنت'];
+const KEYS = ['girl','بنات','بنت','box','بوكس'];
 const FALLBACK = 'assets/g-1.jpeg';
 
 let cart = [], products = [], mProduct = null, mQtyVal = 1;
