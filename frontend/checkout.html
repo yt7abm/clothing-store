@@ -1,537 +1,583 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <link rel="icon" type="image/jpeg" href="../assets/12.jpeg" />
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>إتمام الطلب | Sukkar Store</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --pink-stripe: #de98b5;
-      --pink-stripe-pale: #f6e6ec;
-      --mint: #b9e1dd;
-      --mint-hero: #b8e5e0;
-      --brand: #b2437b;
-      --brand-dark: #8a305f;
-      --mint-pill: #a0cdc6;
-      --pink-card: #f6c6de;
-      --ink: #4a2338;
-      --warm-white: #fffaf5;
-      --price-color: #222;
-      --success: #4caf50;
-      --danger: #ef4444;
-      --whatsapp: #25d366;
-      --bg-light: #fdf6f9;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-    }
-    *{box-sizing:border-box; margin:0; padding:0;}
-    html{ scroll-behavior: smooth; }
-    body{
-      font-family:'Quicksand', 'Poppins', sans-serif;
-      color: var(--ink);
-      background:var(--warm-white);
-      overflow-x:hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .display{ font-family:'Baloo 2', cursive; }
-    img{max-width:100%; display:block;}
-    a{text-decoration:none; color:inherit;}
-    ul{list-style:none;}
-    .wrap{max-width:1180px; margin:0 auto; padding:0 16px;}
-    button{font-family:'Quicksand', sans-serif; cursor:pointer; border:none; background:none; color:inherit;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>إتمام الطلب | Sukkar Store</title>
+<link rel="icon" type="image/jpeg" href="../assets/12.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#b2437b; --brand-dark:#8a305f; --brand-deep:#5e1f41;
+  --pink-soft:#f8cfd8; --yellow:#ffde59;
+  --ink:#4a2338; --bg:#fffaf5; --success:#2e9e5b; --danger:#d23b3b; --wa:#25d366;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Cairo',sans-serif;color:var(--ink);background:var(--bg);font-size:17px;line-height:1.65;overflow-x:hidden;-webkit-tap-highlight-color:transparent;min-height:100vh;display:flex;flex-direction:column}
+[hidden]{display:none!important}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button,input,textarea{font-family:inherit}
+button{cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:3px solid rgba(178,67,123,.45);outline-offset:2px}
+.display{font-family:'Baloo 2','Cairo',sans-serif}
+.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.omr-img{display:inline-block;vertical-align:middle;width:18px;height:auto}
+.omr-img.sm{width:14px}
 
-    /* AWNING & TOP BAR */
-    .awning{ width: 100%; position: sticky; top: 0; z-index: 101; }
-    .awning-stripes{
-      height: 38px;
-      background: repeating-linear-gradient(90deg, var(--pink-stripe) 0 50px, var(--pink-stripe-pale) 50px 100px);
-    }
-    .top-bar{
-      background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 38px;
-      z-index: 100; box-shadow: 0 1px 6px rgba(0,0,0,0.04);
-    }
-    .top-bar-inner{
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 16px; gap: 16px; max-width: 1180px; margin: 0 auto;
-      position: relative; min-height: 58px;
-    }
-    .icon-group{ display: flex; align-items: center; gap: 12px; flex-shrink: 0; z-index: 2; }
-    .icon-btn{
-      background: transparent; position: relative; display: flex; align-items: center; justify-content: center;
-      width: 34px; height: 34px; color: #222; transition: color 0.2s;
-    }
-    .icon-btn:hover { color: var(--brand); }
-    .icon-btn svg{ width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .brand-center{
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-      display: flex; align-items: center; white-space: nowrap; user-select: none; pointer-events: none;
-    }
-    .brand-logo{ height: 44px; width: auto; display: block; }
+/* TOP */
+.stripes{height:10px;background:repeating-linear-gradient(90deg,#de98b5 0 40px,#f6e6ec 40px 80px)}
+.top{background:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.top-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;min-height:62px;position:relative}
+.grp{display:flex;gap:4px;min-width:46px}
+.icon-btn{width:46px;height:46px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--ink);font-size:26px}
+.icon-btn:active{background:var(--pink-soft)}
+.brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;line-height:1}
+.brand b{display:block;font-family:'Baloo 2',sans-serif;font-size:1.9rem;font-weight:800;color:var(--brand);letter-spacing:1px}
+.brand small{display:block;font-size:.62rem;letter-spacing:7px;color:#d4739f;font-weight:700;margin-top:3px;padding-right:7px}
 
-    /* PAGE HEADER */
-    .page-header { padding: 30px 16px 20px; text-align: center; }
-    .page-title { font-family: 'Baloo 2', cursive; font-size: 2.2rem; font-weight: 800; color: var(--brand); margin-bottom: 10px; }
-    .page-sub { font-size: 1rem; font-weight: 700; color: #666; }
+/* HERO */
+.phero{background:linear-gradient(135deg,var(--brand),var(--brand-dark));color:#fff;text-align:center;padding:26px 16px 30px;position:relative;overflow:hidden}
+.phero::before,.phero::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.08)}
+.phero::before{width:200px;height:200px;top:-80px;right:-50px}
+.phero::after{width:170px;height:170px;bottom:-80px;left:-40px;background:rgba(255,222,89,.14)}
+.phero>*{position:relative;z-index:1}
+.crumb{display:flex;justify-content:center;align-items:center;gap:6px;font-size:.85rem;font-weight:600;opacity:.9;margin-bottom:10px}
+.crumb .ic{font-size:14px}
+.phero h1{font-size:2rem;font-weight:800;line-height:1.2}
+.phero p{font-weight:600;opacity:.92;margin-top:6px}
 
-    /* MAIN LAYOUT */
-    .checkout-layout {
-      display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px;
-      max-width: 1180px; margin: 0 auto 60px; padding: 0 16px;
-    }
+/* MAIN */
+.main{flex:1 0 auto;width:100%;max-width:720px;margin:0 auto;padding:20px 16px 150px}
+.step-h{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+.step-n{width:42px;height:42px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:1.3rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-h h2{font-size:1.4rem;font-weight:800;color:var(--brand-dark);line-height:1.2}
+.step-h small{display:block;font-size:.9rem;font-weight:600;color:#8a7a82}
+.card{background:#fff;border-radius:22px;padding:18px;box-shadow:0 4px 16px rgba(94,31,65,.08);border:1px solid #f3e4ea;margin-bottom:22px}
 
-    /* CARDS */
-    .section-card {
-      background: #fff; border-radius: 20px; padding: 25px;
-      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
-      margin-bottom: 20px;
-    }
-    .section-card-header {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--pink-card);
-    }
-    .section-icon {
-      width: 40px; height: 40px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--brand), var(--brand-light));
-      color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-    }
-    .section-title { font-family: 'Baloo 2', cursive; font-size: 1.2rem; color: var(--brand); }
+/* CART ITEMS */
+.c-item{display:grid;grid-template-columns:76px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid #f4e9ee}
+.c-item:first-child{padding-top:0}
+.c-item:last-child{border-bottom:none;padding-bottom:0}
+.c-img{width:76px;height:76px;border-radius:14px;object-fit:cover;background:#f8f0f3}
+.c-main{display:flex;flex-direction:column;gap:6px;min-width:0}
+.c-top{display:flex;justify-content:space-between;gap:6px;align-items:flex-start}
+.c-name{font-weight:700;font-size:1rem;line-height:1.4}
+.rm{color:#c94c4c;font-size:20px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0;margin:-6px -6px 0 0}
+.rm:active{background:#fde8e8}
+.c-bot{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.qty{display:flex;align-items:center;background:#f3ecef;border-radius:24px;padding:3px}
+.qty button{width:40px;height:40px;border-radius:50%;background:#fff;color:var(--brand);font-weight:800;font-size:1.4rem;box-shadow:0 1px 4px rgba(0,0,0,.12);line-height:1}
+.qty button:disabled{opacity:.35}
+.qty span{min-width:34px;text-align:center;font-weight:800;font-size:1.15rem}
+.c-sub{direction:ltr;font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:4px;color:var(--brand-dark)}
+.empty{text-align:center;padding:40px 16px}
+.empty .ring{width:90px;height:90px;border-radius:50%;background:var(--pink-soft);color:var(--brand);display:flex;align-items:center;justify-content:center;font-size:42px;margin:0 auto 14px}
+.empty h3{font-size:1.3rem;font-weight:800;margin-bottom:4px}
+.empty a{display:inline-block;margin-top:14px;background:var(--brand);color:#fff;font-weight:800;padding:13px 32px;border-radius:30px;font-size:1.05rem}
+.more{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;padding:12px;border-radius:14px;border:2px dashed #eab3c8;color:var(--brand);font-weight:800}
 
-    /* FORM */
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
-    .form-group input, .form-group textarea {
-      width: 100%; padding: 12px 15px; border-radius: 12px; border: 1.5px solid #ddd;
-      font-family: 'Quicksand', sans-serif; font-size: 0.9rem; background: var(--bg-light); outline: none; transition: 0.2s;
-    }
-    .form-group input:focus, .form-group textarea:focus {
-      border-color: var(--brand); background: #fff; box-shadow: 0 0 0 4px rgba(178,67,123,0.1);
-    }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+/* FORM */
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-weight:800;font-size:1.05rem;margin-bottom:6px}
+.field label i{color:var(--danger);font-style:normal}
+.field label span{font-weight:600;color:#8a7a82;font-size:.9rem}
+.field input,.field textarea{width:100%;padding:16px;border-radius:16px;border:2px solid #efdde5;background:#fdf8fa;font-size:18px;color:var(--ink);outline:none;transition:.2s;-webkit-appearance:none;appearance:none}
+.field input:focus,.field textarea:focus{border-color:var(--brand);background:#fff;box-shadow:0 0 0 4px rgba(178,67,123,.12)}
+.field textarea{resize:vertical;min-height:90px}
+.field.bad input,.field.bad textarea{border-color:var(--danger);background:#fff6f6}
+.err{display:none;color:var(--danger);font-weight:800;font-size:.95rem;margin-top:6px}
+.field.bad .err{display:block}
+.hint{font-size:.88rem;color:#8a7a82;font-weight:600;margin-top:5px}
+.saved{display:flex;align-items:center;gap:8px;background:#e3f6ea;color:#1f7a45;font-weight:700;font-size:.92rem;padding:9px 14px;border-radius:14px;margin-bottom:16px}
+.saved .ic{font-size:18px}
 
-    /* PAYMENT OPTIONS */
-    .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .payment-card {
-      background: var(--bg-light); border: 2px solid #ddd; border-radius: 16px;
-      padding: 20px 15px; text-align: center; cursor: pointer; transition: all 0.3s;
-      position: relative;
-    }
-    .payment-card.selected { border-color: var(--brand); background: #fff; box-shadow: 0 4px 15px rgba(178,67,123,0.15); }
-    .payment-icon { font-size: 2rem; margin-bottom: 10px; }
-    .payment-title { font-weight: 800; font-size: 1rem; color: var(--ink); }
+/* PAYMENT */
+.pay{display:flex;align-items:center;gap:14px;width:100%;text-align:right;background:#fdf8fa;border:3px solid #efdde5;border-radius:20px;padding:16px;margin-bottom:12px;transition:.2s}
+.pay:last-of-type{margin-bottom:0}
+.pay .dot{width:30px;height:30px;border-radius:50%;border:3px solid #d9c5cf;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+.pay .dot .ic{opacity:0}
+.pay b{display:block;font-size:1.2rem;font-weight:800;line-height:1.3}
+.pay small{display:block;font-size:.95rem;font-weight:600;color:#6b5a63;line-height:1.5;margin-top:2px}
+.pay.on{border-color:var(--brand);background:#fff;box-shadow:0 6px 18px rgba(178,67,123,.18)}
+.pay.on .dot{background:var(--brand);border-color:var(--brand)}
+.pay.on .dot .ic{opacity:1}
+.tbox{margin-top:16px;background:#fff5f8;border:2px dashed var(--brand);border-radius:20px;padding:16px;text-align:center}
+.tbox p{font-weight:700}
+.tnum{font-family:'Baloo 2',sans-serif;font-size:2.2rem;font-weight:800;color:var(--brand);letter-spacing:2px;direction:ltr;line-height:1.3;margin:6px 0 10px}
+.tamt{font-weight:800;color:var(--brand-dark);margin-bottom:10px}
+.copy-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--brand);color:#fff;font-weight:800;font-size:1.1rem;padding:13px 28px;border-radius:30px;min-width:170px}
+.copy-btn.ok{background:var(--success)}
+.copy-btn .ic{font-size:20px}
+.tnote{font-size:.92rem;font-weight:600;color:#6b5a63;margin-top:12px}
 
-    /* TRANSFER DETAILS (الرقم فقط وزر النسخ) */
-    .transfer-info {
-      display: none; margin-top: 20px; padding: 20px;
-      background: rgba(178,67,123,0.05); border: 1.5px dashed var(--brand); border-radius: 16px;
-      text-align: center;
-    }
-    .transfer-info.show { display: block; }
-    .transfer-phone {
-      font-size: 2rem; font-weight: 900; color: var(--brand); letter-spacing: 2px;
-      margin: 10px 0; font-family: 'Baloo 2', cursive; direction: ltr;
-    }
-    .copy-btn {
-      background: var(--brand); color: #fff; padding: 10px 20px; border-radius: 20px;
-      font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
-    }
-    .copy-btn:hover { background: var(--brand-dark); }
+/* TOTALS */
+.row{display:flex;justify-content:space-between;align-items:center;font-weight:700;padding:7px 0}
+.row .v{direction:ltr;display:flex;align-items:center;gap:5px}
+.row.t{border-top:2px dashed #eab3c8;margin-top:8px;padding-top:14px;font-size:1.3rem;font-weight:800;color:var(--brand-dark)}
+.row.t .v{font-size:1.6rem}
+.banner{display:none;background:#fff0f0;border:2px solid #f3b4b4;color:var(--danger);font-weight:800;border-radius:16px;padding:14px 16px;margin-bottom:16px;line-height:1.6}
+.banner.show{display:block}
+.banner button{display:inline-block;margin-top:8px;background:var(--danger);color:#fff;padding:8px 20px;border-radius:20px;font-weight:800}
 
-    /* ORDER SUMMARY */
-    .summary-card {
-      background: #fff; border-radius: 20px; padding: 25px;
-      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
-      position: sticky; top: 110px;
-    }
-    .summary-items { max-height: 250px; overflow-y: auto; margin-bottom: 20px; }
-    .summary-item { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--bg-light); }
-    .summary-item-img { width: 50px; height: 50px; border-radius: 10px; overflow: hidden; background: #eee; }
-    .summary-item-info { flex: 1; }
-    .summary-item-name { font-size: 0.85rem; font-weight: 700; }
-    .summary-item-price { font-size: 0.9rem; font-weight: 900; color: var(--brand); }
-    
-    .summary-totals { border-top: 2px dashed var(--pink-card); padding-top: 15px; }
-    .summary-row { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; font-weight: 600; }
-    .summary-row.total { font-size: 1.2rem; font-weight: 900; color: var(--brand); margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+/* STICKY BAR */
+.obar{position:fixed;left:0;right:0;bottom:0;z-index:95;background:#fff;border-top:2px solid var(--pink-soft);box-shadow:0 -8px 24px rgba(94,31,65,.15);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}
+.obar-in{max-width:720px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.o-tot small{display:block;font-size:.85rem;font-weight:700;color:#8a7a82;line-height:1.2}
+.o-tot b{display:flex;align-items:center;gap:5px;direction:ltr;font-size:1.5rem;color:var(--brand-dark);line-height:1.2}
+.o-btn{flex:1;max-width:260px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--success);color:#fff;font-weight:800;font-size:1.2rem;padding:15px 18px;border-radius:16px;box-shadow:0 6px 16px rgba(46,158,91,.3)}
+.o-btn .ic{font-size:22px}
+.o-btn:active{transform:scale(.97)}
+.o-btn:disabled{opacity:.5;box-shadow:none}
 
-    .submit-btn {
-      width: 100%; background: var(--brand); color: #fff; padding: 16px; border-radius: 16px;
-      font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      box-shadow: 0 6px 20px rgba(178,67,123,0.3); transition: 0.3s; margin-top: 20px;
-    }
-    .submit-btn:hover { background: var(--brand-dark); transform: translateY(-3px); }
-    .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+/* DONE */
+.done{text-align:center}
+.done .ring{width:96px;height:96px;border-radius:50%;background:#e3f6ea;color:var(--success);display:flex;align-items:center;justify-content:center;font-size:52px;margin:6px auto 14px}
+.done h2{font-size:1.7rem;font-weight:800;margin-bottom:4px}
+.done .oid{display:inline-block;background:var(--pink-soft);color:var(--brand-dark);font-weight:800;padding:4px 18px;border-radius:20px;margin:6px 0 10px}
+.done .lead{font-weight:700;color:#6b5a63}
+.todo{text-align:right;margin:18px 0 6px}
+.todo li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #f4e9ee;font-weight:700}
+.todo li:last-child{border-bottom:none}
+.todo .step-n{width:34px;height:34px;font-size:1.05rem}
+.wa-open{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--wa);color:#fff;font-weight:800;font-size:1.3rem;padding:18px;border-radius:18px;margin-top:14px;box-shadow:0 8px 20px rgba(37,211,102,.35)}
+.wa-open .ic{font-size:28px}
+.home-link{display:block;margin-top:14px;color:var(--brand);font-weight:800;padding:10px}
+.wa-note{font-size:.92rem;font-weight:600;color:#8a7a82;margin-top:8px}
 
-    /* SUCCESS MODAL */
-    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
-    .modal.show { display: flex; }
-    .modal-content { background: #fff; border-radius: 24px; padding: 30px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
-    .success-icon { font-size: 4rem; margin-bottom: 15px; display: inline-block; animation: float 2s infinite; }
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    .modal h2 { font-family: 'Baloo 2', cursive; color: var(--brand); margin-bottom: 10px; font-size: 1.5rem; }
-    .modal p { color: #666; margin-bottom: 20px; font-size: 0.95rem; }
-    .modal-btn { background: var(--brand); color: #fff; padding: 12px 30px; border-radius: 12px; font-weight: 700; text-decoration: none; display: inline-block; }
+/* FOOTER */
+.footer{background:linear-gradient(180deg,var(--brand-dark),var(--brand-deep));color:#fff;text-align:center;padding:38px 18px 0}
+.footer h2{font-size:2rem;font-weight:800;margin-bottom:8px}
+.fdesc{max-width:560px;margin:0 auto 20px;opacity:.92;line-height:1.9}
+.social{display:flex;justify-content:center;gap:14px;margin-bottom:24px}
+.soc{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;transition:.2s}
+.soc:hover,.soc:active{background:var(--yellow);color:var(--brand-deep);border-color:var(--yellow)}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 24px;margin-bottom:22px}
+.flinks a{font-weight:700;opacity:.95;padding:4px 2px}
+.flinks a:hover{color:var(--yellow)}
+.webora{border-top:1px solid rgba(255,255,255,.15);padding:20px 0;display:flex;flex-direction:column;align-items:center;gap:8px}
+.webora img{height:54px;width:auto;object-fit:contain}
+.webora span{font-size:.9rem;font-weight:700;color:var(--yellow)}
+.copy{background:rgba(0,0,0,.2);margin:0 -18px;padding:14px;font-size:.82rem;color:rgba(255,255,255,.75)}
+body.has-bar .copy{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .checkout-layout { grid-template-columns: 1fr; }
-      .summary-card { position: static; }
-    }
-    @media (max-width: 600px) {
-      .top-bar-inner { padding: 8px 10px; gap: 6px; }
-      .icon-btn { width: 30px; height: 30px; }
-      .icon-btn svg { width: 20px; height: 20px; }
-      .brand-logo { height: 34px; }
-      .page-title { font-size: 1.8rem; }
-      .section-card { padding: 18px; }
-      .form-row { grid-template-columns: 1fr; gap: 10px; }
-      .payment-grid { grid-template-columns: 1fr 1fr; }
-      .transfer-phone { font-size: 1.6rem; }
-    }
-  </style>
+/* MENU */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .25s;z-index:998}
+.overlay.open{opacity:1;pointer-events:auto}
+.side{position:fixed;top:0;right:0;height:100vh;height:100dvh;width:290px;max-width:84vw;background:#fff;z-index:1001;transform:translateX(100%);transition:transform .3s;padding:22px 18px;box-shadow:0 0 20px rgba(0,0,0,.15)}
+.side.open{transform:none}
+.side h3{color:var(--brand);font-size:1.3rem;margin-bottom:12px}
+.side li a{display:block;padding:15px 4px;border-bottom:1px solid #f0e6ea;font-weight:700;font-size:1.05rem}
+
+@media(max-width:380px){
+  body{font-size:16px}
+  .phero h1{font-size:1.7rem}
+  .brand b{font-size:1.6rem}
+  .o-btn{font-size:1.05rem;padding:14px 10px}
+  .tnum{font-size:1.9rem}
+}
+@media(min-width:700px){
+  .phero{padding:38px 16px 42px}.phero h1{font-size:2.6rem}
+  .card{padding:24px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
-<body>
+<body class="has-bar">
 
-<!-- AWNING -->
-<div class="awning">
-  <div class="awning-stripes"></div>
-</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.8 11.8 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.9 11.9 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 11.5a2 2 0 0 0 2 1.5h8.8a2 2 0 0 0 2-1.6L22 7H6"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v7M14 10v7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-cl" viewBox="0 0 24 24"><polyline points="15 6 9 12 15 18"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+</svg>
 
-<!-- TOP BAR -->
-<header class="top-bar">
-  <div class="top-bar-inner">
-    <div class="icon-group group-left">
-      <a href="../index.html" class="icon-btn" title="الرئيسية">
-        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-      </a>
-    </div>
-    <div class="brand-center">
-      <a href="../index.html">
-        <svg class="brand-logo" viewBox="0 0 320 85" xmlns="http://www.w3.org/2000/svg" aria-label="Sukkar Store">
-          <g transform="translate(2,30)">
-            <path d="M30 22 C 18 4, -2 6, 4 20 C 8 30, 20 30, 30 22 Z" fill="#f9a7c6" stroke="#e26a98" stroke-width="1.8"/>
-            <path d="M30 22 C 42 4, 62 6, 56 20 C 52 30, 40 30, 30 22 Z" fill="#f9a7c6" stroke="#e26a98" stroke-width="1.8"/>
-            <circle cx="30" cy="22" r="4" fill="#e26a98"/>
-            <path d="M30 26 C 28 36, 24 46, 20 54" stroke="#e26a98" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-            <path d="M30 26 C 32 36, 36 46, 40 54" stroke="#e26a98" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-          </g>
-          <g transform="translate(48,18)">
-            <circle cx="25" cy="20" r="16" fill="#f8b878" stroke="#d97e3a" stroke-width="1.5"/>
-            <circle cx="19" cy="19" r="2" fill="#3a2419"/>
-            <circle cx="31" cy="19" r="2" fill="#3a2419"/>
-            <path d="M23 24 L 27 24 L 25 26 Z" fill="#e2738d"/>
-          </g>
-          <g font-family="'Baloo 2', cursive" font-weight="800" font-size="56" fill="#b2437b">
-            <text x="100" y="58">S</text>
-            <text x="135" y="58">U</text>
-            <text x="172" y="58">K</text>
-            <text x="208" y="58">K</text>
-            <text x="244" y="58">A</text>
-            <text x="280" y="58">R</text>
-          </g>
-        </svg>
-      </a>
-    </div>
-    <div class="icon-group group-right">
-      <a href="search.html" class="icon-btn" title="بحث">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      </a>
-    </div>
+<div class="stripes"></div>
+
+<header class="top">
+  <div class="top-in">
+    <div class="grp"><button class="icon-btn" onclick="toggleMenu()" aria-label="القائمة"><svg class="ic"><use href="#i-menu"/></svg></button></div>
+    <a href="../index.html" class="brand" aria-label="Sukkar Store"><b>SUKKAR</b><small>STORE</small></a>
+    <div class="grp"><a href="search.html" class="icon-btn" aria-label="بحث"><svg class="ic"><use href="#i-search"/></svg></a></div>
   </div>
 </header>
 
-<!-- MAIN -->
-<div class="wrap">
-  <div class="page-header">
-    <h1 class="page-title display">🛒 إتمام الطلب</h1>
-    <p class="page-sub">أكمل بياناتك لتأكيد طلبك</p>
-  </div>
+<section class="phero">
+  <div class="crumb"><a href="../index.html">الرئيسية</a><svg class="ic"><use href="#i-cl"/></svg><span>إتمام الطلب</span></div>
+  <h1>إتمام الطلب</h1>
+  <p>خطوات بسيطة وطلبك يوصلك</p>
+</section>
 
-  <div class="checkout-layout" id="checkoutLayout">
-    
-    <!-- RIGHT: Form -->
-    <div class="checkout-main">
-      
-      <!-- Customer Data -->
-      <div class="section-card">
-        <div class="section-card-header">
-          <div class="section-icon">👤</div>
-          <div class="section-title">بيانات المستلم</div>
-        </div>
-        <div class="form-group">
-          <label>الاسم الكامل <span style="color:var(--brand);">*</span></label>
-          <input type="text" id="customerName" placeholder="مثال: أحمد محمد">
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>رقم الهاتف <span style="color:var(--brand);">*</span></label>
-            <input type="tel" id="customerPhone" placeholder="91234567" dir="ltr">
-          </div>
-          <div class="form-group">
-            <label>البريد الإلكتروني (اختياري)</label>
-            <input type="email" id="customerEmail" placeholder="email@example.com" dir="ltr">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>العنوان الكامل <span style="color:var(--brand);">*</span></label>
-          <input type="text" id="customerAddress" placeholder="الولاية، الحي، الشارع، رقم المنزل">
-        </div>
-        <div class="form-group">
-          <label>ملاحظات إضافية</label>
-          <textarea id="customerNotes" placeholder="أي ملاحظات على الطلب..."></textarea>
-        </div>
-      </div>
+<main class="main">
 
-      <!-- Payment Methods -->
-      <div class="section-card">
-        <div class="section-card-header">
-          <div class="section-icon">💳</div>
-          <div class="section-title">طريقة الدفع</div>
-        </div>
-        
-        <div class="payment-grid">
-          <!-- Transfer -->
-          <div class="payment-card selected" onclick="selectPayment('transfer')">
-            <div class="payment-icon">🏦</div>
-            <div class="payment-title">تحويل بنكي</div>
-          </div>
-          <!-- WhatsApp -->
-          <div class="payment-card" onclick="selectPayment('whatsapp')">
-            <div class="payment-icon">💬</div>
-            <div class="payment-title">تواصل واتساب</div>
-          </div>
-        </div>
+  <!-- نموذج الطلب -->
+  <div id="orderView">
 
-        <!-- Transfer Details -->
-        <div class="transfer-info show" id="transferInfo">
-          <p style="font-weight:700; color:var(--ink); margin-bottom:10px;">الرجاء تحويل المبلغ إلى الرقم التالي:</p>
-          <div class="transfer-phone" id="transferPhone">95544676</div>
-          <button class="copy-btn" onclick="copyPhone()">
-            📋 نسخ الرقم
-          </button>
-        </div>
-      </div>
+    <div class="step-h"><span class="step-n">1</span><div><h2>طلبك</h2><small>راجع الهدايا وعدّل الكمية إذا تبغى</small></div></div>
+    <section class="card" id="cartCard"></section>
 
-    </div>
-
-    <!-- LEFT: Summary -->
-    <div class="checkout-side">
-      <div class="summary-card">
-        <div class="section-card-header" style="border-bottom:none; margin-bottom:10px; padding-bottom:0;">
-          <div class="section-title">ملخص الطلب</div>
+    <div id="formArea">
+      <div class="step-h"><span class="step-n">2</span><div><h2>بياناتك</h2><small>عشان نوصل لك الطلب</small></div></div>
+      <section class="card">
+        <div class="saved" id="savedNote" hidden><svg class="ic"><use href="#i-check"/></svg>حفظنا بياناتك من المرة اللي قبل، راجعها</div>
+        <div class="field" id="f-name">
+          <label for="cName">الاسم <i>*</i></label>
+          <input id="cName" type="text" placeholder="مثال: أحمد محمد" autocomplete="name">
+          <div class="err">اكتب اسمك</div>
         </div>
-        
-        <div class="summary-items" id="summaryItems">
-          <!-- Items will be loaded here -->
+        <div class="field" id="f-phone">
+          <label for="cPhone">رقم الهاتف <i>*</i></label>
+          <input id="cPhone" type="tel" inputmode="numeric" placeholder="مثال: 91234567" dir="ltr" style="text-align:right" autocomplete="tel">
+          <div class="err">اكتب رقم هاتف صحيح من 8 أرقام</div>
+          <div class="hint">نتواصل معك على هذا الرقم</div>
         </div>
-
-        <div class="summary-totals">
-          <div class="summary-row">
-            <span>المجموع:</span>
-            <span id="subtotal">0.000 ر.ع</span>
-          </div>
-          <div class="summary-row">
-            <span>الضريبة (5%):</span>
-            <span id="tax">0.000 ر.ع</span>
-          </div>
-          <div class="summary-row">
-            <span>التوصيل:</span>
-            <span id="deliveryCost">1.000 ر.ع</span>
-          </div>
-          <div class="summary-row total">
-            <span>الإجمالي:</span>
-            <span id="total">0.000 ر.ع</span>
-          </div>
+        <div class="field" id="f-addr">
+          <label for="cAddr">العنوان <i>*</i></label>
+          <input id="cAddr" type="text" placeholder="مثال: مسقط - الخوض - شارع الجامعة" autocomplete="street-address">
+          <div class="err">اكتب عنوان التوصيل</div>
+          <div class="hint">الولاية، الحي، الشارع، رقم البيت</div>
         </div>
+        <div class="field">
+          <label for="cNotes">ملاحظات <span>(اختياري)</span></label>
+          <textarea id="cNotes" placeholder="أي شي تبغانا نعرفه عن الطلب"></textarea>
+        </div>
+      </section>
 
-        <button class="submit-btn" id="submitBtn" onclick="submitOrder()">
-          <span>✅</span>
-          <span>تأكيد الطلب</span>
+      <div class="step-h"><span class="step-n">3</span><div><h2>طريقة الدفع</h2><small>اختر واحدة</small></div></div>
+      <section class="card">
+        <button type="button" class="pay on" id="pay-transfer" onclick="selectPay('transfer')" role="radio" aria-checked="true">
+          <span class="dot"><svg class="ic"><use href="#i-check"/></svg></span>
+          <span><b>تحويل بنكي</b><small>تحوّل المبلغ على رقم المتجر وترسل لنا صورة التحويل</small></span>
         </button>
-      </div>
+        <button type="button" class="pay" id="pay-whatsapp" onclick="selectPay('whatsapp')" role="radio" aria-checked="false">
+          <span class="dot"><svg class="ic"><use href="#i-check"/></svg></span>
+          <span><b>أكمل عبر الواتساب</b><small>نتواصل معك في الواتساب ونتفق على الدفع</small></span>
+        </button>
+
+        <div class="tbox" id="tbox">
+          <p>رقم التحويل</p>
+          <div class="tnum" id="tnum"></div>
+          <div class="tamt">المبلغ المطلوب: <span id="tamt"></span></div>
+          <button type="button" class="copy-btn" id="copyBtn" onclick="copyNum(this)"><svg class="ic"><use href="#i-copy"/></svg><span>نسخ الرقم</span></button>
+          <div class="tnote">حوّل المبلغ، وبعد تأكيد الطلب بنوريك كيف ترسل الصورة</div>
+        </div>
+      </section>
+
+      <section class="card" id="totalsCard">
+        <div class="row"><span>مجموع الهدايا</span><span class="v"><span id="rSub">0</span><img class="omr-img sm" src="../assets/omr-dark.png" alt="ر.ع"></span></div>
+        <div class="row" id="rTaxRow"><span>الضريبة (<span id="taxPct"></span>)</span><span class="v"><span id="rTax">0</span><img class="omr-img sm" src="../assets/omr-dark.png" alt="ر.ع"></span></div>
+        <div class="row"><span>التوصيل</span><span class="v"><span id="rDel">0</span><img class="omr-img sm" src="../assets/omr-dark.png" alt="ر.ع"></span></div>
+        <div class="row t"><span>الإجمالي</span><span class="v"><span id="rTot">0</span><img class="omr-img" src="../assets/omr-dark.png" alt="ر.ع"></span></div>
+      </section>
+
+      <div class="banner" id="banner" role="alert"></div>
     </div>
+  </div>
 
+  <!-- شاشة النجاح -->
+  <section class="card done" id="doneView" hidden>
+    <div class="ring"><svg class="ic"><use href="#i-check"/></svg></div>
+    <h2>تم تسجيل طلبك</h2>
+    <div class="oid" id="doneId" hidden></div>
+    <p class="lead">باقي خطوة أخيرة عشان يوصلنا طلبك</p>
+    <ul class="todo" id="todo"></ul>
+    <a class="wa-open" id="waOpen" href="#" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>إرسال الطلب في الواتساب</a>
+    <div class="wa-note">طلبك محفوظ عندنا، والواتساب يساعدنا نأكد معك أسرع</div>
+    <a class="home-link" href="../index.html">العودة للرئيسية</a>
+  </section>
+</main>
+
+<footer class="footer">
+  <h2 class="display">SUKKAR STORY</h2>
+  <p class="fdesc">وجهتك الأولى للهدايا الفاخرة والراقية في سلطنة عمان. نقدم لك تشكيلة حصرية من الهدايا المصممة بعناية لتناسب ذوقك الرفيع.</p>
+  <div class="social">
+    <a class="soc" href="https://wa.me/96895544676" target="_blank" rel="noopener" aria-label="واتساب"><svg class="ic"><use href="#i-wa"/></svg></a>
+    <a class="soc" href="https://www.instagram.com/sukkar.store.om?vrfl=ZTUwbm94NTNkMjR6" target="_blank" rel="noopener" aria-label="انستغرام"><svg class="ic"><use href="#i-ig"/></svg></a>
+  </div>
+  <div class="flinks">
+    <a href="../index.html">الرئيسية</a>
+    <a href="search.html">البحث</a>
+    <a href="orders.html">طلباتي</a>
+    <a href="../admin/login.html">الموظفين</a>
+  </div>
+  <div class="webora">
+    <a href="https://www.instagram.com/webora.om?dlrf=djE5d2lmZ3BwNW1z" target="_blank" rel="noopener"><img src="../assets/webora-logo.png" alt="Webora"></a>
+    <span>تم التصميم والتطوير من قبل Webora</span>
+  </div>
+  <div class="copy">جميع الحقوق محفوظة &copy; 2026 Sukkar Store</div>
+</footer>
+
+<div class="obar" id="obar">
+  <div class="obar-in">
+    <div class="o-tot"><small>الإجمالي</small><b><span id="bTot">0</span><img class="omr-img" src="../assets/omr-dark.png" alt="ر.ع"></b></div>
+    <button class="o-btn" id="submitBtn" onclick="submitOrder()"><svg class="ic"><use href="#i-check"/></svg><span id="submitTxt">تأكيد الطلب</span></button>
   </div>
 </div>
 
-<!-- SUCCESS MODAL -->
-<div class="modal" id="successModal">
-  <div class="modal-content">
-    <div class="success-icon">🎉</div>
-    <h2>تم تأكيد الطلب!</h2>
-    <p>سيتم التواصل معك قريباً لتأكيد التوصيل. شكراً لثقتك بنا!</p>
-    <a href="../index.html" class="modal-btn">العودة للرئيسية</a>
-  </div>
-</div>
+<aside class="side" id="sideMenu">
+  <h3>القائمة</h3>
+  <ul>
+    <li><a href="../index.html">الرئيسية</a></li>
+    <li><a href="search.html">البحث</a></li>
+    <li><a href="girls-products.html">هدايا البنات</a></li>
+    <li><a href="boys-products.html">هدايا الأولاد</a></li>
+    <li><a href="bouquets.html">باقات الهدايا</a></li>
+    <li><a href="giveaways.html">توزيعات مميزة</a></li>
+    <li><a href="me-to-you.html">هدية مني إليك</a></li>
+    <li><a href="orders.html">طلباتي</a></li>
+    <li><a href="../admin/login.html">الموظفين</a></li>
+  </ul>
+</aside>
+<div class="overlay" id="menuOverlay" onclick="toggleMenu()"></div>
 
 <script>
-  const API_URL = '/api';
-  // ⚠️ الرقم الخاص بك (التحويل والواتساب)
-  const STORE_PHONE = '96895544676'; 
-  
-  let cart = JSON.parse(localStorage.getItem('sukkarCart') || '[]');
-  let selectedPayment = 'transfer';
-  let currentSubtotal = 0;
-  let currentTax = 0;
-  let deliveryCost = 1; // مثلاً 1 ريال توصيل
+/* ====== إعدادات (غيّر هذي القيم فقط) ====== */
+const API_URL        = '/api';
+const STORE_PHONE    = '96895544676';   // واتساب المتجر
+const TRANSFER_PHONE = '95544676';      // رقم التحويل
+const TAX_RATE       = 0.05;            // الضريبة 5% (اكتب 0 لو ما في ضريبة)
+const DELIVERY       = 1;               // التوصيل بالريال
+const FALLBACK = 'assets/g-1.jpeg';
 
-  document.addEventListener('DOMContentLoaded', () => {
-    if(cart.length === 0) {
-      alert('السلة فارغة! سيتم تحويلك للمتجر.');
-      window.location.href = 'search.html';
-      return;
-    }
-    renderSummary();
-  });
+let cart = [], stockMap = {}, pay = 'transfer', sending = false;
+const $ = id => document.getElementById(id);
+const fmt = n => String(parseFloat((Number(n) || 0).toFixed(3)));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const src = u => (!u ? '../' + FALLBACK : /^(https?:|data:|\/|\.\.\/)/.test(u) ? u : '../' + u);
+const omr = (c='') => `<img class="omr-img ${c}" src="../assets/omr-dark.png" alt="ر.ع">`;
+const ic = n => `<svg class="ic"><use href="#i-${n}"/></svg>`;
+const maxQty = id => (stockMap[id] == null ? 99 : stockMap[id]);
 
-  function renderSummary() {
-    const container = document.getElementById('summaryItems');
-    let subtotal = 0;
+function toggleMenu(){ sideMenu.classList.toggle('open'); menuOverlay.classList.toggle('open'); }
 
-    container.innerHTML = cart.map(item => {
-      const sub = item.price * item.qty;
-      subtotal += sub;
-      return `
-        <div class="summary-item">
-          <div class="summary-item-img">
-            ${item.img ? `<img src="${item.img}">` : '🎁'}
-          </div>
-          <div class="summary-item-info">
-            <div class="summary-item-name">${item.name}</div>
-            <div class="summary-item-price">${item.qty} × ${item.price.toFixed(3)}</div>
-          </div>
+/* ---------- السلة ---------- */
+function saveCart(){ try{ localStorage.setItem('sukkarCart', JSON.stringify(cart)); }catch(e){} }
+function loadCart(){
+  try{
+    const s = JSON.parse(localStorage.getItem('sukkarCart') || '[]');
+    cart = Array.isArray(s) ? s.map(i => ({...i, id:String(i.id), price:Number(i.price)||0, qty:Number(i.qty)||1})) : [];
+  }catch(e){ cart = []; }
+}
+function changeQty(id, d){
+  const i = cart.find(x => x.id === id); if(!i) return;
+  i.qty = Math.min(i.qty + d, maxQty(id));
+  if(i.qty <= 0) cart = cart.filter(x => x.id !== id);
+  saveCart(); render();
+}
+function removeItem(id){ cart = cart.filter(i => i.id !== id); saveCart(); render(); }
+
+function totals(){
+  const sub = cart.reduce((s,i) => s + i.qty * i.price, 0);
+  const tax = sub * TAX_RATE;
+  const del = cart.length ? DELIVERY : 0;
+  return {sub, tax, del, total: sub + tax + del};
+}
+
+function render(){
+  const has = cart.length > 0;
+  formArea.hidden = !has;
+  obar.hidden = !has;
+  document.body.classList.toggle('has-bar', has);
+
+  if(!has){
+    cartCard.innerHTML = `<div class="empty"><div class="ring">${ic('cart')}</div><h3>السلة فارغة</h3><p>اختر هدية أولاً ثم ارجع هنا</p><a href="../index.html">تصفّح الهدايا</a></div>`;
+    return;
+  }
+  cartCard.innerHTML = cart.map(i => `
+    <div class="c-item">
+      <img class="c-img" src="${esc(src(i.img))}" alt="" onerror="this.onerror=null;this.src='../${FALLBACK}'">
+      <div class="c-main">
+        <div class="c-top">
+          <div class="c-name">${esc(i.name)}</div>
+          <button class="rm" onclick="removeItem('${esc(i.id)}')" aria-label="حذف ${esc(i.name)}">${ic('trash')}</button>
         </div>
-      `;
-    }).join('');
+        <div class="c-bot">
+          <div class="qty">
+            <button onclick="changeQty('${esc(i.id)}',-1)" aria-label="نقص">−</button>
+            <span>${i.qty}</span>
+            <button onclick="changeQty('${esc(i.id)}',1)" aria-label="زيادة" ${i.qty >= maxQty(i.id) ? 'disabled' : ''}>+</button>
+          </div>
+          <div class="c-sub"><span>${fmt(i.qty * i.price)}</span>${omr('sm')}</div>
+        </div>
+      </div>
+    </div>`).join('') + `<a class="more" href="../index.html">${ic('plus')}إضافة هدية ثانية</a>`;
 
-    currentSubtotal = subtotal;
-    currentTax = subtotal * 0.05;
-    const total = currentSubtotal + currentTax + deliveryCost;
+  const t = totals();
+  rSub.textContent = fmt(t.sub); rTax.textContent = fmt(t.tax); rDel.textContent = fmt(t.del); rTot.textContent = fmt(t.total);
+  bTot.textContent = fmt(t.total); tamt.textContent = fmt(t.total) + ' ر.ع';
+  rTaxRow.hidden = !TAX_RATE;
+  taxPct.textContent = Math.round(TAX_RATE * 1000) / 10 + '%';
+}
 
-    document.getElementById('subtotal').textContent = currentSubtotal.toFixed(3) + ' ر.ع';
-    document.getElementById('tax').textContent = currentTax.toFixed(3) + ' ر.ع';
-    document.getElementById('deliveryCost').textContent = deliveryCost.toFixed(3) + ' ر.ع';
-    document.getElementById('total').textContent = total.toFixed(3) + ' ر.ع';
-  }
-
-  function selectPayment(type) {
-    selectedPayment = type;
-    document.querySelectorAll('.payment-card').forEach(card => {
-      card.classList.toggle('selected', card.textContent.includes(type === 'transfer' ? 'تحويل' : 'واتساب'));
-    });
-    
-    const transferInfo = document.getElementById('transferInfo');
-    if (type === 'transfer') {
-      transferInfo.classList.add('show');
-    } else {
-      transferInfo.classList.remove('show');
-    }
-  }
-
-  function copyPhone() {
-    navigator.clipboard.writeText('95544676').then(() => {
-      alert('✅ تم نسخ الرقم بنجاح: 95544676');
-    }).catch(() => {
-      alert('تعذر النسخ، يرجى النسخ يدوياً: 95544676');
-    });
-  }
-
-  async function submitOrder() {
-    const name = document.getElementById('customerName').value.trim();
-    const phone = document.getElementById('customerPhone').value.trim();
-    const address = document.getElementById('customerAddress').value.trim();
-    const notes = document.getElementById('customerNotes').value.trim();
-
-    if (!name) return alert('الرجاء إدخال الاسم');
-    if (!phone) return alert('الرجاء إدخال رقم الهاتف');
-    if (!address) return alert('الرجاء إدخال العنوان');
-
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.innerHTML = '<span>⏳</span><span>جاري إرسال الطلب...</span>';
-
-    // 1. تجهيز البيانات للـ API
-    const orderData = {
-      customer_name: name,
-      customer_phone: phone,
-      customer_address: address + (notes ? ' | ' + notes : ''),
-      payment_method: selectedPayment,
-      sale_type: 'online',
-      total: currentSubtotal,
-      tax: currentTax,
-      delivery_cost: deliveryCost,
-      final_total: currentSubtotal + currentTax + deliveryCost,
-      items: cart.map(i => ({
-        product_id: i.id,
-        product_name: i.name,
-        price: i.price,
-        quantity: i.qty
-      }))
-    };
-
-    try {
-      // إرسال الطلب للوحة التحكم
-      const res = await fetch(`${API_URL}/sales`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData)
+/* تحديث الأسعار والمخزون من المتجر (بصمت) */
+async function refreshFromStore(){
+  try{
+    const res = await fetch(API_URL + '/products');
+    if(!res.ok) return;
+    const data = await res.json();
+    const list = Array.isArray(data) ? data : (data.products || data.data || []);
+    const map = {}; list.forEach(p => map[String(p.id)] = p);
+    cart = cart.filter(i => { const p = map[i.id]; return !(p && Number(p.stock) === 0 && p.stock !== '' && p.stock != null); })
+      .map(i => {
+        const p = map[i.id]; if(!p) return i;
+        stockMap[i.id] = (p.stock == null || p.stock === '') ? null : Number(p.stock);
+        const price = Number(p.final_price != null ? p.final_price : p.price);
+        const qty = Math.min(i.qty, maxQty(i.id));
+        return {...i, price: isNaN(price) ? i.price : price, name: p.name || i.name, qty};
       });
-      
-      const data = await res.json();
-      
-      if (data.success) {
-        // 2. تجهيز رسالة الواتساب
-        let invoiceNumber = data.invoice_number || 'جديد';
-        let message = `مرحباً، لقد قمت بطلب من متجر سكر 🎀\n\n`;
-        message += `رقم الطلب: ${invoiceNumber}\n`;
-        message += `الاسم: ${name}\n`;
-        message += `الهاتف: ${phone}\n`;
-        message += `العنوان: ${address}\n`;
-        if(notes) message += `ملاحظات: ${notes}\n`;
-        message += `طريقة الدفع: ${selectedPayment === 'transfer' ? 'تحويل بنكي' : 'واتساب'}\n\n`;
-        
-        message += `المنتجات:\n`;
-        cart.forEach(i => message += `- ${i.name} (${i.qty}) = ${(i.price*i.qty).toFixed(3)} ر.ع\n`);
-        
-        message += `\nالإجمالي: ${(currentSubtotal + currentTax + deliveryCost).toFixed(3)} ر.ع\n`;
-        
-        if (selectedPayment === 'transfer') {
-          message += `\n📸 (سأرسل صورة الإيصال الآن)`;
-        }
+    saveCart(); render();
+  }catch(e){}
+}
 
-        // 3. فتح الواتساب
-        const encoded = encodeURIComponent(message);
-        const url = `https://wa.me/${STORE_PHONE}?text=${encoded}`;
-        
-        // تفريغ السلة
-        localStorage.removeItem('sukkarCart');
-        
-        // إظهار النجاح والتحويل للواتساب
-        document.getElementById('successModal').classList.add('show');
-        setTimeout(() => {
-          window.open(url, '_blank');
-        }, 1500);
+/* ---------- الدفع ---------- */
+function selectPay(t){
+  pay = t;
+  ['transfer','whatsapp'].forEach(k => {
+    const b = $('pay-' + k), on = k === t;
+    b.classList.toggle('on', on); b.setAttribute('aria-checked', on);
+  });
+  tbox.hidden = t !== 'transfer';
+}
+function copyNum(btn){
+  const done = ok => {
+    const s = btn.querySelector('span');
+    s.textContent = ok ? 'تم النسخ ✓' : 'اضغط مطوّلاً على الرقم لنسخه';
+    btn.classList.toggle('ok', ok);
+    setTimeout(() => { s.textContent = 'نسخ الرقم'; btn.classList.remove('ok'); }, 2200);
+  };
+  const fallback = () => {
+    try{
+      const ta = document.createElement('textarea'); ta.value = TRANSFER_PHONE; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); document.body.removeChild(ta); done(ok);
+    }catch(e){ done(false); }
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(TRANSFER_PHONE).then(() => done(true), fallback);
+  else fallback();
+}
 
-      } else {
-        alert('حدث خطأ في لوحة التحكم: ' + data.message);
-        btn.disabled = false;
-        btn.innerHTML = '<span>✅</span><span>تأكيد الطلب</span>';
-      }
-    } catch (error) {
-      console.error(error);
-      alert('تعذر الاتصال بالخادم');
-      btn.disabled = false;
-      btn.innerHTML = '<span>✅</span><span>تأكيد الطلب</span>';
+/* ---------- التحقق (الرسائل داخل الصفحة) ---------- */
+const toLatin = s => String(s).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+function cleanPhone(s){
+  let d = toLatin(s).replace(/\D/g, '');
+  if(d.startsWith('00968')) d = d.slice(5);
+  else if(d.startsWith('968') && d.length > 8) d = d.slice(3);
+  return d;
+}
+const phoneOk = d => /^\d{8}$/.test(d);
+function mark(id, bad){ $('f-' + id).classList.toggle('bad', bad); return bad; }
+function showBanner(msg, retry){
+  banner.innerHTML = esc(msg) + (retry ? `<br><button onclick="submitOrder()">حاول مرة ثانية</button>` : '');
+  banner.classList.add('show');
+  banner.scrollIntoView({behavior:'smooth', block:'center'});
+}
+['name','phone','addr'].forEach(k => {
+  const el = {name:cName, phone:cPhone, addr:cAddr}[k];
+  el.addEventListener('input', () => { $('f-' + k).classList.remove('bad'); banner.classList.remove('show'); });
+});
+
+/* ---------- حفظ بيانات العميل للمرة القادمة ---------- */
+function loadSaved(){
+  try{
+    const s = JSON.parse(localStorage.getItem('sukkarCustomer') || 'null');
+    if(s && (s.name || s.phone || s.addr)){
+      cName.value = s.name || ''; cPhone.value = s.phone || ''; cAddr.value = s.addr || '';
+      savedNote.hidden = false;
     }
-  }
-</script>
+  }catch(e){}
+}
+function saveCustomer(d){ try{ localStorage.setItem('sukkarCustomer', JSON.stringify({name:d.name, phone:d.phone, addr:d.addr})); }catch(e){} }
 
+/* ---------- إرسال الطلب ---------- */
+async function submitOrder(){
+  if(sending || !cart.length) return;
+  banner.classList.remove('show');
+
+  const d = { name:cName.value.trim(), phone:cleanPhone(cPhone.value), addr:cAddr.value.trim(), notes:cNotes.value.trim() };
+  const bads = [ mark('name', !d.name), mark('phone', !phoneOk(d.phone)), mark('addr', !d.addr) ];
+  if(bads.some(Boolean)){
+    const first = document.querySelector('.field.bad');
+    first.scrollIntoView({behavior:'smooth', block:'center'});
+    setTimeout(() => first.querySelector('input').focus({preventScroll:true}), 350);
+    return;
+  }
+
+  sending = true; submitBtn.disabled = true; submitTxt.textContent = 'جاري الإرسال...';
+  const t = totals();
+  const items = cart.map(i => ({
+    product_id: isNaN(i.id) ? i.id : Number(i.id),
+    product_name: i.name, price: i.price, quantity: i.qty
+  }));
+  const orderData = {
+    customer_name: d.name,
+    customer_phone: d.phone,
+    customer_address: d.addr + (d.notes ? ' | ' + d.notes : ''),
+    payment_method: pay,
+    sale_type: 'online',
+    total: t.sub, tax: t.tax, delivery_cost: t.del, final_total: t.total,
+    items
+  };
+
+  try{
+    const ctrl = new AbortController();
+    const to = setTimeout(() => ctrl.abort(), 15000);
+    const res = await fetch(API_URL + '/sales', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(orderData), signal:ctrl.signal});
+    clearTimeout(to);
+    const data = await res.json().catch(() => ({}));
+    if(res.ok && data.success){
+      finish(d, t, data.invoice_number || data.order_number || '');
+    } else {
+      showBanner(data.message ? 'تعذر تسجيل الطلب: ' + data.message : 'تعذر تسجيل الطلب، حاول مرة ثانية', true);
+      reset();
+    }
+  }catch(err){
+    console.error(err);
+    showBanner('تعذر الاتصال. تأكد من الإنترنت ثم اضغط حاول مرة ثانية', true);
+    reset();
+  }
+}
+function reset(){ sending = false; submitBtn.disabled = false; submitTxt.textContent = 'تأكيد الطلب'; }
+
+function finish(d, t, orderId){
+  saveCustomer(d);
+  const L = [];
+  L.push('*طلب جديد - متجر سكر*');
+  if(orderId) L.push('رقم الطلب: ' + orderId);
+  L.push('------------------', 'الاسم: ' + d.name, 'الهاتف: ' + d.phone, 'العنوان: ' + d.addr);
+  if(d.notes) L.push('ملاحظات: ' + d.notes);
+  L.push('طريقة الدفع: ' + (pay === 'transfer' ? 'تحويل بنكي' : 'واتساب'), '', '*المنتجات:*');
+  cart.forEach(i => L.push('- ' + i.name + ' × ' + i.qty + ' = ' + fmt(i.qty * i.price) + ' ر.ع'));
+  L.push('', '*الإجمالي:* ' + fmt(t.total) + ' ر.ع');
+  if(pay === 'transfer') L.push('', '(سأرسل صورة التحويل الآن)');
+  waOpen.href = 'https://wa.me/' + STORE_PHONE + '?text=' + encodeURIComponent(L.join('\n'));
+
+  doneId.hidden = !orderId; doneId.textContent = orderId ? 'رقم الطلب: ' + orderId : '';
+  todo.innerHTML = (pay === 'transfer'
+    ? `<li><span class="step-n">1</span><span>حوّل <b>${fmt(t.total)} ر.ع</b> على الرقم <b dir="ltr">${TRANSFER_PHONE}</b></span></li>
+       <li><span class="step-n">2</span><span>اضغط الزر الأخضر تحت، وأرسل لنا صورة التحويل في الواتساب</span></li>`
+    : `<li><span class="step-n">1</span><span>اضغط الزر الأخضر تحت لفتح الواتساب</span></li>
+       <li><span class="step-n">2</span><span>أرسل الرسالة، ونكمل معك الدفع والتوصيل</span></li>`);
+
+  cart = []; saveCart();
+  orderView.hidden = true; doneView.hidden = false; obar.hidden = true;
+  document.body.classList.remove('has-bar');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.addEventListener('keydown', e => { if(e.key === 'Escape'){ sideMenu.classList.remove('open'); menuOverlay.classList.remove('open'); } });
+
+/* ---------- البداية ---------- */
+tnum.textContent = TRANSFER_PHONE;
+loadCart(); loadSaved(); render(); refreshFromStore();
+</script>
 </body>
 </html>
