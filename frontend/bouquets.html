@@ -411,8 +411,14 @@ function mQty(d){
 function addFromModal(){ if(!mProduct) return; addItem(mProduct, mQtyVal); closeModal(); openCart(); }
 
 /* ---------- المنتجات ---------- */
-// المنتج يظهر هنا إذا كانت فئته "البنات" من لوحة التحكم (بأي صيغة: girls أو بنات)
+// المنتج يظهر هنا إذا كانت فئته "الباقات" من لوحة التحكم
 function isMine(p){
+  // 1. الحل الجذري: إذا كان الـ API يرجع category_id نتحقق منه فوراً
+  const id = String(p.category_id || '').trim();
+  if(id === '3') return true; 
+  if(id !== '') return false; // إذا كان هناك ID ومختلف عن 3، فهو ليس للباقات
+
+  // 2. إذا لم يوجد ID، نبحث بالطرق العادية
   const vals = [p.category_slug, p.category, p.category_name, p.section, p.type]
     .filter(v => v != null && typeof v !== 'object').map(v => String(v).toLowerCase().trim());
   return vals.includes(SLUG) || vals.some(v => KEYS.some(k => v.includes(k)));

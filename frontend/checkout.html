@@ -95,6 +95,18 @@ body.has-bar .main{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
 .saved{display:flex;align-items:center;gap:8px;background:#e3f6ea;color:#1f7a45;font-weight:700;font-size:.9rem;padding:9px 12px;border-radius:12px;margin-bottom:14px}
 .saved .ic{font-size:18px}
 
+/* COUPON */
+.coupon-box{display:flex;gap:8px;margin-bottom:12px}
+.coupon-box input{flex:1;padding:12px;border-radius:14px;border:2px solid #efdde5;background:#fdf8fa;font-size:1rem;font-weight:700;text-align:center;text-transform:uppercase;outline:none;transition:.2s}
+.coupon-box input:focus{border-color:var(--brand);background:#fff}
+.coupon-box button{background:var(--brand);color:#fff;font-weight:800;padding:0 20px;border-radius:14px;font-size:1rem;min-height:48px}
+.coupon-box button:disabled{opacity:.6}
+.coupon-msg{display:none;font-weight:700;font-size:.9rem;margin-bottom:10px;text-align:center;padding:8px;border-radius:10px}
+.coupon-msg.ok{display:block;background:#e3f6ea;color:#1f7a45}
+.coupon-msg.bad{display:block;background:#fde8e8;color:var(--danger)}
+.disc-row{display:none;justify-content:space-between;align-items:center;font-weight:800;color:var(--success);padding:6px 0;border-top:2px dashed #eab3c8;margin-top:6px;padding-top:12px;font-size:1.05rem}
+.disc-row.show{display:flex}
+
 /* OPTION CARDS (توصيل + دفع) */
 .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:right;background:#fdf8fa;border:3px solid #efdde5;border-radius:18px;padding:14px;margin-bottom:10px;transition:border-color .2s,box-shadow .2s,background .2s}
 .opt:last-of-type{margin-bottom:0}
@@ -277,8 +289,22 @@ body.has-bar .copy{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
       </section>
 
       <section class="card" id="totalsCard">
+        <!-- كود الخصم -->
+        <div class="coupon-box">
+          <input type="text" id="couponInput" placeholder="كود الخصم" autocomplete="off">
+          <button type="button" id="applyCouponBtn" onclick="applyCoupon()">تطبيق</button>
+        </div>
+        <div class="coupon-msg" id="couponMsg"></div>
+        
         <div class="row"><span>مجموع الهدايا</span><span class="v"><span id="rSub">0</span><img class="omr-img sm" src="../assets/omr-dark.png" alt="ر.ع"></span></div>
         <div class="row"><span>التوصيل <small id="delName" style="font-weight:600;color:#8a7a82"></small></span><span class="v"><span id="rDel">0</span><img class="omr-img sm" src="../assets/omr-dark.png" alt="ر.ع"></span></div>
+        
+        <!-- سطر الخصم -->
+        <div class="disc-row" id="discRow">
+          <span>الخصم</span>
+          <span class="v" style="color:var(--success)">-<span id="rDisc">0</span><img class="omr-img sm" src="../assets/omr-dark.png" alt="ر.ع"></span>
+        </div>
+
         <div class="row t"><span>الإجمالي</span><span class="v"><span id="rTot">0</span><img class="omr-img" src="../assets/omr-dark.png" alt="ر.ع"></span></div>
       </section>
 
@@ -352,6 +378,8 @@ const DELIVERY_OPTIONS = [
 ];
 
 let cart = [], stockMap = {}, pay = 'transfer', delId = DELIVERY_OPTIONS[0].id, sending = false;
+let appliedCoupon = null; // لتخزين كود الخصم المطبق
+
 const $ = id => document.getElementById(id);
 const fmt = n => String(parseFloat((Number(n) || 0).toFixed(3)));
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -382,9 +410,64 @@ function removeItem(id){ cart = cart.filter(i => i.id !== id); saveCart(); rende
 function totals(){
   const sub = cart.reduce((s,i) => s + i.qty * i.price, 0);
   const del = cart.length ? curDel().price : 0;
-  return {sub, del, total: sub + del};
+  let disc = 0;
+  
+  if (appliedCoupon) {
+    if (appliedCoupon.type === 'percent') {
+      disc = sub * (appliedCoupon.value / 100);
+    } else {
+      disc = appliedCoupon.value;
+    }
+    disc = Math.min(disc, sub); // الخصم لا يتجاوز قيمة المنتجات
+  }
+  
+  return {sub, del, disc, total: Math.max(0, sub + del - disc)};
 }
 
+/* ---------- كود الخصم ---------- */
+async function applyCoupon() {
+  const code = couponInput.value.trim().toUpperCase();
+  if (!code) return;
+
+  const btn = $('applyCouponBtn');
+  btn.disabled = true;
+  btn.textContent = '...';
+  couponMsg.className = 'coupon-msg';
+  
+  try {
+    const res = await fetch(API_URL + '/coupons/validate', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ code })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      appliedCoupon = { code: data.code, type: data.discount_type, value: Number(data.discount_value) };
+      couponMsg.textContent = 'تم تطبيق الخصم بنجاح!';
+      couponMsg.className = 'coupon-msg ok';
+      couponInput.disabled = true;
+      btn.textContent = 'مطبق';
+      btn.style.background = 'var(--success)';
+      btn.disabled = true;
+      render();
+    } else {
+      throw new Error(data.message || 'كود الخصم غير صحيح أو منتهي');
+    }
+  } catch (err) {
+    couponMsg.textContent = err.message;
+    couponMsg.className = 'coupon-msg bad';
+    appliedCoupon = null;
+    render();
+  } finally {
+    if (!appliedCoupon) {
+      btn.disabled = false;
+      btn.textContent = 'تطبيق';
+    }
+  }
+}
+
+/* ---------- التوصيل ---------- */
 function renderDelivery(){
   delCard.innerHTML = DELIVERY_OPTIONS.map(o => `
     <button type="button" class="opt ${o.id === delId ? 'on' : ''}" onclick="selectDel('${o.id}')" role="radio" aria-checked="${o.id === delId}">
@@ -425,9 +508,20 @@ function render(){
     </div>`).join('') + `<a class="more" href="../index.html">${ic('plus')}إضافة هدية ثانية</a>`;
 
   const t = totals();
-  rSub.textContent = fmt(t.sub); rDel.textContent = fmt(t.del); rTot.textContent = fmt(t.total);
+  rSub.textContent = fmt(t.sub); 
+  rDel.textContent = fmt(t.del); 
+  rTot.textContent = fmt(t.total);
+  
+  if (t.disc > 0) {
+    discRow.classList.add('show');
+    rDisc.textContent = fmt(t.disc);
+  } else {
+    discRow.classList.remove('show');
+  }
+
   delName.textContent = '(' + curDel().title + ')';
-  bTot.textContent = fmt(t.total); tamt.textContent = fmt(t.total) + ' ر.ع';
+  bTot.textContent = fmt(t.total); 
+  tamt.textContent = fmt(t.total) + ' ر.ع';
 }
 
 /* تحديث الأسعار والمخزون من المتجر (بصمت) */
@@ -534,6 +628,7 @@ async function submitOrder(){
     product_id: isNaN(i.id) ? i.id : Number(i.id),
     product_name: i.name, price: i.price, quantity: i.qty
   }));
+  
   const orderData = {
     customer_name: d.name,
     customer_phone: d.phone,
@@ -541,6 +636,8 @@ async function submitOrder(){
     payment_method: pay,
     sale_type: 'online',
     total: t.sub, tax: 0, delivery_cost: t.del, final_total: t.total,
+    coupon_code: appliedCoupon ? appliedCoupon.code : null,
+    discount_value: appliedCoupon ? t.disc : 0,
     items
   };
 
@@ -572,6 +669,11 @@ function finish(d, t, dl, orderId){
   L.push('------------------', 'الاسم: ' + d.name, 'الهاتف: ' + d.phone, 'العنوان: ' + d.addr);
   L.push('التوصيل: ' + dl.title + ' (' + fmt(dl.price) + ' ر.ع)');
   if(d.notes) L.push('ملاحظات: ' + d.notes);
+  
+  if (appliedCoupon) {
+    L.push('كود الخصم: ' + appliedCoupon.code + ' (خصم: ' + fmt(t.disc) + ' ر.ع)');
+  }
+  
   L.push('طريقة الدفع: ' + (pay === 'transfer' ? 'تحويل بنكي' : 'واتساب'), '', '*المنتجات:*');
   cart.forEach(i => L.push('- ' + i.name + ' × ' + i.qty + ' = ' + fmt(i.qty * i.price) + ' ر.ع'));
   L.push('', '*الإجمالي:* ' + fmt(t.total) + ' ر.ع');

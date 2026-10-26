@@ -325,6 +325,14 @@ function toggleMenu(){ sideMenu.classList.toggle('open'); menuOverlay.classList.
 
 /* ---------- تحميل وعرض المنتجات حسب القسم ---------- */
 function catOf(p){
+  // 1. الحل الجذري: إذا كان الـ API يرجع category_id نتحقق منه فوراً
+  const id = String(p.category_id || '').trim();
+  if(id === '1') return 'girls';
+  if(id === '2') return 'boys';
+  if(id === '3') return 'bouquet';
+  if(id === '4') return 'events';
+
+  // 2. إذا لم يوجد ID، نبحث بالطرق العادية
   const vals = [p.category_slug, p.category, p.category_name, p.section, p.type]
     .filter(v => v != null && typeof v !== 'object').map(v => String(v).toLowerCase().trim());
   for(const c of CATS){
