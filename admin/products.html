@@ -349,7 +349,6 @@ button.cat.none{background:#fff1c9;color:#7a5600;border:2px dashed #e8c84f}
   <div class="side-sec" id="managementSection" hidden>
     <div class="side-t">الإدارة</div>
     <a href="reports.html" class="s-link" data-permission="reports.view"><svg class="ic"><use href="#i-chart"/></svg>التقارير</a>
-
     <a href="offers.html" class="s-link" data-permission="offers.view"><svg class="ic"><use href="#i-gift"/></svg>العروضات</a>
   </div>
   <div class="side-sec">
@@ -571,13 +570,23 @@ const isOn = v => v === 1 || v === true || v === '1' || v === 'true';
 const norm = s => String(s == null ? '' : s).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).toLowerCase()
   .replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ').trim();
 
-/* ---------- التعرف على الفئة (نفس منطق المتجر) ---------- */
+/* ---------- التعرف على الفئة (تم تعديلها لتقرأ ID أو slug) ---------- */
 function catOf(p){
+  // إذا كان الـ API يرجع category_slug أو الاسم، نبحث عنها
   const vals = [p.category_slug, p.category, p.category_name, p.section, p.type]
     .filter(v => v != null && typeof v !== 'object').map(v => String(v).toLowerCase().trim());
+  
   for(const c of CATS){
     if(vals.includes(c.slug) || vals.some(v => c.keys.some(k => v.includes(k)))) return c.slug;
   }
+
+  // كحل احتياطي: إذا كان الـ API يرجع category_id فقط، نحوله لـ slug
+  const id = String(p.category_id || '').trim();
+  if(id === '1') return 'girls';
+  if(id === '2') return 'boys';
+  if(id === '3') return 'bouquet';
+  if(id === '4') return 'events';
+
   return '';
 }
 function calcFinal(price, type, val){
@@ -802,7 +811,7 @@ function openEdit(id){
   fId.value = p.id; fName.value = p.name; fDesc.value = p.desc;
   fPrice.value = p.price; fCost.value = p.cost || ''; fStock.value = p.stock == null ? '' : p.stock;
   fMin.value = p.min; fFeat.checked = p.featured; fImg.value = '';
-  setFormCat(p.cat);                       // الفئة تُقرأ بنفس طريقة المتجر
+  setFormCat(p.cat); // سيتم قراءتها بناءً على الدالة المعدلة
   setFormDisc(p.hasDisc ? p.dtype : ''); fDiscVal.value = p.hasDisc ? p.dval : '';
   updatePrev('f');
   setUpload(p.img ? src(p.img) : '', p.img ? 'الصورة الحالية' : '');
@@ -834,7 +843,7 @@ async function saveProduct(){
   fd.append('description', fDesc.value.trim());
   fd.append('price', price);
   fd.append('cost', fCost.value || 0);
-  fd.append('category_slug', formCat);
+  fd.append('category_slug', formCat); // نرسل الـ slug
   fd.append('stock', fStock.value || 0);
   fd.append('min_stock', fMin.value || 5);
   fd.append('discount_type', formDisc || '');
