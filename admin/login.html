@@ -2,482 +2,144 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
 <title>تسجيل الدخول | Sukkar Store</title>
+<link rel="icon" type="image/jpeg" href="../assets/12.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --brand: #b2437b;
-  --brand-dark: #8a305f;
-  --brand-light: #d98cb4;
-  --mint-pill: #a0cdc6;
-  --pink-card: #f6c6de;
-  --ink: #4a2338;
-  --warm-white: #fffaf5;
-  --bg-light: #fdf6f9;
-  
-  --primary: var(--brand);
-  --primary-light: var(--brand-light);
-  --primary-dark: var(--brand-dark);
-  --accent: #f59e0b;
-  --gold: #d4af37;
-  --bg: #ffffff;
-  --bg-2: #f9fafb;
-  --text: var(--ink);
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
-  --danger: #ef4444;
-  --success: #10b981;
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-  --shadow-lg: 0 10px 40px rgba(178,67,123,0.15);
+:root{
+  --brand:#b2437b; --brand-dark:#8a305f; --brand-deep:#5e1f41;
+  --pink-soft:#f8cfd8; --mint:#b8e5e0; --mint-dark:#2f7a72; --yellow:#ffde59; --gold:#a87400;
+  --ink:#4a2338; --bg:#fffaf5; --line:#f1e4ea; --muted:#8a7a82;
+  --success:#2e9e5b; --danger:#d23b3b; --warn:#e8a900;
 }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Cairo',sans-serif;color:var(--ink);background:var(--bg);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-tap-highlight-color:transparent;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;position:relative}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 20% 20%, rgba(178,67,123,.08), transparent 40%), radial-gradient(circle at 80% 80%, rgba(184,229,224,.1), transparent 40%), radial-gradient(circle at 50% 50%, rgba(248,207,216,.1), transparent 60%);z-index:-1;pointer-events:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;color:inherit}
+a{text-decoration:none;color:inherit}
+:focus-visible{outline:3px solid rgba(178,67,123,.45);outline-offset:2px}
+.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+/* Login Container */
+.login-container{width:100%;max-width:420px;background:#fff;border-radius:28px;padding:40px 30px;box-shadow:0 20px 50px rgba(178,67,123,.15);border:1px solid var(--line);position:relative;overflow:hidden;animation:slideUp .6s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.login-container::before{content:'';position:absolute;top:0;right:0;left:0;height:6px;background:repeating-linear-gradient(90deg,var(--brand) 0 40px,#f6e6ec 40px 80px)}
 
-html { scroll-behavior: smooth; height: 100%; }
+/* Logo */
+.logo-wrap{text-align:center;margin-bottom:30px}
+.logo-icon{width:80px;height:80px;margin:0 auto 15px;background:linear-gradient(135deg,var(--brand),var(--brand-dark));border-radius:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 25px rgba(178,67,123,.25);animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.logo-icon .ic{font-size:40px;color:#fff}
+.logo-wrap h1{font-family:'Baloo 2',sans-serif;font-size:1.8rem;font-weight:800;color:var(--brand);margin-bottom:4px}
+.logo-wrap p{font-size:.85rem;color:var(--muted);font-weight:700}
 
-body {
-  background: var(--warm-white);
-  color: var(--text);
-  line-height: 1.6;
-  overflow-x: hidden;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  position: relative;
-}
+/* Error */
+.err-box{background:#fde8e8;color:var(--danger);border:2px solid #f3b4b4;padding:12px;border-radius:14px;font-size:.9rem;font-weight:800;margin-bottom:20px;display:none;align-items:center;justify-content:center;gap:8px;text-align:center}
+.err-box.show{display:flex;animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
-/* خلفية متحركة */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(178, 67, 123, 0.08), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(160, 205, 198, 0.1), transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(246, 198, 222, 0.1), transparent 60%);
-  z-index: -1;
-  pointer-events: none;
-  animation: bgMove 15s ease infinite;
-}
+/* Form */
+.field{margin-bottom:18px}
+.field label{display:block;font-weight:800;font-size:.95rem;margin-bottom:6px}
+.input-wrap{position:relative}
+.input-wrap input{width:100%;padding:14px 46px 14px 16px;font-size:16px;font-weight:700;background:#fdf8fa;border:2px solid #efdde5;border-radius:14px;color:var(--ink);outline:none;transition:.2s}
+.input-wrap input:focus{border-color:var(--brand);background:#fff;box-shadow:0 0 0 4px rgba(178,67,123,.12)}
+.input-wrap input::placeholder{color:#b8a0b0;font-weight:600}
+.input-wrap .ic{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:20px;color:#b8a0b0;pointer-events:none;transition:.2s}
+.input-wrap input:focus ~ .ic{color:var(--brand)}
+.toggle-pass{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--brand);font-size:18px;transition:.2s}
+.toggle-pass:hover{background:#fdf1f5}
 
-@keyframes bgMove {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
+/* Button */
+.login-btn{width:100%;padding:16px;background:linear-gradient(135deg,var(--brand),var(--brand-dark));color:#fff;border-radius:14px;font-weight:800;font-size:1.1rem;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 20px rgba(178,67,123,.3);transition:.2s;margin-top:10px}
+.login-btn .ic{font-size:20px}
+.login-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 25px rgba(178,67,123,.4)}
+.login-btn:active:not(:disabled){transform:scale(.98)}
+.login-btn:disabled{opacity:.7;cursor:not-allowed}
 
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: 'Quicksand', sans-serif; border: none; background: none; color: inherit; }
-img { max-width: 100%; display: block; }
+/* Footer */
+.footer-link{text-align:center;margin-top:24px;padding-top:20px;border-top:2px dashed var(--line)}
+.footer-link a{color:var(--brand);font-weight:800;font-size:.9rem;display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.footer-link a:hover{color:var(--brand-dark);gap:10px}
+.footer-link a .ic{font-size:16px}
 
-/* ========== الصندوق الرئيسي ========== */
-.login-container {
-  width: 100%;
-  max-width: 440px;
-  background: #fff;
-  border-radius: 28px;
-  padding: 45px 35px;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--pink-card);
-  position: relative;
-  animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-}
+.secure-note{text-align:center;margin-top:16px;color:var(--muted);font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px}
+.secure-note .ic{font-size:16px;color:var(--brand)}
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* شريط علوي مزخرف */
-.login-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 6px;
-  background: repeating-linear-gradient(90deg, var(--brand) 0 30px, var(--mint-pill) 30px 60px);
-}
-
-/* ========== الشعار ========== */
-.login-logo {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.login-logo-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 15px;
-  background: #fff;
-  border-radius: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 25px rgba(178,67,123,0.2);
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.login-logo h1 {
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--brand);
-  margin-bottom: 5px;
-}
-
-.login-logo p {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-
-/* ========== رسالة الخطأ ========== */
-.error-message {
-  background: rgba(239, 68, 68, 0.08);
-  color: var(--danger);
-  border: 1.5px solid rgba(239, 68, 68, 0.2);
-  padding: 12px 16px;
-  border-radius: 14px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  text-align: center;
-  animation: shake 0.5s;
-}
-
-.error-message.show { display: flex; }
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  75% { transform: translateX(6px); }
-}
-
-/* ========== النموذج ========== */
-.form-group {
-  margin-bottom: 18px;
-}
-
-.form-group label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.input-wrapper {
-  position: relative;
-}
-
-.input-wrapper input {
-  width: 100%;
-  padding: 15px 50px 15px 18px;
-  font-size: 0.95rem;
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 600;
-  background: var(--bg-light);
-  border: 2px solid var(--pink-card);
-  border-radius: 14px;
-  color: var(--text);
-  transition: all 0.3s;
-}
-
-.input-wrapper input:focus {
-  outline: none;
-  border-color: var(--brand);
-  background: white;
-  box-shadow: 0 0 0 4px rgba(178,67,123,0.1);
-}
-
-.input-wrapper input::placeholder {
-  color: #b08aa0;
-  font-weight: 500;
-}
-
-.input-wrapper .input-icon {
-  position: absolute;
-  right: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.2rem;
-  color: var(--brand-light);
-  pointer-events: none;
-  transition: color 0.3s;
-}
-
-.input-wrapper input:focus + .input-icon {
-  color: var(--brand);
-}
-
-/* زر إظهار كلمة المرور */
-.toggle-password {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.1rem;
-  color: var(--brand-light);
-  cursor: pointer;
-  padding: 5px;
-  transition: color 0.3s;
-  background: none;
-  border: none;
-}
-
-.toggle-password:hover {
-  color: var(--brand);
-}
-
-/* ========== زر الدخول ========== */
-.login-btn {
-  width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
-  color: white;
-  border-radius: 14px;
-  font-size: 1rem;
-  font-weight: 800;
-  font-family: 'Baloo 2', cursive;
-  transition: all 0.3s;
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  box-shadow: 0 10px 25px rgba(178,67,123,0.25);
-  position: relative;
-  overflow: hidden;
-}
-
-.login-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: right 0.6s;
-}
-
-.login-btn:hover::before {
-  right: 100%;
-}
-
-.login-btn:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(178,67,123,0.35);
-}
-
-.login-btn:active:not(:disabled) {
-  transform: translateY(-1px);
-}
-
-.login-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-/* ========== رابط العودة ========== */
-.back-home {
-  text-align: center;
-  margin-top: 25px;
-  padding-top: 25px;
-  border-top: 2px dashed var(--pink-card);
-}
-
-.back-home a {
-  color: var(--brand);
-  font-size: 0.85rem;
-  font-weight: 700;
-  transition: all 0.3s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.back-home a:hover {
-  color: var(--brand-dark);
-  gap: 10px;
-}
-
-/* ========== معلومات تحت ========== */
-.login-info {
-  text-align: center;
-  margin-top: 20px;
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-weight: 600;
-}
-
-.login-info .icon {
-  color: var(--brand);
-  font-size: 0.9rem;
-}
-
-/* ========== Responsive ========== */
-@media (max-width: 600px) {
-  body { padding: 15px; }
-  
-  .login-container {
-    padding: 35px 22px;
-    border-radius: 24px;
-  }
-  
-  .login-logo-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 20px;
-  }
-  
-  .login-logo h1 { font-size: 1.5rem; }
-  .login-logo p { font-size: 0.75rem; }
-  
-  .input-wrapper input {
-    padding: 14px 45px 14px 15px;
-    font-size: 0.9rem;
-  }
-  
-  .input-wrapper .input-icon { right: 15px; font-size: 1.1rem; }
-  .toggle-password { left: 12px; font-size: 1rem; }
-  
-  .login-btn { padding: 15px; font-size: 0.95rem; }
-  
-  .back-home { margin-top: 20px; padding-top: 20px; }
-  .back-home a { font-size: 0.8rem; }
-}
-
-@media (max-width: 360px) {
-  .login-container { padding: 30px 18px; }
-  .login-logo-icon { width: 60px; height: 60px; }
-  .login-logo h1 { font-size: 1.3rem; }
+/* Responsive */
+@media(max-width:480px){
+  body{padding:15px}
+  .login-container{padding:30px 20px;border-radius:24px}
+  .logo-icon{width:70px;height:70px}
+  .logo-wrap h1{font-size:1.5rem}
+  .login-btn{padding:14px;font-size:1rem}
 }
 </style>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></symbol>
+  <symbol id="i-login" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+</svg>
+
 <div class="login-container">
-  
-  <!-- الشعار -->
-  <div class="login-logo">
-    <div class="login-logo-icon">
-      <svg viewBox="0 0 320 85" xmlns="http://www.w3.org/2000/svg" style="width: 60px; height: auto;">
-        <g transform="translate(2,30)">
-          <path d="M30 22 C 18 4, -2 6, 4 20 C 8 30, 20 30, 30 22 Z" fill="#f9a7c6" stroke="#e26a98" stroke-width="1.8"/>
-          <path d="M30 22 C 42 4, 62 6, 56 20 C 52 30, 40 30, 30 22 Z" fill="#f9a7c6" stroke="#e26a98" stroke-width="1.8"/>
-          <circle cx="30" cy="22" r="4" fill="#e26a98"/>
-          <path d="M30 26 C 28 36, 24 46, 20 54" stroke="#e26a98" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-          <path d="M30 26 C 32 36, 36 46, 40 54" stroke="#e26a98" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-        </g>
-        <g transform="translate(48,18)">
-          <path d="M14 10 L 10 -4 L 24 4 Z" fill="#f4a35e" stroke="#d97e3a" stroke-width="1.5" stroke-linejoin="round"/>
-          <path d="M36 10 L 40 -4 L 26 4 Z" fill="#f4a35e" stroke="#d97e3a" stroke-width="1.5" stroke-linejoin="round"/>
-          <circle cx="25" cy="20" r="16" fill="#f8b878" stroke="#d97e3a" stroke-width="1.5"/>
-          <path d="M15 8 L 13 0 L 21 4 Z" fill="#ffd6b0"/>
-          <path d="M35 8 L 37 0 L 29 4 Z" fill="#ffd6b0"/>
-          <circle cx="19" cy="19" r="2" fill="#3a2419"/>
-          <circle cx="31" cy="19" r="2" fill="#3a2419"/>
-          <circle cx="19.5" cy="18.5" r="0.6" fill="#fff"/>
-          <circle cx="31.5" cy="18.5" r="0.6" fill="#fff"/>
-          <path d="M23 24 L 27 24 L 25 26 Z" fill="#e2738d"/>
-          <path d="M25 26 C 25 28, 22 29, 21 28" stroke="#3a2419" stroke-width="1" fill="none" stroke-linecap="round"/>
-          <path d="M25 26 C 25 28, 28 29, 29 28" stroke="#3a2419" stroke-width="1" fill="none" stroke-linecap="round"/>
-          <line x1="12" y1="22" x2="4" y2="21" stroke="#3a2419" stroke-width="0.8" stroke-linecap="round"/>
-          <line x1="12" y1="25" x2="4" y2="26" stroke="#3a2419" stroke-width="0.8" stroke-linecap="round"/>
-          <line x1="38" y1="22" x2="46" y2="21" stroke="#3a2419" stroke-width="0.8" stroke-linecap="round"/>
-          <line x1="38" y1="25" x2="46" y2="26" stroke="#3a2419" stroke-width="0.8" stroke-linecap="round"/>
-          <circle cx="16" cy="24" r="2.2" fill="#ffb0c8" opacity="0.6"/>
-          <circle cx="34" cy="24" r="2.2" fill="#ffb0c8" opacity="0.6"/>
-        </g>
-        <g font-family="'Baloo 2', cursive" font-weight="800" font-size="56" fill="#b2437b">
-          <text x="100" y="58">S</text>
-          <text x="135" y="58">U</text>
-          <text x="172" y="58">K</text>
-          <text x="208" y="58">K</text>
-          <text x="244" y="58">A</text>
-          <text x="280" y="58">R</text>
-        </g>
-        <g font-family="'Quicksand', sans-serif" font-weight="700" font-size="14" fill="#e07fa9" letter-spacing="7">
-          <text x="100" y="78">STORE</text>
-        </g>
-        <g stroke="#e8a5b8" stroke-width="2.2" stroke-linecap="round" fill="none" transform="translate(300,40)">
-          <path d="M0 0 C 4 -3, 8 0, 4 3"/>
-          <path d="M0 8 C 4 5, 8 8, 4 11"/>
-          <path d="M0 16 C 4 13, 8 16, 4 19"/>
-        </g>
-      </svg>
-    </div>
-    <h1>Sukkar Store</h1>
+  <div class="logo-wrap">
+    <div class="logo-icon"><svg class="ic"><use href="#i-shield"/></svg></div>
+    <h1>SUKKAR STORE</h1>
     <p>لوحة التحكم الإدارية</p>
   </div>
 
-  <!-- رسالة الخطأ -->
-  <div class="error-message" id="errorMessage">
-    <span>⚠️</span>
+  <div class="err-box" id="errorMessage">
+    <svg class="ic"><use href="#i-alert"/></svg>
     <span id="errorText">حدث خطأ</span>
   </div>
 
-  <!-- النموذج -->
   <form id="loginForm" onsubmit="handleLogin(event)">
-    
-    <div class="form-group">
-      <label>👤 اسم المستخدم</label>
-      <div class="input-wrapper">
+    <div class="field">
+      <label for="username">اسم المستخدم</label>
+      <div class="input-wrap">
         <input type="text" id="username" placeholder="أدخل اسم المستخدم" autocomplete="username" autofocus required>
-        <span class="input-icon">👤</span>
+        <svg class="ic"><use href="#i-user"/></svg>
       </div>
     </div>
 
-    <div class="form-group">
-      <label>🔒 كلمة المرور</label>
-      <div class="input-wrapper">
+    <div class="field">
+      <label for="password">كلمة المرور</label>
+      <div class="input-wrap">
         <input type="password" id="password" placeholder="أدخل كلمة المرور" autocomplete="current-password" required>
-        <span class="input-icon">🔒</span>
-        <button type="button" class="toggle-password" onclick="togglePassword()" id="toggleBtn">👁️</button>
+        <svg class="ic"><use href="#i-lock"/></svg>
+        <button type="button" class="toggle-pass" onclick="togglePassword()" id="toggleBtn" aria-label="إظهار كلمة المرور">
+          <svg class="ic"><use href="#i-eye"/></svg>
+        </button>
       </div>
     </div>
 
     <button type="submit" class="login-btn" id="loginBtn">
       <span>دخول</span>
-      <span>←</span>
+      <svg class="ic"><use href="#i-login"/></svg>
     </button>
-
   </form>
 
-  <!-- رابط العودة -->
-  <div class="back-home">
-    <a href="../index.html">← العودة للمتجر</a>
+  <div class="footer-link">
+    <a href="../index.html"><svg class="ic"><use href="#i-arrow-left"/></svg> العودة للمتجر</a>
   </div>
 
-  <!-- معلومات -->
-  <div class="login-info">
-    <span class="icon">🔒</span>
+  <div class="secure-note">
+    <svg class="ic"><use href="#i-shield"/></svg>
     <span>دخول آمن ومشفر</span>
   </div>
-
 </div>
 
 <script>
@@ -485,51 +147,51 @@ const API_URL = '/api';
 
 // ========== التحقق من الجلسة السابقة ==========
 const existingToken = localStorage.getItem('sukkar_token');
-if (existingToken) {
+if(existingToken){
   verifyToken(existingToken);
 }
 
-async function verifyToken(token) {
-  try {
+async function verifyToken(token){
+  try{
     const res = await fetch(`${API_URL}/auth/verify`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const data = await res.json();
     
-    if (data.success) {
+    if(data.success){
       localStorage.setItem('sukkar_user', JSON.stringify(data.user));
       localStorage.setItem('sukkar_permissions', JSON.stringify(data.permissions));
       window.location.href = 'dashboard.html';
     } else {
-      localStorage.removeItem('sukkar_token');
-      localStorage.removeItem('sukkar_user');
-      localStorage.removeItem('sukkar_permissions');
+      clearSession();
     }
-  } catch (error) {
-    console.error(error);
-  }
+  }catch(e){ console.error(e); }
+}
+
+function clearSession(){
+  ['sukkar_token','sukkar_user','sukkar_permissions'].forEach(k => localStorage.removeItem(k));
 }
 
 // ========== تسجيل الدخول ==========
-async function handleLogin(e) {
+async function handleLogin(e){
   e.preventDefault();
   
   const username = document.getElementById('username').value.trim();
   const password = document.getElementById('password').value;
   const btn = document.getElementById('loginBtn');
-  const errorMsg = document.getElementById('errorMessage');
-  const errorText = document.getElementById('errorText');
+  const errBox = document.getElementById('errorMessage');
+  const errText = document.getElementById('errorText');
   
-  if (!username || !password) {
+  if(!username || !password){
     showError('الرجاء إدخال اسم المستخدم وكلمة المرور');
     return;
   }
   
   btn.disabled = true;
-  btn.innerHTML = '<span>⏳ جاري التحقق...</span>';
-  errorMsg.classList.remove('show');
+  btn.innerHTML = '<span>جاري التحقق...</span>';
+  errBox.classList.remove('show');
   
-  try {
+  try{
     const res = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -538,61 +200,53 @@ async function handleLogin(e) {
     
     const data = await res.json();
     
-    if (data.success) {
+    if(data.success){
       localStorage.setItem('sukkar_token', data.token);
       localStorage.setItem('sukkar_user', JSON.stringify(data.user));
       localStorage.setItem('sukkar_permissions', JSON.stringify(data.permissions));
       
-      btn.innerHTML = '<span>✅ تم الدخول</span>';
-      
-      setTimeout(() => {
-        window.location.href = 'dashboard.html';
-      }, 500);
-      
+      btn.innerHTML = '<svg class="ic"><use href="#i-check"/></svg> <span>تم الدخول</span>';
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 500);
     } else {
       showError(data.message || 'بيانات الدخول غير صحيحة');
       btn.disabled = false;
-      btn.innerHTML = '<span>دخول</span><span>←</span>';
+      btn.innerHTML = '<span>دخول</span><svg class="ic"><use href="#i-login"/></svg>';
       document.getElementById('password').value = '';
       document.getElementById('password').focus();
     }
-    
-  } catch (error) {
+  }catch(e){
     showError('تعذّر الاتصال بالسيرفر');
     btn.disabled = false;
-    btn.innerHTML = '<span>دخول</span><span>←</span>';
+    btn.innerHTML = '<span>دخول</span><svg class="ic"><use href="#i-login"/></svg>';
   }
 }
 
 // ========== إظهار/إخفاء كلمة المرور ==========
-function togglePassword() {
+function togglePassword(){
   const input = document.getElementById('password');
   const btn = document.getElementById('toggleBtn');
   
-  if (input.type === 'password') {
+  if(input.type === 'password'){
     input.type = 'text';
-    btn.textContent = '🙈';
+    btn.innerHTML = '<svg class="ic"><use href="#i-eye-off"/></svg>';
   } else {
     input.type = 'password';
-    btn.textContent = '👁️';
+    btn.innerHTML = '<svg class="ic"><use href="#i-eye"/></svg>';
   }
 }
 
 // ========== إظهار الخطأ ==========
-function showError(msg) {
-  const errorMsg = document.getElementById('errorMessage');
-  const errorText = document.getElementById('errorText');
+function showError(msg){
+  const errBox = document.getElementById('errorMessage');
+  const errText = document.getElementById('errorText');
   
-  errorText.textContent = msg;
-  errorMsg.classList.add('show');
+  errText.textContent = msg;
+  errBox.classList.add('show');
   
   const container = document.querySelector('.login-container');
   container.style.animation = 'none';
-  setTimeout(() => {
-    container.style.animation = 'shake 0.5s';
-  }, 10);
+  setTimeout(() => { container.style.animation = 'shake .4s'; }, 10);
 }
 </script>
-
 </body>
 </html>
