@@ -318,8 +318,8 @@ body.has-bar .copy{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
     <div class="oid" id="doneId" hidden></div>
     <p class="lead">باقي خطوة أخيرة عشان يوصلنا طلبك</p>
     <ul class="todo" id="todo"></ul>
-    <a class="wa-open" id="waOpen" href="#" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>إرسال الطلب في الواتساب</a>
-    <div class="wa-note">طلبك محفوظ عندنا، والواتساب يساعدنا نأكد معك أسرع</div>
+    <a class="wa-open" id="waOpen" href="#"><svg class="ic"><use href="#i-wa"/></svg>إرسال الطلب في الواتساب</a>
+    <div class="wa-note" id="waNote">طلبك محفوظ عندنا، والواتساب يساعدنا نأكد معك أسرع</div>
     <a class="home-link" href="../index.html">العودة للرئيسية</a>
   </section>
 </main>
@@ -376,6 +376,7 @@ const DELIVERY_OPTIONS = [
 
 let cart = [], stockMap = {}, pay = 'transfer', delId = DELIVERY_OPTIONS[0].id, sending = false;
 let appliedCoupon = null; // لتخزين كود الخصم المطبق
+let waTimer = null, lastOrder = null;
 
 const $ = id => document.getElementById(id);
 const fmt = n => String(parseFloat((Number(n) || 0).toFixed(3)));
@@ -578,7 +579,7 @@ function cleanPhone(s){
 const phoneOk = d => /^\d{8}$/.test(d);
 function mark(id, bad){ $('f-' + id).classList.toggle('bad', bad); return bad; }
 function showBanner(msg, retry){
-  banner.innerHTML = esc(msg) + (retry ? `<br><button onclick="submitOrder()">حاول مرة ثانية</button>` : '');
+  banner.innerHTML = esc(msg) + (retry ? `<br><button onclick="submitOrder()">حاول مرة ثانية</button> <button onclick="sendViaWa()" style="background:var(--wa)">أرسل الطلب بالواتساب</button>` : '');
   banner.classList.add('show');
   banner.scrollIntoView({behavior:'smooth', block:'center'});
 }
@@ -621,6 +622,7 @@ async function submitOrder(){
 
   sending = true; submitBtn.disabled = true; submitTxt.textContent = 'جاري الإرسال...';
   const t = totals(), dl = curDel();
+  lastOrder = {d, t, dl};
   const items = cart.map(i => ({
     product_id: isNaN(i.id) ? i.id : Number(i.id),
     product_name: i.name, price: i.price, quantity: i.qty
@@ -640,7 +642,7 @@ async function submitOrder(){
 
   try{
     const ctrl = new AbortController();
-    const to = setTimeout(() => ctrl.abort(), 15000);
+    const to = setTimeout(() => ctrl.abort(), 30000);
     const res = await fetch(API_URL + '/sales', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(orderData), signal:ctrl.signal});
     clearTimeout(to);
     const data = await res.json().catch(() => ({}));
@@ -658,24 +660,28 @@ async function submitOrder(){
 }
 function reset(){ sending = false; submitBtn.disabled = false; submitTxt.textContent = 'تأكيد الطلب'; }
 
-function finish(d, t, dl, orderId){
-  saveCustomer(d);
+/* ---------- واتساب ---------- */
+function waUrl(d, t, dl, orderId){
   const L = [];
   L.push('*طلب جديد - متجر سكر*');
   if(orderId) L.push('رقم الطلب: ' + orderId);
   L.push('------------------', 'الاسم: ' + d.name, 'الهاتف: ' + d.phone, 'العنوان: ' + d.addr);
   L.push('التوصيل: ' + dl.title + ' (' + fmt(dl.price) + ' ر.ع)');
   if(d.notes) L.push('ملاحظات: ' + d.notes);
-  
-  if (appliedCoupon) {
-    L.push('كود الخصم: ' + appliedCoupon.code + ' (خصم: ' + fmt(t.disc) + ' ر.ع)');
-  }
-  
+  if(appliedCoupon) L.push('كود الخصم: ' + appliedCoupon.code + ' (خصم: ' + fmt(t.disc) + ' ر.ع)');
   L.push('طريقة الدفع: ' + (pay === 'transfer' ? 'تحويل بنكي' : 'واتساب'), '', '*المنتجات:*');
   cart.forEach(i => L.push('- ' + i.name + ' × ' + i.qty + ' = ' + fmt(i.qty * i.price) + ' ر.ع'));
   L.push('', '*الإجمالي:* ' + fmt(t.total) + ' ر.ع');
   if(pay === 'transfer') L.push('', '(سأرسل صورة التحويل الآن)');
-  waOpen.href = 'https://wa.me/' + STORE_PHONE + '?text=' + encodeURIComponent(L.join('\n'));
+  return 'https://wa.me/' + STORE_PHONE + '?text=' + encodeURIComponent(L.join('\n'));
+}
+function sendViaWa(){ if(lastOrder) location.href = waUrl(lastOrder.d, lastOrder.t, lastOrder.dl, ''); }
+
+function finish(d, t, dl, orderId){
+  saveCustomer(d);
+  const url = waUrl(d, t, dl, orderId);   // لازم قبل تفريغ السلة
+  waOpen.href = url;
+  waOpen.onclick = () => clearTimeout(waTimer);
 
   doneId.hidden = !orderId; doneId.textContent = orderId ? 'رقم الطلب: ' + orderId : '';
   todo.innerHTML = (pay === 'transfer'
@@ -688,6 +694,9 @@ function finish(d, t, dl, orderId){
   orderView.hidden = true; doneView.hidden = false; obar.hidden = true;
   document.body.classList.remove('has-bar', 'kbd');
   window.scrollTo({top:0, behavior:'smooth'});
+
+  waNote.textContent = 'جاري تحويلك للواتساب تلقائياً... وإذا ما انفتح اضغط الزر الأخضر';
+  waTimer = setTimeout(() => { location.href = url; }, 1800);   // نفس الصفحة، مو نافذة جديدة
 }
 
 document.addEventListener('keydown', e => { if(e.key === 'Escape'){ sideMenu.classList.remove('open'); menuOverlay.classList.remove('open'); } });
